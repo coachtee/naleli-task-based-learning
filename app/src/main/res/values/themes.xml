@@ -9,8 +9,15 @@
         <item name="android:windowBackground">@color/surface_white</item>
     </style>
 
+    <!-- The OS-level splash (pre-Compose, API 31+ SplashScreen API) shows
+         briefly during cold start using the square adaptive launcher icon —
+         the system icon slot expects a compact, roughly-square graphic and
+         will clip a tall mark. The full NIBS academic mark + institutional
+         wordmark sequence (brief V1.5 §24) is shown by our own Compose
+         SplashScreen composable immediately after, which has full layout
+         control. -->
     <style name="Theme.Naleli.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/surface_white</item>
+        <item name="windowSplashScreenBackground">@color/naleli_navy</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="postSplashScreenTheme">@style/Theme.Naleli</item>
     </style>

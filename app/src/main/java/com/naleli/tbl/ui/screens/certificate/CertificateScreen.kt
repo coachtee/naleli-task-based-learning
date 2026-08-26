@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.naleli.tbl.ui.components.BackHeader
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.theme.ErrorRed
@@ -36,7 +37,7 @@ import com.naleli.tbl.util.viewIntent
 import java.io.File
 
 @Composable
-fun CertificateScreen() {
+fun CertificateScreen(onBack: () -> Unit) {
     val container = rememberAppContainer()
     val viewModel: CertificateViewModel = viewModel(factory = viewModelFactory { initializer { CertificateViewModel(container) } })
     val state by viewModel.state.collectAsState()
@@ -55,7 +56,7 @@ fun CertificateScreen() {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Text("Certificate", style = MaterialTheme.typography.headlineSmall)
+        BackHeader(title = "Certificate", onBack = onBack)
         Text(
             "Naleli Innovators Business School — ${state.course?.programmeName ?: ""}",
             style = MaterialTheme.typography.bodyMedium,
@@ -89,7 +90,6 @@ fun CertificateScreen() {
                         contentDescription = null,
                         tint = if (rule.satisfied) SuccessGreen else ErrorRed,
                     )
-                    Spacer(Modifier.height(0.dp))
                     Text(rule.label, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(start = 8.dp))
                 }
                 Spacer(Modifier.height(6.dp))

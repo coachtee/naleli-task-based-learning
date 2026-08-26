@@ -4,47 +4,62 @@
 
 | Name | What it is | Where it appears in the app |
 |---|---|---|
-| **Naleli Task-Based Learning** | The learning methodology and this application | App name, splash screen, About screen |
-| **NIBS — Naleli Innovators Business School** | The professional programme and credential brand | Certificate, Programme details, Help/About |
-| **KCS — Katlehong Computer School** | The campus / training environment | Programme details, Help/About |
+| **Naleli Task-Based Learning** | The learning methodology and this application | App name, splash screen, Help screen |
+| **NIBS — Naleli Innovators Business School** | The professional programme and credential brand | Splash, certificate, Help screen |
+| **KCS — Katlehong Computer School** | The campus / training environment | Help screen |
 
-The app never blends these into one generic "Naleli" brand — Programme
-details and the certificate explicitly label which is which, matching the
-project brief (§2, §21).
+The app never blends these into one generic "Naleli" brand — the certificate
+and Help screen explicitly label which is which, matching the project
+brief. No accreditation, qualification, or certificate claim beyond what
+the brief itself states is made anywhere in the app.
 
-No accreditation, qualification, or certificate claim beyond what the brief
-itself states is made anywhere in the app. Public organisation information
-used here is limited to what the brief supplied directly (organisation
-names, the 90-day stage names, and the "Digital Operations Professional
-Foundation" / progression terminology). No content was scraped from
-kcs.edu.za for this pass.
+## Logo — the official NIBS academic mark (V1.5)
 
-## Current asset status — placeholder pending the official logo
+`logo/nibs-academic-mark.png` is the **authoritative, supplied logo asset**:
+an orange academic-cap-on-a-column mark. It replaces the placeholder
+purple "N" wordmark used in the first V1 pass.
 
-**No official Naleli/NIBS/KCS logo file was supplied to this build.** Per
-the brief ("if a logo asset is supplied directly by the project owner, use
-that supplied asset as the authoritative logo"), this pass ships a simple,
-original **placeholder wordmark** so the app has a coherent visual identity
-to build and test against, rather than inventing a logo that could be
-mistaken for an approved brand mark:
+- **Splash screen** — the full mark (cap + circle + column), shown at its
+  natural tall aspect ratio above the institutional wordmark. Source:
+  `app/src/main/res/drawable-nodpi/nibs_mark.png`.
+- **Android launcher icon** — a square crop of just the cap-and-circle
+  "head" portion of the mark (the column reads better as a tall logo
+  lockup than as a square icon), centered on a solid Naleli-navy
+  background per Android's adaptive-icon safe-zone convention (foreground
+  content ≈62% of the canvas). Source:
+  `app/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.png`, with a
+  matching white-silhouette `ic_launcher_monochrome.png` for Android 13+
+  themed icons.
 
-- `logo/naleli-wordmark.svg` — a plain text wordmark in the Naleli purple
-  (`#5B2A86`), used on the splash screen and welcome screen.
-- `icons/app-icon-foreground.xml` / `icons/app-icon-background.xml` —
-  vector sources for the Android adaptive launcher icon: a rounded "N"
-  monogram on a deep navy background.
-- `splash/SPLASH-NOTES.md` — how the splash screen is composed.
+The logo's own colour and proportions were never altered — no gradients
+were added to it, no recolouring — the processing done was strictly
+technical: background removal (flood-fill to transparency), autocropping
+to content, and resizing/cropping into the specific asset shapes Android
+requires (a tall splash mark, a square adaptive-icon foreground). See
+`branding/logo/nibs-academic-mark.png` for the canonical, full,
+transparent-background version any future asset should be derived from.
 
-**Replace these the moment an official logo file is supplied** — swap the
-files in this folder and update the Android vector drawables referenced in
-`docs/ARCHITECTURE.md`; no other app code needs to change, since the app
-only references these assets by resource name, not by their visual content.
+**If a newer/higher-resolution source file is supplied later**, regenerate
+these derived assets from it rather than re-deriving from the current
+cropped versions, to avoid compounding quality loss.
+
+## Colour direction (V1.5)
+
+The V1.5 UI/UX redesign (see `docs/ROADMAP.md`) introduced a "hero" dark
+navy surface (Home screen, bottom navigation, splash) using the palette's
+existing `NaleliNavy`/`NaleliNavyDeep` tokens — this is a change in
+*emphasis and composition*, not a new colour palette: the same purple/navy/
+white/green/orange-for-warnings palette from V1 is reused, just applied
+with a bolder dark/light relationship matching the supplied UI mockup
+reference. Content screens (My Learning, Day, Evidence, Portfolio, Profile,
+Progress, Certificate) stay light/white. The NIBS orange from the logo is
+reserved for brand moments (splash, certificate) — primary actions and
+navigation highlights stay Naleli purple, matching the mockup reference.
+See `design/DESIGN-TOKENS.md`.
 
 ## Design characteristics (brief §3)
 
 Modern, clean, professional, mobile-first, simple navigation, strong
 typography, generous spacing, rounded cards, clear progress indicators,
 subtle shadows, accessible contrast — a professional education/productivity
-aesthetic, not a childish school interface. See `design/DESIGN-TOKENS.md`
-for the concrete colour/typography/spacing values used to implement this in
-Jetpack Compose.
+aesthetic, not a childish school interface.

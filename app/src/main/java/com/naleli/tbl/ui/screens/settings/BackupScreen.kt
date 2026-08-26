@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.naleli.tbl.ui.components.BackHeader
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.rememberAppContainer
 import kotlinx.coroutines.launch
@@ -33,7 +34,7 @@ import java.io.File
 import java.time.LocalDate
 
 @Composable
-fun BackupScreen() {
+fun BackupScreen(onBack: () -> Unit) {
     val container = rememberAppContainer()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -70,7 +71,7 @@ fun BackupScreen() {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Text("Backup / Export", style = MaterialTheme.typography.headlineSmall)
+        BackHeader(title = "Backup / Export", onBack = onBack)
 
         NaleliCard(modifier = Modifier.fillMaxWidth()) {
             Text("Backup My Learning", style = MaterialTheme.typography.titleMedium)

@@ -11,9 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.naleli.tbl.ui.components.BackHeader
 
 @Composable
-fun HelpScreen() {
+fun HelpScreen(onBack: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -21,7 +22,7 @@ fun HelpScreen() {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Help", style = MaterialTheme.typography.headlineSmall)
+        BackHeader(title = "Help", onBack = onBack)
 
         Text("About Naleli Task-Based Learning", style = MaterialTheme.typography.titleMedium)
         Text(

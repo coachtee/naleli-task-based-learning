@@ -22,11 +22,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.naleli.tbl.R
+import com.naleli.tbl.ui.components.BackHeader
 import com.naleli.tbl.ui.rememberAppContainer
 
 @Composable
 fun ProfileScreen(
     isEditMode: Boolean,
+    onBack: (() -> Unit)? = null,
     onSaved: () -> Unit,
 ) {
     val container = rememberAppContainer()
@@ -44,10 +46,14 @@ fun ProfileScreen(
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text(
-            text = if (isEditMode) stringResource(R.string.profile_edit) else stringResource(R.string.welcome_cta),
-            style = MaterialTheme.typography.headlineSmall,
-        )
+        if (isEditMode && onBack != null) {
+            BackHeader(title = stringResource(R.string.profile_edit), onBack = onBack)
+        } else {
+            Text(
+                text = stringResource(R.string.welcome_cta),
+                style = MaterialTheme.typography.headlineSmall,
+            )
+        }
 
         OutlinedTextField(
             value = state.firstName,

@@ -3,6 +3,7 @@ package com.naleli.tbl.ui.screens.portfolio
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.naleli.tbl.AppContainer
+import com.naleli.tbl.data.db.entity.AssessmentStatus
 import com.naleli.tbl.data.db.entity.CertificateEntity
 import com.naleli.tbl.data.db.entity.EvidenceEntity
 import com.naleli.tbl.data.db.entity.LearnerProfileEntity
@@ -22,6 +23,7 @@ data class PortfolioUiState(
     val profile: LearnerProfileEntity? = null,
     val items: List<PortfolioItemEntity> = emptyList(),
     val evidenceById: Map<String, EvidenceEntity> = emptyMap(),
+    val assessmentByTask: Map<String, AssessmentStatus> = emptyMap(),
     val latestCertificate: CertificateEntity? = null,
 )
 
@@ -36,12 +38,14 @@ class PortfolioViewModel(private val container: AppContainer) : ViewModel() {
                 container.portfolioRepository.observeAll(),
                 container.evidenceRepository.observeAll(),
                 container.certificateRepository.observeAll(),
-            ) { items, evidence, certificates ->
+                container.progressRepository.observeAllTasks(),
+            ) { items, evidence, certificates, taskStatuses ->
                 PortfolioUiState(
                     isLoading = false,
                     profile = profile,
                     items = items,
                     evidenceById = evidence.associateBy { it.evidenceId },
+                    assessmentByTask = taskStatuses.associate { it.taskId to it.assessmentStatus },
                     latestCertificate = certificates.maxByOrNull { it.issuedAt },
                 )
             }.collect { _state.value = it }

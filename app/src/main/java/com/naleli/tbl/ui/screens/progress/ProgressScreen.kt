@@ -2,11 +2,14 @@ package com.naleli.tbl.ui.screens.progress
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,15 +22,17 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.naleli.tbl.ui.components.BackHeader
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.NaleliProgressBar
 import com.naleli.tbl.ui.rememberAppContainer
 
 @Composable
-fun ProgressScreen() {
+fun ProgressScreen(onBack: () -> Unit) {
     val container = rememberAppContainer()
     val viewModel: ProgressViewModel = viewModel(factory = viewModelFactory { initializer { ProgressViewModel(container) } })
     val summary by viewModel.summary.collectAsState()
+    val stages by viewModel.stages.collectAsState()
 
     val progress = summary
     if (progress == null) {
@@ -40,24 +45,41 @@ fun ProgressScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Text("Progress", style = MaterialTheme.typography.headlineSmall)
+        BackHeader(title = "Progress", onBack = onBack)
 
         NaleliCard(modifier = Modifier.fillMaxWidth()) {
-            Text("${progress.overallPercent}% complete", style = MaterialTheme.typography.headlineSmall)
-            Spacer(Modifier.height(8.dp))
+            Text("Overall Progress", style = MaterialTheme.typography.titleMedium)
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("${progress.overallPercent}%", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary)
+            }
+            Spacer(Modifier.height(4.dp))
             NaleliProgressBar(progressFraction = progress.overallPercent / 100f)
+            Spacer(Modifier.height(6.dp))
+            Text("${progress.daysCompleted} of ${progress.totalDays} days completed", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+
+        NaleliCard(modifier = Modifier.fillMaxWidth()) {
+            Text("By Stage", style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(8.dp))
-            Text("${progress.daysCompleted} / ${progress.totalDays} days", style = MaterialTheme.typography.bodyMedium)
+            stages.forEach { stage ->
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(stage.name, style = MaterialTheme.typography.bodyMedium)
+                    Text("${stage.daysCompleted} / ${stage.totalDays}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Spacer(Modifier.height(4.dp))
+                NaleliProgressBar(progressFraction = stage.fraction)
+                Spacer(Modifier.height(14.dp))
+            }
         }
 
         NaleliCard(modifier = Modifier.fillMaxWidth()) {
             StatRow("Tasks completed", progress.tasksCompleted.toString())
             StatRow("Evidence submitted", progress.evidenceCount.toString())
             StatRow("Portfolio items", progress.portfolioItemCount.toString())
-            StatRow("Current stage", progress.currentStageName ?: "—")
             StatRow("Capstone status", if (progress.capstoneComplete) "Complete" else "Not yet complete")
         }
     }
@@ -65,7 +87,7 @@ fun ProgressScreen() {
 
 @Composable
 private fun StatRow(label: String, value: String) {
-    androidx.compose.foundation.layout.Row(
+    Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {

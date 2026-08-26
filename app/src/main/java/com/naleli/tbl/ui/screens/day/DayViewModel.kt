@@ -91,6 +91,10 @@ class DayViewModel(private val container: AppContainer, private val dayNumber: I
         }
     }
 
+    fun deleteEvidence(evidence: EvidenceEntity) {
+        viewModelScope.launch { container.evidenceRepository.delete(evidence) }
+    }
+
     fun saveReviewAnswers(task: CourseTask, answers: List<ReviewAnswer>, confidence: Int, confident: Boolean) {
         viewModelScope.launch {
             val answersJson = json.encodeToString(answers)

@@ -29,3 +29,21 @@ val ErrorRedBg = Color(0xFFFBEAE9)
 val NaleliNavyDeep = Color(0xFF0B111D)
 val NaleliNavySurface = Color(0xFF1A2233)
 val NaleliNavyBorder = Color(0xFF2C3646)
+
+// NIBS brand orange — sampled directly from the supplied academic-mark
+// logo (V1.5, see branding/logo/nibs-academic-mark.png). Reserved for
+// brand/logo moments (splash, certificate seal) and used sparingly as a
+// warm accent — primary actions stay Naleli purple, matching the V1.5
+// mockup reference. Never used to recolor the logo itself.
+val NibsOrange = Color(0xFFF2540A)
+val NibsOrangeLight = Color(0xFFF66D02)
+val NibsOrangeDark = Color(0xFFEB4C02)
+
+// "Hero" surface — the dark navy background used for high-emphasis
+// moments (Home screen, bottom navigation, splash) per the V1.5 mockup,
+// while other screens keep a light surface. Same palette as
+// NaleliNavy/NaleliNavyDeep, just named for how it's used.
+val HeroSurface = NaleliNavyDeep
+val HeroSurfaceRaised = NaleliNavySurface
+val OnHeroSurface = SurfaceWhite
+val OnHeroSurfaceSoft = Color(0xFFB8BFCC)

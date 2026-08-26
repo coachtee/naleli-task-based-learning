@@ -55,6 +55,22 @@ Subtle only — Material 3 tonal elevation for cards (`elevation = 1.dp`), no
 heavy drop shadows. Keeps the "professional productivity app" feel rather
 than a skeuomorphic school-app look.
 
+## Brand / hero tokens (V1.5)
+
+| Token | Hex | Use |
+|---|---|---|
+| `NibsOrange` | `#F2540A` | Sampled from the supplied NIBS academic mark. Brand moments only (splash, certificate) — never the general call-to-action colour. |
+| `HeroSurface` | `#0B111D` (= `NaleliNavyDeep`) | Dark "hero" background: Home screen, bottom navigation, splash. |
+| `OnHeroSurface` | `#FFFFFF` | Primary text/icons on `HeroSurface`. |
+| `OnHeroSurfaceSoft` | `#B8BFCC` | Secondary text on `HeroSurface`. |
+
+Everything else (My Learning, Day detail, Task detail, Evidence, Portfolio,
+Profile, Progress, Certificate) stays on the light surfaces defined above —
+only Home, the splash screen, and the bottom navigation bar use the dark
+hero surface. This mirrors the supplied V1.5 UI mockup's light/dark
+composition without introducing a new, unrelated colour palette — `NaleliNavy`/
+`NaleliNavyDeep` were already part of the V1 palette.
+
 ## Status colour mapping (used everywhere a day/task status is shown)
 
 | Status | Colour | Chip background |

@@ -11,9 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.naleli.tbl.ui.components.BackHeader
 
 @Composable
-fun PrivacyScreen() {
+fun PrivacyScreen(onBack: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -21,7 +22,7 @@ fun PrivacyScreen() {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Privacy Notice", style = MaterialTheme.typography.headlineSmall)
+        BackHeader(title = "Privacy Notice", onBack = onBack)
 
         Text("What we collect", style = MaterialTheme.typography.titleMedium)
         Text(
@@ -49,7 +50,7 @@ fun PrivacyScreen() {
 
         Text("Your control", style = MaterialTheme.typography.titleMedium)
         Text(
-            "You can back up your data to a file you control at any time, and permanently delete all of it from this device from Settings → Delete My Learning Data.",
+            "You can back up your data to a file you control at any time, and permanently delete all of it from this device from Profile → Delete My Learning Data.",
             style = MaterialTheme.typography.bodyMedium,
         )
     }
