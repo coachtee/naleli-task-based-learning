@@ -48,6 +48,16 @@ jobs:
           name: naleli-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
+      - name: Write release notes
+        run: |
+          cat > release-notes.md << 'NOTES_EOF'
+          Automated debug build from this commit on the V1 branch.
+
+          **Install:** download `app-debug.apk` on your phone, open it, and allow "install unknown apps" for whatever app you downloaded it with. This is a debug build for testing the Day 1 learning journey, not a signed release build.
+
+          **Content included:** Days 1-7 of the Digital Foundation programme. See `docs/ROADMAP.md` for what's next.
+          NOTES_EOF
+
       - name: Publish GitHub Release with APK attached
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -55,10 +65,6 @@ jobs:
           TAG="v1-debug-${{ github.run_number }}"
           gh release create "$TAG" \
             app/build/outputs/apk/debug/app-debug.apk \
-            --title "Naleli Task-Based Learning V1 — debug build ${{ github.run_number }}" \
-            --notes "Automated debug build from commit ${{ github.sha }} on branch ${{ github.ref_name }}.
-
-Install: download app-debug.apk on your phone, open it, and allow \"install unknown apps\" for whatever app you downloaded it with. This is a debug build for testing the Day 1 learning journey — not a signed release build.
-
-Content included: Days 1-7 of the Digital Foundation programme (see docs/ROADMAP.md for what's next)." \
+            --title "Naleli Task-Based Learning V1 - debug build ${{ github.run_number }}" \
+            --notes-file release-notes.md \
             --target "${{ github.sha }}"
