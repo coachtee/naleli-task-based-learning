@@ -1,0 +1,86 @@
+{
+  "dayNumber": 3,
+  "stageId": "stage-1",
+  "title": "Understanding Computing Basics",
+  "learningFocus": "Foundations",
+  "sourceReference": "Lesson 1C — Understanding Computing Basics",
+  "objective": "Explain the input–processing–storage–output cycle every computer uses to get work done.",
+  "lessonSummary": "Every computer, no matter how complex, is really doing the same basic cycle: Input (getting information in — typing, clicking, a camera, a scanner), Processing (the computer's processor acting on that information, following instructions), Storage (keeping information for later, either temporarily in memory or permanently on a drive), and Output (giving a result back — on screen, printed, played as sound, or sent somewhere else).\n\nThinking in this cycle is a useful workplace habit: when something goes wrong, ask yourself which stage failed. Did the input never register? Did processing hang? Was nothing saved? Did the output never actually reach where it needed to go? That question alone solves a surprising number of everyday tech problems.",
+  "keyFocusAreas": [
+    "What is Input?",
+    "What is Processing?",
+    "What is Storage?"
+  ],
+  "tasks": [
+    {
+      "taskId": "day-03-task-1",
+      "orderIndex": 1,
+      "title": "Learn — Understanding Computing Basics",
+      "taskType": "READ",
+      "instructions": "Write 3 key points in your own words explaining Input, Processing, and Storage.",
+      "learningObjective": "Describe the input-processing-storage-output cycle.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "TEXT",
+      "portfolioEligible": false,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-03-task-2",
+      "orderIndex": 2,
+      "title": "Practice — Understanding Computing Basics",
+      "taskType": "PRACTICE",
+      "instructions": "Pick one everyday task on your device (e.g. taking a photo, saving a document, printing a page). Write down what the Input, Processing, Storage, and Output were for that specific task.",
+      "learningObjective": "Apply the IPOS cycle to a real, hands-on example.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-03-task-3",
+      "orderIndex": 3,
+      "title": "Work Mission — Understanding Computing Basics",
+      "taskType": "WORK_MISSION",
+      "instructions": "A colleague says \"the computer froze and I lost my work.\" Using the IPOS cycle, write a short explanation of what might have happened and which stage most likely failed.",
+      "learningObjective": "Use the IPOS cycle to reason about a workplace tech problem.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-03-task-4",
+      "orderIndex": 4,
+      "title": "Review — Prove you can do it",
+      "taskType": "SELF_CHECK",
+      "instructions": "Without reopening today's notes, answer the review questions in your own words and rate how confident you feel.",
+      "learningObjective": "Self-assess understanding of today's learning outcomes.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "REVIEW",
+      "portfolioEligible": false,
+      "supportContent": [],
+      "reviewQuestions": [
+        "What is Input?",
+        "What is Processing?",
+        "What is Storage?",
+        "What is Output?"
+      ]
+    }
+  ],
+  "reviewQuestions": [
+    "What is Input?",
+    "What is Processing?",
+    "What is Storage?",
+    "What is Output?"
+  ],
+  "reflectionPrompt": "What did you learn today, and what would you do differently tomorrow?",
+  "dailyDeliverableSummary": "3 key points / notes; a working file, screenshot, answer or recorded result; a short workplace-style explanation."
+}

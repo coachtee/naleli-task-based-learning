@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Naleli Task-Based Learning</string>
+    <string name="programme_name">Digital Foundation</string>
+    <string name="school_kcs">Katlehong Computer School (KCS)</string>
+    <string name="brand_nibs">Naleli Innovators Business School (NIBS)</string>
+
+    <!-- Welcome -->
+    <string name="welcome_title">Welcome to Naleli Task-Based Learning</string>
+    <string name="welcome_body">Create your learner profile to start the Digital Foundation programme. Everything you do stays on this device.</string>
+    <string name="welcome_cta">Create My Profile</string>
+
+    <!-- Profile -->
+    <string name="profile_first_name">First name</string>
+    <string name="profile_surname">Surname</string>
+    <string name="profile_student_number">Student number (optional)</string>
+    <string name="profile_email">Email (optional)</string>
+    <string name="profile_phone">Phone number (optional)</string>
+    <string name="profile_programme">Programme</string>
+    <string name="profile_start_date">Start date</string>
+    <string name="profile_save">Save Profile</string>
+    <string name="profile_edit">Edit Profile</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_my_learning">My Learning</string>
+    <string name="nav_evidence">Evidence</string>
+    <string name="nav_portfolio">Portfolio</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Home -->
+    <string name="home_start_today">Start Today\'s Task</string>
+    <string name="home_todays_mission">Today\'s Mission</string>
+    <string name="home_upcoming">Upcoming</string>
+    <string name="home_recent_portfolio">Recent Portfolio Item</string>
+
+    <!-- Day statuses -->
+    <string name="status_not_started">NOT STARTED</string>
+    <string name="status_in_progress">IN PROGRESS</string>
+    <string name="status_complete">COMPLETE</string>
+    <string name="status_needs_review">NEEDS REVIEW</string>
+
+    <!-- Day detail sections -->
+    <string name="section_learn">LEARN</string>
+    <string name="section_do">DO</string>
+    <string name="section_check">CHECK</string>
+    <string name="section_evidence">EVIDENCE</string>
+    <string name="section_reflect">REFLECT</string>
+    <string name="action_complete_day">Complete Day</string>
+
+    <!-- Certificate -->
+    <string name="certificate_title">Certificate</string>
+    <string name="certificate_generate">Generate Certificate</string>
+    <string name="certificate_not_eligible">Complete every requirement below to unlock your certificate.</string>
+
+    <!-- Backup -->
+    <string name="backup_title">Backup / Export</string>
+    <string name="backup_export_action">Backup My Learning</string>
+    <string name="backup_restore_action">Restore My Learning</string>
+    <string name="backup_restore_warning">Restoring will overwrite your current learner data on this device. This cannot be undone.</string>
+
+    <!-- Settings / privacy -->
+    <string name="settings_title">Settings</string>
+    <string name="privacy_title">Privacy Notice</string>
+    <string name="delete_my_data">Delete My Learning Data</string>
+    <string name="delete_my_data_warning">This permanently deletes your profile, progress, evidence, and portfolio from this device. This cannot be undone.</string>
+</resources>

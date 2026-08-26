@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    android:allowBackup is "false" in the manifest — learner data (including
+    evidence files) never leaves the device via Android Auto Backup either.
+    Backup is exclusively the explicit, learner-initiated "Backup My
+    Learning" ZIP export feature. This file is kept only because
+    fullBackupContent is a required attribute reference on some API levels;
+    its rule set is irrelevant while allowBackup="false".
+-->
+<full-backup-content>
+    <exclude domain="database" path="." />
+    <exclude domain="file" path="." />
+</full-backup-content>

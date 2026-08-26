@@ -1,0 +1,86 @@
+{
+  "dayNumber": 1,
+  "stageId": "stage-1",
+  "title": "Starting the Course",
+  "learningFocus": "Foundations",
+  "sourceReference": "Lesson 1A — Starting the Course",
+  "objective": "Understand what digital literacy and digital citizenship mean, and start building the habits of a proactive learner.",
+  "lessonSummary": "Digital literacy is the ability to find, use, and create information confidently and safely with digital devices — it's not about knowing every app, it's about knowing how to figure things out. Digital citizenship is how you show up in digital spaces: acting responsibly, respecting others, and understanding that your online actions have real consequences.\n\nIn a workplace, both of these show up every day: reading instructions carefully, asking good questions when you're unsure, keeping your work organised, and treating colleagues and customers the same way online as you would in person. A proactive learner doesn't wait to be told everything — they try things, take notes on what they figure out, and ask for help once they've made a real attempt.",
+  "keyFocusAreas": [
+    "What is digital literacy?",
+    "What is digital citizenship?",
+    "What can you do to be a proactive learner?"
+  ],
+  "tasks": [
+    {
+      "taskId": "day-01-task-1",
+      "orderIndex": 1,
+      "title": "Learn — Starting the Course",
+      "taskType": "READ",
+      "instructions": "Think about digital literacy and digital citizenship, and what it means to be a proactive learner. Write 3 key points in your own words that you want to remember from today's topic.",
+      "learningObjective": "Explain digital literacy and digital citizenship in your own words.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "TEXT",
+      "portfolioEligible": false,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-01-task-2",
+      "orderIndex": 2,
+      "title": "Practice — Starting the Course",
+      "taskType": "PRACTICE",
+      "instructions": "Use your own computer or device to explore one setting or app you haven't used before. Take a screenshot, or write a short note, showing what you found and what it does. Do not only describe it — actually try it.",
+      "learningObjective": "Demonstrate independent, hands-on exploration of a digital device.",
+      "estimatedTime": "20 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-01-task-3",
+      "orderIndex": 3,
+      "title": "Work Mission — Starting the Course",
+      "taskType": "WORK_MISSION",
+      "instructions": "Imagine a new colleague at work asks you: \"What's the difference between being good at typing and being digitally literate?\" Write a short, clear answer you could actually say to them, and explain one decision you made about how to explain it.",
+      "learningObjective": "Apply the concept of digital literacy to a realistic workplace explanation.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-01-task-4",
+      "orderIndex": 4,
+      "title": "Review — Prove you can do it",
+      "taskType": "SELF_CHECK",
+      "instructions": "Without reopening today's notes, answer the review questions in your own words and rate how confident you feel. If you can't answer confidently, mark this day NEEDS REVIEW instead of COMPLETE.",
+      "learningObjective": "Self-assess understanding of today's learning outcomes.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "REVIEW",
+      "portfolioEligible": false,
+      "supportContent": [],
+      "reviewQuestions": [
+        "What is digital literacy?",
+        "What is digital citizenship?",
+        "What can you do to be a proactive learner?",
+        "What is the role of practice in learning new skills?"
+      ]
+    }
+  ],
+  "reviewQuestions": [
+    "What is digital literacy?",
+    "What is digital citizenship?",
+    "What can you do to be a proactive learner?",
+    "What is the role of practice in learning new skills?"
+  ],
+  "reflectionPrompt": "What did you learn today, and what would you do differently tomorrow?",
+  "dailyDeliverableSummary": "3 key points / notes; a working file, screenshot, answer or recorded result; a short workplace-style explanation."
+}

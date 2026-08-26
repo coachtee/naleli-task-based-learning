@@ -1,0 +1,56 @@
+{
+  "programmeId": "digital-foundation",
+  "programmeName": "Digital Foundation",
+  "shortDescription": "A practical, task-based digital literacy programme where students learn a professional role by completing daily workplace-style tasks, producing evidence, building a portfolio, and completing a final capstone.",
+  "credential": {
+    "issuingBody": "Naleli Innovators Business School",
+    "campus": "Katlehong Computer School (KCS)",
+    "programmeTitle": "Digital Foundation"
+  },
+  "totalDays": 90,
+  "method": ["LEARN", "DO", "CHECK", "EVIDENCE", "REFLECT"],
+  "progressionRule": "FREE_NAVIGATION",
+  "stages": [
+    {
+      "stageId": "stage-1",
+      "stageNumber": 1,
+      "name": "Learn the Role",
+      "dayStart": 1,
+      "dayEnd": 30,
+      "description": "High guidance: learn the basics and practise with step-by-step tasks."
+    },
+    {
+      "stageId": "stage-2",
+      "stageNumber": 2,
+      "name": "Do the Work",
+      "dayStart": 31,
+      "dayEnd": 60,
+      "description": "Reduced guidance: realistic workplace missions and outputs."
+    },
+    {
+      "stageId": "stage-3",
+      "stageNumber": 3,
+      "name": "Operate Independently",
+      "dayStart": 61,
+      "dayEnd": 82,
+      "description": "Minimal guidance: solve problems, make decisions and document them."
+    },
+    {
+      "stageId": "stage-4",
+      "stageNumber": 4,
+      "name": "Capstone & Portfolio",
+      "dayStart": 83,
+      "dayEnd": 90,
+      "description": "Final simulation, presentation, evidence and portfolio submission."
+    }
+  ],
+  "certificateEligibility": {
+    "requireAllDaysComplete": true,
+    "requireCapstoneComplete": true,
+    "requireFinalAssessmentComplete": true,
+    "minimumPortfolioItems": 1
+  },
+  "contentAvailableDays": [1, 2, 3, 4, 5, 6, 7],
+  "contentVersion": "v1.0-days1-7",
+  "sourceBlueprint": "source/Naleli_Task_Based_Digital_Foundation_90_Day_Workbook.xlsx"
+}

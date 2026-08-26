@@ -1,0 +1,137 @@
+{
+  "dayNumber": 7,
+  "stageId": "stage-1",
+  "title": "Typing Sentences + Being a Digital Citizen",
+  "learningFocus": "Practice, Digital citizenship",
+  "sourceReference": "Lesson 2D — Typing Sentences | Lesson 3A — Being a Digital Citizen",
+  "objective": "Type full sentences with growing accuracy and speed, and understand what responsible digital citizenship looks like.",
+  "lessonSummary": "Typing full sentences brings letters, words, punctuation, and spacing together at once — this is where accuracy and speed really start to matter together, because a fast typist who makes constant errors isn't actually faster once you count the corrections.\n\nBeing a digital citizen means recognising that empathy and ethics apply online just as much as they do in person. Everything you post, send, or share leaves a digital footprint — a trail that can outlast the moment you created it and that others (including future employers) may see. What you say and how you say it matters, and cultural differences can change how a message lands, so it's worth thinking before you send, not just after.",
+  "keyFocusAreas": [
+    "Type sentences.",
+    "Increase your accuracy.",
+    "How do empathy and ethics apply to digital life?",
+    "What does your digital footprint leave behind?"
+  ],
+  "tasks": [
+    {
+      "taskId": "day-07-task-1",
+      "orderIndex": 1,
+      "title": "Learn — Typing Sentences",
+      "taskType": "READ",
+      "instructions": "Write 3 key points in your own words about typing full sentences, accuracy, and speed.",
+      "learningObjective": "Describe technique for typing accurate, complete sentences.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "TEXT",
+      "portfolioEligible": false,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-07-task-2",
+      "orderIndex": 2,
+      "title": "Practice — Typing Sentences",
+      "taskType": "PRACTICE",
+      "instructions": "Type 5 full sentences (with correct punctuation and capitalisation) for 5–10 minutes. Record your accuracy and note whether your speed or accuracy improved from earlier this week.",
+      "learningObjective": "Build accurate, complete-sentence typing.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": [
+        { "fileName": "Keyboarding-Practice-Sheet.txt", "label": "Keyboarding Practice Sheet", "location": "downloads" }
+      ]
+    },
+    {
+      "taskId": "day-07-task-3",
+      "orderIndex": 3,
+      "title": "Work Mission — Typing Sentences",
+      "taskType": "WORK_MISSION",
+      "instructions": "Type a short, professional two-sentence email reply to a colleague confirming a meeting time. Explain one wording choice you made to keep it clear and polite.",
+      "learningObjective": "Apply sentence typing to a realistic workplace communication.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-07-task-4",
+      "orderIndex": 4,
+      "title": "Learn — Being a Digital Citizen",
+      "taskType": "READ",
+      "instructions": "Write 3 key points in your own words about empathy, ethics, and digital footprints online.",
+      "learningObjective": "Explain digital citizenship and digital footprint.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "TEXT",
+      "portfolioEligible": false,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-07-task-5",
+      "orderIndex": 5,
+      "title": "Practice — Being a Digital Citizen",
+      "taskType": "PRACTICE",
+      "instructions": "Think of a realistic online situation (e.g. a heated comment thread, a group chat misunderstanding). Write a short, responsible response or a 3-point checklist for handling it well.",
+      "learningObjective": "Apply digital citizenship principles to a realistic online situation.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-07-task-6",
+      "orderIndex": 6,
+      "title": "Work Mission — Being a Digital Citizen",
+      "taskType": "WORK_MISSION",
+      "instructions": "A new colleague posts something online that could reflect badly on the company. As a trusted teammate, write the message you'd send them privately, and explain one decision you made about tone.",
+      "learningObjective": "Apply digital citizenship to a realistic workplace scenario.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-07-task-7",
+      "orderIndex": 7,
+      "title": "Review — Prove you can do it",
+      "taskType": "SELF_CHECK",
+      "instructions": "Without reopening today's notes, answer the review questions in your own words and rate how confident you feel.",
+      "learningObjective": "Self-assess understanding of today's learning outcomes.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "REVIEW",
+      "portfolioEligible": false,
+      "supportContent": [],
+      "reviewQuestions": [
+        "Type sentences.",
+        "Increase your accuracy.",
+        "Increase your typing speed.",
+        "How do empathy and ethics apply to digital life?",
+        "What does your digital footprint leave behind?",
+        "Why does what you say and how you communicate matter?",
+        "How can cultural differences affect how people understand what you say?"
+      ]
+    }
+  ],
+  "reviewQuestions": [
+    "Type sentences.",
+    "Increase your accuracy.",
+    "Increase your typing speed.",
+    "How do empathy and ethics apply to digital life?",
+    "What does your digital footprint leave behind?",
+    "Why does what you say and how you communicate matter?",
+    "How can cultural differences affect how people understand what you say?"
+  ],
+  "reflectionPrompt": "What did you learn today, and what would you do differently tomorrow?",
+  "dailyDeliverableSummary": "3 key points / notes; a working file, screenshot, answer or recorded result; a short workplace-style explanation (x2 lessons)."
+}

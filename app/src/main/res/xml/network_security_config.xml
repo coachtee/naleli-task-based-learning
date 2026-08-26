@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    No INTERNET permission is requested, so this app makes no network
+    connections. This config exists only to explicitly document and enforce
+    that intent — cleartext traffic is denied for all domains as a defensive
+    default should a future dependency ever attempt one.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>

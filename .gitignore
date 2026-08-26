@@ -1,0 +1,45 @@
+# ==============================================================
+# Naleli Task-Based Learning — .gitignore
+# ==============================================================
+
+# ---- Copyrighted / third-party source material ----
+# Never commit the raw source manual/course PDF or any other
+# copyrighted third-party material to this public repository.
+# Only Naleli-authored content and the Naleli-generated workbook
+# belong in /source.
+/source/private/
+*.manual.pdf
+*digital-literacy*.pdf
+*comptia*.pdf
+
+# ---- Android / Gradle ----
+*.iml
+.gradle/
+/local.properties
+.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+*.apk
+*.aab
+*.ap_
+*.dex
+/app/build/
+/app/release/
+/app/debug/
+
+# Keystores — never commit signing material
+*.jks
+*.keystore
+keystore.properties
+
+# ---- Gradle wrapper distribution cache (wrapper scripts are kept) ----
+gradle/wrapper/dists/
+
+# ---- Logs ----
+*.log
+
+# ---- OS ----
+Thumbs.db

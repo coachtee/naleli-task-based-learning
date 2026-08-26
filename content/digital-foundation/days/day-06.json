@@ -1,0 +1,86 @@
+{
+  "dayNumber": 6,
+  "stageId": "stage-1",
+  "title": "Typing Words",
+  "learningFocus": "Practice",
+  "sourceReference": "Lesson 2C — Typing Words",
+  "objective": "Type common English words and letter combinations accurately, including correctly capitalised proper nouns.",
+  "lessonSummary": "Once individual letters feel natural, the next step is typing whole words without breaking rhythm — your fingers should start recognising common letter patterns (like \"th\", \"ing\", \"tion\") as a single motion rather than separate keystrokes. This is also a good moment to build the habit of capitalising proper nouns correctly as you type (names, places, brand names), since fixing capitalisation after the fact wastes time in real work.\n\nTyping words well is about smoothness, not just speed — a steady, even pace with fewer corrections beats a fast burst full of mistakes.",
+  "keyFocusAreas": [
+    "Type common English words.",
+    "Type common letter combinations in longer words.",
+    "Type proper nouns with capitalized letters."
+  ],
+  "tasks": [
+    {
+      "taskId": "day-06-task-1",
+      "orderIndex": 1,
+      "title": "Learn — Typing Words",
+      "taskType": "READ",
+      "instructions": "Write 3 key points in your own words about typing common words, letter combinations, and capitalising proper nouns.",
+      "learningObjective": "Describe technique for typing whole words smoothly.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "TEXT",
+      "portfolioEligible": false,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-06-task-2",
+      "orderIndex": 2,
+      "title": "Practice — Typing Words",
+      "taskType": "PRACTICE",
+      "instructions": "Type a list of 15 common words, including at least 3 proper nouns (names/places), for 5–10 minutes. Record your accuracy and note any words you kept mistyping.",
+      "learningObjective": "Build accurate whole-word typing, including proper noun capitalisation.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": [
+        { "fileName": "Keyboarding-Practice-Sheet.txt", "label": "Keyboarding Practice Sheet", "location": "downloads" }
+      ]
+    },
+    {
+      "taskId": "day-06-task-3",
+      "orderIndex": 3,
+      "title": "Work Mission — Typing Words",
+      "taskType": "WORK_MISSION",
+      "instructions": "You've been asked to type a customer's name and company correctly into a workplace form. Write the sentence you'd type, and explain one thing you double-checked before submitting it.",
+      "learningObjective": "Apply accurate word typing to a realistic data-entry scenario.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-06-task-4",
+      "orderIndex": 4,
+      "title": "Review — Prove you can do it",
+      "taskType": "SELF_CHECK",
+      "instructions": "Without reopening today's notes, answer the review questions in your own words and rate how confident you feel.",
+      "learningObjective": "Self-assess understanding of today's learning outcomes.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "REVIEW",
+      "portfolioEligible": false,
+      "supportContent": [],
+      "reviewQuestions": [
+        "Type common English words.",
+        "Type common letter combinations in longer words.",
+        "Type proper nouns with capitalized letters."
+      ]
+    }
+  ],
+  "reviewQuestions": [
+    "Type common English words.",
+    "Type common letter combinations in longer words.",
+    "Type proper nouns with capitalized letters."
+  ],
+  "reflectionPrompt": "What did you learn today, and what would you do differently tomorrow?",
+  "dailyDeliverableSummary": "3 key points / notes; a working file, screenshot, answer or recorded result; a short workplace-style explanation."
+}

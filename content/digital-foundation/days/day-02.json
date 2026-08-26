@@ -1,0 +1,86 @@
+{
+  "dayNumber": 2,
+  "stageId": "stage-1",
+  "title": "Exploring a World of Tech",
+  "learningFocus": "Foundations",
+  "sourceReference": "Lesson 1B — Exploring a World of Tech",
+  "objective": "Recognise how technology shapes daily life and future careers, and understand computers as systems.",
+  "lessonSummary": "Technology touches almost everything you do in a day — how you communicate, learn, shop, get paid, and find work. Understanding that isn't just background knowledge: employers expect people to be comfortable adapting to new tools, because the tools keep changing.\n\nA computer system is the combination of hardware (the physical parts) and software (the instructions that make the hardware useful) working together to take in information, process it, and produce a result. Knowing this basic system view helps you troubleshoot calmly instead of guessing — if something isn't working, it's either a hardware problem, a software problem, or how they're communicating with each other.",
+  "keyFocusAreas": [
+    "How does technology impact my daily life?",
+    "How could technology impact my future and my future career?",
+    "What are some facts about computing history?"
+  ],
+  "tasks": [
+    {
+      "taskId": "day-02-task-1",
+      "orderIndex": 1,
+      "title": "Learn — Exploring a World of Tech",
+      "taskType": "READ",
+      "instructions": "Write 3 key points in your own words about how technology affects your daily life and your future career.",
+      "learningObjective": "Connect technology trends to personal and career impact.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "TEXT",
+      "portfolioEligible": false,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-02-task-2",
+      "orderIndex": 2,
+      "title": "Practice — Exploring a World of Tech",
+      "taskType": "PRACTICE",
+      "instructions": "List 5 pieces of technology you personally used yesterday and, for each one, name whether it is mainly hardware, mainly software, or both working together.",
+      "learningObjective": "Distinguish hardware from software in real, everyday examples.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-02-task-3",
+      "orderIndex": 3,
+      "title": "Work Mission — Exploring a World of Tech",
+      "taskType": "WORK_MISSION",
+      "instructions": "A workplace mentor asks you to name one way technology might change your role in the next five years, and one skill you should build now to stay ready for it. Write your answer and explain your reasoning.",
+      "learningObjective": "Apply awareness of technology trends to a career-planning scenario.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-02-task-4",
+      "orderIndex": 4,
+      "title": "Review — Prove you can do it",
+      "taskType": "SELF_CHECK",
+      "instructions": "Without reopening today's notes, answer the review questions in your own words and rate how confident you feel.",
+      "learningObjective": "Self-assess understanding of today's learning outcomes.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "REVIEW",
+      "portfolioEligible": false,
+      "supportContent": [],
+      "reviewQuestions": [
+        "How does technology impact my daily life?",
+        "How could technology impact my future and my future career?",
+        "What are some facts about computing history?",
+        "What is a computer system?"
+      ]
+    }
+  ],
+  "reviewQuestions": [
+    "How does technology impact my daily life?",
+    "How could technology impact my future and my future career?",
+    "What are some facts about computing history?",
+    "What is a computer system?"
+  ],
+  "reflectionPrompt": "What did you learn today, and what would you do differently tomorrow?",
+  "dailyDeliverableSummary": "3 key points / notes; a working file, screenshot, answer or recorded result; a short workplace-style explanation."
+}

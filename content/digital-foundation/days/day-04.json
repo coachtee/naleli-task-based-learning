@@ -1,0 +1,135 @@
+{
+  "dayNumber": 4,
+  "stageId": "stage-1",
+  "title": "Binary Numbers and Data + What is Keyboarding?",
+  "learningFocus": "Foundations, Practice",
+  "sourceReference": "Lesson 1D — Bit by Bit: Binary Numbers and Data | Lesson 2A — What is Keyboarding?",
+  "objective": "Explain how computers represent data using binary, and start building correct keyboarding technique.",
+  "lessonSummary": "Computers store and move everything — text, images, sound — as binary: a series of 1s and 0s. Each single 1 or 0 is a bit; group 8 bits together and you get a byte, the basic unit computers use to measure data size (kilobytes, megabytes, gigabytes are just bytes counted in bigger groups). Binary, decimal (the normal 0–9 numbers we use), and hexadecimal are just different ways of writing the same number — computers use binary because a circuit is easiest to build with two clear states (on/off), but hexadecimal is often used by people because it's a shorter way to write binary values.\n\nKeyboarding is a practical skill worth taking seriously: proper technique — resting your fingers on the home row (ASDF for the left hand, JKL; for the right) and using the correct finger for each key — is what lets you type faster and more accurately without looking down, which matters the moment your job involves writing anything at speed.",
+  "keyFocusAreas": [
+    "What is binary?",
+    "What is the relationship between decimal, binary, and hexadecimal numbers?",
+    "What are bits and Bytes?",
+    "What is proper keyboarding technique to type more accurately?"
+  ],
+  "tasks": [
+    {
+      "taskId": "day-04-task-1",
+      "orderIndex": 1,
+      "title": "Learn — Bit by Bit: Binary Numbers and Data",
+      "taskType": "READ",
+      "instructions": "Write 3 key points in your own words about binary, bits, and bytes.",
+      "learningObjective": "Explain binary, bits, and bytes.",
+      "estimatedTime": "15 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "TEXT",
+      "portfolioEligible": false,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-04-task-2",
+      "orderIndex": 2,
+      "title": "Practice — Bit by Bit: Binary Numbers and Data",
+      "taskType": "PRACTICE",
+      "instructions": "Convert your age (as a decimal number) into an 8-bit binary number by hand, showing your working, and check a file's size on your device to confirm you can read KB/MB correctly.",
+      "learningObjective": "Perform a basic decimal-to-binary conversion and read file sizes.",
+      "estimatedTime": "20 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-04-task-3",
+      "orderIndex": 3,
+      "title": "Work Mission — Bit by Bit: Binary Numbers and Data",
+      "taskType": "WORK_MISSION",
+      "instructions": "A colleague asks why a photo file is \"bigger\" than a text file. Write a short, non-technical explanation using what you now know about bits and bytes.",
+      "learningObjective": "Apply the concept of data size to a workplace explanation.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-04-task-4",
+      "orderIndex": 4,
+      "title": "Learn — What is Keyboarding?",
+      "taskType": "READ",
+      "instructions": "Write 3 key points in your own words about proper keyboarding technique and home-row finger placement.",
+      "learningObjective": "Describe correct keyboarding posture and home-row technique.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "TEXT",
+      "portfolioEligible": false,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-04-task-5",
+      "orderIndex": 5,
+      "title": "Practice — What is Keyboarding?",
+      "taskType": "PRACTICE",
+      "instructions": "Spend 5 minutes practising the home row (ASDF JKL;) without looking at the keyboard. Record your observations: how many times did you look down, and did it get easier?",
+      "learningObjective": "Build home-row keyboarding awareness through timed practice.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": [
+        { "fileName": "Keyboarding-Practice-Sheet.txt", "label": "Keyboarding Practice Sheet", "location": "downloads" }
+      ]
+    },
+    {
+      "taskId": "day-04-task-6",
+      "orderIndex": 6,
+      "title": "Work Mission — What is Keyboarding?",
+      "taskType": "WORK_MISSION",
+      "instructions": "Imagine you're coaching a new team member on keyboarding. Write 2–3 sentences of advice you'd give them, based on what worked for you today.",
+      "learningObjective": "Apply keyboarding technique to a coaching scenario.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": true,
+      "responseType": "FILE",
+      "portfolioEligible": true,
+      "supportContent": []
+    },
+    {
+      "taskId": "day-04-task-7",
+      "orderIndex": 7,
+      "title": "Review — Prove you can do it",
+      "taskType": "SELF_CHECK",
+      "instructions": "Without reopening today's notes, answer the review questions in your own words and rate how confident you feel.",
+      "learningObjective": "Self-assess understanding of today's learning outcomes.",
+      "estimatedTime": "10 min",
+      "required": true,
+      "evidenceRequired": false,
+      "responseType": "REVIEW",
+      "portfolioEligible": false,
+      "supportContent": [],
+      "reviewQuestions": [
+        "What is binary?",
+        "What is the relationship between decimal, binary, and hexadecimal numbers?",
+        "What are bits and Bytes?",
+        "How do computers store and transfer data?",
+        "What is proper keyboarding technique to type more accurately?",
+        "What is proper finger placement on the home row?"
+      ]
+    }
+  ],
+  "reviewQuestions": [
+    "What is binary?",
+    "What is the relationship between decimal, binary, and hexadecimal numbers?",
+    "What are bits and Bytes?",
+    "How do computers store and transfer data?",
+    "What is proper keyboarding technique to type more accurately?",
+    "What is proper finger placement on the home row?"
+  ],
+  "reflectionPrompt": "What did you learn today, and what would you do differently tomorrow?",
+  "dailyDeliverableSummary": "3 key points / notes; a working file, screenshot, answer or recorded result; a short workplace-style explanation (x2 lessons)."
+}
