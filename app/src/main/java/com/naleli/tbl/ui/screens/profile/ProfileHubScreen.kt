@@ -146,15 +146,15 @@ fun ProfileHubScreen(
             text = {
                 Column {
                     ThemeOption("Light", ThemeMode.LIGHT, container.themePreferences.mode) {
-                        container.themePreferences.setMode(it)
+                        container.themePreferences.updateMode(it)
                         showThemePicker = false
                     }
                     ThemeOption("Dark", ThemeMode.DARK, container.themePreferences.mode) {
-                        container.themePreferences.setMode(it)
+                        container.themePreferences.updateMode(it)
                         showThemePicker = false
                     }
                     ThemeOption("Match system", ThemeMode.SYSTEM, container.themePreferences.mode) {
-                        container.themePreferences.setMode(it)
+                        container.themePreferences.updateMode(it)
                         showThemePicker = false
                     }
                 }

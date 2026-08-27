@@ -16,10 +16,16 @@ enum class ThemeMode { LIGHT, DARK, SYSTEM }
 class ThemePreferences(context: Context) {
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
+    // Named "mode" (not "themeMode") so `NaleliTheme(themeMode = container.themePreferences.mode)`
+    // reads cleanly — but a `var mode` property auto-generates a JVM
+    // `setMode(ThemeMode)` accessor, which collides with an explicitly
+    // declared `fun setMode(...)` at the bytecode level even though the
+    // property setter is private ("Platform declaration clash"). Named the
+    // mutator `updateMode` instead to avoid it.
     var mode: ThemeMode by mutableStateOf(readStored())
         private set
 
-    fun setMode(newMode: ThemeMode) {
+    fun updateMode(newMode: ThemeMode) {
         mode = newMode
         prefs.edit().putString(KEY_MODE, newMode.name).apply()
     }
