@@ -47,3 +47,15 @@ val HeroSurface = NaleliNavyDeep
 val HeroSurfaceRaised = NaleliNavySurface
 val OnHeroSurface = SurfaceWhite
 val OnHeroSurfaceSoft = Color(0xFFB8BFCC)
+
+// Dark-theme-only tokens (V1.5.1 §6 contrast audit). Not simple inversions
+// of their light-theme counterparts — chosen so outlines, track fills and
+// error text hold real contrast against the dark navy surfaces, where the
+// light-theme values (tuned for a white background) go nearly invisible.
+// See the outline/surfaceVariant/error entries in ui/theme/Theme.kt.
+val DarkOutline = Color(0xFF5B6472)
+val DarkSurfaceVariant = Color(0xFF2E3B54)
+val DarkError = Color(0xFFFFB4AB)
+val DarkOnError = Color(0xFF690005)
+val DarkErrorContainer = Color(0xFF93000A)
+val DarkOnErrorContainer = Color(0xFFFFDAD6)

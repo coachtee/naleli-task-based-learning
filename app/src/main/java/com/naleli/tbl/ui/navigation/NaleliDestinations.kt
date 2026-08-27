@@ -9,7 +9,6 @@ package com.naleli.tbl.ui.navigation
  * churn risk for zero user-facing benefit; only the displayed labels and
  * screen content change. */
 object NaleliDestinations {
-    const val SPLASH = "splash"
     const val WELCOME = "welcome"
     const val CREATE_PROFILE = "create_profile"
     const val EDIT_PROFILE = "edit_profile"
@@ -36,6 +35,7 @@ object NaleliDestinations {
     fun addEvidence(dayNumber: Int, taskId: String) = "day/$dayNumber/task/$taskId/evidence"
 
     const val QR_LOOKUP = "qr_lookup"
+    const val QR_SCANNER = "qr_scanner"
 
     val BOTTOM_NAV_ROUTES = listOf(HOME, MY_LEARNING, EVIDENCE, PORTFOLIO, PROFILE)
 }

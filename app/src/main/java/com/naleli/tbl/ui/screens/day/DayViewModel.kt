@@ -7,7 +7,9 @@ import com.naleli.tbl.AppContainer
 import com.naleli.tbl.data.content.Course
 import com.naleli.tbl.data.content.CourseDay
 import com.naleli.tbl.data.content.CourseTask
+import com.naleli.tbl.data.content.ProgressionRule
 import com.naleli.tbl.data.content.SupportContentRef
+import com.naleli.tbl.data.db.entity.DayProgressEntity
 import com.naleli.tbl.data.db.entity.DayStatus
 import com.naleli.tbl.data.db.entity.EvidenceEntity
 import com.naleli.tbl.data.db.entity.TaskStatusEntity
@@ -15,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -32,6 +35,7 @@ data class DayDetailUiState(
     val evidenceByTask: Map<String, List<EvidenceEntity>> = emptyMap(),
     val dayStatus: DayStatus = DayStatus.NOT_STARTED,
     val reflectionText: String = "",
+    val isLocked: Boolean = false,
 ) {
     val requiredTasksComplete: Boolean
         get() = day?.tasks?.filter { it.required }?.all { taskStatuses[it.taskId]?.status == DayStatus.COMPLETE } ?: false
@@ -53,13 +57,36 @@ class DayViewModel(private val container: AppContainer, private val dayNumber: I
                 return@launch
             }
 
-            container.progressRepository.markDayStarted(dayNumber)
+            // Sequential unlock is enforced here — not just as a visual lock icon
+            // in My Learning — so a direct deep link (e.g. a worksheet QR code
+            // for a day/task the learner hasn't reached yet) still lands on a
+            // locked state rather than the full day/task content (V1.5.1 §5).
+            val isSequential = course.progressionRule == ProgressionRule.SEQUENTIAL_UNLOCK
+            val previousDayComplete = if (isSequential && dayNumber > 1) {
+                container.progressRepository.getDay(dayNumber - 1)?.status == DayStatus.COMPLETE
+            } else {
+                true
+            }
+            val initiallyLocked = isSequential && dayNumber > 1 && !previousDayComplete
+
+            // A locked day is preview-only: never record it as "started".
+            if (!initiallyLocked) {
+                container.progressRepository.markDayStarted(dayNumber)
+            }
+
+            val previousDayFlow: kotlinx.coroutines.flow.Flow<DayProgressEntity?> = if (isSequential && dayNumber > 1) {
+                container.progressRepository.observeDay(dayNumber - 1)
+            } else {
+                flowOf(null)
+            }
 
             combine(
                 container.progressRepository.observeTasksForDay(dayNumber),
                 container.progressRepository.observeDay(dayNumber),
                 container.evidenceRepository.observeAll(),
-            ) { taskStatuses, dayProgress, allEvidence ->
+                previousDayFlow,
+            ) { taskStatuses, dayProgress, allEvidence, previousDayProgress ->
+                val isLocked = isSequential && dayNumber > 1 && previousDayProgress?.status != DayStatus.COMPLETE
                 val statusMap = taskStatuses.associateBy { it.taskId }
                 val evidenceByTask = allEvidence.filter { it.dayNumber == dayNumber }.groupBy { it.taskId }
                 DayDetailUiState(
@@ -70,6 +97,7 @@ class DayViewModel(private val container: AppContainer, private val dayNumber: I
                     evidenceByTask = evidenceByTask,
                     dayStatus = dayProgress?.status ?: DayStatus.NOT_STARTED,
                     reflectionText = dayProgress?.reflectionText ?: "",
+                    isLocked = isLocked,
                 )
             }.collect { _state.value = it }
         }

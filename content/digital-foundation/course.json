@@ -9,7 +9,7 @@
   },
   "totalDays": 90,
   "method": ["LEARN", "DO", "CHECK", "EVIDENCE", "REFLECT"],
-  "progressionRule": "FREE_NAVIGATION",
+  "progressionRule": "SEQUENTIAL_UNLOCK",
   "stages": [
     {
       "stageId": "stage-1",

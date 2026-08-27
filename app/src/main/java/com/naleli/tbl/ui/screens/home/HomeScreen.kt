@@ -34,6 +34,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.naleli.tbl.data.content.CourseDay
 import com.naleli.tbl.ui.components.CircularProgressLabel
 import com.naleli.tbl.ui.components.NaleliCard
+import com.naleli.tbl.ui.components.NaleliProgressBar
 import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.theme.HeroSurface
 import com.naleli.tbl.ui.theme.NaleliGradients
@@ -86,7 +87,7 @@ fun HomeScreen(
             NaleliCard(modifier = Modifier.fillMaxWidth()) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                     Column {
-                        Text("YOUR PROGRESS", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                        Text("YOUR JOURNEY", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                         Text("Day ${progress.currentDayNumber} of ${progress.totalDays}", style = MaterialTheme.typography.titleLarge)
                         progress.currentStageName?.let {
                             Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -94,6 +95,19 @@ fun HomeScreen(
                     }
                     CircularProgressLabel(percent = progress.overallPercent, size = 64.dp)
                 }
+                Spacer(Modifier.height(16.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.Bottom) {
+                    Text("LEARNING CONFIDENCE", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                    Text("${state.confidence.overallPercent}%", style = MaterialTheme.typography.labelLarge)
+                }
+                Spacer(Modifier.height(6.dp))
+                NaleliProgressBar(progressFraction = state.confidence.overallPercent / 100f)
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    "Based on tasks completed, evidence attached, self-checks and reflections so far — not just marking days done.",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
 
             state.currentDay?.let { day ->

@@ -111,6 +111,17 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
+    // Real camera-based worksheet QR scanning (V1.5.1 §3) — CameraX for the
+    // live preview + frame pipeline, ML Kit for on-device barcode decoding.
+    // Both resolve from Google's Maven, which this project's CI can reach
+    // (see docs/ARCHITECTURE.md for why local dev in this repo's own build
+    // pass could not).
+    implementation("androidx.camera:camera-core:1.3.4")
+    implementation("androidx.camera:camera-camera2:1.3.4")
+    implementation("androidx.camera:camera-lifecycle:1.3.4")
+    implementation("androidx.camera:camera-view:1.3.4")
+    implementation("com.google.mlkit:barcode-scanning:17.3.0")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

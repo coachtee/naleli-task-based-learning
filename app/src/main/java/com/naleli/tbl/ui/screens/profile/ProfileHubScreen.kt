@@ -22,7 +22,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.theme.NaleliPurpleLight
+import com.naleli.tbl.ui.theme.ThemeMode
 import kotlinx.coroutines.launch
 
 /**
@@ -59,6 +62,7 @@ fun ProfileHubScreen(
     val profile by container.profileRepository.observeProfile().collectAsState(initial = null)
     val scope = rememberCoroutineScope()
     var showDeleteWarning by remember { mutableStateOf(false) }
+    var showThemePicker by remember { mutableStateOf(false) }
 
     val currentProfile = profile
     if (currentProfile == null) {
@@ -98,6 +102,7 @@ fun ProfileHubScreen(
         MenuRow("My Progress", onOpenProgress)
         MenuRow("Certificate", onOpenCertificate)
         MenuRow("My Portfolio", onOpenPortfolio)
+        MenuRow("Appearance · ${container.themePreferences.mode.label()}") { showThemePicker = true }
         MenuRow("Backup & Export", onOpenBackup)
         MenuRow("Help & Support", onOpenHelp)
         MenuRow("Privacy Notice", onOpenPrivacy)
@@ -133,6 +138,49 @@ fun ProfileHubScreen(
             dismissButton = { OutlinedButton(onClick = { showDeleteWarning = false }) { Text("Cancel") } },
         )
     }
+
+    if (showThemePicker) {
+        AlertDialog(
+            onDismissRequest = { showThemePicker = false },
+            title = { Text("Appearance") },
+            text = {
+                Column {
+                    ThemeOption("Light", ThemeMode.LIGHT, container.themePreferences.mode) {
+                        container.themePreferences.setMode(it)
+                        showThemePicker = false
+                    }
+                    ThemeOption("Dark", ThemeMode.DARK, container.themePreferences.mode) {
+                        container.themePreferences.setMode(it)
+                        showThemePicker = false
+                    }
+                    ThemeOption("Match system", ThemeMode.SYSTEM, container.themePreferences.mode) {
+                        container.themePreferences.setMode(it)
+                        showThemePicker = false
+                    }
+                }
+            },
+            confirmButton = { TextButton(onClick = { showThemePicker = false }) { Text("Close") } },
+        )
+    }
+}
+
+@Composable
+private fun ThemeOption(label: String, mode: ThemeMode, selectedMode: ThemeMode, onSelect: (ThemeMode) -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onSelect(mode) },
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RadioButton(selected = selectedMode == mode, onClick = { onSelect(mode) })
+        Text(label, style = MaterialTheme.typography.bodyMedium)
+    }
+}
+
+private fun ThemeMode.label(): String = when (this) {
+    ThemeMode.LIGHT -> "Light"
+    ThemeMode.DARK -> "Dark"
+    ThemeMode.SYSTEM -> "System"
 }
 
 @Composable

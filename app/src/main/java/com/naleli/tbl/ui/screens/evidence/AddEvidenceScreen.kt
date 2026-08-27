@@ -1,5 +1,6 @@
 package com.naleli.tbl.ui.screens.evidence
 
+import android.content.ActivityNotFoundException
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -45,10 +46,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.naleli.tbl.ui.components.BackHeader
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.screens.day.DayViewModel
 import com.naleli.tbl.util.createCameraCaptureUri
+import com.naleli.tbl.util.rememberCameraPermissionAction
 
 /**
  * "Prove Your Work" — the dedicated evidence-capture screen (brief V1.5
@@ -56,6 +59,11 @@ import com.naleli.tbl.util.createCameraCaptureUri
  * student's proof of capability, not a generic file-upload utility, so
  * this presents evidence sources as clear, purposeful choices rather than
  * one plain picker button.
+ *
+ * Both camera-backed sources request runtime CAMERA permission first and
+ * catch ActivityNotFoundException (no camera app present) — this is what
+ * was crashing "Take Photo" before (V1.5.1 §2): the intent was launched
+ * without ever checking/requesting permission.
  */
 @Composable
 fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone: () -> Unit) {
@@ -67,6 +75,7 @@ fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone
     val context = LocalContext.current
     var pendingCameraUri by remember { mutableStateOf<Uri?>(null) }
     var showComputerStub by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val task = state.day?.tasks?.firstOrNull { it.taskId == taskId }
     val evidence = state.evidenceByTask[taskId].orEmpty()
@@ -80,6 +89,7 @@ fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone
     val takePictureLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
         val uri = pendingCameraUri
         if (success && uri != null && task != null) viewModel.attachEvidence(task, uri, null)
+        if (!success) errorMessage = "No photo was captured."
         pendingCameraUri = null
     }
     val scanWorksheetLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
@@ -87,8 +97,31 @@ fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone
         if (success && uri != null && task != null) {
             viewModel.attachEvidence(task, uri, "Worksheet (scanned)")
         }
+        if (!success) errorMessage = "No worksheet photo was captured."
         pendingCameraUri = null
     }
+
+    fun launchCamera(taggedAs: String?) {
+        try {
+            val uri = createCameraCaptureUri(context)
+            pendingCameraUri = uri
+            errorMessage = null
+            if (taggedAs == null) takePictureLauncher.launch(uri) else scanWorksheetLauncher.launch(uri)
+        } catch (e: ActivityNotFoundException) {
+            errorMessage = "No camera app is available on this device."
+        } catch (e: IllegalArgumentException) {
+            errorMessage = "Couldn't prepare a location for the photo. Please try again."
+        }
+    }
+
+    val requestCameraForPhoto = rememberCameraPermissionAction(
+        onGranted = { launchCamera(taggedAs = null) },
+        onDenied = { errorMessage = "Camera permission is needed to take a photo." },
+    )
+    val requestCameraForScan = rememberCameraPermissionAction(
+        onGranted = { launchCamera(taggedAs = "Worksheet (scanned)") },
+        onDenied = { errorMessage = "Camera permission is needed to scan a worksheet." },
+    )
 
     if (task == null) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
@@ -103,7 +136,7 @@ fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item {
-            com.naleli.tbl.ui.components.BackHeader(onBack = onBack)
+            BackHeader(onBack = onBack)
             Spacer(Modifier.height(8.dp))
             Text("Prove Your Work", style = MaterialTheme.typography.headlineSmall)
             Text(
@@ -111,13 +144,15 @@ fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            errorMessage?.let {
+                Spacer(Modifier.height(8.dp))
+                Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+            }
         }
 
         item {
             EvidenceSourceRow(Icons.Filled.CameraAlt, "Take Photo", "Capture your work with the camera") {
-                val uri = createCameraCaptureUri(context)
-                pendingCameraUri = uri
-                takePictureLauncher.launch(uri)
+                requestCameraForPhoto()
             }
         }
         item {
@@ -132,9 +167,7 @@ fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone
         }
         item {
             EvidenceSourceRow(Icons.Filled.DocumentScanner, "Scan Worksheet", "Photograph a completed printed worksheet") {
-                val uri = createCameraCaptureUri(context)
-                pendingCameraUri = uri
-                scanWorksheetLauncher.launch(uri)
+                requestCameraForScan()
             }
         }
         item {

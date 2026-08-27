@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -84,6 +86,46 @@ fun DayDetailScreen(
     }
 
     val day = state.day!!
+
+    if (state.isLocked) {
+        Column(Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                BackHeader(onBack = onBack)
+            }
+            Column(
+                modifier = Modifier.fillMaxSize().padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Icon(
+                    Icons.Filled.Lock,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(40.dp),
+                )
+                Spacer(Modifier.height(12.dp))
+                Text("Day $dayNumber is locked", style = MaterialTheme.typography.titleLarge)
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    "Complete Day ${dayNumber - 1} to unlock this day.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.height(20.dp))
+                NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                    Text("DAY $dayNumber", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                    Text(day.title, style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        day.learningFocus,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+        return
+    }
+
     val nonReviewTasks = remember(day.dayNumber) { day.tasks.filter { it.taskType != TaskType.SELF_CHECK } }
     val reviewTask = remember(day.dayNumber) { day.tasks.firstOrNull { it.taskType == TaskType.SELF_CHECK } }
     val completedCount = nonReviewTasks.count { state.taskStatuses[it.taskId]?.status == DayStatus.COMPLETE }

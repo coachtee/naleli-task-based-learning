@@ -9,6 +9,7 @@ import com.naleli.tbl.data.repository.EvidenceRepository
 import com.naleli.tbl.data.repository.PortfolioRepository
 import com.naleli.tbl.data.repository.ProfileRepository
 import com.naleli.tbl.data.repository.ProgressRepository
+import com.naleli.tbl.ui.theme.ThemePreferences
 
 /**
  * A small hand-rolled DI container instead of Hilt/Koin — the app is a
@@ -19,6 +20,8 @@ import com.naleli.tbl.data.repository.ProgressRepository
  */
 class AppContainer(val context: Context) {
     private val database = NaleliDatabase.getInstance(context)
+
+    val themePreferences = ThemePreferences(context)
 
     val contentRepository = ContentRepository(context)
     val profileRepository = ProfileRepository(database.learnerProfileDao())

@@ -37,9 +37,9 @@ import com.naleli.tbl.ui.screens.profile.ProfileHubScreen
 import com.naleli.tbl.ui.screens.profile.ProfileScreen
 import com.naleli.tbl.ui.screens.progress.ProgressScreen
 import com.naleli.tbl.ui.screens.qrlookup.QrLookupScreen
+import com.naleli.tbl.ui.screens.qrlookup.QrScannerScreen
 import com.naleli.tbl.ui.screens.settings.BackupScreen
 import com.naleli.tbl.ui.screens.settings.PrivacyScreen
-import com.naleli.tbl.ui.screens.splash.SplashScreen
 import com.naleli.tbl.ui.screens.welcome.WelcomeScreen
 import com.naleli.tbl.ui.theme.HeroSurface
 import com.naleli.tbl.ui.theme.OnHeroSurface
@@ -61,7 +61,10 @@ private val bottomNavItems = listOf(
 )
 
 @Composable
-fun NaleliNavHost(navController: NavHostController = rememberNavController()) {
+fun NaleliNavHost(
+    startDestination: String,
+    navController: NavHostController = rememberNavController(),
+) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
     val showBottomBar = currentRoute in NaleliDestinations.BOTTOM_NAV_ROUTES
@@ -97,21 +100,17 @@ fun NaleliNavHost(navController: NavHostController = rememberNavController()) {
     ) { padding ->
         NavHost(
             navController = navController,
-            startDestination = NaleliDestinations.SPLASH,
+            startDestination = startDestination,
             modifier = Modifier.padding(padding),
         ) {
-            composable(NaleliDestinations.SPLASH) {
-                SplashScreen { hasProfile ->
-                    val destination = if (hasProfile) NaleliDestinations.HOME else NaleliDestinations.WELCOME
-                    navController.navigate(destination) { popUpTo(NaleliDestinations.SPLASH) { inclusive = true } }
-                }
-            }
             composable(NaleliDestinations.WELCOME) {
                 WelcomeScreen(onCreateProfile = { navController.navigate(NaleliDestinations.CREATE_PROFILE) })
             }
             composable(NaleliDestinations.CREATE_PROFILE) {
                 ProfileScreen(isEditMode = false) {
-                    navController.navigate(NaleliDestinations.HOME) { popUpTo(NaleliDestinations.SPLASH) { inclusive = true } }
+                    navController.navigate(NaleliDestinations.HOME) {
+                        popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                    }
                 }
             }
             composable(NaleliDestinations.EDIT_PROFILE) {
@@ -129,13 +128,32 @@ fun NaleliNavHost(navController: NavHostController = rememberNavController()) {
                 MyLearningScreen(onOpenDay = { dayNumber -> navController.navigate(NaleliDestinations.dayDetail(dayNumber)) })
             }
             composable(NaleliDestinations.EVIDENCE) {
-                EvidenceScreen(onScanWorksheetCode = { navController.navigate(NaleliDestinations.QR_LOOKUP) })
+                EvidenceScreen(onScanWorksheetCode = { navController.navigate(NaleliDestinations.QR_SCANNER) })
+            }
+            composable(NaleliDestinations.QR_SCANNER) {
+                QrScannerScreen(
+                    onBack = { navController.popBackStack() },
+                    onFound = { dayNumber, taskId ->
+                        navController.popBackStack()
+                        navController.navigate(NaleliDestinations.taskDetail(dayNumber, taskId))
+                    },
+                    onEnterManually = {
+                        navController.navigate(NaleliDestinations.QR_LOOKUP) {
+                            popUpTo(NaleliDestinations.QR_SCANNER) { inclusive = true }
+                        }
+                    },
+                )
             }
             composable(NaleliDestinations.QR_LOOKUP) {
                 QrLookupScreen(
                     onFound = { dayNumber, taskId ->
                         navController.popBackStack()
                         navController.navigate(NaleliDestinations.taskDetail(dayNumber, taskId))
+                    },
+                    onScanWithCamera = {
+                        navController.navigate(NaleliDestinations.QR_SCANNER) {
+                            popUpTo(NaleliDestinations.QR_LOOKUP) { inclusive = true }
+                        }
                     },
                 )
             }

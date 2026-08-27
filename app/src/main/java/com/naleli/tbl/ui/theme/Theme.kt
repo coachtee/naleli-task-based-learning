@@ -37,18 +37,33 @@ private val DarkColors = darkColorScheme(
     onBackground = SurfaceWhite,
     surface = NaleliNavySurface,
     onSurface = SurfaceWhite,
-    surfaceVariant = NaleliNavySurface,
+    // Was equal to `surface` — every surfaceVariant-styled element (progress
+    // track fills, the segmented tab background) was literally invisible
+    // against its own card. Now a distinct, lighter navy step.
+    surfaceVariant = DarkSurfaceVariant,
     onSurfaceVariant = BorderGrey,
-    outline = NaleliNavyBorder,
-    error = ErrorRed,
-    onError = SurfaceWhite,
+    // Was NaleliNavyBorder, ~1.3:1 against `surface` — card borders and
+    // outlined-button strokes were effectively invisible in dark mode.
+    outline = DarkOutline,
+    // The light-theme ErrorRed reads as under ~2.5:1 on the dark surfaces —
+    // below WCAG AA for text. Uses the M3-standard dark error pairing.
+    error = DarkError,
+    onError = DarkOnError,
+    errorContainer = DarkErrorContainer,
+    onErrorContainer = DarkOnErrorContainer,
 )
 
+/** Light / Dark / System — the only persisted UI preference in the app. */
 @Composable
 fun NaleliTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    themeMode: ThemeMode = ThemeMode.SYSTEM,
     content: @Composable () -> Unit,
 ) {
+    val darkTheme = when (themeMode) {
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+        ThemeMode.SYSTEM -> isSystemInDarkTheme()
+    }
     val colorScheme = if (darkTheme) DarkColors else LightColors
     MaterialTheme(
         colorScheme = colorScheme,

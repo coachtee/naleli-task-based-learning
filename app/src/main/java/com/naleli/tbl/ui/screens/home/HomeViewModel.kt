@@ -8,6 +8,8 @@ import com.naleli.tbl.data.content.CourseDay
 import com.naleli.tbl.data.db.entity.DayStatus
 import com.naleli.tbl.data.db.entity.LearnerProfileEntity
 import com.naleli.tbl.data.db.entity.PortfolioItemEntity
+import com.naleli.tbl.domain.ConfidenceCalculator
+import com.naleli.tbl.domain.ConfidenceSummary
 import com.naleli.tbl.domain.ProgressCalculator
 import com.naleli.tbl.domain.ProgressSummary
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +25,7 @@ data class HomeUiState(
     val currentDay: CourseDay? = null,
     val incompleteTaskCount: Int = 0,
     val progress: ProgressSummary? = null,
+    val confidence: ConfidenceSummary = ConfidenceSummary(overallPercent = 0, byDay = emptyMap()),
     val upcomingDay: CourseDay? = null,
     val recentPortfolioItem: PortfolioItemEntity? = null,
 )
@@ -35,6 +38,8 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
         viewModelScope.launch {
             val profile = container.profileRepository.getProfile() ?: return@launch
             val course = container.contentRepository.getCourse(profile.programmeId)
+            val allDays = course.contentAvailableDays.sorted()
+                .mapNotNull { container.contentRepository.getDay(profile.programmeId, it) }
 
             combine(
                 container.progressRepository.observeAllDays(),
@@ -43,6 +48,8 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
                 container.portfolioRepository.observeAll(),
             ) { days, tasks, evidence, portfolio ->
                 val summary = ProgressCalculator.summarize(course, days, tasks, evidence.size, portfolio.size)
+                val evidenceCountByTask = evidence.groupBy { it.taskId }.mapValues { it.value.size }
+                val confidence = ConfidenceCalculator.summarize(allDays, days, tasks, evidenceCountByTask)
                 val currentDay = container.contentRepository.getDay(profile.programmeId, summary.currentDayNumber)
                 val incompleteTasks = currentDay?.tasks?.count { task ->
                     tasks.none { it.taskId == task.taskId && it.status == DayStatus.COMPLETE }
@@ -59,6 +66,7 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
                     currentDay = currentDay,
                     incompleteTaskCount = incompleteTasks,
                     progress = summary,
+                    confidence = confidence,
                     upcomingDay = upcomingDay,
                     recentPortfolioItem = portfolio.maxByOrNull { it.createdAt },
                 )

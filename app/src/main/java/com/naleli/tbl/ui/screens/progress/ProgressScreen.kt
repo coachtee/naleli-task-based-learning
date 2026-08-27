@@ -33,6 +33,7 @@ fun ProgressScreen(onBack: () -> Unit) {
     val viewModel: ProgressViewModel = viewModel(factory = viewModelFactory { initializer { ProgressViewModel(container) } })
     val summary by viewModel.summary.collectAsState()
     val stages by viewModel.stages.collectAsState()
+    val confidence by viewModel.confidence.collectAsState()
 
     val progress = summary
     if (progress == null) {
@@ -60,6 +61,31 @@ fun ProgressScreen(onBack: () -> Unit) {
             NaleliProgressBar(progressFraction = progress.overallPercent / 100f)
             Spacer(Modifier.height(6.dp))
             Text("${progress.daysCompleted} of ${progress.totalDays} days completed", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+
+        NaleliCard(modifier = Modifier.fillMaxWidth()) {
+            Text("Learning Confidence", style = MaterialTheme.typography.titleMedium)
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("${confidence.overallPercent}%", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary)
+            }
+            Spacer(Modifier.height(4.dp))
+            NaleliProgressBar(progressFraction = confidence.overallPercent / 100f)
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "Blends required-task completion, evidence attached, self-check ratings and reflections — not just days marked done.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (confidence.byDay.isNotEmpty()) {
+                Spacer(Modifier.height(12.dp))
+                confidence.byDay.toSortedMap().forEach { (dayNumber, percent) ->
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        Text("Day $dayNumber", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("$percent%", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    Spacer(Modifier.height(4.dp))
+                }
+            }
         }
 
         NaleliCard(modifier = Modifier.fillMaxWidth()) {
