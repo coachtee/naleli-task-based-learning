@@ -53,7 +53,15 @@ private val DarkColors = darkColorScheme(
     onErrorContainer = DarkOnErrorContainer,
 )
 
-/** Light / Dark / System — the only persisted UI preference in the app. */
+/**
+ * Light / Dark / System — the only persisted UI preference in the app.
+ *
+ * Deliberately no `dynamicColor` param: Material You's per-device
+ * wallpaper-derived palette (Android 12+) is a common Compose default,
+ * but it would replace the navy/blue/orange brand identity with
+ * whatever colour the learner's wallpaper happens to be. Always the
+ * fixed Naleli palette.
+ */
 @Composable
 fun NaleliTheme(
     themeMode: ThemeMode = ThemeMode.SYSTEM,

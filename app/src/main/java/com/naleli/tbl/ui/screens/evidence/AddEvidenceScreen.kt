@@ -36,7 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -70,9 +70,12 @@ fun AddEvidenceScreen(taskId: String, taskTitle: String, onBack: () -> Unit, onD
     )
     val evidence by viewModel.evidence.collectAsState()
     val context = LocalContext.current
-    var pendingCameraUri by remember { mutableStateOf<Uri?>(null) }
-    var showComputerStub by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+    // Saveable, not just remember: a rotation between launching the camera
+    // intent and its result coming back would otherwise drop the URI the
+    // callback needs, silently losing the photo.
+    var pendingCameraUri by rememberSaveable { mutableStateOf<Uri?>(null) }
+    var showComputerStub by rememberSaveable { mutableStateOf(false) }
+    var errorMessage by rememberSaveable { mutableStateOf<String?>(null) }
 
     val openDocumentLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri != null) viewModel.attach(uri, null)

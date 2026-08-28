@@ -85,7 +85,7 @@ fun JourneyScreen(onOpenTask: (taskId: String) -> Unit) {
             }
         }
 
-        items(state.lockedPhases) { stage -> LockedPhaseCard(stage) }
+        items(state.lockedPhases, key = { it.stageId }) { stage -> LockedPhaseCard(stage) }
     }
 }
 

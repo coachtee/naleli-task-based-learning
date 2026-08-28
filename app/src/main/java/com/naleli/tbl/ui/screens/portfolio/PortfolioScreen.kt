@@ -21,7 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,7 +48,7 @@ fun PortfolioScreen() {
     val viewModel: PortfolioViewModel = viewModel(factory = viewModelFactory { initializer { PortfolioViewModel(container) } })
     val state by viewModel.state.collectAsState()
     val storageChoice = container.workspacePreferences.storageChoice
-    var showConnectStub by remember { mutableStateOf(false) }
+    var showConnectStub by rememberSaveable { mutableStateOf(false) }
 
     if (state.isLoading) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
@@ -94,7 +94,7 @@ fun PortfolioScreen() {
         }
 
         item { Text("SKILLS DEMONSTRATED", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary) }
-        items(state.skills) { skill -> SkillCard(skill) }
+        items(state.skills, key = { it.skillName }) { skill -> SkillCard(skill) }
 
         item {
             Spacer(Modifier.height(4.dp))

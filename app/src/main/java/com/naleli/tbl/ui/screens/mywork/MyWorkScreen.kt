@@ -107,7 +107,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.taskSection(title: St
         Spacer(Modifier.height(12.dp))
         Text("${title.uppercase()} · ${rows.size}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
     }
-    items(rows) { row -> TaskRow(row, onOpenTask) }
+    items(rows, key = { it.task.taskId }) { row -> TaskRow(row, onOpenTask) }
 }
 
 @Composable

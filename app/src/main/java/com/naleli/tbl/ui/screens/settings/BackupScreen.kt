@@ -19,8 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,10 +39,10 @@ fun BackupScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    var includeEvidenceFiles by remember { mutableStateOf(true) }
-    var statusMessage by remember { mutableStateOf<String?>(null) }
-    var showRestoreWarning by remember { mutableStateOf(false) }
-    var pendingRestoreFile by remember { mutableStateOf<File?>(null) }
+    var includeEvidenceFiles by rememberSaveable { mutableStateOf(true) }
+    var statusMessage by rememberSaveable { mutableStateOf<String?>(null) }
+    var showRestoreWarning by rememberSaveable { mutableStateOf(false) }
+    var pendingRestoreFile by rememberSaveable { mutableStateOf<File?>(null) }
 
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult

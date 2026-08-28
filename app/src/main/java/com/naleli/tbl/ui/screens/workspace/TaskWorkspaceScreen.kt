@@ -28,7 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,7 +57,7 @@ fun TaskWorkspaceScreen(taskId: String, onBack: () -> Unit, onAddEvidence: () ->
         factory = viewModelFactory { initializer { TaskWorkspaceViewModel(container, taskId) } },
     )
     val state by viewModel.state.collectAsState()
-    var showConfidenceDialog by remember { mutableStateOf(false) }
+    var showConfidenceDialog by rememberSaveable { mutableStateOf(false) }
 
     if (state.isLoading || state.task == null) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
@@ -150,7 +150,7 @@ fun TaskWorkspaceScreen(taskId: String, onBack: () -> Unit, onAddEvidence: () ->
         item {
             Text("YOUR STEPS", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
         }
-        items(task.subSteps) { subStep ->
+        items(task.subSteps, key = { it.subStepId }) { subStep ->
             val complete = state.subStepStatuses[subStep.subStepId]?.complete == true
             NaleliCard(modifier = Modifier.fillMaxWidth()) {
                 Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -215,7 +215,7 @@ fun TaskWorkspaceScreen(taskId: String, onBack: () -> Unit, onAddEvidence: () ->
     }
 
     if (showConfidenceDialog) {
-        var confidence by remember { mutableIntStateOf(0) }
+        var confidence by rememberSaveable { mutableIntStateOf(0) }
         AlertDialog(
             onDismissRequest = { showConfidenceDialog = false },
             title = { Text("How confident do you feel?") },
