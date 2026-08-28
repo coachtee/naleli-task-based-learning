@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.naleli.tbl.data.content.CourseDay
-import com.naleli.tbl.ui.components.CircularProgressLabel
+import com.naleli.tbl.domain.ProjectHealth
+import com.naleli.tbl.domain.TaskProgressState
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.NaleliProgressBar
 import com.naleli.tbl.ui.rememberAppContainer
@@ -40,24 +40,22 @@ import com.naleli.tbl.ui.theme.HeroSurface
 import com.naleli.tbl.ui.theme.NaleliGradients
 import com.naleli.tbl.ui.theme.OnHeroSurface
 import com.naleli.tbl.ui.theme.OnHeroSurfaceSoft
+import java.text.DateFormat
+import java.util.Date
 
+/**
+ * Home answers one question: what do I need to do next in my project? Not a
+ * dashboard of stats — a project-health strip, today's workspace snapshot,
+ * and exactly one priority task (brief: "What am I working on today?", not
+ * "what lesson am I watching?").
+ */
 @Composable
-fun HomeScreen(
-    onStartTodaysTask: (dayNumber: Int) -> Unit,
-    onOpenDay: (dayNumber: Int) -> Unit,
-    onOpenPortfolio: () -> Unit,
-) {
+fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit) {
     val container = rememberAppContainer()
-    val viewModel: HomeViewModel = viewModel(
-        factory = viewModelFactory { initializer { HomeViewModel(container) } },
-    )
+    val viewModel: HomeViewModel = viewModel(factory = viewModelFactory { initializer { HomeViewModel(container) } })
     val state by viewModel.state.collectAsState()
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(HeroSurface),
-    ) {
+    Box(modifier = Modifier.fillMaxSize().background(HeroSurface)) {
         if (state.isLoading) {
             Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 CircularProgressIndicator(color = OnHeroSurface)
@@ -67,79 +65,94 @@ fun HomeScreen(
 
         val profile = state.profile ?: return@Box
         val course = state.course ?: return@Box
-        val progress = state.progress ?: return@Box
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp, vertical = 16.dp),
+            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Column {
-                    Text("Hello, ${profile.firstName}", style = MaterialTheme.typography.headlineSmall, color = OnHeroSurface)
-                    Text(course.programmeName, style = MaterialTheme.typography.bodyMedium, color = OnHeroSurfaceSoft)
+                    Text("Good ${greetingWord()}, ${profile.firstName}", style = MaterialTheme.typography.headlineSmall, color = OnHeroSurface)
+                    Text("${course.programmeName} · ${course.credential.issuingBody}", style = MaterialTheme.typography.bodyMedium, color = OnHeroSurfaceSoft)
                 }
                 Icon(Icons.Filled.NotificationsNone, contentDescription = "Notifications", tint = OnHeroSurface)
             }
 
             NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                Text("CURRENT PROJECT", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                Text(course.projectTitle, style = MaterialTheme.typography.titleLarge)
+                NaleliProgressBar(progressFraction = state.progressPercent / 100f)
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text("Day ${state.dayNumber} of ${course.totalDays}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("${state.progressPercent}%", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Spacer(Modifier.height(11.dp))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Column {
-                        Text("YOUR JOURNEY", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                        Text("Day ${progress.currentDayNumber} of ${progress.totalDays}", style = MaterialTheme.typography.titleLarge)
-                        progress.currentStageName?.let {
-                            Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
-                    }
-                    CircularProgressLabel(percent = progress.overallPercent, size = 64.dp)
+                    HealthPill(state.health)
+                    Text("${state.daysRemaining} days left", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
-                Spacer(Modifier.height(16.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.Bottom) {
-                    Text("LEARNING CONFIDENCE", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                    Text("${state.confidence.overallPercent}%", style = MaterialTheme.typography.labelLarge)
-                }
-                Spacer(Modifier.height(6.dp))
-                NaleliProgressBar(progressFraction = state.confidence.overallPercent / 100f)
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(2.dp))
                 Text(
-                    "Based on tasks completed, evidence attached, self-checks and reflections so far — not just marking days done.",
+                    "Next milestone: ${state.nextMilestoneTitle}",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
-            state.currentDay?.let { day ->
-                TodaysMissionCard(day = day, incompleteTaskCount = state.incompleteTaskCount, onStart = { onStartTodaysTask(day.dayNumber) })
-            } ?: NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    "Day ${progress.currentDayNumber} content isn't available in this build yet — Days 1–7 are ready.",
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+            Text("YOUR WORKSPACE TODAY", style = MaterialTheme.typography.labelLarge, color = OnHeroSurfaceSoft)
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                WorkspaceStat("To Do", state.statBoard.toDo, Modifier.weight(1f))
+                WorkspaceStat("In Progress", state.statBoard.inProgress, Modifier.weight(1f))
+                WorkspaceStat("Submitted", state.statBoard.submitted, Modifier.weight(1f))
+                WorkspaceStat("Competent", state.statBoard.competent, Modifier.weight(1f))
             }
 
-            state.upcomingDay?.let { upcoming ->
-                Text("UP NEXT", style = MaterialTheme.typography.labelLarge, color = OnHeroSurfaceSoft)
-                NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                        Column {
-                            Text("Day ${upcoming.dayNumber}", style = MaterialTheme.typography.titleMedium)
-                            Text(upcoming.title, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            state.priorityTask?.let { task ->
+                Box(
+                    modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(NaleliGradients.missionCard).padding(20.dp),
+                ) {
+                    Column {
+                        Text("TODAY'S PRIORITY", style = MaterialTheme.typography.labelLarge, color = OnHeroSurfaceSoft)
+                        Spacer(Modifier.height(4.dp))
+                        Text(task.title, style = MaterialTheme.typography.titleLarge, color = OnHeroSurface)
+                        Spacer(Modifier.height(10.dp))
+                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                            MissionStat("Type", task.tier.name.lowercase().replaceFirstChar { it.uppercase() })
+                            MissionStat("Time", "~${task.estimatedMinutes} min")
+                            MissionStat("Status", task.priorityStatusLabel(state.priorityTaskState))
                         }
-                        Text("Preview", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                        Spacer(Modifier.height(16.dp))
+                        Button(
+                            onClick = { onOpenTask(task.taskId) },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(containerColor = OnHeroSurface, contentColor = MaterialTheme.colorScheme.primary),
+                        ) {
+                            Text(if (state.priorityTaskState == TaskProgressState.NOT_STARTED) "Open Task" else "Continue Task")
+                        }
                     }
                 }
+            } ?: NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                Text("You're caught up on everything available right now.", style = MaterialTheme.typography.bodyMedium)
             }
 
-            state.recentPortfolioItem?.let { item ->
-                Text("RECENT WORK", style = MaterialTheme.typography.labelLarge, color = OnHeroSurfaceSoft)
-                NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                    Text(item.title, style = MaterialTheme.typography.titleMedium)
-                    Text(item.skillDemonstrated, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Spacer(Modifier.height(8.dp))
-                    Button(onClick = onOpenPortfolio) { Text("View Portfolio") }
+            if (state.recentActivity.isNotEmpty()) {
+                Text("RECENT ACTIVITY", style = MaterialTheme.typography.labelLarge, color = OnHeroSurfaceSoft)
+                state.recentActivity.forEach { event ->
+                    NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Column {
+                                Text(event.title, style = MaterialTheme.typography.titleMedium)
+                                Text(event.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Text(
+                                DateFormat.getDateInstance(DateFormat.SHORT).format(Date(event.timestamp)),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
                 }
+                Button(onClick = onOpenPortfolio, modifier = Modifier.fillMaxWidth()) { Text("View Portfolio") }
             }
             Spacer(Modifier.height(8.dp))
         }
@@ -147,37 +160,21 @@ fun HomeScreen(
 }
 
 @Composable
-private fun TodaysMissionCard(day: CourseDay, incompleteTaskCount: Int, onStart: () -> Unit) {
-    val totalMinutes = day.tasks.sumOf { task ->
-        Regex("""\d+""").find(task.estimatedTime)?.value?.toIntOrNull() ?: 0
+private fun HealthPill(health: ProjectHealth) {
+    val (label, color) = when (health) {
+        ProjectHealth.ON_TRACK -> "On Track" to MaterialTheme.colorScheme.primary
+        ProjectHealth.ATTENTION_REQUIRED -> "Attention Required" to com.naleli.tbl.ui.theme.WarningOrange
+        ProjectHealth.BEHIND_SCHEDULE -> "Behind Schedule" to MaterialTheme.colorScheme.error
     }
-    val evidenceRequiredCount = day.tasks.count { it.evidenceRequired }
+    Text(label, style = MaterialTheme.typography.labelMedium, color = color)
+}
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(NaleliGradients.missionCard)
-            .padding(20.dp),
-    ) {
-        Column {
-            Text("TODAY'S MISSION", style = MaterialTheme.typography.labelLarge, color = OnHeroSurfaceSoft)
-            Spacer(Modifier.height(4.dp))
-            Text(day.title, style = MaterialTheme.typography.titleLarge, color = OnHeroSurface)
-            Spacer(Modifier.height(10.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                MissionStat(label = "Estimated time", value = if (totalMinutes > 0) "~$totalMinutes min" else day.tasks.firstOrNull()?.estimatedTime.orEmpty())
-                MissionStat(label = "Tasks", value = day.tasks.size.toString())
-                MissionStat(label = "Evidence", value = "$evidenceRequiredCount required")
-            }
-            Spacer(Modifier.height(16.dp))
-            Button(
-                onClick = onStart,
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = OnHeroSurface, contentColor = MaterialTheme.colorScheme.primary),
-            ) {
-                Text(if (incompleteTaskCount > 0) "Start Today's Task" else "Review Today's Work")
-            }
+@Composable
+private fun WorkspaceStat(label: String, count: Int, modifier: Modifier = Modifier) {
+    NaleliCard(modifier = modifier, contentPadding = androidx.compose.foundation.layout.PaddingValues(10.dp)) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+            Text(count.toString(), style = MaterialTheme.typography.titleLarge)
+            Text(label.uppercase(), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -187,5 +184,22 @@ private fun MissionStat(label: String, value: String) {
     Column {
         Text(value, style = MaterialTheme.typography.titleMedium, color = OnHeroSurface)
         Text(label, style = MaterialTheme.typography.labelSmall, color = OnHeroSurfaceSoft)
+    }
+}
+
+private fun com.naleli.tbl.data.content.WorkTask.priorityStatusLabel(state: TaskProgressState): String = when (state) {
+    TaskProgressState.NOT_STARTED -> "Ready"
+    TaskProgressState.IN_PROGRESS -> "In Progress"
+    TaskProgressState.SUBMITTED -> "Submitted"
+    TaskProgressState.NEEDS_REVISION -> "Needs Revision"
+    TaskProgressState.COMPETENT -> "Competent"
+}
+
+private fun greetingWord(): String {
+    val hour = java.time.LocalTime.now().hour
+    return when {
+        hour < 12 -> "morning"
+        hour < 17 -> "afternoon"
+        else -> "evening"
     }
 }

@@ -1,0 +1,137 @@
+package com.naleli.tbl.ui.screens.assessment
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.naleli.tbl.data.db.entity.CompetenceResult
+import com.naleli.tbl.domain.AssessmentEngine
+import com.naleli.tbl.ui.components.BackHeader
+import com.naleli.tbl.ui.components.NaleliCard
+import com.naleli.tbl.ui.components.color
+import com.naleli.tbl.ui.components.label
+import com.naleli.tbl.ui.rememberAppContainer
+
+/**
+ * The one screen in Naleli Workspace that exists purely to keep progress
+ * and competence separate: a task can be fully worked through and
+ * submitted, and this screen still shows NOT_YET_ASSESSED until the rubric
+ * has actually run — never an automatic "done = competent".
+ */
+@Composable
+fun AssessmentScreen(taskId: String, onBack: () -> Unit) {
+    val container = rememberAppContainer()
+    val viewModel: AssessmentViewModel = viewModel(factory = viewModelFactory { initializer { AssessmentViewModel(container, taskId) } })
+    val state by viewModel.state.collectAsState()
+
+    if (state.isLoading || state.task == null || state.assessment == null) {
+        Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+    val task = state.task!!
+    val assessment = state.assessment!!
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(20.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        item {
+            BackHeader(onBack = onBack)
+            Spacer(Modifier.height(8.dp))
+            Text(task.title, style = MaterialTheme.typography.headlineSmall)
+            Text("Assessment", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+        }
+
+        item {
+            NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                Text("EVIDENCE", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    if (state.evidenceCount == 0) "No evidence attached" else "${state.evidenceCount} file(s) attached",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        }
+
+        item {
+            NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                Text("ASSESSMENT CRITERIA", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.height(8.dp))
+                state.checks.forEach { check -> CriterionRow(check) }
+            }
+        }
+
+        item {
+            Spacer(Modifier.height(8.dp))
+            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(assessment.result.label().uppercase(), style = MaterialTheme.typography.headlineMedium, color = assessment.result.color())
+                Spacer(Modifier.height(8.dp))
+                if (assessment.result == CompetenceResult.COMPETENT) {
+                    Text(
+                        "This competence contributes to: ${task.skillDeveloped}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else {
+                    Text(
+                        "Review the criteria above, then go back and resubmit.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+
+        item {
+            Spacer(Modifier.height(4.dp))
+            Button(onClick = onBack, modifier = Modifier.fillMaxWidth()) {
+                Text(if (assessment.result == CompetenceResult.COMPETENT) "Back to My Work" else "Back to Task")
+            }
+        }
+    }
+}
+
+@Composable
+private fun CriterionRow(check: AssessmentEngine.CriterionCheck) {
+    Row(modifier = Modifier.fillMaxWidth().padding(vertical = 5.dp), verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            if (check.met) Icons.Filled.Check else Icons.Filled.RadioButtonUnchecked,
+            contentDescription = null,
+            tint = if (check.met) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(18.dp),
+        )
+        Text(
+            check.label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (check.met) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(start = 10.dp),
+        )
+    }
+}

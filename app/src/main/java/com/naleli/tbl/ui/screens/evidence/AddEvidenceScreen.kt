@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,7 +28,6 @@ import androidx.compose.material.icons.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Laptop
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -49,54 +49,46 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.naleli.tbl.ui.components.BackHeader
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.rememberAppContainer
-import com.naleli.tbl.ui.screens.day.DayViewModel
 import com.naleli.tbl.util.createCameraCaptureUri
 import com.naleli.tbl.util.rememberCameraPermissionAction
 
 /**
- * "Prove Your Work" — the dedicated evidence-capture screen (brief V1.5
- * §9/§10/§12), reached from a task's detail screen. Evidence is the
- * student's proof of capability, not a generic file-upload utility, so
- * this presents evidence sources as clear, purposeful choices rather than
- * one plain picker button.
+ * "Prove Your Work" — evidence sources presented as clear, purposeful
+ * choices, not one plain file picker button. Generic over any taskId, so
+ * both Naleli Workspace's Task Workspace and (previously) the day-based
+ * task engine can reuse it.
  *
  * Both camera-backed sources request runtime CAMERA permission first and
- * catch ActivityNotFoundException (no camera app present) — this is what
- * was crashing "Take Photo" before (V1.5.1 §2): the intent was launched
- * without ever checking/requesting permission.
+ * catch ActivityNotFoundException — this is what was crashing "Take Photo"
+ * before (V1.5.1 §2): the intent was launched without ever checking it.
  */
 @Composable
-fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone: () -> Unit) {
+fun AddEvidenceScreen(taskId: String, taskTitle: String, onBack: () -> Unit, onDone: () -> Unit) {
     val container = rememberAppContainer()
-    val viewModel: DayViewModel = viewModel(
-        factory = viewModelFactory { initializer { DayViewModel(container, dayNumber) } },
+    val viewModel: AddEvidenceViewModel = viewModel(
+        factory = viewModelFactory { initializer { AddEvidenceViewModel(container, taskId) } },
     )
-    val state by viewModel.state.collectAsState()
+    val evidence by viewModel.evidence.collectAsState()
     val context = LocalContext.current
     var pendingCameraUri by remember { mutableStateOf<Uri?>(null) }
     var showComputerStub by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
-    val task = state.day?.tasks?.firstOrNull { it.taskId == taskId }
-    val evidence = state.evidenceByTask[taskId].orEmpty()
-
     val openDocumentLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
-        if (uri != null && task != null) viewModel.attachEvidence(task, uri, null)
+        if (uri != null) viewModel.attach(uri, null)
     }
     val pickImageLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
-        if (uri != null && task != null) viewModel.attachEvidence(task, uri, null)
+        if (uri != null) viewModel.attach(uri, null)
     }
     val takePictureLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
         val uri = pendingCameraUri
-        if (success && uri != null && task != null) viewModel.attachEvidence(task, uri, null)
+        if (success && uri != null) viewModel.attach(uri, null)
         if (!success) errorMessage = "No photo was captured."
         pendingCameraUri = null
     }
     val scanWorksheetLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
         val uri = pendingCameraUri
-        if (success && uri != null && task != null) {
-            viewModel.attachEvidence(task, uri, "Worksheet (scanned)")
-        }
+        if (success && uri != null) viewModel.attach(uri, "Worksheet (scanned)")
         if (!success) errorMessage = "No worksheet photo was captured."
         pendingCameraUri = null
     }
@@ -123,16 +115,9 @@ fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone
         onDenied = { errorMessage = "Camera permission is needed to scan a worksheet." },
     )
 
-    if (task == null) {
-        Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-            CircularProgressIndicator()
-        }
-        return
-    }
-
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = androidx.compose.foundation.layout.PaddingValues(20.dp),
+        contentPadding = PaddingValues(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item {
@@ -140,7 +125,7 @@ fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone
             Spacer(Modifier.height(8.dp))
             Text("Prove Your Work", style = MaterialTheme.typography.headlineSmall)
             Text(
-                "Add evidence for: ${task.title}",
+                "Add evidence for: $taskTitle",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -191,7 +176,7 @@ fun AddEvidenceScreen(dayNumber: Int, taskId: String, onBack: () -> Unit, onDone
                                 Text(it, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
-                        IconButton(onClick = { viewModel.deleteEvidence(item) }) {
+                        IconButton(onClick = { viewModel.delete(item) }) {
                             Icon(Icons.Filled.Delete, contentDescription = "Remove evidence", tint = MaterialTheme.colorScheme.error)
                         }
                     }

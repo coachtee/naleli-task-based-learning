@@ -5,17 +5,21 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.naleli.tbl.data.db.dao.AssessmentDao
 import com.naleli.tbl.data.db.dao.CertificateDao
 import com.naleli.tbl.data.db.dao.DayProgressDao
 import com.naleli.tbl.data.db.dao.EvidenceDao
 import com.naleli.tbl.data.db.dao.LearnerProfileDao
 import com.naleli.tbl.data.db.dao.PortfolioDao
+import com.naleli.tbl.data.db.dao.SubStepStatusDao
 import com.naleli.tbl.data.db.dao.TaskStatusDao
+import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.CertificateEntity
 import com.naleli.tbl.data.db.entity.DayProgressEntity
 import com.naleli.tbl.data.db.entity.EvidenceEntity
 import com.naleli.tbl.data.db.entity.LearnerProfileEntity
 import com.naleli.tbl.data.db.entity.PortfolioItemEntity
+import com.naleli.tbl.data.db.entity.SubStepStatusEntity
 import com.naleli.tbl.data.db.entity.TaskStatusEntity
 
 @Database(
@@ -26,8 +30,10 @@ import com.naleli.tbl.data.db.entity.TaskStatusEntity
         EvidenceEntity::class,
         PortfolioItemEntity::class,
         CertificateEntity::class,
+        SubStepStatusEntity::class,
+        AssessmentEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -38,6 +44,8 @@ abstract class NaleliDatabase : RoomDatabase() {
     abstract fun evidenceDao(): EvidenceDao
     abstract fun portfolioDao(): PortfolioDao
     abstract fun certificateDao(): CertificateDao
+    abstract fun subStepStatusDao(): SubStepStatusDao
+    abstract fun assessmentDao(): AssessmentDao
 
     companion object {
         @Volatile private var instance: NaleliDatabase? = null
@@ -48,7 +56,12 @@ abstract class NaleliDatabase : RoomDatabase() {
                     context.applicationContext,
                     NaleliDatabase::class.java,
                     "naleli.db",
-                ).build().also { instance = it }
+                )
+                    // Pre-release app, no migration written yet — a schema
+                    // bump just wipes local data rather than crashing on
+                    // open for anyone upgrading from an older debug build.
+                    .fallbackToDestructiveMigration()
+                    .build().also { instance = it }
             }
     }
 }

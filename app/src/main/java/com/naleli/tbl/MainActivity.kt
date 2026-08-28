@@ -33,10 +33,10 @@ class MainActivity : ComponentActivity() {
             val container = (application as NaleliApplication).container
 
             LaunchedEffect(Unit) {
-                startDestination = if (container.profileRepository.hasProfile()) {
-                    NaleliDestinations.HOME
-                } else {
-                    NaleliDestinations.WELCOME
+                startDestination = when {
+                    !container.profileRepository.hasProfile() -> NaleliDestinations.WELCOME
+                    !container.workspacePreferences.portfolioSetupComplete -> NaleliDestinations.PORTFOLIO_SETUP
+                    else -> NaleliDestinations.HOME
                 }
             }
 

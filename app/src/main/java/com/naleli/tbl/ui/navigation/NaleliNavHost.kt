@@ -3,7 +3,7 @@ package com.naleli.tbl.ui.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assignment
-import androidx.compose.material.icons.filled.CalendarViewMonth
+import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.WorkspacePremium
@@ -24,40 +24,38 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.naleli.tbl.ui.screens.assessment.AssessmentScreen
 import com.naleli.tbl.ui.screens.certificate.CertificateScreen
-import com.naleli.tbl.ui.screens.day.DayDetailScreen
-import com.naleli.tbl.ui.screens.day.TaskDetailScreen
 import com.naleli.tbl.ui.screens.evidence.AddEvidenceScreen
-import com.naleli.tbl.ui.screens.evidence.EvidenceScreen
 import com.naleli.tbl.ui.screens.help.HelpScreen
 import com.naleli.tbl.ui.screens.home.HomeScreen
-import com.naleli.tbl.ui.screens.mylearning.MyLearningScreen
+import com.naleli.tbl.ui.screens.journey.JourneyScreen
+import com.naleli.tbl.ui.screens.mywork.MyWorkScreen
+import com.naleli.tbl.ui.screens.onboarding.PortfolioSetupScreen
 import com.naleli.tbl.ui.screens.portfolio.PortfolioScreen
 import com.naleli.tbl.ui.screens.profile.ProfileHubScreen
 import com.naleli.tbl.ui.screens.profile.ProfileScreen
 import com.naleli.tbl.ui.screens.progress.ProgressScreen
-import com.naleli.tbl.ui.screens.qrlookup.QrLookupScreen
-import com.naleli.tbl.ui.screens.qrlookup.QrScannerScreen
 import com.naleli.tbl.ui.screens.settings.BackupScreen
 import com.naleli.tbl.ui.screens.settings.PrivacyScreen
 import com.naleli.tbl.ui.screens.welcome.WelcomeScreen
+import com.naleli.tbl.ui.screens.workspace.TaskWorkspaceScreen
 import com.naleli.tbl.ui.theme.HeroSurface
 import com.naleli.tbl.ui.theme.OnHeroSurface
 import com.naleli.tbl.ui.theme.OnHeroSurfaceSoft
 
 /**
- * Bottom-nav labels follow the V1.5 information architecture (brief §5):
- * Home / Learn / Work / Portfolio / Profile. Route names underneath stay
- * as MY_LEARNING/EVIDENCE — see NaleliDestinations for why.
+ * Bottom-nav for Naleli Workspace: Home / My Work / Journey / Portfolio /
+ * Me — never "Profile" (brief: navigation).
  */
 private data class BottomNavItem(val route: String, val label: String, val icon: androidx.compose.ui.graphics.vector.ImageVector)
 
 private val bottomNavItems = listOf(
     BottomNavItem(NaleliDestinations.HOME, "Home", Icons.Filled.Home),
-    BottomNavItem(NaleliDestinations.MY_LEARNING, "Learn", Icons.Filled.CalendarViewMonth),
-    BottomNavItem(NaleliDestinations.EVIDENCE, "Work", Icons.Filled.Assignment),
+    BottomNavItem(NaleliDestinations.MY_WORK, "My Work", Icons.Filled.Assignment),
+    BottomNavItem(NaleliDestinations.JOURNEY, "Journey", Icons.Filled.Explore),
     BottomNavItem(NaleliDestinations.PORTFOLIO, "Portfolio", Icons.Filled.WorkspacePremium),
-    BottomNavItem(NaleliDestinations.PROFILE, "Profile", Icons.Filled.Person),
+    BottomNavItem(NaleliDestinations.PROFILE, "Me", Icons.Filled.Person),
 )
 
 @Composable
@@ -108,10 +106,19 @@ fun NaleliNavHost(
             }
             composable(NaleliDestinations.CREATE_PROFILE) {
                 ProfileScreen(isEditMode = false) {
-                    navController.navigate(NaleliDestinations.HOME) {
+                    navController.navigate(NaleliDestinations.PORTFOLIO_SETUP) {
                         popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
                     }
                 }
+            }
+            composable(NaleliDestinations.PORTFOLIO_SETUP) {
+                PortfolioSetupScreen(
+                    onDone = {
+                        navController.navigate(NaleliDestinations.HOME) {
+                            popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                        }
+                    },
+                )
             }
             composable(NaleliDestinations.EDIT_PROFILE) {
                 ProfileScreen(isEditMode = true, onBack = { navController.popBackStack() }) { navController.popBackStack() }
@@ -119,43 +126,15 @@ fun NaleliNavHost(
 
             composable(NaleliDestinations.HOME) {
                 HomeScreen(
-                    onStartTodaysTask = { dayNumber -> navController.navigate(NaleliDestinations.dayDetail(dayNumber)) },
-                    onOpenDay = { dayNumber -> navController.navigate(NaleliDestinations.dayDetail(dayNumber)) },
+                    onOpenTask = { taskId -> navController.navigate(NaleliDestinations.taskWorkspace(taskId)) },
                     onOpenPortfolio = { navController.navigate(NaleliDestinations.PORTFOLIO) },
                 )
             }
-            composable(NaleliDestinations.MY_LEARNING) {
-                MyLearningScreen(onOpenDay = { dayNumber -> navController.navigate(NaleliDestinations.dayDetail(dayNumber)) })
+            composable(NaleliDestinations.MY_WORK) {
+                MyWorkScreen(onOpenTask = { taskId -> navController.navigate(NaleliDestinations.taskWorkspace(taskId)) })
             }
-            composable(NaleliDestinations.EVIDENCE) {
-                EvidenceScreen(onScanWorksheetCode = { navController.navigate(NaleliDestinations.QR_SCANNER) })
-            }
-            composable(NaleliDestinations.QR_SCANNER) {
-                QrScannerScreen(
-                    onBack = { navController.popBackStack() },
-                    onFound = { dayNumber, taskId ->
-                        navController.popBackStack()
-                        navController.navigate(NaleliDestinations.taskDetail(dayNumber, taskId))
-                    },
-                    onEnterManually = {
-                        navController.navigate(NaleliDestinations.QR_LOOKUP) {
-                            popUpTo(NaleliDestinations.QR_SCANNER) { inclusive = true }
-                        }
-                    },
-                )
-            }
-            composable(NaleliDestinations.QR_LOOKUP) {
-                QrLookupScreen(
-                    onFound = { dayNumber, taskId ->
-                        navController.popBackStack()
-                        navController.navigate(NaleliDestinations.taskDetail(dayNumber, taskId))
-                    },
-                    onScanWithCamera = {
-                        navController.navigate(NaleliDestinations.QR_SCANNER) {
-                            popUpTo(NaleliDestinations.QR_LOOKUP) { inclusive = true }
-                        }
-                    },
-                )
+            composable(NaleliDestinations.JOURNEY) {
+                JourneyScreen(onOpenTask = { taskId -> navController.navigate(NaleliDestinations.taskWorkspace(taskId)) })
             }
             composable(NaleliDestinations.PORTFOLIO) { PortfolioScreen() }
             composable(NaleliDestinations.PROFILE) {
@@ -174,48 +153,35 @@ fun NaleliNavHost(
             }
 
             composable(
-                route = NaleliDestinations.DAY_DETAIL_PATTERN,
-                arguments = listOf(navArgument("dayNumber") { type = androidx.navigation.NavType.IntType }),
+                route = NaleliDestinations.TASK_WORKSPACE_PATTERN,
+                arguments = listOf(navArgument("taskId") { type = androidx.navigation.NavType.StringType }),
             ) { backStackEntry ->
-                val dayNumber = backStackEntry.arguments?.getInt("dayNumber") ?: 1
-                DayDetailScreen(
-                    dayNumber = dayNumber,
+                val taskId = backStackEntry.arguments?.getString("taskId") ?: ""
+                TaskWorkspaceScreen(
+                    taskId = taskId,
                     onBack = { navController.popBackStack() },
-                    onOpenTask = { taskId -> navController.navigate(NaleliDestinations.taskDetail(dayNumber, taskId)) },
-                    onDayCompleted = { navController.popBackStack() },
+                    onAddEvidence = { navController.navigate(NaleliDestinations.addEvidence(taskId)) },
+                    onSubmitted = { navController.navigate(NaleliDestinations.assessment(taskId)) },
                 )
             }
 
             composable(
-                route = NaleliDestinations.TASK_DETAIL_PATTERN,
-                arguments = listOf(
-                    navArgument("dayNumber") { type = androidx.navigation.NavType.IntType },
-                    navArgument("taskId") { type = androidx.navigation.NavType.StringType },
-                ),
+                route = NaleliDestinations.ASSESSMENT_PATTERN,
+                arguments = listOf(navArgument("taskId") { type = androidx.navigation.NavType.StringType }),
             ) { backStackEntry ->
-                val dayNumber = backStackEntry.arguments?.getInt("dayNumber") ?: 1
                 val taskId = backStackEntry.arguments?.getString("taskId") ?: ""
-                TaskDetailScreen(
-                    dayNumber = dayNumber,
-                    taskId = taskId,
-                    onBack = { navController.popBackStack() },
-                    onAddEvidence = { navController.navigate(NaleliDestinations.addEvidence(dayNumber, taskId)) },
-                    onTaskCompleted = { navController.popBackStack() },
-                )
+                AssessmentScreen(taskId = taskId, onBack = { navController.popBackStack() })
             }
 
             composable(
                 route = NaleliDestinations.ADD_EVIDENCE_PATTERN,
-                arguments = listOf(
-                    navArgument("dayNumber") { type = androidx.navigation.NavType.IntType },
-                    navArgument("taskId") { type = androidx.navigation.NavType.StringType },
-                ),
+                arguments = listOf(navArgument("taskId") { type = androidx.navigation.NavType.StringType }),
             ) { backStackEntry ->
-                val dayNumber = backStackEntry.arguments?.getInt("dayNumber") ?: 1
                 val taskId = backStackEntry.arguments?.getString("taskId") ?: ""
+                val taskTitle = com.naleli.tbl.data.content.WorkspaceMockContent.taskById(taskId)?.title ?: "Task"
                 AddEvidenceScreen(
-                    dayNumber = dayNumber,
                     taskId = taskId,
+                    taskTitle = taskTitle,
                     onBack = { navController.popBackStack() },
                     onDone = { navController.popBackStack() },
                 )

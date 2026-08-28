@@ -3,12 +3,14 @@ package com.naleli.tbl
 import android.content.Context
 import com.naleli.tbl.data.content.ContentRepository
 import com.naleli.tbl.data.db.NaleliDatabase
+import com.naleli.tbl.data.preferences.WorkspacePreferences
 import com.naleli.tbl.data.repository.BackupRepository
 import com.naleli.tbl.data.repository.CertificateRepository
 import com.naleli.tbl.data.repository.EvidenceRepository
 import com.naleli.tbl.data.repository.PortfolioRepository
 import com.naleli.tbl.data.repository.ProfileRepository
 import com.naleli.tbl.data.repository.ProgressRepository
+import com.naleli.tbl.data.repository.WorkspaceRepository
 import com.naleli.tbl.ui.theme.ThemePreferences
 
 /**
@@ -22,12 +24,14 @@ class AppContainer(val context: Context) {
     private val database = NaleliDatabase.getInstance(context)
 
     val themePreferences = ThemePreferences(context)
+    val workspacePreferences = WorkspacePreferences(context)
 
     val contentRepository = ContentRepository(context)
     val profileRepository = ProfileRepository(database.learnerProfileDao())
     val progressRepository = ProgressRepository(database.dayProgressDao(), database.taskStatusDao())
     val evidenceRepository = EvidenceRepository(context, database.evidenceDao())
     val portfolioRepository = PortfolioRepository(database.portfolioDao())
+    val workspaceRepository = WorkspaceRepository(database.subStepStatusDao(), database.assessmentDao(), evidenceRepository)
     val certificateRepository = CertificateRepository(context, database.certificateDao())
     val backupRepository = BackupRepository(
         context = context,

@@ -2,6 +2,7 @@ package com.naleli.tbl.data.db
 
 import androidx.room.TypeConverter
 import com.naleli.tbl.data.db.entity.AssessmentStatus
+import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.data.db.entity.DayStatus
 
 class Converters {
@@ -16,4 +17,10 @@ class Converters {
 
     @TypeConverter
     fun toAssessmentStatus(value: String): AssessmentStatus = AssessmentStatus.valueOf(value)
+
+    @TypeConverter
+    fun fromCompetenceResult(value: CompetenceResult): String = value.name
+
+    @TypeConverter
+    fun toCompetenceResult(value: String): CompetenceResult = CompetenceResult.valueOf(value)
 }

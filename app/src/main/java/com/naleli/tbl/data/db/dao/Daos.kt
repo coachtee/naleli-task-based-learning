@@ -6,11 +6,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.CertificateEntity
 import com.naleli.tbl.data.db.entity.DayProgressEntity
 import com.naleli.tbl.data.db.entity.EvidenceEntity
 import com.naleli.tbl.data.db.entity.LearnerProfileEntity
 import com.naleli.tbl.data.db.entity.PortfolioItemEntity
+import com.naleli.tbl.data.db.entity.SubStepStatusEntity
 import com.naleli.tbl.data.db.entity.TaskStatusEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -76,6 +78,9 @@ interface EvidenceDao {
     @Query("SELECT * FROM evidence WHERE taskId = :taskId ORDER BY createdAt DESC")
     fun observeForTask(taskId: String): Flow<List<EvidenceEntity>>
 
+    @Query("SELECT * FROM evidence WHERE taskId = :taskId ORDER BY createdAt DESC")
+    suspend fun getForTask(taskId: String): List<EvidenceEntity>
+
     @Insert
     suspend fun insert(entity: EvidenceEntity): Long
 
@@ -116,5 +121,35 @@ interface CertificateDao {
     suspend fun insert(entity: CertificateEntity): Long
 
     @Query("DELETE FROM certificate")
+    suspend fun deleteAll()
+}
+
+@Dao
+interface SubStepStatusDao {
+    @Query("SELECT * FROM substep_status")
+    fun observeAll(): Flow<List<SubStepStatusEntity>>
+
+    @Query("SELECT * FROM substep_status WHERE subStepId = :subStepId LIMIT 1")
+    suspend fun get(subStepId: String): SubStepStatusEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(entity: SubStepStatusEntity)
+
+    @Query("DELETE FROM substep_status")
+    suspend fun deleteAll()
+}
+
+@Dao
+interface AssessmentDao {
+    @Query("SELECT * FROM assessment")
+    fun observeAll(): Flow<List<AssessmentEntity>>
+
+    @Query("SELECT * FROM assessment WHERE taskId = :taskId LIMIT 1")
+    suspend fun get(taskId: String): AssessmentEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(entity: AssessmentEntity)
+
+    @Query("DELETE FROM assessment")
     suspend fun deleteAll()
 }

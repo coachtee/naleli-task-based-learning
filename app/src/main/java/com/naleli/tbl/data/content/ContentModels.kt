@@ -92,6 +92,7 @@ data class CredentialInfo(
 data class Course(
     val programmeId: String,
     val programmeName: String,
+    val projectTitle: String = "Becoming a Digital Professional",
     val shortDescription: String,
     val credential: CredentialInfo,
     val totalDays: Int,

@@ -130,6 +130,8 @@ fun ProfileHubScreen(
                         container.evidenceRepository.deleteAll()
                         container.portfolioRepository.deleteAll()
                         container.certificateRepository.deleteAll()
+                        container.workspaceRepository.deleteAll()
+                        container.workspacePreferences.resetForNewLearner()
                         showDeleteWarning = false
                         onDataDeleted()
                     }

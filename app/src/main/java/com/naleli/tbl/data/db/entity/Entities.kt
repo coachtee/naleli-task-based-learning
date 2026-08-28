@@ -85,3 +85,28 @@ data class CertificateEntity(
     val issuedAt: Long,
     val filePath: String,
 )
+
+// ---- Naleli Workspace (Workstream/Task/Sub-step model) ----
+
+/** Progress: has this specific step of the work been done. */
+@Entity(tableName = "substep_status")
+data class SubStepStatusEntity(
+    @PrimaryKey val subStepId: String,
+    val taskId: String,
+    val complete: Boolean = false,
+    val completedAt: Long? = null,
+)
+
+enum class CompetenceResult { NOT_YET_ASSESSED, REQUIRES_IMPROVEMENT, COMPETENT }
+
+/** Competence: kept as its own row, never inferred from task/substep
+ * completion — a task can be fully worked through and still not be
+ * COMPETENT until it's actually been assessed (domain.AssessmentEngine). */
+@Entity(tableName = "assessment")
+data class AssessmentEntity(
+    @PrimaryKey val taskId: String,
+    val submittedAt: Long? = null,
+    val result: CompetenceResult = CompetenceResult.NOT_YET_ASSESSED,
+    val assessedAt: Long? = null,
+    val confidenceRating: Int? = null, // 1-5, learner self-report at submission — never substitutes for the result above.
+)
