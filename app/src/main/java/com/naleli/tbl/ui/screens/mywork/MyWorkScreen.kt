@@ -1,7 +1,9 @@
 package com.naleli.tbl.ui.screens.mywork
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Lock
@@ -36,6 +39,7 @@ import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.TierDot
 import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.theme.SuccessGreen
+import com.naleli.tbl.ui.theme.WarningOrange
 
 /**
  * A real work list, not a syllabus (approved redesign §2): every task the
@@ -122,6 +126,12 @@ private fun TaskRow(row: WorkTaskRow, onOpenTask: (String) -> Unit) {
             when {
                 row.locked -> Icon(Icons.Filled.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                 row.state == TaskProgressState.COMPETENT -> Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = SuccessGreen, modifier = Modifier.size(16.dp))
+                // A task actively being worked on gets the "in progress"
+                // state colour (the real brand orange) instead of its
+                // tier colour — tier says what KIND of task this is,
+                // this dot says WHERE it is right now.
+                row.state == TaskProgressState.IN_PROGRESS || row.state == TaskProgressState.NEEDS_REVISION ->
+                    Box(modifier = Modifier.size(8.dp).background(WarningOrange, CircleShape))
                 else -> TierDot(row.task.tier)
             }
             Column(modifier = Modifier.weight(1f).padding(start = 12.dp)) {

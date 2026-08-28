@@ -26,8 +26,12 @@ val BorderGrey = Color(0xFFE4E4EA)
 val SuccessGreen = Color(0xFF059669)
 val SuccessGreenBg = Color(0xFFE3F6EF)
 
-val WarningOrange = Color(0xFFD97706)
-val WarningOrangeBg = Color(0xFFFCEEE1)
+// The real brand orange (sampled from the logo, see NibsOrange below) —
+// reused here as the "in progress / attention" semantic colour rather
+// than a generic Material amber, so the actual Naleli orange shows up
+// wherever that state occurs (a task being worked on, a resubmission).
+val WarningOrange = Color(0xFFEE5A00)
+val WarningOrangeBg = Color(0xFFFCE7DA)
 
 val ErrorRed = Color(0xFFDC2626)
 val ErrorRedBg = Color(0xFFFBEAEA)
