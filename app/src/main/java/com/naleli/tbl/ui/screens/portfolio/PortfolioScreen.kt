@@ -11,9 +11,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -32,11 +35,14 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.data.preferences.StorageChoice
 import com.naleli.tbl.domain.PortfolioSkill
+import com.naleli.tbl.ui.components.BadgeMark
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.NaleliProgressBar
+import com.naleli.tbl.ui.components.StatusBadge
 import com.naleli.tbl.ui.components.color
 import com.naleli.tbl.ui.components.label
 import com.naleli.tbl.ui.rememberAppContainer
+import com.naleli.tbl.ui.theme.SuccessGreen
 
 /** The portfolio as centrepiece (brief §6): a strength score, per-skill
  * competence + evidence count + a confidence tag that never substitutes
@@ -142,21 +148,33 @@ fun PortfolioScreen() {
 private fun SkillCard(skill: PortfolioSkill) {
     NaleliCard(modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                skill.skillName,
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.weight(1f).padding(end = 8.dp),
-                maxLines = 1,
-                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+            Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+                Text(
+                    skill.skillName,
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 2,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                )
+                Spacer(Modifier.height(2.dp))
+                Text(
+                    "${if (skill.evidenceCount == 0) "No evidence yet" else "${skill.evidenceCount} evidence item(s)"} · Confidence: ${skill.confidenceLabel}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 2,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                )
+                Spacer(Modifier.height(8.dp))
+                if (skill.result == CompetenceResult.COMPETENT) {
+                    StatusBadge("Competent", SuccessGreen, BadgeMark.CHECK)
+                } else {
+                    StatusBadge(skill.result.label(), skill.result.color(), BadgeMark.DOT)
+                }
+            }
+            Icon(
+                Icons.Filled.ChevronRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Text(skill.result.label(), style = MaterialTheme.typography.labelMedium, color = skill.result.color(), maxLines = 1)
         }
-        Text(
-            "${if (skill.evidenceCount == 0) "No evidence yet" else "${skill.evidenceCount} evidence item(s)"} · Confidence: ${skill.confidenceLabel}",
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            maxLines = 1,
-            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
-        )
     }
 }

@@ -166,7 +166,11 @@ fun NaleliNavHost(
                 arguments = listOf(navArgument("taskId") { type = androidx.navigation.NavType.StringType }),
             ) { backStackEntry ->
                 val taskId = backStackEntry.arguments?.getString("taskId") ?: ""
-                AssessmentScreen(taskId = taskId, onBack = { navController.popBackStack() })
+                AssessmentScreen(
+                    taskId = taskId,
+                    onBack = { navController.popBackStack() },
+                    onOpenPortfolio = { navController.navigate(NaleliDestinations.PORTFOLIO) },
+                )
             }
 
             composable(

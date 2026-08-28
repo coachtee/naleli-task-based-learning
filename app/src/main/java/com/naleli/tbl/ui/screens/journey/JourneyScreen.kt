@@ -32,9 +32,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.naleli.tbl.data.content.CourseStage
+import com.naleli.tbl.ui.components.BadgeMark
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.NaleliProgressBar
+import com.naleli.tbl.ui.components.StatusBadge
 import com.naleli.tbl.ui.rememberAppContainer
+import com.naleli.tbl.ui.theme.SuccessGreen
 
 @Composable
 fun JourneyScreen(onOpenTask: (taskId: String) -> Unit) {
@@ -115,10 +118,10 @@ private fun WorkstreamRow(ws: WorkstreamUi, onOpenTask: (String) -> Unit) {
                 overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
             )
         }
-        if (isCurrent) {
-            Text("HERE", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-        } else {
-            Text("${ws.completedCount}/${ws.totalCount}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        when {
+            isCurrent -> StatusBadge("Here", MaterialTheme.colorScheme.primary, BadgeMark.DOT)
+            allDone -> StatusBadge("Complete", SuccessGreen, BadgeMark.CHECK)
+            else -> Text("${ws.completedCount}/${ws.totalCount}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

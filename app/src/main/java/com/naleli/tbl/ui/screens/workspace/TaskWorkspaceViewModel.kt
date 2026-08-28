@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 data class TaskWorkspaceUiState(
     val isLoading: Boolean = true,
     val task: WorkTask? = null,
+    val workstreamName: String = "",
     val locked: Boolean = false,
     val subStepStatuses: Map<String, SubStepStatusEntity> = emptyMap(),
     val evidenceCount: Int = 0,
@@ -51,6 +52,7 @@ class TaskWorkspaceViewModel(private val container: AppContainer, private val ta
                 TaskWorkspaceUiState(
                     isLoading = false,
                     task = task,
+                    workstreamName = WorkspaceMockContent.workstreamFor(taskId)?.name ?: "",
                     locked = isTaskLocked(taskId, assessmentByTask),
                     subStepStatuses = subStepStatuses,
                     evidenceCount = evidence.size,

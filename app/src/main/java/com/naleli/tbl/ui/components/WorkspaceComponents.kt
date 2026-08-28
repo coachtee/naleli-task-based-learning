@@ -1,11 +1,20 @@
 package com.naleli.tbl.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -13,6 +22,7 @@ import com.naleli.tbl.data.content.TaskTier
 import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.domain.ProjectHealth
 import com.naleli.tbl.domain.TaskProgressState
+import com.naleli.tbl.ui.theme.ChipShape
 import com.naleli.tbl.ui.theme.SuccessGreen
 import com.naleli.tbl.ui.theme.WarningOrange
 
@@ -37,6 +47,66 @@ fun TaskTier.color(): Color = when (this) {
 @Composable
 fun TierDot(tier: TaskTier, modifier: Modifier = Modifier) {
     Box(modifier = modifier.size(8.dp).background(tier.color(), CircleShape))
+}
+
+/** The status-badge marks from the approved design system. */
+enum class BadgeMark { DOT, RING, CHECK, LOCK }
+
+/**
+ * A pill-shaped status badge: a small mark plus a label, on a tinted wash
+ * of its own colour. This is the design system's one status component —
+ * every screen that shows "what state is this in" (My Work, Journey,
+ * Portfolio, Task Workspace) uses it, so a Required task reads identically
+ * everywhere instead of each screen inventing its own dot-and-text row.
+ */
+@Composable
+fun StatusBadge(
+    label: String,
+    color: Color,
+    mark: BadgeMark = BadgeMark.DOT,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .background(color.copy(alpha = 0.14f), ChipShape)
+            .padding(horizontal = 10.dp, vertical = 5.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        when (mark) {
+            BadgeMark.DOT -> Box(Modifier.size(7.dp).background(color, CircleShape))
+            BadgeMark.RING -> Box(
+                Modifier.size(7.dp).background(color.copy(alpha = 0.35f), CircleShape),
+            )
+            BadgeMark.CHECK -> Icon(Icons.Filled.Check, contentDescription = null, tint = color, modifier = Modifier.size(12.dp))
+            BadgeMark.LOCK -> Icon(Icons.Filled.Lock, contentDescription = null, tint = color, modifier = Modifier.size(11.dp))
+        }
+        Text(label, style = MaterialTheme.typography.labelSmall, color = color)
+    }
+}
+
+/** The badge for a task's live state — the single mapping every screen
+ * shares, so progress language can't drift between screens. */
+@Composable
+fun TaskStateBadge(state: TaskProgressState, locked: Boolean, modifier: Modifier = Modifier) {
+    if (locked) {
+        StatusBadge("Locked", MaterialTheme.colorScheme.onSurfaceVariant, BadgeMark.LOCK, modifier)
+        return
+    }
+    when (state) {
+        TaskProgressState.NOT_STARTED -> StatusBadge("Available", MaterialTheme.colorScheme.onSurfaceVariant, BadgeMark.RING, modifier)
+        TaskProgressState.IN_PROGRESS -> StatusBadge("In Progress", WarningOrange, BadgeMark.DOT, modifier)
+        TaskProgressState.NEEDS_REVISION -> StatusBadge("Needs Revision", WarningOrange, BadgeMark.DOT, modifier)
+        TaskProgressState.SUBMITTED -> StatusBadge("Submitted", MaterialTheme.colorScheme.primary, BadgeMark.DOT, modifier)
+        TaskProgressState.COMPETENT -> StatusBadge("Competent", SuccessGreen, BadgeMark.CHECK, modifier)
+    }
+}
+
+/** The tier badge — what KIND of task this is, kept visually separate from
+ * the state badge above (which says where it is right now). */
+@Composable
+fun TierBadge(tier: TaskTier, modifier: Modifier = Modifier) {
+    StatusBadge(tier.label(), tier.color(), BadgeMark.DOT, modifier)
 }
 
 fun TaskProgressState.label(): String = when (this) {

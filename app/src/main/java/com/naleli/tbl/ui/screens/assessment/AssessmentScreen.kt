@@ -1,5 +1,7 @@
 package com.naleli.tbl.ui.screens.assessment
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,19 +13,25 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
@@ -35,6 +43,8 @@ import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.color
 import com.naleli.tbl.ui.components.label
 import com.naleli.tbl.ui.rememberAppContainer
+import com.naleli.tbl.ui.theme.SuccessGreen
+import com.naleli.tbl.ui.theme.SurfaceWhite
 
 /**
  * The one screen in Naleli Workspace that exists purely to keep progress
@@ -43,7 +53,7 @@ import com.naleli.tbl.ui.rememberAppContainer
  * has actually run — never an automatic "done = competent".
  */
 @Composable
-fun AssessmentScreen(taskId: String, onBack: () -> Unit) {
+fun AssessmentScreen(taskId: String, onBack: () -> Unit, onOpenPortfolio: () -> Unit) {
     val container = rememberAppContainer()
     val viewModel: AssessmentViewModel = viewModel(factory = viewModelFactory { initializer { AssessmentViewModel(container, taskId) } })
     val state by viewModel.state.collectAsState()
@@ -90,20 +100,45 @@ fun AssessmentScreen(taskId: String, onBack: () -> Unit) {
 
         item {
             Spacer(Modifier.height(8.dp))
-            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(assessment.result.label().uppercase(), style = MaterialTheme.typography.headlineMedium, color = assessment.result.color())
-                Spacer(Modifier.height(8.dp))
-                if (assessment.result == CompetenceResult.COMPETENT) {
+            val isCompetent = assessment.result == CompetenceResult.COMPETENT
+            val resultColor = assessment.result.color()
+            // The competence result gets its own bordered, tinted surface —
+            // deliberately distinct from the criteria checklist above, so
+            // "assessed competent" never reads as just another tick.
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(resultColor.copy(alpha = 0.10f))
+                    .border(1.dp, resultColor.copy(alpha = 0.45f), RoundedCornerShape(20.dp))
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    if (isCompetent) {
+                        Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = resultColor, modifier = Modifier.size(26.dp))
+                    }
+                    Text(assessment.result.label().uppercase(), style = MaterialTheme.typography.headlineSmall, color = resultColor)
+                }
+                Spacer(Modifier.height(10.dp))
+                if (isCompetent) {
                     Text(
-                        "This competence contributes to: ${task.skillDeveloped}",
+                        "You demonstrated the ability to",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                    )
+                    Text(
+                        task.skillDeveloped,
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
                     )
                 } else {
                     Text(
                         "Review the criteria above, then go back and resubmit.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
                     )
                 }
             }
@@ -111,8 +146,17 @@ fun AssessmentScreen(taskId: String, onBack: () -> Unit) {
 
         item {
             Spacer(Modifier.height(4.dp))
-            Button(onClick = onBack, modifier = Modifier.fillMaxWidth()) {
-                Text(if (assessment.result == CompetenceResult.COMPETENT) "Back to My Work" else "Back to Task")
+            if (assessment.result == CompetenceResult.COMPETENT) {
+                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    OutlinedButton(onClick = onOpenPortfolio, modifier = Modifier.fillMaxWidth()) { Text("View Portfolio") }
+                    Button(
+                        onClick = onBack,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(containerColor = SuccessGreen, contentColor = SurfaceWhite),
+                    ) { Text("Continue Journey") }
+                }
+            } else {
+                Button(onClick = onBack, modifier = Modifier.fillMaxWidth()) { Text("Back to Task") }
             }
         }
     }

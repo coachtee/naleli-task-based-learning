@@ -1,9 +1,7 @@
 package com.naleli.tbl.ui.screens.mywork
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,15 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,10 +28,9 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.naleli.tbl.data.content.TaskTier
 import com.naleli.tbl.domain.TaskProgressState
 import com.naleli.tbl.ui.components.NaleliCard
-import com.naleli.tbl.ui.components.TierDot
+import com.naleli.tbl.ui.components.TaskStateBadge
+import com.naleli.tbl.ui.components.TierBadge
 import com.naleli.tbl.ui.rememberAppContainer
-import com.naleli.tbl.ui.theme.SuccessGreen
-import com.naleli.tbl.ui.theme.WarningOrange
 
 /**
  * A real work list, not a syllabus (approved redesign §2): every task the
@@ -122,33 +113,34 @@ private fun TaskRow(row: WorkTaskRow, onOpenTask: (String) -> Unit) {
     }
 
     NaleliCard(modifier = Modifier.fillMaxWidth().clickable(enabled = !row.locked) { onOpenTask(row.task.taskId) }) {
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            when {
-                row.locked -> Icon(Icons.Filled.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
-                row.state == TaskProgressState.COMPETENT -> Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = SuccessGreen, modifier = Modifier.size(16.dp))
-                // A task actively being worked on gets the "in progress"
-                // state colour (the real brand orange) instead of its
-                // tier colour — tier says what KIND of task this is,
-                // this dot says WHERE it is right now.
-                row.state == TaskProgressState.IN_PROGRESS || row.state == TaskProgressState.NEEDS_REVISION ->
-                    Box(modifier = Modifier.size(8.dp).background(WarningOrange, CircleShape))
-                else -> TierDot(row.task.tier)
-            }
-            Column(modifier = Modifier.weight(1f).padding(start = 12.dp)) {
+        // Title on its own full-width line, badges beneath — the previous
+        // layout put a status label beside the title, which squeezed and
+        // ellipsised real task names on a real device.
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     row.task.title,
                     style = MaterialTheme.typography.titleMedium,
                     color = if (row.locked) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
-                    maxLines = 1,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Text(subtitle, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Spacer(Modifier.height(2.dp))
+                Text(subtitle, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
             }
-            when {
-                row.isCurrent -> Text("Current", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-                row.task.tier == TaskTier.REQUIRED && !row.locked && row.state != TaskProgressState.COMPETENT ->
-                    Text("Required", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+            if (row.isCurrent) {
+                Text(
+                    "CURRENT",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(start = 8.dp, top = 2.dp),
+                )
             }
+        }
+        Spacer(Modifier.height(10.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            if (row.task.tier == TaskTier.REQUIRED && !row.locked) TierBadge(row.task.tier)
+            TaskStateBadge(row.state, row.locked)
         }
     }
 }
