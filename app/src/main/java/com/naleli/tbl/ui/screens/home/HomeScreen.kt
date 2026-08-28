@@ -80,11 +80,9 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                         overflow = TextOverflow.Ellipsis,
                     )
                     Text(
-                        "Day ${state.dayNumber} of ${course.totalDays} · ${course.projectTitle}",
+                        "Day ${state.dayNumber} of ${course.totalDays}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = OnHeroSurfaceSoft,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
                     )
                 }
                 Icon(Icons.Filled.NotificationsNone, contentDescription = "Notifications", tint = OnHeroSurface)

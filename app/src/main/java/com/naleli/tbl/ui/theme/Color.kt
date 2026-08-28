@@ -40,14 +40,19 @@ val NaleliNavyBorder = Color(0xFF29415A)
 val NaleliLightBlue = Color(0xFF8CCBFF)
 val NaleliTextSecondaryDark = Color(0xFFAAB8C8)
 
-// NIBS brand orange — sampled directly from the supplied academic-mark
-// logo (V1.5, see branding/logo/nibs-academic-mark.png). Reserved for
-// brand/logo moments (splash, certificate seal) only — a fixed brand asset
-// colour, independent of the semantic amber ("in progress") token above.
+// NIBS brand marks — sampled directly (pixel-picked) from the supplied
+// academic-mark logo (branding/logo/nibs-academic-mark.png), re-verified
+// against the logo file itself, not eyeballed. Reserved for brand/logo
+// moments (splash, Welcome wordmark, certificate seal) only — fixed brand
+// asset colours, independent of the app's interactive blue/amber tokens.
 // Never used to recolor the logo itself.
-val NibsOrange = Color(0xFFF2540A)
-val NibsOrangeLight = Color(0xFFF66D02)
-val NibsOrangeDark = Color(0xFFEB4C02)
+val NibsOrange = Color(0xFFEE5A00)
+val NibsOrangeLight = Color(0xFFF17830)
+val NibsOrangeDark = Color(0xFFC24A00)
+// The deep navy the "nibs" wordmark and institutional name are actually
+// printed in — much darker/more indigo than any interactive UI blue, so
+// it's kept as its own token rather than reused from MaterialTheme.
+val NibsWordmarkNavy = Color(0xFF02084B)
 
 // "Hero" surface — the dark navy background used for high-emphasis
 // moments (Home screen, bottom navigation, splash), while other screens

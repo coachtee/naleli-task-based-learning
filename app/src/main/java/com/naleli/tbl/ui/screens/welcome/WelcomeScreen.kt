@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,6 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.naleli.tbl.R
+import com.naleli.tbl.ui.theme.NaleliLightBlue
+import com.naleli.tbl.ui.theme.NibsWordmarkNavy
 
 /**
  * The one place the full NIBS academic mark + institutional wordmark
@@ -47,12 +50,17 @@ fun WelcomeScreen(onCreateProfile: () -> Unit) {
                 .height(94.dp),
         )
         Spacer(Modifier.height(16.dp))
+        // The wordmark's real ink colour (sampled from the logo asset) has
+        // almost no contrast against the dark-theme background, so dark
+        // mode gets a legible light-blue instead — never the interactive
+        // primary blue, so this reads as a brand mark, not a tappable one.
+        val isDarkSurface = MaterialTheme.colorScheme.background.luminance() < 0.5f
         Text(
-            text = "NALELI INNOVATORS BUSINESS SCHOOL",
+            text = "NALELI INNOVATORS\nBUSINESS SCHOOL",
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.SemiBold,
             letterSpacing = 1.sp,
-            color = MaterialTheme.colorScheme.primary,
+            color = if (isDarkSurface) NaleliLightBlue else NibsWordmarkNavy,
             textAlign = TextAlign.Center,
         )
         Spacer(Modifier.height(28.dp))
