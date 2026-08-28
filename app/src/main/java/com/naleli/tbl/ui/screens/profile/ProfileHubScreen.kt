@@ -37,21 +37,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.rememberAppContainer
-import com.naleli.tbl.ui.theme.NaleliPurpleLight
+import com.naleli.tbl.ui.theme.NaleliBlueLight
 import com.naleli.tbl.ui.theme.ThemeMode
 import kotlinx.coroutines.launch
 
 /**
- * The bottom-nav "Profile" tab: a compact learner identity header plus a
- * flat menu list (brief V1.5 §16) — Progress, Certificate, My Portfolio,
- * Backup & Export, Help, Privacy, Delete My Data — instead of a stack of
- * heavy cards.
+ * The bottom-nav "Me" tab: a compact learner identity header plus a
+ * grouped, flat menu list — My Portfolio and Backup & Export under
+ * Learning, Appearance under Preferences, Help and Privacy under Support,
+ * Delete My Data set apart under Data.
+ *
+ * The old Progress and Certificate screens are intentionally not linked
+ * here: they still read the pre-Workspace day/task entities that this
+ * rebuild stopped writing to, so they'd show stale or empty data. Rather
+ * than rebuild their eligibility/PDF logic against the new Task/Assessment
+ * model in this pass, they're left in the codebase (like the QR scanner)
+ * but unreachable from the UI until they're rebuilt for real.
  */
 @Composable
 fun ProfileHubScreen(
     onEditProfile: () -> Unit,
-    onOpenProgress: () -> Unit,
-    onOpenCertificate: () -> Unit,
     onOpenPortfolio: () -> Unit,
     onOpenBackup: () -> Unit,
     onOpenHelp: () -> Unit,
@@ -82,7 +87,7 @@ fun ProfileHubScreen(
             Box(
                 modifier = Modifier
                     .size(56.dp)
-                    .background(NaleliPurpleLight, CircleShape),
+                    .background(NaleliBlueLight, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
@@ -99,14 +104,18 @@ fun ProfileHubScreen(
         }
         Spacer(Modifier.height(4.dp))
 
-        MenuRow("My Progress", onOpenProgress)
-        MenuRow("Certificate", onOpenCertificate)
+        SectionLabel("Learning")
         MenuRow("My Portfolio", onOpenPortfolio)
-        MenuRow("Appearance · ${container.themePreferences.mode.label()}") { showThemePicker = true }
         MenuRow("Backup & Export", onOpenBackup)
+
+        SectionLabel("Preferences")
+        MenuRow("Appearance · ${container.themePreferences.mode.label()}") { showThemePicker = true }
+
+        SectionLabel("Support")
         MenuRow("Help & Support", onOpenHelp)
         MenuRow("Privacy Notice", onOpenPrivacy)
 
+        SectionLabel("Data", color = MaterialTheme.colorScheme.error)
         NaleliCard(modifier = Modifier.fillMaxWidth().clickable { showDeleteWarning = true }) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -183,6 +192,16 @@ private fun ThemeMode.label(): String = when (this) {
     ThemeMode.LIGHT -> "Light"
     ThemeMode.DARK -> "Dark"
     ThemeMode.SYSTEM -> "System"
+}
+
+@Composable
+private fun SectionLabel(title: String, color: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primary) {
+    Text(
+        title.uppercase(),
+        style = MaterialTheme.typography.labelLarge,
+        color = color,
+        modifier = Modifier.padding(top = 10.dp, bottom = 2.dp),
+    )
 }
 
 @Composable

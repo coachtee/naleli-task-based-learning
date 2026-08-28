@@ -25,7 +25,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.naleli.tbl.ui.screens.assessment.AssessmentScreen
-import com.naleli.tbl.ui.screens.certificate.CertificateScreen
 import com.naleli.tbl.ui.screens.evidence.AddEvidenceScreen
 import com.naleli.tbl.ui.screens.help.HelpScreen
 import com.naleli.tbl.ui.screens.home.HomeScreen
@@ -35,7 +34,6 @@ import com.naleli.tbl.ui.screens.onboarding.PortfolioSetupScreen
 import com.naleli.tbl.ui.screens.portfolio.PortfolioScreen
 import com.naleli.tbl.ui.screens.profile.ProfileHubScreen
 import com.naleli.tbl.ui.screens.profile.ProfileScreen
-import com.naleli.tbl.ui.screens.progress.ProgressScreen
 import com.naleli.tbl.ui.screens.settings.BackupScreen
 import com.naleli.tbl.ui.screens.settings.PrivacyScreen
 import com.naleli.tbl.ui.screens.welcome.WelcomeScreen
@@ -140,8 +138,6 @@ fun NaleliNavHost(
             composable(NaleliDestinations.PROFILE) {
                 ProfileHubScreen(
                     onEditProfile = { navController.navigate(NaleliDestinations.EDIT_PROFILE) },
-                    onOpenProgress = { navController.navigate(NaleliDestinations.PROGRESS) },
-                    onOpenCertificate = { navController.navigate(NaleliDestinations.CERTIFICATE) },
                     onOpenPortfolio = { navController.navigate(NaleliDestinations.PORTFOLIO) },
                     onOpenBackup = { navController.navigate(NaleliDestinations.BACKUP) },
                     onOpenHelp = { navController.navigate(NaleliDestinations.HELP) },
@@ -187,8 +183,6 @@ fun NaleliNavHost(
                 )
             }
 
-            composable(NaleliDestinations.PROGRESS) { ProgressScreen(onBack = { navController.popBackStack() }) }
-            composable(NaleliDestinations.CERTIFICATE) { CertificateScreen(onBack = { navController.popBackStack() }) }
             composable(NaleliDestinations.HELP) { HelpScreen(onBack = { navController.popBackStack() }) }
             composable(NaleliDestinations.BACKUP) { BackupScreen(onBack = { navController.popBackStack() }) }
             composable(NaleliDestinations.PRIVACY) { PrivacyScreen(onBack = { navController.popBackStack() }) }

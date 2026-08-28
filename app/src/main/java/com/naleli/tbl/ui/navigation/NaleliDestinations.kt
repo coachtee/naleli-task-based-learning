@@ -21,8 +21,6 @@ object NaleliDestinations {
     const val PORTFOLIO = "portfolio"
     const val PROFILE = "profile"
 
-    const val PROGRESS = "progress"
-    const val CERTIFICATE = "certificate"
     const val HELP = "help"
     const val BACKUP = "backup"
     const val PRIVACY = "privacy"

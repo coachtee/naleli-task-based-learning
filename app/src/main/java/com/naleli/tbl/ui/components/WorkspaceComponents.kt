@@ -13,10 +13,14 @@ import com.naleli.tbl.data.content.TaskTier
 import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.domain.ProjectHealth
 import com.naleli.tbl.domain.TaskProgressState
+import com.naleli.tbl.ui.theme.SuccessGreen
 import com.naleli.tbl.ui.theme.WarningOrange
 
-/** Naleli Workspace's three task tiers, colour-coded consistently everywhere
- * a task appears (My Work, Task Workspace, Journey). */
+/** Naleli Workspace's three task tiers, labelled consistently everywhere a
+ * task appears (My Work, Task Workspace, Journey). Colour is reserved for
+ * the approved four-colour system (blue = action, green = competent, amber
+ * = attention, red = required/warning) — so only Required gets a colour
+ * here; Supporting and Assessment are neutral, tier is conveyed by label. */
 fun TaskTier.label(): String = when (this) {
     TaskTier.REQUIRED -> "Required"
     TaskTier.SUPPORTING -> "Supporting"
@@ -25,9 +29,9 @@ fun TaskTier.label(): String = when (this) {
 
 @Composable
 fun TaskTier.color(): Color = when (this) {
-    TaskTier.REQUIRED -> Color(0xFFE0453A)
-    TaskTier.SUPPORTING -> Color(0xFF3B8FE0)
-    TaskTier.ASSESSMENT -> MaterialTheme.colorScheme.primary
+    TaskTier.REQUIRED -> MaterialTheme.colorScheme.error
+    TaskTier.SUPPORTING -> MaterialTheme.colorScheme.onSurfaceVariant
+    TaskTier.ASSESSMENT -> MaterialTheme.colorScheme.onSurfaceVariant
 }
 
 @Composable
@@ -44,16 +48,18 @@ fun TaskProgressState.label(): String = when (this) {
 }
 
 fun CompetenceResult.label(): String = when (this) {
-    CompetenceResult.NOT_YET_ASSESSED -> "Not Yet Assessed"
-    CompetenceResult.REQUIRES_IMPROVEMENT -> "Requires Improvement"
+    CompetenceResult.NOT_YET_ASSESSED -> "Submitted"
+    CompetenceResult.REQUIRES_IMPROVEMENT -> "Not Yet Competent"
     CompetenceResult.COMPETENT -> "Competent"
 }
 
+// The green "Competent" state should feel meaningful and earned — it is
+// the only competence outcome that gets green anywhere in the app.
 @Composable
 fun CompetenceResult.color(): Color = when (this) {
     CompetenceResult.NOT_YET_ASSESSED -> MaterialTheme.colorScheme.onSurfaceVariant
     CompetenceResult.REQUIRES_IMPROVEMENT -> WarningOrange
-    CompetenceResult.COMPETENT -> MaterialTheme.colorScheme.primary
+    CompetenceResult.COMPETENT -> SuccessGreen
 }
 
 fun ProjectHealth.label(): String = when (this) {
@@ -64,7 +70,7 @@ fun ProjectHealth.label(): String = when (this) {
 
 @Composable
 fun ProjectHealth.color(): Color = when (this) {
-    ProjectHealth.ON_TRACK -> MaterialTheme.colorScheme.primary
+    ProjectHealth.ON_TRACK -> SuccessGreen
     ProjectHealth.ATTENTION_REQUIRED -> WarningOrange
     ProjectHealth.BEHIND_SCHEDULE -> MaterialTheme.colorScheme.error
 }

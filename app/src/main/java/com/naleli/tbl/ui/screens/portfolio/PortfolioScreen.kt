@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
@@ -140,17 +141,22 @@ fun PortfolioScreen() {
 @Composable
 private fun SkillCard(skill: PortfolioSkill) {
     NaleliCard(modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-            Text(skill.skillName, style = MaterialTheme.typography.titleMedium)
-            Text(skill.result.label(), style = MaterialTheme.typography.labelMedium, color = skill.result.color())
-        }
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(
-                if (skill.evidenceCount == 0) "No evidence yet" else "${skill.evidenceCount} evidence item(s)",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                skill.skillName,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f).padding(end = 8.dp),
+                maxLines = 1,
+                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
             )
-            Text("Confidence: ${skill.confidenceLabel}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(skill.result.label(), style = MaterialTheme.typography.labelMedium, color = skill.result.color(), maxLines = 1)
         }
+        Text(
+            "${if (skill.evidenceCount == 0) "No evidence yet" else "${skill.evidenceCount} evidence item(s)"} · Confidence: ${skill.confidenceLabel}",
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+        )
     }
 }

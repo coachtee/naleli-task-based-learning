@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,21 +25,22 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.naleli.tbl.data.content.TaskTier
+import com.naleli.tbl.domain.TaskProgressState
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.TierDot
-import com.naleli.tbl.ui.components.color
-import com.naleli.tbl.ui.components.label
 import com.naleli.tbl.ui.rememberAppContainer
+import com.naleli.tbl.ui.theme.SuccessGreen
 
 /**
- * A real task workspace, not a syllabus (brief §2): today's task with its
- * sub-step checklist front and centre, then what's queued, then a one-line
- * phase summary.
+ * A real work list, not a syllabus (approved redesign §2): every task the
+ * learner is responsible for, grouped into the four states a person
+ * instantly understands — To Do, In Progress, Assessment, Done.
  */
 @Composable
 fun MyWorkScreen(onOpenTask: (taskId: String) -> Unit) {
@@ -55,10 +55,12 @@ fun MyWorkScreen(onOpenTask: (taskId: String) -> Unit) {
         return
     }
 
+    val totalTasks = state.toDo.size + state.inProgress.size + state.assessment.size + state.done.size
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         item {
             Text("My Work", style = MaterialTheme.typography.headlineSmall)
@@ -67,44 +69,27 @@ fun MyWorkScreen(onOpenTask: (taskId: String) -> Unit) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            Spacer(Modifier.height(16.dp))
         }
 
-        state.today?.let { today ->
-            item { Text("TODAY", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary) }
+        if (totalTasks == 0) {
             item {
-                NaleliCard(modifier = Modifier.fillMaxWidth().clickable { onOpenTask(today.task.taskId) }) {
-                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        TierDot(today.task.tier)
-                        Column(modifier = Modifier.weight(1f).padding(start = 10.dp)) {
-                            Text(today.task.title, style = MaterialTheme.typography.titleMedium)
-                            Text(
-                                "${today.task.tier.label()} · ~${today.task.estimatedMinutes} min",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        Text(today.state.label(), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
-                    }
-                    Spacer(Modifier.height(10.dp))
-                    today.subSteps.forEach { row -> SubStepRowView(row) }
+                NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                    Text("Nothing here yet.", style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }
 
-        if (state.next.isNotEmpty()) {
-            item {
-                Spacer(Modifier.height(4.dp))
-                Text("NEXT", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-            }
-            items(state.next) { row -> NextTaskRow(row, onOpenTask) }
-        }
+        taskSection("In Progress", state.inProgress, onOpenTask)
+        taskSection("Assessment", state.assessment, onOpenTask)
+        taskSection("To Do", state.toDo, onOpenTask)
+        taskSection("Done", state.done, onOpenTask)
 
         item {
-            Spacer(Modifier.height(4.dp))
-            Text("THIS PHASE", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+            Spacer(Modifier.height(12.dp))
             NaleliCard(modifier = Modifier.fillMaxWidth()) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text(state.phaseName, style = MaterialTheme.typography.titleMedium)
+                    Text(state.phaseName, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f), maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Text("${state.phaseCompletedCount} / ${state.phasePlannedCount} tasks", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
@@ -112,48 +97,47 @@ fun MyWorkScreen(onOpenTask: (taskId: String) -> Unit) {
     }
 }
 
-@Composable
-private fun SubStepRowView(row: SubStepRow) {
-    Row(modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-        val icon = when {
-            row.complete -> Icons.Filled.CheckCircle
-            row.locked -> Icons.Filled.Lock
-            else -> Icons.Filled.RadioButtonUnchecked
-        }
-        val tint = when {
-            row.complete -> MaterialTheme.colorScheme.primary
-            row.locked -> MaterialTheme.colorScheme.onSurfaceVariant
-            else -> MaterialTheme.colorScheme.onSurfaceVariant
-        }
-        Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(18.dp))
-        Column(modifier = Modifier.padding(start = 10.dp)) {
-            Text(
-                row.subStep.title,
-                style = MaterialTheme.typography.bodyMedium,
-                textDecoration = if (row.complete) TextDecoration.LineThrough else TextDecoration.None,
-                color = if (row.locked) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
-            )
-            Text("${row.subStep.estimatedMinutes} min", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
+private fun androidx.compose.foundation.lazy.LazyListScope.taskSection(title: String, rows: List<WorkTaskRow>, onOpenTask: (String) -> Unit) {
+    if (rows.isEmpty()) return
+    item {
+        Spacer(Modifier.height(12.dp))
+        Text("${title.uppercase()} · ${rows.size}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
     }
+    items(rows) { row -> TaskRow(row, onOpenTask) }
 }
 
 @Composable
-private fun NextTaskRow(row: NextTaskUi, onOpenTask: (String) -> Unit) {
+private fun TaskRow(row: WorkTaskRow, onOpenTask: (String) -> Unit) {
+    val subtitle = when {
+        row.locked -> row.lockReason ?: "Locked"
+        row.state == TaskProgressState.IN_PROGRESS || row.state == TaskProgressState.NEEDS_REVISION ->
+            "${row.workstreamName} · Step ${row.stepsDone} of ${row.stepsTotal}"
+        row.state == TaskProgressState.SUBMITTED -> "${row.workstreamName} · Awaiting assessment"
+        row.state == TaskProgressState.COMPETENT -> "${row.workstreamName} · Competence recorded"
+        else -> "${row.workstreamName} · ~${row.task.estimatedMinutes} min"
+    }
+
     NaleliCard(modifier = Modifier.fillMaxWidth().clickable(enabled = !row.locked) { onOpenTask(row.task.taskId) }) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            if (row.locked) {
-                Icon(Icons.Filled.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
-            } else {
-                TierDot(row.task.tier)
+            when {
+                row.locked -> Icon(Icons.Filled.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+                row.state == TaskProgressState.COMPETENT -> Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = SuccessGreen, modifier = Modifier.size(16.dp))
+                else -> TierDot(row.task.tier)
             }
-            Column(modifier = Modifier.weight(1f).padding(start = 10.dp)) {
-                Text(row.task.title, style = MaterialTheme.typography.titleMedium, color = if (row.locked) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface)
+            Column(modifier = Modifier.weight(1f).padding(start = 12.dp)) {
                 Text(
-                    row.lockReason ?: "${row.task.tier.label()} · ~${row.task.estimatedMinutes} min",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    row.task.title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = if (row.locked) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
+                Text(subtitle, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+            when {
+                row.isCurrent -> Text("Current", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                row.task.tier == TaskTier.REQUIRED && !row.locked && row.state != TaskProgressState.COMPETENT ->
+                    Text("Required", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
             }
         }
     }

@@ -13,9 +13,9 @@ import com.naleli.tbl.data.db.entity.DayStatus
 import com.naleli.tbl.ui.theme.ChipShape
 import com.naleli.tbl.ui.theme.ErrorRed
 import com.naleli.tbl.ui.theme.ErrorRedBg
+import com.naleli.tbl.ui.theme.NaleliBlue
+import com.naleli.tbl.ui.theme.NaleliBlueLight
 import com.naleli.tbl.ui.theme.NaleliNavySoft
-import com.naleli.tbl.ui.theme.NaleliPurple
-import com.naleli.tbl.ui.theme.NaleliPurpleLight
 import com.naleli.tbl.ui.theme.SuccessGreen
 import com.naleli.tbl.ui.theme.SuccessGreenBg
 import com.naleli.tbl.ui.theme.SurfaceGrey
@@ -26,7 +26,7 @@ data class StatusColors(val foreground: Color, val background: Color)
 
 fun DayStatus.colors(): StatusColors = when (this) {
     DayStatus.NOT_STARTED -> StatusColors(NaleliNavySoft, SurfaceGrey)
-    DayStatus.IN_PROGRESS -> StatusColors(NaleliPurple, NaleliPurpleLight)
+    DayStatus.IN_PROGRESS -> StatusColors(NaleliBlue, NaleliBlueLight)
     DayStatus.COMPLETE -> StatusColors(SuccessGreen, SuccessGreenBg)
     DayStatus.NEEDS_REVIEW -> StatusColors(WarningOrange, WarningOrangeBg)
 }

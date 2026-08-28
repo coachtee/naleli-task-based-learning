@@ -11,8 +11,6 @@ import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.data.db.entity.LearnerProfileEntity
 import com.naleli.tbl.data.db.entity.SubStepStatusEntity
-import com.naleli.tbl.domain.ProjectHealth
-import com.naleli.tbl.domain.ProjectHealthCalculator
 import com.naleli.tbl.domain.TaskProgressState
 import com.naleli.tbl.domain.currentTaskId
 import com.naleli.tbl.domain.isTaskLocked
@@ -24,8 +22,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
-data class WorkspaceStatBoard(val toDo: Int, val inProgress: Int, val submitted: Int, val competent: Int)
-
 data class ActivityEvent(val title: String, val subtitle: String, val timestamp: Long)
 
 data class HomeUiState(
@@ -33,14 +29,13 @@ data class HomeUiState(
     val profile: LearnerProfileEntity? = null,
     val course: Course? = null,
     val dayNumber: Int = 1,
-    val progressPercent: Int = 0,
-    val health: ProjectHealth = ProjectHealth.ON_TRACK,
-    val daysRemaining: Int = 89,
     val nextMilestoneTitle: String = "",
-    val statBoard: WorkspaceStatBoard = WorkspaceStatBoard(0, 0, 0, 0),
     val priorityTask: WorkTask? = null,
     val priorityTaskState: TaskProgressState = TaskProgressState.NOT_STARTED,
-    val recentActivity: List<ActivityEvent> = emptyList(),
+    val priorityStepsDone: Int = 0,
+    val priorityStepsTotal: Int = 0,
+    val priorityHint: String? = null,
+    val recentAchievement: ActivityEvent? = null,
 )
 
 class HomeViewModel(private val container: AppContainer) : ViewModel() {
@@ -74,35 +69,32 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
     ): HomeUiState {
         val dayNumber = projectDayNumber(profile, course.totalDays)
         val allTasks = WorkspaceMockContent.allTasks()
-        val reachableTasks = allTasks.filterNot { isTaskLocked(it.taskId, assessmentByTask) }
-
-        val stateByTask = reachableTasks.associate { it.taskId to taskProgressState(it, subStepStatuses, assessmentByTask[it.taskId]) }
-        val competentCount = stateByTask.values.count { it == TaskProgressState.COMPETENT }
-
-        val statBoard = WorkspaceStatBoard(
-            toDo = stateByTask.values.count { it == TaskProgressState.NOT_STARTED || it == TaskProgressState.NEEDS_REVISION },
-            inProgress = stateByTask.values.count { it == TaskProgressState.IN_PROGRESS },
-            submitted = stateByTask.values.count { it == TaskProgressState.SUBMITTED },
-            competent = competentCount,
-        )
 
         val priorityTask = currentTaskId(subStepStatuses, assessmentByTask)?.let { WorkspaceMockContent.taskById(it) }
+        val priorityState = priorityTask?.let { taskProgressState(it, subStepStatuses, assessmentByTask[it.taskId]) }
+            ?: TaskProgressState.NOT_STARTED
+        val priorityStepsDone = priorityTask?.subSteps?.count { subStepStatuses[it.subStepId]?.complete == true } ?: 0
+        val priorityStepsTotal = priorityTask?.subSteps?.size ?: 0
+        val priorityNextStepTitle = priorityTask?.subSteps?.firstOrNull { subStepStatuses[it.subStepId]?.complete != true }?.title
+        val priorityHint = when {
+            priorityTask == null -> null
+            priorityNextStepTitle != null -> "Next: $priorityNextStepTitle"
+            priorityState == TaskProgressState.SUBMITTED -> "Awaiting assessment."
+            priorityState == TaskProgressState.NEEDS_REVISION -> "Resubmit for assessment."
+            else -> "Ready to submit for assessment."
+        }
 
         val nextMilestone = allTasks.firstOrNull {
             it.tier == TaskTier.ASSESSMENT && (assessmentByTask[it.taskId]?.result ?: CompetenceResult.NOT_YET_ASSESSED) != CompetenceResult.COMPETENT
         }?.title ?: course.stages.getOrNull(1)?.name ?: "Next Phase"
 
-        val recentActivity = assessmentByTask.values
-            .filter { it.assessedAt != null }
-            .sortedByDescending { it.assessedAt }
-            .take(3)
-            .mapNotNull { assessment ->
-                val task = WorkspaceMockContent.taskById(assessment.taskId) ?: return@mapNotNull null
-                ActivityEvent(
-                    title = task.title,
-                    subtitle = if (assessment.result == CompetenceResult.COMPETENT) "Marked Competent" else "Needs another look",
-                    timestamp = assessment.assessedAt ?: 0L,
-                )
+        val recentAchievement = assessmentByTask.values
+            .filter { it.assessedAt != null && it.result == CompetenceResult.COMPETENT }
+            .maxByOrNull { it.assessedAt ?: 0L }
+            ?.let { assessment ->
+                WorkspaceMockContent.taskById(assessment.taskId)?.let { task ->
+                    ActivityEvent(title = task.title, subtitle = "Competence recorded", timestamp = assessment.assessedAt ?: 0L)
+                }
             }
 
         return HomeUiState(
@@ -110,14 +102,13 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
             profile = profile,
             course = course,
             dayNumber = dayNumber,
-            progressPercent = (dayNumber * 100) / course.totalDays,
-            health = ProjectHealthCalculator.evaluate(dayNumber, course.totalDays, competentCount, WorkspaceMockContent.PHASE_1_PLANNED_TASK_COUNT),
-            daysRemaining = course.totalDays - dayNumber,
             nextMilestoneTitle = nextMilestone,
-            statBoard = statBoard,
             priorityTask = priorityTask,
-            priorityTaskState = priorityTask?.let { stateByTask[it.taskId] } ?: TaskProgressState.NOT_STARTED,
-            recentActivity = recentActivity,
+            priorityTaskState = priorityState,
+            priorityStepsDone = priorityStepsDone,
+            priorityStepsTotal = priorityStepsTotal,
+            priorityHint = priorityHint,
+            recentAchievement = recentAchievement,
         )
     }
 }

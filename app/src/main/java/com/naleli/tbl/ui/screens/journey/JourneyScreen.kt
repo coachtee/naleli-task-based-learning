@@ -106,11 +106,13 @@ private fun WorkstreamRow(ws: WorkstreamUi, onOpenTask: (String) -> Unit) {
             tint = if (isCurrent) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(18.dp),
         )
-        Column(modifier = Modifier.weight(1f).padding(start = 10.dp)) {
+        Column(modifier = Modifier.weight(1f).padding(start = 10.dp, end = 8.dp)) {
             Text(
                 ws.workstream.name,
                 style = MaterialTheme.typography.bodyMedium,
                 color = if (isCurrent) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
             )
         }
         if (isCurrent) {

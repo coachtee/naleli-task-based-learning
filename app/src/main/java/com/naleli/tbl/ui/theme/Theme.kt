@@ -7,10 +7,10 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
 private val LightColors = lightColorScheme(
-    primary = NaleliPurple,
+    primary = NaleliBlue,
     onPrimary = SurfaceWhite,
-    primaryContainer = NaleliPurpleLight,
-    onPrimaryContainer = NaleliPurpleDark,
+    primaryContainer = NaleliBlueLight,
+    onPrimaryContainer = NaleliBlueDark,
     secondary = NaleliNavySoft,
     onSecondary = SurfaceWhite,
     background = SurfaceWhite,
@@ -27,11 +27,11 @@ private val LightColors = lightColorScheme(
 )
 
 private val DarkColors = darkColorScheme(
-    primary = NaleliPurpleLight,
-    onPrimary = NaleliPurpleDark,
-    primaryContainer = NaleliPurpleDark,
-    onPrimaryContainer = NaleliPurpleLight,
-    secondary = BorderGrey,
+    primary = NaleliBlueActive,
+    onPrimary = NaleliNavyDeep,
+    primaryContainer = NaleliBlueDark,
+    onPrimaryContainer = NaleliLightBlue,
+    secondary = NaleliLightBlue,
     onSecondary = NaleliNavyDeep,
     background = NaleliNavyDeep,
     onBackground = SurfaceWhite,
@@ -41,7 +41,7 @@ private val DarkColors = darkColorScheme(
     // track fills, the segmented tab background) was literally invisible
     // against its own card. Now a distinct, lighter navy step.
     surfaceVariant = DarkSurfaceVariant,
-    onSurfaceVariant = BorderGrey,
+    onSurfaceVariant = NaleliTextSecondaryDark,
     // Was NaleliNavyBorder, ~1.3:1 against `surface` — card borders and
     // outlined-button strokes were effectively invisible in dark mode.
     outline = DarkOutline,
