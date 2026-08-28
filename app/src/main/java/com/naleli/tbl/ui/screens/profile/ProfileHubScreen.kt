@@ -37,7 +37,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.rememberAppContainer
-import com.naleli.tbl.ui.theme.NaleliBlueLight
+import com.naleli.tbl.ui.theme.NibsNavy
+import com.naleli.tbl.ui.theme.SlateSurface
 import com.naleli.tbl.ui.theme.ThemeMode
 import kotlinx.coroutines.launch
 
@@ -87,13 +88,13 @@ fun ProfileHubScreen(
             Box(
                 modifier = Modifier
                     .size(56.dp)
-                    .background(NaleliBlueLight, CircleShape),
+                    .background(SlateSurface, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
                     "${currentProfile.firstName.firstOrNull() ?: ' '}${currentProfile.surname.firstOrNull() ?: ' '}",
                     style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = NibsNavy,
                 )
             }
             Column(modifier = Modifier.padding(start = 14.dp).weight(1f)) {

@@ -39,6 +39,7 @@ import com.naleli.tbl.ui.screens.settings.PrivacyScreen
 import com.naleli.tbl.ui.screens.welcome.WelcomeScreen
 import com.naleli.tbl.ui.screens.workspace.TaskWorkspaceScreen
 import com.naleli.tbl.ui.theme.HeroSurface
+import com.naleli.tbl.ui.theme.NibsOrange
 import com.naleli.tbl.ui.theme.OnHeroSurface
 import com.naleli.tbl.ui.theme.OnHeroSurfaceSoft
 
@@ -86,7 +87,9 @@ fun NaleliNavHost(
                                 selectedTextColor = OnHeroSurface,
                                 unselectedIconColor = OnHeroSurfaceSoft,
                                 unselectedTextColor = OnHeroSurfaceSoft,
-                                indicatorColor = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.12f),
+                                // Orange marks the active destination, the
+                                // same accent the hero CTA uses.
+                                indicatorColor = NibsOrange,
                             ),
                         )
                     }

@@ -22,15 +22,17 @@ import com.naleli.tbl.data.content.TaskTier
 import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.domain.ProjectHealth
 import com.naleli.tbl.domain.TaskProgressState
+import com.naleli.tbl.ui.theme.AssessmentPurple
 import com.naleli.tbl.ui.theme.ChipShape
+import com.naleli.tbl.ui.theme.ErrorRed
+import com.naleli.tbl.ui.theme.SlateGray
 import com.naleli.tbl.ui.theme.SuccessGreen
 import com.naleli.tbl.ui.theme.WarningOrange
 
-/** Naleli Workspace's three task tiers, labelled consistently everywhere a
- * task appears (My Work, Task Workspace, Journey). Colour is reserved for
- * the approved four-colour system (blue = action, green = competent, amber
- * = attention, red = required/warning) — so only Required gets a colour
- * here; Supporting and Assessment are neutral, tier is conveyed by label. */
+/** The three task tiers, labelled and coloured consistently everywhere a
+ * task appears (My Work, Task Workspace, Journey), per the NIBS semantic
+ * status colours: Crimson for Required, Deep Purple for Checkpoint
+ * Assessments, Slate for the Supporting tier. */
 fun TaskTier.label(): String = when (this) {
     TaskTier.REQUIRED -> "Required"
     TaskTier.SUPPORTING -> "Supporting"
@@ -39,9 +41,9 @@ fun TaskTier.label(): String = when (this) {
 
 @Composable
 fun TaskTier.color(): Color = when (this) {
-    TaskTier.REQUIRED -> MaterialTheme.colorScheme.error
-    TaskTier.SUPPORTING -> MaterialTheme.colorScheme.onSurfaceVariant
-    TaskTier.ASSESSMENT -> MaterialTheme.colorScheme.onSurfaceVariant
+    TaskTier.REQUIRED -> ErrorRed
+    TaskTier.SUPPORTING -> SlateGray
+    TaskTier.ASSESSMENT -> AssessmentPurple
 }
 
 @Composable

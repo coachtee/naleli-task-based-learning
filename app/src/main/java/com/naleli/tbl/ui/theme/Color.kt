@@ -2,83 +2,84 @@ package com.naleli.tbl.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Mirrors /design/DESIGN-TOKENS.md — that document is the source of truth
-// for what these tokens mean; keep the two in sync if either changes.
+// NIBS Branding & UI System Specification — this file is the code-side
+// source of truth for that spec; keep the two in sync if either changes.
 //
-// Naleli Workspace visual identity (approved redesign): deep navy / dark
-// blue surfaces with Naleli blue as the one accent for primary actions and
-// navigation. No purple — status colour is restricted to exactly three
-// meanings everywhere in the app: green = competent/completed/success,
-// amber = in progress/attention, red = required/warning/destructive.
+// The identity is: Deep Navy structure, Vibrant Orange action, on a soft
+// off-white canvas. Orange is the ONE call-to-action colour (primary
+// buttons, the active workflow step, focus rings); navy carries structure
+// (top bars, the Current Focus anchor, secondary-button outlines).
 
-val NaleliBlue = Color(0xFF1677FF)
-val NaleliBlueDark = Color(0xFF0B4DB8)
-val NaleliBlueLight = Color(0xFFE1EEFF)
-val NaleliBlueActive = Color(0xFF2997FF)
+/** Primary Deep Navy — top bars, primary headings, dark surfaces. */
+val NibsNavy = Color(0xFF0A1140)
+val NibsNavyRaised = Color(0xFF141C55)
 
-val NaleliNavy = Color(0xFF101828)
-val NaleliNavySoft = Color(0xFF475467)
+/** Vibrant Innovation Orange — hero CTAs, active step, high-priority
+ * progression. The spec value; the logo asset itself samples #EE5A00,
+ * near-identical, and the spec wins for UI. */
+val NibsOrange = Color(0xFFF05A00)
+val NibsOrangeDark = Color(0xFFC24700)
+val NibsOrangeTint = Color(0xFFFFEDE3)
 
+/** Canvas — soft off-white, chosen over stark white to cut glare. */
+val CanvasBackground = Color(0xFFF8FAFC)
 val SurfaceWhite = Color(0xFFFFFFFF)
-val SurfaceGrey = Color(0xFFF5F5F8)
-val BorderGrey = Color(0xFFE4E4EA)
 
+/** 1px card borders and hairline dividers. */
+val BorderSlate = Color(0xFFE2E8F0)
+
+/** Locked / subordinate text. */
+val SlateGray = Color(0xFF64748B)
+
+/** Soft slate fill — grouped setting-row icon backgrounds. */
+val SlateSurface = Color(0xFFF1F5F9)
+
+// Semantic status colours. Each has exactly one meaning, everywhere.
+/** Competent / Completed / Verified evidence. */
 val SuccessGreen = Color(0xFF059669)
 val SuccessGreenBg = Color(0xFFE3F6EF)
 
-// The real brand orange (sampled from the logo, see NibsOrange below) —
-// reused here as the "in progress / attention" semantic colour rather
-// than a generic Material amber, so the actual Naleli orange shows up
-// wherever that state occurs (a task being worked on, a resubmission).
-val WarningOrange = Color(0xFFEE5A00)
-val WarningOrangeBg = Color(0xFFFCE7DA)
-
+/** Required tasks. */
 val ErrorRed = Color(0xFFDC2626)
 val ErrorRedBg = Color(0xFFFBEAEA)
 
-// Dark theme surfaces — the approved navy palette, exact hexes.
-val NaleliNavyDeep = Color(0xFF071525)
-val NaleliNavySurface = Color(0xFF0D2138)
-val NaleliNavyElevated = Color(0xFF132A45)
-val NaleliNavyBorder = Color(0xFF29415A)
-val NaleliLightBlue = Color(0xFF8CCBFF)
+/** Checkpoint assessments. */
+val AssessmentPurple = Color(0xFF7C3AED)
+
+/** In-progress / attention — the brand orange doing semantic duty, which
+ * is why "high-priority progression states" sits in the orange spec entry. */
+val WarningOrange = NibsOrange
+val WarningOrangeBg = NibsOrangeTint
+
+// Dark-theme surfaces. The spec designs a light app; dark mode is kept as
+// a learner preference and re-tuned onto the same navy/orange identity
+// rather than a separate palette, so the brand reads the same either way.
+val NaleliNavyDeep = Color(0xFF060B27)
+val NaleliNavySurface = NibsNavy
+val NaleliNavyElevated = NibsNavyRaised
+val NaleliNavyBorder = Color(0xFF2A3266)
 val NaleliTextSecondaryDark = Color(0xFFAAB8C8)
 
-// NIBS brand marks — sampled directly (pixel-picked) from the supplied
-// academic-mark logo (branding/logo/nibs-academic-mark.png), re-verified
-// against the logo file itself, not eyeballed. Reserved for brand/logo
-// moments (splash, Welcome wordmark, certificate seal) only — fixed brand
-// asset colours, independent of the app's interactive blue/amber tokens.
-// Never used to recolor the logo itself.
-val NibsOrange = Color(0xFFEE5A00)
-val NibsOrangeLight = Color(0xFFF17830)
-val NibsOrangeDark = Color(0xFFC24A00)
-// The deep navy the "nibs" wordmark and institutional name are actually
-// printed in — much darker/more indigo than any interactive UI blue, so
-// it's kept as its own token rather than reused from MaterialTheme.
-val NibsWordmarkNavy = Color(0xFF02084B)
-
-// "Hero" surface — the dark navy background used for high-emphasis
-// moments (Home screen, bottom navigation, splash), while other screens
-// keep a light surface in Light mode. Same palette as
-// NaleliNavy/NaleliNavyDeep, just named for how it's used.
-val HeroSurface = NaleliNavyDeep
-val HeroSurfaceRaised = NaleliNavySurface
+// "Hero" surface — the navy used for the top bar, bottom navigation and
+// the Current Focus anchor card, on both light and dark.
+val HeroSurface = NibsNavy
+val HeroSurfaceRaised = NibsNavyRaised
 val OnHeroSurface = SurfaceWhite
 val OnHeroSurfaceSoft = Color(0xFFB8BFCC)
 
-// Dark-theme-only tokens (V1.5.1 §6 contrast audit, updated for the navy
-// redesign). Not simple inversions of their light-theme counterparts —
-// chosen so outlines, track fills and error text hold real contrast
-// against the dark navy surfaces, where the light-theme values (tuned for
-// a white background) go nearly invisible. See the outline/surfaceVariant/
-// error entries in ui/theme/Theme.kt.
+// Dark-theme-only tokens: chosen so outlines, track fills and error text
+// hold real contrast against the dark navy surfaces, where the light-theme
+// values (tuned for an off-white canvas) go nearly invisible.
 val DarkOutline = NaleliNavyBorder
-val DarkSurfaceVariant = NaleliNavyElevated
-// A lighter tint of ErrorRed, not the saturated value itself — #DC2626
-// reads too dark to stay legible as small text on the near-black
-// background. Documented in the approved design system as "Danger Text."
+val DarkSurfaceVariant = NibsNavyRaised
+// A lighter tint of the crimson, not the saturated value — #DC2626 reads
+// too dark to stay legible as small text on near-black.
 val DarkError = Color(0xFFF87171)
 val DarkOnError = Color(0xFF450A0A)
 val DarkErrorContainer = Color(0xFF7F1D1D)
 val DarkOnErrorContainer = Color(0xFFFFDAD6)
+
+// The wordmark's real ink, sampled from the logo asset — used only for the
+// institutional wordmark on Welcome, never as a UI colour.
+val NibsWordmarkNavy = Color(0xFF02084B)
+val NaleliLightBlue = Color(0xFF8CCBFF)

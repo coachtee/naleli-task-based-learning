@@ -51,10 +51,13 @@ import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.label
 import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.theme.ChipShape
+import com.naleli.tbl.ui.theme.HeroSurface
 import com.naleli.tbl.ui.theme.NaleliGradients
+import com.naleli.tbl.ui.theme.NibsOrange
 import com.naleli.tbl.ui.theme.OnHeroSurface
 import com.naleli.tbl.ui.theme.OnHeroSurfaceSoft
-import com.naleli.tbl.ui.theme.SuccessGreen
+import com.naleli.tbl.ui.theme.SlateGray
+import com.naleli.tbl.ui.theme.SurfaceWhite
 
 /**
  * Replaces the old lesson-style Task Detail screen (brief §3): Brief →
@@ -302,10 +305,12 @@ private fun WorkflowStepper(progressState: TaskProgressState, allStepsDone: Bool
         labels.forEachIndexed { index, label ->
             val done = index < currentIndex
             val active = index == currentIndex
+            // NIBS spec: navy for completed steps with white checkmarks,
+            // vibrant orange for the active step, light slate for upcoming.
             val color = when {
-                done -> SuccessGreen
-                active -> MaterialTheme.colorScheme.primary
-                else -> MaterialTheme.colorScheme.onSurfaceVariant
+                done -> HeroSurface
+                active -> NibsOrange
+                else -> SlateGray
             }
             Column(
                 modifier = Modifier.weight(1f),
@@ -320,12 +325,12 @@ private fun WorkflowStepper(progressState: TaskProgressState, allStepsDone: Bool
                     contentAlignment = Alignment.Center,
                 ) {
                     if (done) {
-                        Icon(Icons.Filled.Check, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(14.dp))
+                        Icon(Icons.Filled.Check, contentDescription = null, tint = SurfaceWhite, modifier = Modifier.size(14.dp))
                     } else {
                         Text(
                             "0${index + 1}",
                             style = MaterialTheme.typography.labelSmall,
-                            color = if (active) MaterialTheme.colorScheme.onPrimary else color,
+                            color = if (active) SurfaceWhite else color,
                         )
                     }
                 }

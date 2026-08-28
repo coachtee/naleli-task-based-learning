@@ -30,9 +30,14 @@ class ThemePreferences(context: Context) {
         prefs.edit().putString(KEY_MODE, newMode.name).apply()
     }
 
+    // Defaults to LIGHT, not SYSTEM: the NIBS spec designs one look — navy
+    // structure and orange actions on a soft off-white canvas — so a
+    // learner whose phone happens to be in dark mode would otherwise never
+    // see the designed app. Dark remains available under Appearance and is
+    // tuned onto the same navy/orange identity.
     private fun readStored(): ThemeMode {
-        val stored = prefs.getString(KEY_MODE, null) ?: return ThemeMode.SYSTEM
-        return runCatching { ThemeMode.valueOf(stored) }.getOrDefault(ThemeMode.SYSTEM)
+        val stored = prefs.getString(KEY_MODE, null) ?: return ThemeMode.LIGHT
+        return runCatching { ThemeMode.valueOf(stored) }.getOrDefault(ThemeMode.LIGHT)
     }
 
     private companion object {

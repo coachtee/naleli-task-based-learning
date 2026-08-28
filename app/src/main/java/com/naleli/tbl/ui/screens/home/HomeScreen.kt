@@ -41,8 +41,11 @@ import com.naleli.tbl.ui.components.NaleliProgressBar
 import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.theme.HeroSurface
 import com.naleli.tbl.ui.theme.NaleliGradients
+import com.naleli.tbl.ui.theme.NibsOrange
 import com.naleli.tbl.ui.theme.OnHeroSurface
 import com.naleli.tbl.ui.theme.OnHeroSurfaceSoft
+import com.naleli.tbl.ui.theme.SuccessGreen
+import com.naleli.tbl.ui.theme.SurfaceWhite
 
 /**
  * Home answers exactly one question — what should I do right now? One
@@ -55,10 +58,10 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
     val viewModel: HomeViewModel = viewModel(factory = viewModelFactory { initializer { HomeViewModel(container) } })
     val state by viewModel.state.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize().background(HeroSurface)) {
+    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         if (state.isLoading) {
             Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                CircularProgressIndicator(color = OnHeroSurface)
+                CircularProgressIndicator()
             }
             return@Box
         }
@@ -67,10 +70,19 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
         val course = state.course ?: return@Box
 
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 16.dp),
+            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            // Deep Navy top bar (NIBS spec): solid navy structure carrying
+            // the identity, against the soft canvas the content sits on.
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(HeroSurface)
+                    .padding(horizontal = 20.dp, vertical = 18.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         "Good ${greetingWord()}, ${profile.firstName}",
@@ -88,6 +100,10 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                 Icon(Icons.Filled.NotificationsNone, contentDescription = "Notifications", tint = OnHeroSurface)
             }
 
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+            ) {
             state.priorityTask?.let { task ->
                 val workstreamName = WorkspaceMockContent.workstreamFor(task.taskId)?.name ?: course.programmeName
                 Box(
@@ -103,12 +119,14 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                         Spacer(Modifier.height(6.dp))
                         NaleliProgressBar(progressFraction = if (state.priorityStepsTotal == 0) 0f else state.priorityStepsDone / state.priorityStepsTotal.toFloat())
                         Spacer(Modifier.height(16.dp))
+                        // The hero CTA pops in vibrant orange against the
+                        // navy anchor — the screen's one dominant action.
                         Button(
                             onClick = { onOpenTask(task.taskId) },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = OnHeroSurface, contentColor = MaterialTheme.colorScheme.primary),
+                            colors = ButtonDefaults.buttonColors(containerColor = NibsOrange, contentColor = SurfaceWhite),
                         ) {
-                            Text(if (state.priorityTaskState == TaskProgressState.NOT_STARTED) "Open Task" else "Continue Work")
+                            Text(if (state.priorityTaskState == TaskProgressState.NOT_STARTED) "OPEN TASK" else "CONTINUE WORK")
                         }
                     }
                 }
@@ -124,9 +142,8 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                 Button(onClick = onOpenPortfolio, modifier = Modifier.fillMaxWidth()) { Text("View Portfolio") }
             }
 
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("TODAY", style = MaterialTheme.typography.labelLarge, color = OnHeroSurfaceSoft)
-
+            NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                Text("TODAY", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                 state.priorityHint?.let { hint ->
                     TodayRow(label = "Priority", body = hint)
                 }
@@ -136,6 +153,7 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                 }
             }
             Spacer(Modifier.height(4.dp))
+            }
         }
     }
 }
@@ -144,12 +162,12 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
 private fun TodayRow(label: String, body: String, icon: Boolean = false) {
     Row(modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp), verticalAlignment = Alignment.Top) {
         if (icon) {
-            Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = com.naleli.tbl.ui.theme.SuccessGreen, modifier = Modifier.padding(top = 2.dp))
+            Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = SuccessGreen, modifier = Modifier.padding(top = 2.dp))
             Spacer(Modifier.width(10.dp))
         }
         Column(modifier = Modifier.weight(1f)) {
-            Text(label.uppercase(), style = MaterialTheme.typography.labelSmall, color = OnHeroSurfaceSoft)
-            Text(body, style = MaterialTheme.typography.bodyMedium, color = OnHeroSurface, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Text(label.uppercase(), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(body, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface, maxLines = 2, overflow = TextOverflow.Ellipsis)
         }
     }
 }

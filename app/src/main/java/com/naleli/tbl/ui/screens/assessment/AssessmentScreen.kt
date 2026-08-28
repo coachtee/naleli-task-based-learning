@@ -43,7 +43,7 @@ import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.color
 import com.naleli.tbl.ui.components.label
 import com.naleli.tbl.ui.rememberAppContainer
-import com.naleli.tbl.ui.theme.SuccessGreen
+import com.naleli.tbl.ui.theme.NibsOrange
 import com.naleli.tbl.ui.theme.SurfaceWhite
 
 /**
@@ -147,13 +147,15 @@ fun AssessmentScreen(taskId: String, onBack: () -> Unit, onOpenPortfolio: () -> 
         item {
             Spacer(Modifier.height(4.dp))
             if (assessment.result == CompetenceResult.COMPETENT) {
+                // Emerald success banner (above) paired with an orange
+                // primary button leading to the next Journey module.
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    OutlinedButton(onClick = onOpenPortfolio, modifier = Modifier.fillMaxWidth()) { Text("View Portfolio") }
+                    OutlinedButton(onClick = onOpenPortfolio, modifier = Modifier.fillMaxWidth()) { Text("VIEW PORTFOLIO") }
                     Button(
                         onClick = onBack,
                         modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(containerColor = SuccessGreen, contentColor = SurfaceWhite),
-                    ) { Text("Continue Journey") }
+                        colors = ButtonDefaults.buttonColors(containerColor = NibsOrange, contentColor = SurfaceWhite),
+                    ) { Text("CONTINUE JOURNEY") }
                 }
             } else {
                 Button(onClick = onBack, modifier = Modifier.fillMaxWidth()) { Text("Back to Task") }
