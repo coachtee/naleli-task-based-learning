@@ -22,7 +22,13 @@ class WorkspacePreferences(context: Context) {
     var portfolioSetupComplete: Boolean by mutableStateOf(prefs.getBoolean(KEY_SETUP_DONE, false))
         private set
 
-    fun setStorageChoice(choice: StorageChoice) {
+    // Named updateStorageChoice, not setStorageChoice: a `var storageChoice`
+    // property auto-generates a JVM setStorageChoice(StorageChoice) accessor
+    // (even with a private setter), which collides with an explicitly
+    // declared function of that name at the bytecode level ("Platform
+    // declaration clash") — the same bug class already fixed once this
+    // session in ThemePreferences.updateMode.
+    fun updateStorageChoice(choice: StorageChoice) {
         storageChoice = choice
         prefs.edit().putString(KEY_STORAGE, choice.name).apply()
     }

@@ -87,7 +87,7 @@ fun PortfolioSetupScreen(onDone: () -> Unit) {
         Spacer(Modifier.weight(1f))
         Button(
             onClick = {
-                container.workspacePreferences.setStorageChoice(selected)
+                container.workspacePreferences.updateStorageChoice(selected)
                 container.workspacePreferences.markPortfolioSetupComplete()
                 onDone()
             },
