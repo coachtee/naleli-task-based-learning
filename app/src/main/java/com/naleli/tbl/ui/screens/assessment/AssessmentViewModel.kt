@@ -6,6 +6,7 @@ import com.naleli.tbl.AppContainer
 import com.naleli.tbl.data.content.WorkTask
 import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.data.db.entity.AssessmentEntity
+import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.domain.AssessmentEngine
 import com.naleli.tbl.domain.currentTaskId
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,8 +40,6 @@ class AssessmentViewModel(private val container: AppContainer, private val taskI
 
     init {
         viewModelScope.launch {
-            task?.let { container.workspaceRepository.evaluateAssessment(it) }
-
             combine(
                 container.workspaceRepository.observeSubSteps(),
                 container.workspaceRepository.observeAssessments(),
@@ -60,6 +59,18 @@ class AssessmentViewModel(private val container: AppContainer, private val taskI
                     subSteps.associateBy { it.subStepId },
                     assessments.associateBy { it.taskId },
                 )?.takeIf { it != taskId }
+
+                // Run the rubric the moment a submitted-but-unassessed row
+                // appears. Evaluating once in init raced the submit that sent
+                // the learner here: the write had not landed, evaluate found
+                // no row, bailed, and the screen sat on "Submitted" with every
+                // criterion ticked and nothing that would ever assess it.
+                if (assessment != null &&
+                    assessment.submittedAt != null &&
+                    assessment.result == CompetenceResult.NOT_YET_ASSESSED
+                ) {
+                    task?.let { container.workspaceRepository.evaluateAssessment(it) }
+                }
 
                 AssessmentUiState(
                     isLoading = false,

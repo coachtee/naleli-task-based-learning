@@ -860,14 +860,7 @@
                 "A single character of text (like A, z, or ?)",
                 "Part of a color in an image"
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "1D-p5",
-          "stage": "understand",
-          "title": "Bytes",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Bytes are the basic building block of storage in computing."
@@ -879,7 +872,7 @@
           ]
         },
         {
-          "pageId": "1D-p6",
+          "pageId": "1D-p5",
           "stage": "understand",
           "title": "Term Definition",
           "blocks": [
@@ -910,14 +903,7 @@
                 "bit is written with a lowercase b",
                 "byte is written with an uppercase B"
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "1D-p7",
-          "stage": "see",
-          "title": "Term Definition",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
@@ -926,14 +912,7 @@
                 "Mb = megabit",
                 "MB = megabyte"
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "1D-p8",
-          "stage": "understand",
-          "title": "",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Bits are used to measure data transfer over networks. So I may have internet at my home with 1 Gbps (gigabits per second), which is equal to 1000 Mbps (megabits per second). Bytes are used to measure file size and storage. My computer may have a 500 GBs (Gigab y t es) hard drive. Whether you have a lowercase b or capital B is important when reading these numbers, because they tell you whether you're talking about data transfer, bits, or data storage, bytes."
@@ -941,7 +920,7 @@
           ]
         },
         {
-          "pageId": "1D-p9",
+          "pageId": "1D-p6",
           "stage": "understand",
           "title": "Binary Number System Facts",
           "blocks": [
@@ -960,7 +939,7 @@
           ]
         },
         {
-          "pageId": "1D-p10",
+          "pageId": "1D-p7",
           "stage": "understand",
           "title": "Binary Number System Facts",
           "blocks": [
@@ -971,7 +950,7 @@
           ]
         },
         {
-          "pageId": "1D-p11",
+          "pageId": "1D-p8",
           "stage": "understand",
           "title": "Binary as Storage",
           "blocks": [
@@ -982,7 +961,7 @@
           ]
         },
         {
-          "pageId": "1D-p12",
+          "pageId": "1D-p9",
           "stage": "understand",
           "title": "Information Coding Formats",
           "blocks": [
@@ -1001,7 +980,7 @@
           ]
         },
         {
-          "pageId": "1D-p13",
+          "pageId": "1D-p10",
           "stage": "understand",
           "title": "Information Coding Formats",
           "blocks": [
@@ -1012,7 +991,7 @@
           ]
         },
         {
-          "pageId": "1D-p14",
+          "pageId": "1D-p11",
           "stage": "understand",
           "title": "Storing in Binary",
           "blocks": [
@@ -1031,7 +1010,7 @@
           ]
         },
         {
-          "pageId": "1D-p15",
+          "pageId": "1D-p12",
           "stage": "understand",
           "title": "Storing in Binary",
           "blocks": [
@@ -1050,7 +1029,7 @@
           ]
         },
         {
-          "pageId": "1D-p16",
+          "pageId": "1D-p13",
           "stage": "understand",
           "title": "Hexadecimal and Octal Systems",
           "blocks": [
@@ -1069,7 +1048,7 @@
           ]
         },
         {
-          "pageId": "1D-p17",
+          "pageId": "1D-p14",
           "stage": "understand",
           "title": "Hexadecimal in Computing",
           "blocks": [
@@ -1088,7 +1067,7 @@
           ]
         },
         {
-          "pageId": "1D-p18",
+          "pageId": "1D-p15",
           "stage": "understand",
           "title": "Hexadecimal in Network Addresses",
           "blocks": [
@@ -1103,7 +1082,7 @@
           ]
         },
         {
-          "pageId": "1D-p19",
+          "pageId": "1D-p16",
           "stage": "understand",
           "title": "Octal Numbering",
           "blocks": [
@@ -2745,14 +2724,7 @@
             {
               "type": "paragraph",
               "text": "Open-Source Software Software where anyone can inspect, enhance, and modify the source code is considered open source. Open-source software is often free and can have third-party add-ons to enhance the product. Common examples are GIMP and the Linux operating system."
-            }
-          ]
-        },
-        {
-          "pageId": "3C-p13",
-          "stage": "understand",
-          "title": "Term Description",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Open source is not the same thing as a free license or open license, which is a license that allows others to reuse another creator’s work as they wish."
@@ -2760,7 +2732,7 @@
           ]
         },
         {
-          "pageId": "3C-p14",
+          "pageId": "3C-p13",
           "stage": "understand",
           "title": "Plagiarism",
           "blocks": [
@@ -2779,7 +2751,7 @@
           ]
         },
         {
-          "pageId": "3C-p15",
+          "pageId": "3C-p14",
           "stage": "understand",
           "title": "Plagiarism",
           "blocks": [
@@ -2808,7 +2780,7 @@
           ]
         },
         {
-          "pageId": "3C-p16",
+          "pageId": "3C-p15",
           "stage": "understand",
           "title": "Plagiarism",
           "blocks": [
@@ -2823,7 +2795,7 @@
           ]
         },
         {
-          "pageId": "3C-p17",
+          "pageId": "3C-p16",
           "stage": "understand",
           "title": "Practical copyright ethics on social media",
           "blocks": [
@@ -2842,7 +2814,7 @@
           ]
         },
         {
-          "pageId": "3C-p18",
+          "pageId": "3C-p17",
           "stage": "understand",
           "title": "Practical copyright ethics on social media",
           "blocks": [
@@ -3329,14 +3301,7 @@
             {
               "type": "paragraph",
               "text": "A useful analogy is a city with open streets and gated communities. The public roads are like the public internet; anyone can use them. A gated neighborhood is like a private network; only people with permission can enter. Devices such as routers and firewalls act like the gates and guards, controlling who can go in and out."
-            }
-          ]
-        },
-        {
-          "pageId": "4A-p11",
-          "stage": "understand",
-          "title": "Public and Private Networks",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Some organizations build an intranet, which is like a private “mini-internet” inside the company."
@@ -3348,7 +3313,7 @@
           ]
         },
         {
-          "pageId": "4A-p12",
+          "pageId": "4A-p11",
           "stage": "understand",
           "title": "Clients, Servers, and Peers",
           "blocks": [
@@ -3374,7 +3339,7 @@
           ]
         },
         {
-          "pageId": "4A-p13",
+          "pageId": "4A-p12",
           "stage": "understand",
           "title": "Connectivity in Everyday Life",
           "blocks": [
@@ -3399,7 +3364,7 @@
           ]
         },
         {
-          "pageId": "4A-p14",
+          "pageId": "4A-p13",
           "stage": "understand",
           "title": "Web Pages and Web Sites",
           "blocks": [
@@ -3410,7 +3375,7 @@
           ]
         },
         {
-          "pageId": "4A-p15",
+          "pageId": "4A-p14",
           "stage": "understand",
           "title": "Web Content",
           "blocks": [
@@ -3425,7 +3390,7 @@
           ]
         },
         {
-          "pageId": "4A-p16",
+          "pageId": "4A-p15",
           "stage": "understand",
           "title": "Web Content",
           "blocks": [
@@ -3440,7 +3405,7 @@
           ]
         },
         {
-          "pageId": "4A-p17",
+          "pageId": "4A-p16",
           "stage": "understand",
           "title": "Protocols",
           "blocks": [
@@ -3455,7 +3420,7 @@
           ]
         },
         {
-          "pageId": "4A-p18",
+          "pageId": "4A-p17",
           "stage": "understand",
           "title": "Web Architecture",
           "blocks": [
@@ -3478,7 +3443,7 @@
           ]
         },
         {
-          "pageId": "4A-p19",
+          "pageId": "4A-p18",
           "stage": "understand",
           "title": "Web Architecture",
           "blocks": [
@@ -3489,7 +3454,7 @@
           ]
         },
         {
-          "pageId": "4A-p20",
+          "pageId": "4A-p19",
           "stage": "understand",
           "title": "Finding Things on the Internet",
           "blocks": [
@@ -3515,7 +3480,7 @@
           ]
         },
         {
-          "pageId": "4A-p21",
+          "pageId": "4A-p20",
           "stage": "understand",
           "title": "What Is an IP Address?",
           "blocks": [
@@ -3541,7 +3506,7 @@
           ]
         },
         {
-          "pageId": "4A-p22",
+          "pageId": "4A-p21",
           "stage": "understand",
           "title": "What Is a URL?",
           "blocks": [
@@ -3568,7 +3533,7 @@
           ]
         },
         {
-          "pageId": "4A-p23",
+          "pageId": "4A-p22",
           "stage": "understand",
           "title": "How URLs and IP Addresses Work Together",
           "blocks": [
@@ -3591,7 +3556,7 @@
           ]
         },
         {
-          "pageId": "4A-p24",
+          "pageId": "4A-p23",
           "stage": "understand",
           "title": "The Role of DNS Servers",
           "blocks": [
@@ -3619,7 +3584,7 @@
           ]
         },
         {
-          "pageId": "4A-p25",
+          "pageId": "4A-p24",
           "stage": "understand",
           "title": "Why IP Addresses and URLs Matter",
           "blocks": [
@@ -3825,14 +3790,7 @@
                 "Home button: Returns a browser to the default starting webpage.",
                 "Address bar: Displays the name of the website or universal resource locator (URL) of the current web page."
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "4B-p8",
-          "stage": "understand",
-          "title": "Shared Browser Traits",
-          "blocks": [
+            },
             {
               "type": "list",
               "items": [
@@ -3843,7 +3801,7 @@
           ]
         },
         {
-          "pageId": "4B-p9",
+          "pageId": "4B-p8",
           "stage": "understand",
           "title": "Web Browsing Software",
           "blocks": [
@@ -3862,7 +3820,7 @@
           ]
         },
         {
-          "pageId": "4B-p10",
+          "pageId": "4B-p9",
           "stage": "understand",
           "title": "Smartphone Browsers",
           "blocks": [
@@ -3873,7 +3831,7 @@
           ]
         },
         {
-          "pageId": "4B-p11",
+          "pageId": "4B-p10",
           "stage": "understand",
           "title": "Website Navigation",
           "blocks": [
@@ -3884,7 +3842,7 @@
           ]
         },
         {
-          "pageId": "4B-p12",
+          "pageId": "4B-p11",
           "stage": "understand",
           "title": "Features/Terms Description",
           "blocks": [
@@ -3908,14 +3866,7 @@
             {
               "type": "paragraph",
               "text": "Contact information often includes a phone number, email addresses, and physical addresses."
-            }
-          ]
-        },
-        {
-          "pageId": "4B-p13",
-          "stage": "understand",
-          "title": "Features/Terms Description",
-          "blocks": [
+            },
             {
               "type": "list",
               "items": [
@@ -3925,7 +3876,7 @@
           ]
         },
         {
-          "pageId": "4B-p14",
+          "pageId": "4B-p12",
           "stage": "understand",
           "title": "Features/Terms Description",
           "blocks": [
@@ -3940,7 +3891,7 @@
           ]
         },
         {
-          "pageId": "4B-p15",
+          "pageId": "4B-p13",
           "stage": "understand",
           "title": "Personalize the Browser",
           "blocks": [
@@ -3955,7 +3906,7 @@
           ]
         },
         {
-          "pageId": "4B-p16",
+          "pageId": "4B-p14",
           "stage": "understand",
           "title": "Browser Profiles",
           "blocks": [
@@ -3978,7 +3929,7 @@
           ]
         },
         {
-          "pageId": "4B-p17",
+          "pageId": "4B-p15",
           "stage": "understand",
           "title": "Browser Profiles",
           "blocks": [
@@ -3997,7 +3948,7 @@
           ]
         },
         {
-          "pageId": "4B-p18",
+          "pageId": "4B-p16",
           "stage": "understand",
           "title": "Search Engines",
           "blocks": [
@@ -4016,7 +3967,7 @@
           ]
         },
         {
-          "pageId": "4B-p19",
+          "pageId": "4B-p17",
           "stage": "understand",
           "title": "Customize the Browser Appearance",
           "blocks": [
@@ -4035,7 +3986,7 @@
           ]
         },
         {
-          "pageId": "4B-p20",
+          "pageId": "4B-p18",
           "stage": "understand",
           "title": "Accessibility Features",
           "blocks": [
@@ -4058,7 +4009,7 @@
           ]
         },
         {
-          "pageId": "4B-p21",
+          "pageId": "4B-p19",
           "stage": "understand",
           "title": "Accessibility Features",
           "blocks": [
@@ -4069,7 +4020,7 @@
           ]
         },
         {
-          "pageId": "4B-p22",
+          "pageId": "4B-p20",
           "stage": "understand",
           "title": "Understand Browser Add-ons",
           "blocks": [
@@ -4084,7 +4035,7 @@
           ]
         },
         {
-          "pageId": "4B-p23",
+          "pageId": "4B-p21",
           "stage": "understand",
           "title": "Pop-up Blockers",
           "blocks": [
@@ -4099,7 +4050,7 @@
           ]
         },
         {
-          "pageId": "4B-p24",
+          "pageId": "4B-p22",
           "stage": "understand",
           "title": "Extensions and Privacy",
           "blocks": [
@@ -4114,7 +4065,7 @@
           ]
         },
         {
-          "pageId": "4B-p25",
+          "pageId": "4B-p23",
           "stage": "understand",
           "title": "Removing Extensions",
           "blocks": [
@@ -4125,7 +4076,7 @@
           ]
         },
         {
-          "pageId": "4B-p26",
+          "pageId": "4B-p24",
           "stage": "understand",
           "title": "Use Browser Privacy Features",
           "blocks": [
@@ -4136,7 +4087,7 @@
           ]
         },
         {
-          "pageId": "4B-p27",
+          "pageId": "4B-p25",
           "stage": "understand",
           "title": "Autofill",
           "blocks": [
@@ -4151,7 +4102,7 @@
           ]
         },
         {
-          "pageId": "4B-p28",
+          "pageId": "4B-p26",
           "stage": "understand",
           "title": "Incognito and Private Mode",
           "blocks": [
@@ -4174,7 +4125,7 @@
           ]
         },
         {
-          "pageId": "4B-p29",
+          "pageId": "4B-p27",
           "stage": "understand",
           "title": "Incognito and Private Mode",
           "blocks": [
@@ -4185,7 +4136,7 @@
           ]
         },
         {
-          "pageId": "4B-p30",
+          "pageId": "4B-p28",
           "stage": "understand",
           "title": "Maintain the Browser",
           "blocks": [
@@ -4220,7 +4171,7 @@
           ]
         },
         {
-          "pageId": "4B-p31",
+          "pageId": "4B-p29",
           "stage": "understand",
           "title": "Maintain the Browser",
           "blocks": [
@@ -4235,7 +4186,7 @@
           ]
         },
         {
-          "pageId": "4B-p32",
+          "pageId": "4B-p30",
           "stage": "understand",
           "title": "Browser Cache",
           "blocks": [
@@ -4250,7 +4201,7 @@
           ]
         },
         {
-          "pageId": "4B-p33",
+          "pageId": "4B-p31",
           "stage": "understand",
           "title": "Browser Cache",
           "blocks": [
@@ -4269,7 +4220,7 @@
           ]
         },
         {
-          "pageId": "4B-p34",
+          "pageId": "4B-p32",
           "stage": "understand",
           "title": "Browser Compatibility",
           "blocks": [
@@ -4288,7 +4239,7 @@
           ]
         },
         {
-          "pageId": "4B-p35",
+          "pageId": "4B-p33",
           "stage": "understand",
           "title": "Browser Compatibility",
           "blocks": [
@@ -4377,14 +4328,7 @@
             {
               "type": "paragraph",
               "text": "Searching is perhaps the most common activity to do on the internet. Knowing how a search engine creates and presents results and practicing using advanced search tools will result in better internet searching and faster, better results."
-            }
-          ]
-        },
-        {
-          "pageId": "4C-p2",
-          "stage": "understand",
-          "title": "Search Engines",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Search engines are used on a daily basis to find websites, information, and local businesses."
@@ -4396,7 +4340,7 @@
           ]
         },
         {
-          "pageId": "4C-p3",
+          "pageId": "4C-p2",
           "stage": "understand",
           "title": "Features/Terms Description",
           "blocks": [
@@ -4423,7 +4367,7 @@
           ]
         },
         {
-          "pageId": "4C-p4",
+          "pageId": "4C-p3",
           "stage": "understand",
           "title": "Term Definition Explanation",
           "blocks": [
@@ -4438,7 +4382,7 @@
           ]
         },
         {
-          "pageId": "4C-p5",
+          "pageId": "4C-p4",
           "stage": "understand",
           "title": "Term Definition Explanation",
           "blocks": [
@@ -4465,7 +4409,7 @@
           ]
         },
         {
-          "pageId": "4C-p6",
+          "pageId": "4C-p5",
           "stage": "understand",
           "title": "Logo Search Engine Description",
           "blocks": [
@@ -4492,7 +4436,7 @@
           ]
         },
         {
-          "pageId": "4C-p7",
+          "pageId": "4C-p6",
           "stage": "understand",
           "title": "Searching Online",
           "blocks": [
@@ -4503,7 +4447,7 @@
           ]
         },
         {
-          "pageId": "4C-p8",
+          "pageId": "4C-p7",
           "stage": "understand",
           "title": "Tip Description",
           "blocks": [
@@ -4526,7 +4470,7 @@
           ]
         },
         {
-          "pageId": "4C-p9",
+          "pageId": "4C-p8",
           "stage": "understand",
           "title": "Tip Description",
           "blocks": [
@@ -4537,7 +4481,7 @@
           ]
         },
         {
-          "pageId": "4C-p10",
+          "pageId": "4C-p9",
           "stage": "understand",
           "title": "Tip Description",
           "blocks": [
@@ -4556,7 +4500,7 @@
           ]
         },
         {
-          "pageId": "4C-p11",
+          "pageId": "4C-p10",
           "stage": "understand",
           "title": "Tip Description",
           "blocks": [
@@ -4571,7 +4515,7 @@
           ]
         },
         {
-          "pageId": "4C-p12",
+          "pageId": "4C-p11",
           "stage": "understand",
           "title": "Academic Research",
           "blocks": [
@@ -4586,7 +4530,7 @@
           ]
         },
         {
-          "pageId": "4C-p13",
+          "pageId": "4C-p12",
           "stage": "understand",
           "title": "Formal Citations",
           "blocks": [
@@ -4597,7 +4541,7 @@
           ]
         },
         {
-          "pageId": "4C-p14",
+          "pageId": "4C-p13",
           "stage": "understand",
           "title": "Style Description and Examples",
           "blocks": [
@@ -4612,7 +4556,7 @@
           ]
         },
         {
-          "pageId": "4C-p15",
+          "pageId": "4C-p14",
           "stage": "understand",
           "title": "Style Description and Examples",
           "blocks": [
@@ -4627,7 +4571,7 @@
           ]
         },
         {
-          "pageId": "4C-p16",
+          "pageId": "4C-p15",
           "stage": "understand",
           "title": "Style Description and Examples",
           "blocks": [
@@ -4646,7 +4590,7 @@
           ]
         },
         {
-          "pageId": "4C-p17",
+          "pageId": "4C-p16",
           "stage": "understand",
           "title": "Informal Citations",
           "blocks": [
@@ -4657,7 +4601,7 @@
           ]
         },
         {
-          "pageId": "4C-p18",
+          "pageId": "4C-p17",
           "stage": "understand",
           "title": "Type Example",
           "blocks": [
@@ -4668,7 +4612,7 @@
           ]
         },
         {
-          "pageId": "4C-p19",
+          "pageId": "4C-p18",
           "stage": "understand",
           "title": "Type Example",
           "blocks": [
@@ -4687,7 +4631,7 @@
           ]
         },
         {
-          "pageId": "4C-p20",
+          "pageId": "4C-p19",
           "stage": "understand",
           "title": "Special Considerations for Social Media",
           "blocks": [
@@ -4698,7 +4642,7 @@
           ]
         },
         {
-          "pageId": "4C-p21",
+          "pageId": "4C-p20",
           "stage": "understand",
           "title": "Special Considerations for Social Media",
           "blocks": [
@@ -5211,14 +5155,7 @@
             {
               "type": "paragraph",
               "text": "Most paid distribution utilizes algorithms to help distribute content to users. When you like or share a post, the app makes note of the type of content you have shown interest in. The algorithm in the app will then search through its library of paid ads and accounts to find the paid content that fits closest to your interests."
-            }
-          ]
-        },
-        {
-          "pageId": "4D-p21",
-          "stage": "understand",
-          "title": "User Communities & Forums",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Forum type social media is useful in helping users ask questions, provide feedback, give advice, and to discuss all types of information."
@@ -5226,7 +5163,7 @@
           ]
         },
         {
-          "pageId": "4D-p22",
+          "pageId": "4D-p21",
           "stage": "understand",
           "title": "Content",
           "blocks": [
@@ -5245,7 +5182,7 @@
           ]
         },
         {
-          "pageId": "4D-p23",
+          "pageId": "4D-p22",
           "stage": "understand",
           "title": "Logo Website Network Type",
           "blocks": [
@@ -5272,7 +5209,7 @@
           ]
         },
         {
-          "pageId": "4D-p24",
+          "pageId": "4D-p23",
           "stage": "understand",
           "title": "Logo Website Network Type",
           "blocks": [
@@ -5287,7 +5224,7 @@
           ]
         },
         {
-          "pageId": "4D-p25",
+          "pageId": "4D-p24",
           "stage": "understand",
           "title": "Online Streaming",
           "blocks": [
@@ -5298,7 +5235,7 @@
           ]
         },
         {
-          "pageId": "4D-p26",
+          "pageId": "4D-p25",
           "stage": "understand",
           "title": "Method Description",
           "blocks": [
@@ -5313,7 +5250,7 @@
           ]
         },
         {
-          "pageId": "4D-p27",
+          "pageId": "4D-p26",
           "stage": "understand",
           "title": "Method Description",
           "blocks": [
@@ -5645,14 +5582,7 @@
             {
               "type": "paragraph",
               "text": "Consider someone named Kai as an example. If Kai has been on social media talking about visiting an animal shelter and has also been shopping for dog toys recently, the company looking at this data might connect the dots. They could start showing Kai ads for dog beds or more posts about dogs on social media. If they also know where Kai lives or how old Kai is, they can get even more specific. Kai might start seeing ads for dog groomers nearby, or events held at the local dog park."
-            }
-          ]
-        },
-        {
-          "pageId": "5A-p16",
-          "stage": "understand",
-          "title": "Data Analysis",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "All of this happens very quickly and at a very large scale with the help of algorithms and computer processing. Human analysis isn't necessary anymore when tracking huge amounts of data."
@@ -5660,7 +5590,7 @@
           ]
         },
         {
-          "pageId": "5A-p17",
+          "pageId": "5A-p16",
           "stage": "understand",
           "title": "Big Data",
           "blocks": [
@@ -5671,7 +5601,7 @@
           ]
         },
         {
-          "pageId": "5A-p18",
+          "pageId": "5A-p17",
           "stage": "understand",
           "title": "Masking Data",
           "blocks": [
@@ -5690,7 +5620,7 @@
           ]
         },
         {
-          "pageId": "5A-p19",
+          "pageId": "5A-p18",
           "stage": "understand",
           "title": "Monetizing Data",
           "blocks": [
@@ -5705,7 +5635,7 @@
           ]
         },
         {
-          "pageId": "5A-p20",
+          "pageId": "5A-p19",
           "stage": "understand",
           "title": "Data Brokers",
           "blocks": [
@@ -5720,7 +5650,7 @@
           ]
         },
         {
-          "pageId": "5A-p21",
+          "pageId": "5A-p20",
           "stage": "understand",
           "title": "Data Brokers",
           "blocks": [
@@ -5731,7 +5661,7 @@
           ]
         },
         {
-          "pageId": "5A-p22",
+          "pageId": "5A-p21",
           "stage": "understand",
           "title": "Data as Income",
           "blocks": [
@@ -5742,7 +5672,7 @@
           ]
         },
         {
-          "pageId": "5A-p23",
+          "pageId": "5A-p22",
           "stage": "understand",
           "title": "Privacy in Social Media",
           "blocks": [
@@ -5757,7 +5687,7 @@
           ]
         },
         {
-          "pageId": "5A-p24",
+          "pageId": "5A-p23",
           "stage": "understand",
           "title": "Who Owns Data on Social Media?",
           "blocks": [
@@ -5772,7 +5702,7 @@
           ]
         },
         {
-          "pageId": "5A-p25",
+          "pageId": "5A-p24",
           "stage": "understand",
           "title": "Safely Using Social Media",
           "blocks": [
@@ -5794,7 +5724,7 @@
           ]
         },
         {
-          "pageId": "5A-p26",
+          "pageId": "5A-p25",
           "stage": "understand",
           "title": "Safely Using Social Media",
           "blocks": [
@@ -5809,7 +5739,7 @@
           ]
         },
         {
-          "pageId": "5A-p27",
+          "pageId": "5A-p26",
           "stage": "understand",
           "title": "Privacy in Communications",
           "blocks": [
@@ -5820,7 +5750,7 @@
           ]
         },
         {
-          "pageId": "5A-p28",
+          "pageId": "5A-p27",
           "stage": "understand",
           "title": "Texting (SMS) Safety",
           "blocks": [
@@ -5835,7 +5765,7 @@
           ]
         },
         {
-          "pageId": "5A-p29",
+          "pageId": "5A-p28",
           "stage": "understand",
           "title": "Instant Messaging Safety",
           "blocks": [
@@ -5854,7 +5784,7 @@
           ]
         },
         {
-          "pageId": "5A-p30",
+          "pageId": "5A-p29",
           "stage": "understand",
           "title": "Email Safety",
           "blocks": [
@@ -5869,7 +5799,7 @@
           ]
         },
         {
-          "pageId": "5A-p31",
+          "pageId": "5A-p30",
           "stage": "understand",
           "title": "File Sharing Safety",
           "blocks": [
@@ -5884,7 +5814,7 @@
           ]
         },
         {
-          "pageId": "5A-p32",
+          "pageId": "5A-p31",
           "stage": "understand",
           "title": "Safely Using Internet Communications",
           "blocks": [
@@ -5908,7 +5838,7 @@
           ]
         },
         {
-          "pageId": "5A-p33",
+          "pageId": "5A-p32",
           "stage": "understand",
           "title": "Safely Using Internet Communications",
           "blocks": [
@@ -5923,7 +5853,7 @@
           ]
         },
         {
-          "pageId": "5A-p34",
+          "pageId": "5A-p33",
           "stage": "understand",
           "title": "Term Description",
           "blocks": [
@@ -5942,7 +5872,7 @@
           ]
         },
         {
-          "pageId": "5A-p35",
+          "pageId": "5A-p34",
           "stage": "understand",
           "title": "Term Description",
           "blocks": [
@@ -5961,7 +5891,7 @@
           ]
         },
         {
-          "pageId": "5A-p36",
+          "pageId": "5A-p35",
           "stage": "understand",
           "title": "Privacy Regulations",
           "blocks": [
@@ -5980,7 +5910,7 @@
           ]
         },
         {
-          "pageId": "5A-p37",
+          "pageId": "5A-p36",
           "stage": "understand",
           "title": "Personal Data in the United States",
           "blocks": [
@@ -5995,7 +5925,7 @@
           ]
         },
         {
-          "pageId": "5A-p38",
+          "pageId": "5A-p37",
           "stage": "understand",
           "title": "Personal Data in the United States",
           "blocks": [
@@ -6284,14 +6214,7 @@
                 "Are you using the same password on more than one site or app?",
                 "Have you heard about any data breaches at the organizations for which you have a password?"
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "5B-p12",
-          "stage": "understand",
-          "title": "Digital Records",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "If you've read through this lesson and have a feeling that you might not have the best passwords, take a few minutes now to change them."
@@ -6299,7 +6222,7 @@
           ]
         },
         {
-          "pageId": "5B-p13",
+          "pageId": "5B-p12",
           "stage": "understand",
           "title": "Account Types",
           "blocks": [
@@ -6310,7 +6233,7 @@
           ]
         },
         {
-          "pageId": "5B-p14",
+          "pageId": "5B-p13",
           "stage": "understand",
           "title": "Data Breaches",
           "blocks": [
@@ -6329,7 +6252,7 @@
           ]
         },
         {
-          "pageId": "5B-p15",
+          "pageId": "5B-p14",
           "stage": "understand",
           "title": "Data Breaches",
           "blocks": [
@@ -6340,7 +6263,7 @@
           ]
         },
         {
-          "pageId": "5B-p16",
+          "pageId": "5B-p15",
           "stage": "understand",
           "title": "Encryption Basics",
           "blocks": [
@@ -6367,14 +6290,7 @@
             {
               "type": "paragraph",
               "text": "This encryption method works by shifting each letter in the alphabet a certain number of spaces to the right or left. In the example below, the cipher is shifting to the right by three letters. A becomes D, B becomes E, C becomes F, and so forth. To decrypt the message, the reader must know how many spaces to shift the letters."
-            }
-          ]
-        },
-        {
-          "pageId": "5B-p17",
-          "stage": "see",
-          "title": "Encryption Basics",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
@@ -6383,9 +6299,9 @@
           ]
         },
         {
-          "pageId": "5B-p18",
+          "pageId": "5B-p16",
           "stage": "understand",
-          "title": "",
+          "title": "Encryption Basics",
           "blocks": [
             {
               "type": "paragraph",
@@ -6394,7 +6310,7 @@
           ]
         },
         {
-          "pageId": "5B-p19",
+          "pageId": "5B-p17",
           "stage": "understand",
           "title": "Modern Encryption",
           "blocks": [
@@ -6413,7 +6329,7 @@
           ]
         },
         {
-          "pageId": "5B-p20",
+          "pageId": "5B-p18",
           "stage": "understand",
           "title": "Encrypting Data",
           "blocks": [
@@ -6432,7 +6348,7 @@
           ]
         },
         {
-          "pageId": "5B-p21",
+          "pageId": "5B-p19",
           "stage": "understand",
           "title": "Encrypting Data at Rest",
           "blocks": [
@@ -6455,7 +6371,7 @@
           ]
         },
         {
-          "pageId": "5B-p22",
+          "pageId": "5B-p20",
           "stage": "understand",
           "title": "Encrypting Data at Rest",
           "blocks": [
@@ -6466,7 +6382,7 @@
           ]
         },
         {
-          "pageId": "5B-p23",
+          "pageId": "5B-p21",
           "stage": "understand",
           "title": "Encrypting Data in Transit",
           "blocks": [
@@ -6761,14 +6677,7 @@
             {
               "type": "paragraph",
               "text": "Be careful about your state of mind when you read emails. If someone tries to trick you with an email when you're not paying much attention or feeling tired, you might not notice that it's a fake. Remember one of the golden rules of email: no matter how legitimate it appears, always open your browser and go directly to the website yourself to log in. If your user ID or name field is set to auto complete, make sure it does actually auto complete. If it does not, this is another hint of a potentially counterfeit site."
-            }
-          ]
-        },
-        {
-          "pageId": "5C-p14",
-          "stage": "understand",
-          "title": "Phishing Attacks",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Always think before you respond to requests like this and consider the possibilities. Do you even have an account with the company that is allegedly reaching out to you?"
@@ -6776,7 +6685,7 @@
           ]
         },
         {
-          "pageId": "5C-p15",
+          "pageId": "5C-p14",
           "stage": "understand",
           "title": "Spear Phishing Variation",
           "blocks": [
@@ -6795,7 +6704,7 @@
           ]
         },
         {
-          "pageId": "5C-p16",
+          "pageId": "5C-p15",
           "stage": "understand",
           "title": "Spear Phishing Variation",
           "blocks": [
@@ -6810,7 +6719,7 @@
           ]
         },
         {
-          "pageId": "5C-p17",
+          "pageId": "5C-p16",
           "stage": "understand",
           "title": "Smishing Attacks",
           "blocks": [
@@ -6831,7 +6740,7 @@
           ]
         },
         {
-          "pageId": "5C-p18",
+          "pageId": "5C-p17",
           "stage": "understand",
           "title": "Smishing Attacks",
           "blocks": [
@@ -6866,7 +6775,7 @@
           ]
         },
         {
-          "pageId": "5C-p19",
+          "pageId": "5C-p18",
           "stage": "understand",
           "title": "Smishing Attacks",
           "blocks": [
@@ -6881,7 +6790,7 @@
           ]
         },
         {
-          "pageId": "5C-p20",
+          "pageId": "5C-p19",
           "stage": "understand",
           "title": "Social Engineering Overview",
           "blocks": [
@@ -6900,7 +6809,7 @@
           ]
         },
         {
-          "pageId": "5C-p21",
+          "pageId": "5C-p20",
           "stage": "understand",
           "title": "Social Engineering Overview",
           "blocks": [
@@ -6919,7 +6828,7 @@
           ]
         },
         {
-          "pageId": "5C-p22",
+          "pageId": "5C-p21",
           "stage": "understand",
           "title": "Types of Social Engineering",
           "blocks": [
@@ -6938,7 +6847,7 @@
           ]
         },
         {
-          "pageId": "5C-p23",
+          "pageId": "5C-p22",
           "stage": "see",
           "title": "Types of Social Engineering",
           "blocks": [
@@ -6950,7 +6859,7 @@
           ]
         },
         {
-          "pageId": "5C-p24",
+          "pageId": "5C-p23",
           "stage": "understand",
           "title": "",
           "blocks": [
@@ -6961,7 +6870,7 @@
           ]
         },
         {
-          "pageId": "5C-p25",
+          "pageId": "5C-p24",
           "stage": "understand",
           "title": "Lunchtime Attacks",
           "blocks": [
@@ -6980,7 +6889,7 @@
           ]
         },
         {
-          "pageId": "5C-p26",
+          "pageId": "5C-p25",
           "stage": "understand",
           "title": "Shoulder Surfing",
           "blocks": [
@@ -6995,7 +6904,7 @@
           ]
         },
         {
-          "pageId": "5C-p27",
+          "pageId": "5C-p26",
           "stage": "understand",
           "title": "Tailgating",
           "blocks": [
@@ -7006,7 +6915,7 @@
           ]
         },
         {
-          "pageId": "5C-p28",
+          "pageId": "5C-p27",
           "stage": "understand",
           "title": "Fake News and Evaluating Misinformation",
           "blocks": [
@@ -7028,14 +6937,7 @@
                 "Check the website's links. Reputable websites will link to each other. If you click on a link and it doesn't work, this could be a red flag.",
                 "Blog and social media posts are not reliable sources of information. Always use good judgment and be wary of content published by strangers that you can't verify. Local exceptions to this rule are common, directly from an institution or about local happenings."
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "5C-p29",
-          "stage": "see",
-          "title": "Fake News and Evaluating Misinformation",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
@@ -7044,9 +6946,9 @@
           ]
         },
         {
-          "pageId": "5C-p30",
+          "pageId": "5C-p28",
           "stage": "understand",
-          "title": "",
+          "title": "Fake News and Evaluating Misinformation",
           "blocks": [
             {
               "type": "paragraph",
@@ -7071,9 +6973,9 @@
           ]
         },
         {
-          "pageId": "5C-p31",
+          "pageId": "5C-p29",
           "stage": "understand",
-          "title": "",
+          "title": "Fake News and Evaluating Misinformation",
           "blocks": [
             {
               "type": "paragraph",
@@ -8767,14 +8669,7 @@
             {
               "type": "paragraph",
               "text": "Most tools have simplified this completely by automatically determining the best model for the task based on your prompt. For example, if your prompt asks for a text summary, a tool like ChatGPT will route it to a text-processing model (like GPT -5). If you ask for a picture, it seamlessly routes the request to an image-generation model (like GPT Image). However, some still let you manually select different levels of 'thinking,' such as choosing a 'Standard' model for quick, everyday tasks or an 'Advanced' reasoning model for complex problem-solving."
-            }
-          ]
-        },
-        {
-          "pageId": "6A-p13",
-          "stage": "understand",
-          "title": "Common Generative AI Tools and Models",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Below is a quick reference table listing the most popular tools as of July 2026."
@@ -8782,7 +8677,7 @@
           ]
         },
         {
-          "pageId": "6A-p14",
+          "pageId": "6A-p13",
           "stage": "understand",
           "title": "Primary Use",
           "blocks": [
@@ -8797,7 +8692,7 @@
           ]
         },
         {
-          "pageId": "6A-p15",
+          "pageId": "6A-p14",
           "stage": "understand",
           "title": "Google Gemini Gemini 3.5 Flash / Pro (Ma y",
           "blocks": [
@@ -8828,7 +8723,7 @@
           ]
         },
         {
-          "pageId": "6A-p16",
+          "pageId": "6A-p15",
           "stage": "understand",
           "title": "Workplace productivity inside",
           "blocks": [
@@ -8851,7 +8746,7 @@
           ]
         },
         {
-          "pageId": "6A-p17",
+          "pageId": "6A-p16",
           "stage": "understand",
           "title": "Apple Intelligence Native to Apple's 26-series",
           "blocks": [
@@ -8866,7 +8761,7 @@
           ]
         },
         {
-          "pageId": "6A-p18",
+          "pageId": "6A-p17",
           "stage": "understand",
           "title": "Claude (Anthr opic ) Claude Sonnet 5 (June",
           "blocks": [
@@ -8889,7 +8784,7 @@
           ]
         },
         {
-          "pageId": "6A-p19",
+          "pageId": "6A-p18",
           "stage": "understand",
           "title": "Primary Use",
           "blocks": [
@@ -8908,7 +8803,7 @@
           ]
         },
         {
-          "pageId": "6A-p20",
+          "pageId": "6A-p19",
           "stage": "understand",
           "title": "Primary Use",
           "blocks": [
@@ -8947,7 +8842,7 @@
           ]
         },
         {
-          "pageId": "6A-p21",
+          "pageId": "6A-p20",
           "stage": "understand",
           "title": "Primary Use",
           "blocks": [
@@ -8982,7 +8877,7 @@
           ]
         },
         {
-          "pageId": "6A-p22",
+          "pageId": "6A-p21",
           "stage": "understand",
           "title": "Primary Use",
           "blocks": [
@@ -9013,14 +8908,7 @@
             {
               "type": "paragraph",
               "text": "Specialized software engineering, security auditing, and deep technical debugging."
-            }
-          ]
-        },
-        {
-          "pageId": "6A-p23",
-          "stage": "understand",
-          "title": "Where Can You Find These Tools?",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Most of these tools are available online. Many offer free versions or trial periods, so you can experiment and see if they fit your needs."
@@ -9028,7 +8916,7 @@
           ]
         },
         {
-          "pageId": "6A-p24",
+          "pageId": "6A-p22",
           "stage": "understand",
           "title": "Everyday Uses (And Some Surprising Ide as!)",
           "blocks": [
@@ -9080,7 +8968,7 @@
           ]
         },
         {
-          "pageId": "6A-p25",
+          "pageId": "6A-p23",
           "stage": "understand",
           "title": "Tips for Using Generative AI Wisely",
           "blocks": [
@@ -9121,7 +9009,7 @@
           ]
         },
         {
-          "pageId": "6A-p26",
+          "pageId": "6A-p24",
           "stage": "understand",
           "title": "Elements of an Effective Prompt",
           "blocks": [
@@ -9170,7 +9058,7 @@
           ]
         },
         {
-          "pageId": "6A-p27",
+          "pageId": "6A-p25",
           "stage": "understand",
           "title": "Elements of an Effective Prompt",
           "blocks": [
@@ -9204,7 +9092,7 @@
           ]
         },
         {
-          "pageId": "6A-p28",
+          "pageId": "6A-p26",
           "stage": "understand",
           "title": "Elements of an Effective Prompt",
           "blocks": [
@@ -9234,7 +9122,7 @@
           ]
         },
         {
-          "pageId": "6A-p29",
+          "pageId": "6A-p27",
           "stage": "understand",
           "title": "Elements of an Effective Prompt",
           "blocks": [
@@ -9280,7 +9168,7 @@
           ]
         },
         {
-          "pageId": "6A-p30",
+          "pageId": "6A-p28",
           "stage": "understand",
           "title": "Elements of an Effective Prompt",
           "blocks": [
@@ -9310,7 +9198,7 @@
           ]
         },
         {
-          "pageId": "6A-p31",
+          "pageId": "6A-p29",
           "stage": "understand",
           "title": "Pulling It All Together",
           "blocks": [
@@ -9346,7 +9234,7 @@
           ]
         },
         {
-          "pageId": "6A-p32",
+          "pageId": "6A-p30",
           "stage": "understand",
           "title": "Why Effective Prompts Matter",
           "blocks": [
@@ -9501,14 +9389,7 @@
                 "Show your work: Ask AI tools to explain how they developed the response, or to show their work.",
                 "Be specific: Vague or open-ended questions increase the risk of hallucination. Try to ask precise, detailed questions to guide the AI toward accurate answers."
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "6B-p6",
-          "stage": "see",
-          "title": "What Is It?",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
@@ -9517,7 +9398,7 @@
           ]
         },
         {
-          "pageId": "6B-p7",
+          "pageId": "6B-p6",
           "stage": "understand",
           "title": "Why Does Bias Occur?",
           "blocks": [
@@ -9532,7 +9413,7 @@
           ]
         },
         {
-          "pageId": "6B-p8",
+          "pageId": "6B-p7",
           "stage": "understand",
           "title": "How to Avoid or Minimize Bias",
           "blocks": [
@@ -9547,7 +9428,7 @@
           ]
         },
         {
-          "pageId": "6B-p9",
+          "pageId": "6B-p8",
           "stage": "understand",
           "title": "What Is It?",
           "blocks": [
@@ -9562,7 +9443,7 @@
           ]
         },
         {
-          "pageId": "6B-p10",
+          "pageId": "6B-p9",
           "stage": "understand",
           "title": "How to Avoid Generic Content",
           "blocks": [
@@ -9577,7 +9458,7 @@
           ]
         },
         {
-          "pageId": "6B-p11",
+          "pageId": "6B-p10",
           "stage": "understand",
           "title": "What Is It?",
           "blocks": [
@@ -9588,7 +9469,7 @@
           ]
         },
         {
-          "pageId": "6B-p12",
+          "pageId": "6B-p11",
           "stage": "understand",
           "title": "Why Does It Occur?",
           "blocks": [
@@ -9599,7 +9480,7 @@
           ]
         },
         {
-          "pageId": "6B-p13",
+          "pageId": "6B-p12",
           "stage": "understand",
           "title": "How to Handle Outdated Information",
           "blocks": [
@@ -9609,26 +9490,12 @@
                 "Check the date: Before trusting time-sensitive information, verify the AI's data cut-off.",
                 "Use up-to-date sources: If you need recent news or updates, use official websites, news services, or AI tools with real-time access."
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "6B-p14",
-          "stage": "see",
-          "title": "What Are They?",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
               "text": "Imagine an AI accidentally sharing personal information or copying text from a copyrighted book. AI can sometimes produce outputs that raise ethical issues."
-            }
-          ]
-        },
-        {
-          "pageId": "6B-p15",
-          "stage": "understand",
-          "title": "Why Does It Happen?",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Because AI models use vast amounts of internet data, occasionally they can reproduce content that's private, sensitive, or protected by copyright laws."
@@ -9636,7 +9503,7 @@
           ]
         },
         {
-          "pageId": "6B-p16",
+          "pageId": "6B-p13",
           "stage": "understand",
           "title": "How to Avoid Ethical Risks",
           "blocks": [
@@ -9666,7 +9533,7 @@
           ]
         },
         {
-          "pageId": "6B-p17",
+          "pageId": "6B-p14",
           "stage": "understand",
           "title": "Bringing It All Together",
           "blocks": [
@@ -9687,7 +9554,7 @@
           ]
         },
         {
-          "pageId": "6B-p18",
+          "pageId": "6B-p15",
           "stage": "see",
           "title": "Nuances of Adding Context Files",
           "blocks": [
@@ -9699,7 +9566,7 @@
           ]
         },
         {
-          "pageId": "6B-p19",
+          "pageId": "6B-p16",
           "stage": "understand",
           "title": "",
           "blocks": [
@@ -9718,7 +9585,7 @@
           ]
         },
         {
-          "pageId": "6B-p20",
+          "pageId": "6B-p17",
           "stage": "understand",
           "title": "",
           "blocks": [
@@ -9733,7 +9600,7 @@
           ]
         },
         {
-          "pageId": "6B-p21",
+          "pageId": "6B-p18",
           "stage": "understand",
           "title": "Quality Over Quantity: Be a Thoughtful Curator",
           "blocks": [
@@ -9756,7 +9623,7 @@
           ]
         },
         {
-          "pageId": "6B-p22",
+          "pageId": "6B-p19",
           "stage": "understand",
           "title": "Strategies for Choosing the Right Files",
           "blocks": [
@@ -9775,7 +9642,7 @@
           ]
         },
         {
-          "pageId": "6B-p23",
+          "pageId": "6B-p20",
           "stage": "understand",
           "title": "Strategies for Choosing the Right Files",
           "blocks": [
@@ -9793,7 +9660,7 @@
           ]
         },
         {
-          "pageId": "6B-p24",
+          "pageId": "6B-p21",
           "stage": "understand",
           "title": "Less Really Can Be More",
           "blocks": [
@@ -9808,7 +9675,7 @@
           ]
         },
         {
-          "pageId": "6B-p25",
+          "pageId": "6B-p22",
           "stage": "understand",
           "title": "Checklist for Adding Context Files",
           "blocks": [
@@ -9833,7 +9700,7 @@
           ]
         },
         {
-          "pageId": "6B-p26",
+          "pageId": "6B-p23",
           "stage": "understand",
           "title": "What to Include in Your Second Prompt",
           "blocks": [
@@ -9852,7 +9719,7 @@
           ]
         },
         {
-          "pageId": "6B-p27",
+          "pageId": "6B-p24",
           "stage": "understand",
           "title": "Ask Clarifying Questions",
           "blocks": [
@@ -9867,7 +9734,7 @@
           ]
         },
         {
-          "pageId": "6B-p28",
+          "pageId": "6B-p25",
           "stage": "see",
           "title": "Ask Clarifying Questions",
           "blocks": [
@@ -9879,7 +9746,7 @@
           ]
         },
         {
-          "pageId": "6B-p29",
+          "pageId": "6B-p26",
           "stage": "understand",
           "title": "",
           "blocks": [
@@ -9890,7 +9757,7 @@
           ]
         },
         {
-          "pageId": "6B-p30",
+          "pageId": "6B-p27",
           "stage": "understand",
           "title": "Add Elements: Give More Context, Constraints, or Details",
           "blocks": [
@@ -9913,7 +9780,7 @@
           ]
         },
         {
-          "pageId": "6B-p31",
+          "pageId": "6B-p28",
           "stage": "understand",
           "title": "Example",
           "blocks": [
@@ -9952,14 +9819,7 @@
                 "\"Is there anything missing in your last response?\"",
                 "\"Tell me if your answer has any weaknesses or could be more accurate.\""
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "6B-p32",
-          "stage": "understand",
-          "title": "Example",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "This not only brings a fresh perspective but can also improve the overall quality or usefulness of the response."
@@ -9967,7 +9827,7 @@
           ]
         },
         {
-          "pageId": "6B-p33",
+          "pageId": "6B-p29",
           "stage": "understand",
           "title": "Example",
           "blocks": [
@@ -9994,7 +9854,7 @@
           ]
         },
         {
-          "pageId": "6B-p34",
+          "pageId": "6B-p30",
           "stage": "understand",
           "title": "Tips for Crafting Great Follow-Up Prompts",
           "blocks": [
@@ -10010,7 +9870,7 @@
           ]
         },
         {
-          "pageId": "6B-p35",
+          "pageId": "6B-p31",
           "stage": "understand",
           "title": "In Summary",
           "blocks": [
@@ -11035,14 +10895,7 @@
                 "It uses a graphical user interface based on the Google Chrome web browser.",
                 "It is designed primarily for web-based applications installed from the"
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "7B-p5",
-          "stage": "understand",
-          "title": "Operating System Description",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Google Chrome Web Store."
@@ -11057,7 +10910,7 @@
           ]
         },
         {
-          "pageId": "7B-p6",
+          "pageId": "7B-p5",
           "stage": "understand",
           "title": "Mobile Operating Systems",
           "blocks": [
@@ -11075,7 +10928,7 @@
           ]
         },
         {
-          "pageId": "7B-p7",
+          "pageId": "7B-p6",
           "stage": "understand",
           "title": "Logo Operating System Description",
           "blocks": [
@@ -11105,7 +10958,7 @@
           ]
         },
         {
-          "pageId": "7B-p8",
+          "pageId": "7B-p7",
           "stage": "understand",
           "title": "Pixel devices",
           "blocks": [
@@ -11132,7 +10985,7 @@
           ]
         },
         {
-          "pageId": "7B-p9",
+          "pageId": "7B-p8",
           "stage": "understand",
           "title": "Watch",
           "blocks": [
@@ -11152,7 +11005,7 @@
           ]
         },
         {
-          "pageId": "7B-p10",
+          "pageId": "7B-p9",
           "stage": "understand",
           "title": "Android",
           "blocks": [
@@ -11262,14 +11115,7 @@
             {
               "type": "paragraph",
               "text": "In this lesson, you will explore the Windows desktop and its key components, learn to recognize common user interface elements that Windows applications share, and practice installing, configuring, and removing applications using the Settings app and Microsoft Store."
-            }
-          ]
-        },
-        {
-          "pageId": "7C-p2",
-          "stage": "understand",
-          "title": "Windows Components",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Windows provides you with a graphical desktop that allows you to interact with the operating system. The following tables describe the key elements of the desktop and Start menu."
@@ -11277,7 +11123,7 @@
           ]
         },
         {
-          "pageId": "7C-p3",
+          "pageId": "7C-p2",
           "stage": "understand",
           "title": "Component Description",
           "blocks": [
@@ -11303,7 +11149,7 @@
           ]
         },
         {
-          "pageId": "7C-p4",
+          "pageId": "7C-p3",
           "stage": "understand",
           "title": "Component Description",
           "blocks": [
@@ -11330,14 +11176,7 @@
             {
               "type": "paragraph",
               "text": "7. Notification Area The notification area is located on the right side of the taskbar. It displays the date and time, network connectivity, and notifications from various applications. In addition, there are icons available for sound volume, battery status, antivirus programs, and more."
-            }
-          ]
-        },
-        {
-          "pageId": "7C-p5",
-          "stage": "understand",
-          "title": "Component Description",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "It's important to know the key parts of the Start menu on Windows 11."
@@ -11345,7 +11184,7 @@
           ]
         },
         {
-          "pageId": "7C-p6",
+          "pageId": "7C-p4",
           "stage": "understand",
           "title": "Component Description",
           "blocks": [
@@ -11360,7 +11199,7 @@
           ]
         },
         {
-          "pageId": "7C-p7",
+          "pageId": "7C-p5",
           "stage": "understand",
           "title": "Component Description",
           "blocks": [
@@ -11395,7 +11234,7 @@
           ]
         },
         {
-          "pageId": "7C-p8",
+          "pageId": "7C-p6",
           "stage": "understand",
           "title": "Application Management",
           "blocks": [
@@ -11406,7 +11245,7 @@
           ]
         },
         {
-          "pageId": "7C-p9",
+          "pageId": "7C-p7",
           "stage": "understand",
           "title": "Installing Applications",
           "blocks": [
@@ -11425,7 +11264,7 @@
           ]
         },
         {
-          "pageId": "7C-p10",
+          "pageId": "7C-p8",
           "stage": "understand",
           "title": "Using Applications",
           "blocks": [
@@ -11444,7 +11283,7 @@
           ]
         },
         {
-          "pageId": "7C-p11",
+          "pageId": "7C-p9",
           "stage": "understand",
           "title": "Startup Applications",
           "blocks": [
@@ -11943,14 +11782,7 @@
             {
               "type": "paragraph",
               "text": "In Windows, file extensions are hidden by default. If you access a file's properties, you can view its extension as well as customize which application that particular file type opens with by default. To do this, complete the following steps: 1. Access the file's properties."
-            }
-          ]
-        },
-        {
-          "pageId": "7D-p25",
-          "stage": "understand",
-          "title": "Windows File Management Facts",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "2. To the right of Opens with, select Change ."
@@ -11958,7 +11790,14 @@
             {
               "type": "paragraph",
               "text": "3. Choose the desired default application and then select OK > OK ."
-            },
+            }
+          ]
+        },
+        {
+          "pageId": "7D-p25",
+          "stage": "understand",
+          "title": "File Compression Facts",
+          "blocks": [
             {
               "type": "paragraph",
               "text": "Compression reduces the size of files, making them easier to store and faster to transfer over a network. There are different types of compression, each with trade-offs between file size and data quality."
@@ -12585,14 +12424,7 @@
                 "Some updates will be installed in the background while the system is running.",
                 "Other updates require the system to be shut down and restarted for them to be applied. By default, updates will be automatically installed during a restart when you are not using the system. Windows will display a prompt and allow you to reschedule the restart."
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "7F-p15",
-          "stage": "understand",
-          "title": "Image 1: Configuring Windows Update in the Settings App",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "To access Windows Update select the Windows Start icon and then Settings. From the Settings App, select Windows Update."
@@ -12600,7 +12432,7 @@
           ]
         },
         {
-          "pageId": "7F-p16",
+          "pageId": "7F-p15",
           "stage": "understand",
           "title": "Pause updates",
           "blocks": [
@@ -12619,14 +12451,7 @@
                 "If there is an error that occurs during an update, you may need to pause updates to continue working until the issue can be resolved.",
                 "When using slow or secure network connections, allowing Windows to constantly check for and download updates can affect performance and could be restricted."
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "7F-p17",
-          "stage": "understand",
-          "title": "Update history",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Reviewing a list of installed updates can help you identify whether you are protected by critical security updates. Selecting Update history will list of all installed updates."
@@ -12634,7 +12459,7 @@
           ]
         },
         {
-          "pageId": "7F-p18",
+          "pageId": "7F-p16",
           "stage": "understand",
           "title": "Advanced options",
           "blocks": [
@@ -12664,7 +12489,7 @@
           ]
         },
         {
-          "pageId": "7F-p19",
+          "pageId": "7F-p17",
           "stage": "understand",
           "title": "Advanced options",
           "blocks": [
@@ -12685,7 +12510,7 @@
           ]
         },
         {
-          "pageId": "7F-p20",
+          "pageId": "7F-p18",
           "stage": "understand",
           "title": "Software Patching and Updates",
           "blocks": [
@@ -12696,7 +12521,7 @@
           ]
         },
         {
-          "pageId": "7F-p21",
+          "pageId": "7F-p19",
           "stage": "understand",
           "title": "Patch Management",
           "blocks": [
@@ -12707,7 +12532,7 @@
           ]
         },
         {
-          "pageId": "7F-p22",
+          "pageId": "7F-p20",
           "stage": "understand",
           "title": "Microsoft Patches",
           "blocks": [
@@ -12722,7 +12547,7 @@
           ]
         },
         {
-          "pageId": "7F-p23",
+          "pageId": "7F-p21",
           "stage": "understand",
           "title": "Updating Non-Microsoft Software",
           "blocks": [
@@ -12839,14 +12664,7 @@
             {
               "type": "paragraph",
               "text": "Command Description dir Short for directory, the dir command displays a list of files and folders in the current directory. It's like double-clicking a folder to open it up to see what's inside. Your prompt looks like this: C:\\ Users \\F rank\\Document s> This prompt is telling you that you are in Frank's Documents folder. To look inside the Documents folder, you type the dir command. Here is an example: C:\\ Users \\F rank\\Document s> dir After you type dir, and press the Enter key, the files and folders inside the Documents folder are displayed on the screen. Folders are just names, and files in the directory have the filename and the file extension: Homework Memes Lyrics.docx Allowance.xlsx C:\\ Users \\F rank\\Document s> cd The change directory command, or cd, is how you move from one folder to another or from one hard drive to another in the Command Line."
-            }
-          ]
-        },
-        {
-          "pageId": "7G-p4",
-          "stage": "understand",
-          "title": "Windows Command Line Commands",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "To move into the folder, you type cd a space and the name of the folder, and then press Enter."
@@ -12854,7 +12672,7 @@
           ]
         },
         {
-          "pageId": "7G-p5",
+          "pageId": "7G-p4",
           "stage": "understand",
           "title": "To continue the example above, to move into the",
           "blocks": [
@@ -12869,7 +12687,7 @@
           ]
         },
         {
-          "pageId": "7G-p6",
+          "pageId": "7G-p5",
           "stage": "understand",
           "title": "You want to make a folder called Math inside",
           "blocks": [
@@ -12884,7 +12702,7 @@
           ]
         },
         {
-          "pageId": "7G-p7",
+          "pageId": "7G-p6",
           "stage": "understand",
           "title": "For example, you could copy the Essay1.docx file in",
           "blocks": [
@@ -12895,33 +12713,19 @@
           ]
         },
         {
-          "pageId": "7G-p8",
+          "pageId": "7G-p7",
           "stage": "understand",
           "title": "For example, you could delete the original",
           "blocks": [
             {
               "type": "paragraph",
               "text": "Essay1.docx that you copied into another folder. You type and run: C:\\ Users \\F rank\\Document s \\Home w or k> del Essay1.docx The file is deleted from the computer. Be very careful when using this command! rd The rd command stands for remove directory and is similar to the del command, but instead of deleting a single file, it deletes an entire folder and its contents. To use it, you type rd a space, the name of the folder you want to delete, and then press Enter."
-            }
-          ]
-        },
-        {
-          "pageId": "7G-p9",
-          "stage": "see",
-          "title": "For example, you could delete the original",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
               "text": "For example, you could delete the Math folder from inside Frank's Homework directory: C:\\ Users \\F rank\\Document s \\Home w or k> rd Math The folder is deleted from the computer. Be very careful when using this command!"
-            }
-          ]
-        },
-        {
-          "pageId": "7G-p10",
-          "stage": "understand",
-          "title": "",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "You can use the dir command to see the contents of the folder: C:\\ Users \\F rank\\Document s \\Home w or k> dir English C:\\ Users \\F rank\\Document s \\Home w or k> cls The cls command stands for clear screen. It clears the previous commands from the Command Prompt interface, making it easier to focus on what you're working on. To use it, just type cls and press Enter: C:\\ Users \\F rank\\Document s \\Home w or k> cls Linux Command Line There are many versions of the Linux Operating System, and most have custom graphical user interfaces. But one thing they all have in common is a powerful command line interface. To be able to run command-line commands in Linux, you must open a Terminal. To open a Terminal, find the search tool in the Linux GUI and type terminal, then press Enter. Once the terminal window opens, you are ready to start typing commands. Here is a list of Linux Command Line Interface commands you will use in the labs."
@@ -12929,7 +12733,7 @@
           ]
         },
         {
-          "pageId": "7G-p11",
+          "pageId": "7G-p8",
           "stage": "understand",
           "title": "Linux CLI Commands",
           "blocks": [
@@ -12956,7 +12760,7 @@
           ]
         },
         {
-          "pageId": "7G-p12",
+          "pageId": "7G-p9",
           "stage": "understand",
           "title": "Linux CLI Commands",
           "blocks": [
@@ -12967,14 +12771,7 @@
             {
               "type": "paragraph",
               "text": "An important thing to remember about the cp command is that it leaves a copy of the source file or folder; you have two copies. mv The Move mv command moves a file from one place to another. The difference between the mv command and the cp command is that the mv command removes the source file or folder and places it in the destination. You are left with one copy. rmdir The Remove Directory rmdir command deletes a directory (folder). It is similar to the Windows rd command. rm The Remove rm command can be used to delete a folder or file. It is similar to the Windows del command. clear This command clears the screen."
-            }
-          ]
-        },
-        {
-          "pageId": "7G-p13",
-          "stage": "understand",
-          "title": "Linux CLI Commands",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Command Description whoami This command displays the current user name."
@@ -13396,14 +13193,7 @@
             {
               "type": "paragraph",
               "text": "Companies like Apple, Google, and Microsoft give users some free cloud storage space when they use their products. There are also business-oriented options like Dropbox and Amazon."
-            }
-          ]
-        },
-        {
-          "pageId": "7H-p22",
-          "stage": "understand",
-          "title": "Cloud Backups",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "You can use these services with a web browser or an app on your smartphone or tablet. On Windows 10, there's a built-in cloud storage service called OneDrive, which you can access through File Explorer."
@@ -13411,7 +13201,7 @@
           ]
         },
         {
-          "pageId": "7H-p23",
+          "pageId": "7H-p22",
           "stage": "understand",
           "title": "Backup Services in Business",
           "blocks": [
@@ -13426,7 +13216,7 @@
           ]
         },
         {
-          "pageId": "7H-p24",
+          "pageId": "7H-p23",
           "stage": "understand",
           "title": "Backup Services in Business",
           "blocks": [
@@ -13441,7 +13231,7 @@
           ]
         },
         {
-          "pageId": "7H-p25",
+          "pageId": "7H-p24",
           "stage": "understand",
           "title": "Restoring Data",
           "blocks": [
@@ -13460,7 +13250,7 @@
           ]
         },
         {
-          "pageId": "7H-p26",
+          "pageId": "7H-p25",
           "stage": "understand",
           "title": "Backup Testing",
           "blocks": [
@@ -13471,7 +13261,7 @@
           ]
         },
         {
-          "pageId": "7H-p27",
+          "pageId": "7H-p26",
           "stage": "see",
           "title": "Backup Testing",
           "blocks": [
@@ -14101,14 +13891,7 @@
             {
               "type": "paragraph",
               "text": "Calendaring Online calendars that help teams coordinate schedules by showing when each member is busy or available for meetings."
-            }
-          ]
-        },
-        {
-          "pageId": "8A-p36",
-          "stage": "understand",
-          "title": "Gaming and Media Software",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Software is not only used for work and communication. Entertainment software is a major category of applications that people use every day for streaming media, sharing content, and playing games."
@@ -14116,7 +13899,7 @@
           ]
         },
         {
-          "pageId": "8A-p37",
+          "pageId": "8A-p36",
           "stage": "understand",
           "title": "Video and Audio Streaming",
           "blocks": [
@@ -14127,7 +13910,7 @@
           ]
         },
         {
-          "pageId": "8A-p38",
+          "pageId": "8A-p37",
           "stage": "understand",
           "title": "Gaming Software",
           "blocks": [
@@ -14138,7 +13921,7 @@
           ]
         },
         {
-          "pageId": "8A-p39",
+          "pageId": "8A-p38",
           "stage": "understand",
           "title": "Social Media",
           "blocks": [
@@ -14149,7 +13932,7 @@
           ]
         },
         {
-          "pageId": "8A-p40",
+          "pageId": "8A-p39",
           "stage": "understand",
           "title": "Educational Software",
           "blocks": [
@@ -14160,7 +13943,7 @@
           ]
         },
         {
-          "pageId": "8A-p41",
+          "pageId": "8A-p40",
           "stage": "understand",
           "title": "Learning Management Systems",
           "blocks": [
@@ -14175,7 +13958,7 @@
           ]
         },
         {
-          "pageId": "8A-p42",
+          "pageId": "8A-p41",
           "stage": "understand",
           "title": "Online Learning Platforms",
           "blocks": [
@@ -14186,7 +13969,7 @@
           ]
         },
         {
-          "pageId": "8A-p43",
+          "pageId": "8A-p42",
           "stage": "understand",
           "title": "Study and Reference Tools",
           "blocks": [
@@ -14373,14 +14156,7 @@
             {
               "type": "paragraph",
               "text": "Because of this review process, app stores are one of the safest ways to install software."
-            }
-          ]
-        },
-        {
-          "pageId": "8B-p7",
-          "stage": "understand",
-          "title": "What Is an App Store?",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "The Microsoft Store, Google Play Store, and Apple App Store all work to ensure that only trusted apps are available for download or purchase, reducing the risk of accidentally installing malicious software."
@@ -14388,7 +14164,7 @@
           ]
         },
         {
-          "pageId": "8B-p8",
+          "pageId": "8B-p7",
           "stage": "understand",
           "title": "App Distribution",
           "blocks": [
@@ -14411,7 +14187,7 @@
           ]
         },
         {
-          "pageId": "8B-p9",
+          "pageId": "8B-p8",
           "stage": "understand",
           "title": "Common App Stores",
           "blocks": [
@@ -14434,7 +14210,7 @@
           ]
         },
         {
-          "pageId": "8B-p10",
+          "pageId": "8B-p9",
           "stage": "understand",
           "title": "Common App Stores",
           "blocks": [
@@ -14445,7 +14221,7 @@
           ]
         },
         {
-          "pageId": "8B-p11",
+          "pageId": "8B-p10",
           "stage": "understand",
           "title": "Software Licensing",
           "blocks": [
@@ -14460,7 +14236,7 @@
           ]
         },
         {
-          "pageId": "8B-p12",
+          "pageId": "8B-p11",
           "stage": "understand",
           "title": "Software Licensing",
           "blocks": [
@@ -14471,7 +14247,7 @@
           ]
         },
         {
-          "pageId": "8B-p13",
+          "pageId": "8B-p12",
           "stage": "understand",
           "title": "Subscription Model",
           "blocks": [
@@ -14482,7 +14258,7 @@
           ]
         },
         {
-          "pageId": "8B-p14",
+          "pageId": "8B-p13",
           "stage": "understand",
           "title": "Product Keys and Serial Numbers",
           "blocks": [
@@ -14493,7 +14269,7 @@
           ]
         },
         {
-          "pageId": "8B-p15",
+          "pageId": "8B-p14",
           "stage": "understand",
           "title": "Open Source vs. Proprietary",
           "blocks": [
@@ -14512,7 +14288,7 @@
           ]
         },
         {
-          "pageId": "8B-p16",
+          "pageId": "8B-p15",
           "stage": "understand",
           "title": "Open Source vs. Proprietary",
           "blocks": [
@@ -14523,7 +14299,7 @@
           ]
         },
         {
-          "pageId": "8B-p17",
+          "pageId": "8B-p16",
           "stage": "understand",
           "title": "Piracy",
           "blocks": [
@@ -14534,7 +14310,7 @@
           ]
         },
         {
-          "pageId": "8B-p18",
+          "pageId": "8B-p17",
           "stage": "understand",
           "title": "Installing Software",
           "blocks": [
@@ -14569,7 +14345,7 @@
           ]
         },
         {
-          "pageId": "8B-p19",
+          "pageId": "8B-p18",
           "stage": "understand",
           "title": "Apple Software",
           "blocks": [
@@ -14592,7 +14368,7 @@
           ]
         },
         {
-          "pageId": "8B-p20",
+          "pageId": "8B-p19",
           "stage": "understand",
           "title": "Windows Software",
           "blocks": [
@@ -14611,7 +14387,7 @@
           ]
         },
         {
-          "pageId": "8B-p21",
+          "pageId": "8B-p20",
           "stage": "understand",
           "title": "Windows Software",
           "blocks": [
@@ -14622,7 +14398,7 @@
           ]
         },
         {
-          "pageId": "8B-p22",
+          "pageId": "8B-p21",
           "stage": "understand",
           "title": "Downloading Software Safely",
           "blocks": [
@@ -14637,7 +14413,7 @@
           ]
         },
         {
-          "pageId": "8B-p23",
+          "pageId": "8B-p22",
           "stage": "understand",
           "title": "Removing Software",
           "blocks": [
@@ -14667,7 +14443,7 @@
           ]
         },
         {
-          "pageId": "8B-p24",
+          "pageId": "8B-p23",
           "stage": "understand",
           "title": "Removing Software",
           "blocks": [
@@ -16351,14 +16127,7 @@
             {
               "type": "paragraph",
               "text": "Every email address follows the same format: a username, the @ symbol, and a domain name."
-            }
-          ]
-        },
-        {
-          "pageId": "12A-p15",
-          "stage": "see",
-          "title": "How Email Works",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
@@ -16367,7 +16136,7 @@
           ]
         },
         {
-          "pageId": "12A-p16",
+          "pageId": "12A-p15",
           "stage": "understand",
           "title": "Webmail vs. Desktop Email Clients",
           "blocks": [
@@ -16386,7 +16155,7 @@
           ]
         },
         {
-          "pageId": "12A-p17",
+          "pageId": "12A-p16",
           "stage": "understand",
           "title": "Key Email Features",
           "blocks": [
@@ -16407,7 +16176,7 @@
           ]
         },
         {
-          "pageId": "12A-p18",
+          "pageId": "12A-p17",
           "stage": "understand",
           "title": "Calendaring",
           "blocks": [
@@ -16418,7 +16187,7 @@
           ]
         },
         {
-          "pageId": "12A-p19",
+          "pageId": "12A-p18",
           "stage": "understand",
           "title": "Common Calendaring Tools",
           "blocks": [
@@ -16429,7 +16198,7 @@
           ]
         },
         {
-          "pageId": "12A-p20",
+          "pageId": "12A-p19",
           "stage": "understand",
           "title": "Key Calendaring Features",
           "blocks": [
@@ -16450,7 +16219,7 @@
           ]
         },
         {
-          "pageId": "12A-p21",
+          "pageId": "12A-p20",
           "stage": "understand",
           "title": "Calendars in the Workplace",
           "blocks": [
@@ -16461,7 +16230,7 @@
           ]
         },
         {
-          "pageId": "12A-p22",
+          "pageId": "12A-p21",
           "stage": "understand",
           "title": "Videoconferencing Apps",
           "blocks": [
@@ -16472,7 +16241,7 @@
           ]
         },
         {
-          "pageId": "12A-p23",
+          "pageId": "12A-p22",
           "stage": "understand",
           "title": "How Videoconferencing Works",
           "blocks": [
@@ -16483,7 +16252,7 @@
           ]
         },
         {
-          "pageId": "12A-p24",
+          "pageId": "12A-p23",
           "stage": "understand",
           "title": "Popular Videoconferencing Apps",
           "blocks": [
@@ -16504,7 +16273,7 @@
           ]
         },
         {
-          "pageId": "12A-p25",
+          "pageId": "12A-p24",
           "stage": "understand",
           "title": "Common Videoconferencing Features",
           "blocks": [
@@ -16524,7 +16293,7 @@
           ]
         },
         {
-          "pageId": "12A-p26",
+          "pageId": "12A-p25",
           "stage": "understand",
           "title": "Tips for a Good Video Call",
           "blocks": [
@@ -17269,14 +17038,7 @@
             {
               "type": "paragraph",
               "text": "47,000,000 Hertz Answer: 47 MHz Giga (G) Giga represents billions, or 109. A single capital G is used to represent Giga in an expression. Here are some examples of its use: 25 Gb = 25,000,000,000 bits 450 GB = 450,000,000,000 Bytes 2 Gb = 2,000,000,000 bits How would you express this amount in Gigs?"
-            }
-          ]
-        },
-        {
-          "pageId": "13A-p13",
-          "stage": "understand",
-          "title": "Prefix Definition",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "575,000,000,000 Hertz Answer: 575 GHz"
@@ -17284,7 +17046,7 @@
           ]
         },
         {
-          "pageId": "13A-p14",
+          "pageId": "13A-p13",
           "stage": "understand",
           "title": "Prefix Definition",
           "blocks": [
@@ -17299,7 +17061,7 @@
           ]
         },
         {
-          "pageId": "13A-p15",
+          "pageId": "13A-p14",
           "stage": "understand",
           "title": "Prefix Definition",
           "blocks": [
@@ -17322,7 +17084,7 @@
           ]
         },
         {
-          "pageId": "13A-p16",
+          "pageId": "13A-p15",
           "stage": "understand",
           "title": "Prefix Definition",
           "blocks": [
@@ -17341,7 +17103,7 @@
           ]
         },
         {
-          "pageId": "13A-p17",
+          "pageId": "13A-p16",
           "stage": "understand",
           "title": "Prefix Definition",
           "blocks": [
@@ -17360,7 +17122,7 @@
           ]
         },
         {
-          "pageId": "13A-p18",
+          "pageId": "13A-p17",
           "stage": "understand",
           "title": "Prefix Definition",
           "blocks": [
@@ -17375,7 +17137,7 @@
           ]
         },
         {
-          "pageId": "13A-p19",
+          "pageId": "13A-p18",
           "stage": "understand",
           "title": "Throughput Units",
           "blocks": [
@@ -17394,7 +17156,7 @@
           ]
         },
         {
-          "pageId": "13A-p20",
+          "pageId": "13A-p19",
           "stage": "understand",
           "title": "Throughput Units",
           "blocks": [
@@ -17405,7 +17167,7 @@
           ]
         },
         {
-          "pageId": "13A-p21",
+          "pageId": "13A-p20",
           "stage": "understand",
           "title": "Moving Bits",
           "blocks": [
@@ -17416,7 +17178,7 @@
           ]
         },
         {
-          "pageId": "13A-p22",
+          "pageId": "13A-p21",
           "stage": "understand",
           "title": "Bandwidth",
           "blocks": [
@@ -17431,7 +17193,7 @@
           ]
         },
         {
-          "pageId": "13A-p23",
+          "pageId": "13A-p22",
           "stage": "understand",
           "title": "Throughput Units",
           "blocks": [
@@ -17451,7 +17213,7 @@
           ]
         },
         {
-          "pageId": "13A-p24",
+          "pageId": "13A-p23",
           "stage": "understand",
           "title": "Throughput Obstacles",
           "blocks": [
@@ -17470,7 +17232,7 @@
           ]
         },
         {
-          "pageId": "13A-p25",
+          "pageId": "13A-p24",
           "stage": "understand",
           "title": "Throughput Obstacles",
           "blocks": [
@@ -17493,21 +17255,14 @@
           ]
         },
         {
-          "pageId": "13A-p26",
+          "pageId": "13A-p25",
           "stage": "understand",
           "title": "Throughput Obstacles",
           "blocks": [
             {
               "type": "paragraph",
               "text": "A smaller CAT number means less capacity, so business at that client was incredibly slow.\" -- R. Turner, network administrator Processing Speed Processing speed describes how fast the computer itself works during a given operation or task. A computer's speed is measured by its internal clock and its processors, also known as the central processing unit (CPU). This speed is measured in Hertz (Hz) , where 1 Hz means one cycle per second. A cycle would just be how many times a process reoccurs."
-            }
-          ]
-        },
-        {
-          "pageId": "13A-p27",
-          "stage": "see",
-          "title": "Throughput Obstacles",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
@@ -17516,7 +17271,7 @@
           ]
         },
         {
-          "pageId": "13A-p28",
+          "pageId": "13A-p26",
           "stage": "understand",
           "title": "Clock Speed",
           "blocks": [
@@ -17535,7 +17290,7 @@
           ]
         },
         {
-          "pageId": "13A-p29",
+          "pageId": "13A-p27",
           "stage": "understand",
           "title": "Clock Speed",
           "blocks": [
@@ -18971,14 +18726,7 @@
             {
               "type": "paragraph",
               "text": "There is a graphics card for every budget. Integrated graphics are the cheapest, while high-end graphics cards can cost a lot of money, sometimes over $1,000. Many companies make video cards and GPUs, but Nvidia is the biggest and most popular one in the market."
-            }
-          ]
-        },
-        {
-          "pageId": "13E-p16",
-          "stage": "understand",
-          "title": "Enhanced Graphics",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Image by nikkytok © 123rf.com."
@@ -18986,7 +18734,7 @@
           ]
         },
         {
-          "pageId": "13E-p17",
+          "pageId": "13E-p16",
           "stage": "understand",
           "title": "Resolution and Frame Rate",
           "blocks": [
@@ -19005,7 +18753,7 @@
           ]
         },
         {
-          "pageId": "13E-p18",
+          "pageId": "13E-p17",
           "stage": "understand",
           "title": "Resolution and Frame Rate",
           "blocks": [
@@ -19358,14 +19106,7 @@
             {
               "type": "paragraph",
               "text": "But the ones you might have at home usually just pass the Wi-Fi signal from one AP to another without cables. You could buy packages of two, three, or more APs to put around your house if you wanted. Then all your devices would have a stronger Wi-Fi connection. The more coverage you need, the more APs you could add."
-            }
-          ]
-        },
-        {
-          "pageId": "14A-p16",
-          "stage": "understand",
-          "title": "Common Networking Protocols",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Beyond those core protocols, there are additional protocols and tools worth understanding for email, file transfer, network management, and troubleshooting."
@@ -19373,7 +19114,7 @@
           ]
         },
         {
-          "pageId": "14A-p17",
+          "pageId": "14A-p16",
           "stage": "understand",
           "title": "Email Protocols",
           "blocks": [
@@ -19400,7 +19141,7 @@
           ]
         },
         {
-          "pageId": "14A-p18",
+          "pageId": "14A-p17",
           "stage": "understand",
           "title": "File Transfer Protocols",
           "blocks": [
@@ -19418,7 +19159,7 @@
           ]
         },
         {
-          "pageId": "14A-p19",
+          "pageId": "14A-p18",
           "stage": "understand",
           "title": "Network Services",
           "blocks": [
@@ -19435,7 +19176,7 @@
           ]
         },
         {
-          "pageId": "14A-p20",
+          "pageId": "14A-p19",
           "stage": "understand",
           "title": "Common Troubleshooting Utilities",
           "blocks": [
@@ -19650,14 +19391,7 @@
             {
               "type": "paragraph",
               "text": "You might hear the term small office, home office (SOHO). This is a network made for a small business that you can set up in any office space or at home. The most important part of this setup is the router. A SOHO router can do more than the regular routers people have at home."
-            }
-          ]
-        },
-        {
-          "pageId": "14B-p9",
-          "stage": "understand",
-          "title": "Local Area Network Examples",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Thanks to technology getting better over the last few years, working from home has become a lot easier and more common. A SOHO is a great option for this scenario."
@@ -19665,7 +19399,7 @@
           ]
         },
         {
-          "pageId": "14B-p10",
+          "pageId": "14B-p9",
           "stage": "understand",
           "title": "Key Features of Local Area Networks",
           "blocks": [
@@ -19688,7 +19422,7 @@
           ]
         },
         {
-          "pageId": "14B-p11",
+          "pageId": "14B-p10",
           "stage": "understand",
           "title": "Key Features of Local Area Networks",
           "blocks": [
@@ -19699,7 +19433,7 @@
           ]
         },
         {
-          "pageId": "14B-p12",
+          "pageId": "14B-p11",
           "stage": "understand",
           "title": "Wide Area Network Types",
           "blocks": [
@@ -19718,7 +19452,7 @@
           ]
         },
         {
-          "pageId": "14B-p13",
+          "pageId": "14B-p12",
           "stage": "understand",
           "title": "Wide Area Network Types",
           "blocks": [
@@ -19733,7 +19467,7 @@
           ]
         },
         {
-          "pageId": "14B-p14",
+          "pageId": "14B-p13",
           "stage": "understand",
           "title": "Wide Area Network Examples",
           "blocks": [
@@ -20466,14 +20200,7 @@
             {
               "type": "paragraph",
               "text": "This means the ISP puts in a fiber network that ends at a big box or cabinet on a street close by."
-            }
-          ]
-        },
-        {
-          "pageId": "14C-p33",
-          "stage": "understand",
-          "title": "Infrastructure",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Then, the last step from the cabinet to each house uses ordinary telephone wires with a special kind of DSL called Very High Bit Rate DSL (VDSL) to make the connection."
@@ -20481,7 +20208,7 @@
           ]
         },
         {
-          "pageId": "14C-p34",
+          "pageId": "14C-p33",
           "stage": "understand",
           "title": "Speed",
           "blocks": [
@@ -20504,7 +20231,7 @@
           ]
         },
         {
-          "pageId": "14C-p35",
+          "pageId": "14C-p34",
           "stage": "understand",
           "title": "Wireless Internet",
           "blocks": [
@@ -20539,7 +20266,7 @@
           ]
         },
         {
-          "pageId": "14C-p36",
+          "pageId": "14C-p35",
           "stage": "understand",
           "title": "Wireless Internet",
           "blocks": [
@@ -20554,7 +20281,7 @@
           ]
         },
         {
-          "pageId": "14C-p37",
+          "pageId": "14C-p36",
           "stage": "understand",
           "title": "Other Wireless Connections",
           "blocks": [
@@ -20565,7 +20292,7 @@
           ]
         },
         {
-          "pageId": "14C-p38",
+          "pageId": "14C-p37",
           "stage": "understand",
           "title": "Satellite Internet",
           "blocks": [
@@ -20588,7 +20315,7 @@
           ]
         },
         {
-          "pageId": "14C-p39",
+          "pageId": "14C-p38",
           "stage": "understand",
           "title": "Satellite Internet",
           "blocks": [
@@ -20607,7 +20334,7 @@
           ]
         },
         {
-          "pageId": "14C-p40",
+          "pageId": "14C-p39",
           "stage": "understand",
           "title": "Satellite Internet",
           "blocks": [
@@ -20630,7 +20357,7 @@
           ]
         },
         {
-          "pageId": "14C-p41",
+          "pageId": "14C-p40",
           "stage": "understand",
           "title": "Fixed Wireless Internet",
           "blocks": [
@@ -20645,7 +20372,7 @@
           ]
         },
         {
-          "pageId": "14C-p42",
+          "pageId": "14C-p41",
           "stage": "understand",
           "title": "Fixed Wireless Internet",
           "blocks": [
@@ -20672,7 +20399,7 @@
           ]
         },
         {
-          "pageId": "14C-p43",
+          "pageId": "14C-p42",
           "stage": "understand",
           "title": "Wireless Antenna Types",
           "blocks": [
@@ -20690,7 +20417,7 @@
           ]
         },
         {
-          "pageId": "14C-p44",
+          "pageId": "14C-p43",
           "stage": "understand",
           "title": "Wireless Antenna Types",
           "blocks": [
@@ -21324,14 +21051,7 @@
             {
               "type": "paragraph",
               "text": "Near Field Communication (NFC) is a type of wireless technology that works over short distances. You can use it with smartphones and smartwatches to talk to or share files, or even pay for things, with other nearby devices. It only works when the devices are very close, less than 2 inches apart."
-            }
-          ]
-        },
-        {
-          "pageId": "14F-p4",
-          "stage": "understand",
-          "title": "Wireless Network Standards",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Wi-Fi standards use modulation to keep other radio waves and electronic signals from interfering with Wi-Fi signals."
@@ -21339,7 +21059,7 @@
           ]
         },
         {
-          "pageId": "14F-p5",
+          "pageId": "14F-p4",
           "stage": "understand",
           "title": "Standardizing Wireless Communications",
           "blocks": [
@@ -21354,7 +21074,7 @@
           ]
         },
         {
-          "pageId": "14F-p6",
+          "pageId": "14F-p5",
           "stage": "understand",
           "title": "Band",
           "blocks": [
@@ -21389,7 +21109,7 @@
           ]
         },
         {
-          "pageId": "14F-p7",
+          "pageId": "14F-p6",
           "stage": "understand",
           "title": "Wireless Network Speed",
           "blocks": [
@@ -21400,7 +21120,7 @@
           ]
         },
         {
-          "pageId": "14F-p8",
+          "pageId": "14F-p7",
           "stage": "understand",
           "title": "Latency",
           "blocks": [
@@ -21423,7 +21143,7 @@
           ]
         },
         {
-          "pageId": "14F-p9",
+          "pageId": "14F-p8",
           "stage": "understand",
           "title": "Latency",
           "blocks": [
@@ -21438,7 +21158,7 @@
           ]
         },
         {
-          "pageId": "14F-p10",
+          "pageId": "14F-p9",
           "stage": "understand",
           "title": "Attenuation and Interference",
           "blocks": [
@@ -21453,7 +21173,7 @@
           ]
         },
         {
-          "pageId": "14F-p11",
+          "pageId": "14F-p10",
           "stage": "understand",
           "title": "Standardize the Troubleshooting Process",
           "blocks": [
@@ -21472,7 +21192,7 @@
           ]
         },
         {
-          "pageId": "14F-p12",
+          "pageId": "14F-p11",
           "stage": "understand",
           "title": "Identify the Problem",
           "blocks": [
@@ -21491,7 +21211,7 @@
           ]
         },
         {
-          "pageId": "14F-p13",
+          "pageId": "14F-p12",
           "stage": "understand",
           "title": "Interview Users",
           "blocks": [
@@ -21502,7 +21222,7 @@
           ]
         },
         {
-          "pageId": "14F-p14",
+          "pageId": "14F-p13",
           "stage": "understand",
           "title": "Duplicate the Problem",
           "blocks": [
@@ -21513,7 +21233,7 @@
           ]
         },
         {
-          "pageId": "14F-p15",
+          "pageId": "14F-p14",
           "stage": "understand",
           "title": "Identify Symptoms One at a Time",
           "blocks": [
@@ -21532,7 +21252,7 @@
           ]
         },
         {
-          "pageId": "14F-p16",
+          "pageId": "14F-p15",
           "stage": "understand",
           "title": "Understand Recent Changes and Review Documentation",
           "blocks": [
@@ -21551,7 +21271,7 @@
           ]
         },
         {
-          "pageId": "14F-p17",
+          "pageId": "14F-p16",
           "stage": "understand",
           "title": "Establish a Theory of Probable Cause",
           "blocks": [
@@ -21562,7 +21282,7 @@
           ]
         },
         {
-          "pageId": "14F-p18",
+          "pageId": "14F-p17",
           "stage": "understand",
           "title": "Question the Obvious",
           "blocks": [
@@ -21577,7 +21297,7 @@
           ]
         },
         {
-          "pageId": "14F-p19",
+          "pageId": "14F-p18",
           "stage": "understand",
           "title": "Consider Multiple Approaches",
           "blocks": [
@@ -21588,7 +21308,7 @@
           ]
         },
         {
-          "pageId": "14F-p20",
+          "pageId": "14F-p19",
           "stage": "understand",
           "title": "Start At One End of the System",
           "blocks": [
@@ -21599,7 +21319,7 @@
           ]
         },
         {
-          "pageId": "14F-p21",
+          "pageId": "14F-p20",
           "stage": "understand",
           "title": "Test the Theory",
           "blocks": [
@@ -21614,7 +21334,7 @@
           ]
         },
         {
-          "pageId": "14F-p22",
+          "pageId": "14F-p21",
           "stage": "understand",
           "title": "Theory Confirmed",
           "blocks": [
@@ -21625,7 +21345,7 @@
           ]
         },
         {
-          "pageId": "14F-p23",
+          "pageId": "14F-p22",
           "stage": "understand",
           "title": "Theory Not Confirmed",
           "blocks": [
@@ -21644,7 +21364,7 @@
           ]
         },
         {
-          "pageId": "14F-p24",
+          "pageId": "14F-p23",
           "stage": "understand",
           "title": "Establish a Plan and Implement the Fix",
           "blocks": [
@@ -21655,7 +21375,7 @@
           ]
         },
         {
-          "pageId": "14F-p25",
+          "pageId": "14F-p24",
           "stage": "understand",
           "title": "Make Sure You Understand the Process",
           "blocks": [
@@ -21670,7 +21390,7 @@
           ]
         },
         {
-          "pageId": "14F-p26",
+          "pageId": "14F-p25",
           "stage": "understand",
           "title": "Identify Potential Effects",
           "blocks": [
@@ -21681,7 +21401,7 @@
           ]
         },
         {
-          "pageId": "14F-p27",
+          "pageId": "14F-p26",
           "stage": "understand",
           "title": "Backup Important Data",
           "blocks": [
@@ -21692,7 +21412,7 @@
           ]
         },
         {
-          "pageId": "14F-p28",
+          "pageId": "14F-p27",
           "stage": "understand",
           "title": "Implement the Solution",
           "blocks": [
@@ -21703,7 +21423,7 @@
           ]
         },
         {
-          "pageId": "14F-p29",
+          "pageId": "14F-p28",
           "stage": "understand",
           "title": "Or Escalate the Issue",
           "blocks": [
@@ -21722,7 +21442,7 @@
           ]
         },
         {
-          "pageId": "14F-p30",
+          "pageId": "14F-p29",
           "stage": "understand",
           "title": "Confirm the Solution Works",
           "blocks": [
@@ -21733,7 +21453,7 @@
           ]
         },
         {
-          "pageId": "14F-p31",
+          "pageId": "14F-p30",
           "stage": "understand",
           "title": "Confirm Functionality",
           "blocks": [
@@ -21748,7 +21468,7 @@
           ]
         },
         {
-          "pageId": "14F-p32",
+          "pageId": "14F-p31",
           "stage": "understand",
           "title": "Put in Preventative Measures if Needed",
           "blocks": [
@@ -21759,7 +21479,7 @@
           ]
         },
         {
-          "pageId": "14F-p33",
+          "pageId": "14F-p32",
           "stage": "understand",
           "title": "Document Your Findings",
           "blocks": [
@@ -21774,7 +21494,7 @@
           ]
         },
         {
-          "pageId": "14F-p34",
+          "pageId": "14F-p33",
           "stage": "understand",
           "title": "Add to the Knowledge Base",
           "blocks": [
@@ -21789,7 +21509,7 @@
           ]
         },
         {
-          "pageId": "14F-p35",
+          "pageId": "14F-p34",
           "stage": "understand",
           "title": "Explain in Detail",
           "blocks": [
@@ -22177,14 +21897,7 @@
             {
               "type": "paragraph",
               "text": "Beyond automatically saving your files, cloud storage keeps different versions of them, so you can go back to an earlier version if you change your mind about edits. For individual consumers, cloud storage costs are typically low, usually just a few dollars per month for tens of gigabytes of data."
-            }
-          ]
-        },
-        {
-          "pageId": "15B-p5",
-          "stage": "understand",
-          "title": "Cloud Storage Benefits",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Cloud storage also makes collaboration easy. You can easily share a file with someone else. You can choose different ways to share, from letting the person only view the file to giving them full editing rights."
@@ -22192,7 +21905,7 @@
           ]
         },
         {
-          "pageId": "15B-p6",
+          "pageId": "15B-p5",
           "stage": "understand",
           "title": "Cloud Storage Providers",
           "blocks": [
@@ -22211,7 +21924,7 @@
           ]
         },
         {
-          "pageId": "15B-p7",
+          "pageId": "15B-p6",
           "stage": "understand",
           "title": "Cloud Storage Providers",
           "blocks": [
@@ -22222,7 +21935,7 @@
           ]
         },
         {
-          "pageId": "15B-p8",
+          "pageId": "15B-p7",
           "stage": "understand",
           "title": "Cloud Storage Drawbacks",
           "blocks": [
@@ -22237,7 +21950,7 @@
           ]
         },
         {
-          "pageId": "15B-p9",
+          "pageId": "15B-p8",
           "stage": "understand",
           "title": "Cloud Storage Drawbacks",
           "blocks": [
@@ -22248,7 +21961,7 @@
           ]
         },
         {
-          "pageId": "15B-p10",
+          "pageId": "15B-p9",
           "stage": "understand",
           "title": "Shared Storage",
           "blocks": [
@@ -22267,14 +21980,7 @@
             {
               "type": "paragraph",
               "text": "In order to access a shared folder, your user account must be granted access to it. Depending on how your workstation and server are configured, you may be required to provide a username and password to access the shared folder."
-            }
-          ]
-        },
-        {
-          "pageId": "15B-p11",
-          "stage": "understand",
-          "title": "Shared Storage",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Several common shared folder management tasks are described in the following table:"
@@ -22282,7 +21988,7 @@
           ]
         },
         {
-          "pageId": "15B-p12",
+          "pageId": "15B-p10",
           "stage": "understand",
           "title": "Task Description",
           "blocks": [
@@ -22320,7 +22026,7 @@
           ]
         },
         {
-          "pageId": "15B-p13",
+          "pageId": "15B-p11",
           "stage": "understand",
           "title": "Task Description",
           "blocks": [
@@ -22356,7 +22062,7 @@
           ]
         },
         {
-          "pageId": "15B-p14",
+          "pageId": "15B-p12",
           "stage": "understand",
           "title": "Folder",
           "blocks": [
@@ -22395,7 +22101,7 @@
           ]
         },
         {
-          "pageId": "15B-p15",
+          "pageId": "15B-p13",
           "stage": "understand",
           "title": "Opening and Saving Files with OneDrive",
           "blocks": [
@@ -22438,7 +22144,7 @@
           ]
         },
         {
-          "pageId": "15B-p16",
+          "pageId": "15B-p14",
           "stage": "understand",
           "title": "Common Cloud Storage Providers",
           "blocks": [
@@ -22453,7 +22159,7 @@
           ]
         },
         {
-          "pageId": "15B-p17",
+          "pageId": "15B-p15",
           "stage": "understand",
           "title": "Table 35: Cloud Storage Provider Comparison",
           "blocks": [
@@ -22464,7 +22170,7 @@
           ]
         },
         {
-          "pageId": "15B-p18",
+          "pageId": "15B-p16",
           "stage": "understand",
           "title": "Table 35: Cloud Storage Provider Comparison",
           "blocks": [
@@ -22475,7 +22181,7 @@
           ]
         },
         {
-          "pageId": "15B-p19",
+          "pageId": "15B-p17",
           "stage": "understand",
           "title": "Cloud Storage vs. Local Storage",
           "blocks": [
@@ -22490,7 +22196,7 @@
           ]
         },
         {
-          "pageId": "15B-p20",
+          "pageId": "15B-p18",
           "stage": "understand",
           "title": "Factor Cloud Storage Local Storage",
           "blocks": [
@@ -22501,7 +22207,7 @@
           ]
         },
         {
-          "pageId": "15B-p21",
+          "pageId": "15B-p19",
           "stage": "understand",
           "title": "When to Use Each",
           "blocks": [
@@ -23420,14 +23126,7 @@
             {
               "type": "paragraph",
               "text": "A cybersecurity framework guides the selection and configuration of devices and behaviors that keep a computer system secure. Frameworks are important because they stop an organization from building its security program in a vacuum, or from building the program on a foundation that fails to account for important security concepts."
-            }
-          ]
-        },
-        {
-          "pageId": "16B-p9",
-          "stage": "understand",
-          "title": "Security Strategies",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Here are two commonly used strategies that many organizations use to guide their work in security."
@@ -23435,7 +23134,7 @@
           ]
         },
         {
-          "pageId": "16B-p10",
+          "pageId": "16B-p9",
           "stage": "understand",
           "title": "The CIA Triad",
           "blocks": [
@@ -23462,7 +23161,7 @@
           ]
         },
         {
-          "pageId": "16B-p11",
+          "pageId": "16B-p10",
           "stage": "understand",
           "title": "The CIA Triad",
           "blocks": [
@@ -23481,7 +23180,7 @@
           ]
         },
         {
-          "pageId": "16B-p12",
+          "pageId": "16B-p11",
           "stage": "understand",
           "title": "The CIA Triad",
           "blocks": [
@@ -23492,7 +23191,7 @@
           ]
         },
         {
-          "pageId": "16B-p13",
+          "pageId": "16B-p12",
           "stage": "understand",
           "title": "The CIA Triad",
           "blocks": [
@@ -23513,7 +23212,7 @@
           ]
         },
         {
-          "pageId": "16B-p14",
+          "pageId": "16B-p13",
           "stage": "understand",
           "title": "Authentication Factors",
           "blocks": [
@@ -23528,7 +23227,7 @@
           ]
         },
         {
-          "pageId": "16B-p15",
+          "pageId": "16B-p14",
           "stage": "understand",
           "title": "Something You Know",
           "blocks": [
@@ -23556,7 +23255,7 @@
           ]
         },
         {
-          "pageId": "16B-p16",
+          "pageId": "16B-p15",
           "stage": "understand",
           "title": "Something You Know",
           "blocks": [
@@ -23571,7 +23270,7 @@
           ]
         },
         {
-          "pageId": "16B-p17",
+          "pageId": "16B-p16",
           "stage": "understand",
           "title": "Something You Are",
           "blocks": [
@@ -23590,7 +23289,7 @@
           ]
         },
         {
-          "pageId": "16B-p18",
+          "pageId": "16B-p17",
           "stage": "understand",
           "title": "Something You Are",
           "blocks": [
@@ -23605,7 +23304,7 @@
           ]
         },
         {
-          "pageId": "16B-p19",
+          "pageId": "16B-p18",
           "stage": "understand",
           "title": "Something You Are",
           "blocks": [
@@ -23616,7 +23315,7 @@
           ]
         },
         {
-          "pageId": "16B-p20",
+          "pageId": "16B-p19",
           "stage": "understand",
           "title": "Multifactor and Two-factor Authentication",
           "blocks": [
@@ -23631,7 +23330,7 @@
           ]
         },
         {
-          "pageId": "16B-p21",
+          "pageId": "16B-p20",
           "stage": "understand",
           "title": "Single Sign-On",
           "blocks": [
@@ -23646,7 +23345,7 @@
           ]
         },
         {
-          "pageId": "16B-p22",
+          "pageId": "16B-p21",
           "stage": "understand",
           "title": "Permissions",
           "blocks": [
@@ -23666,14 +23365,7 @@
                 "Execute: A user or group of users can run a program or script from the file.",
                 "Delete: A user or group of users can remove the file."
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "16B-p23",
-          "stage": "see",
-          "title": "Permissions",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
@@ -23682,9 +23374,9 @@
           ]
         },
         {
-          "pageId": "16B-p24",
+          "pageId": "16B-p22",
           "stage": "understand",
-          "title": "",
+          "title": "Permissions",
           "blocks": [
             {
               "type": "paragraph",
@@ -23697,26 +23389,12 @@
             {
               "type": "paragraph",
               "text": "Network administrators can also assign permissions to individual users or to groups of users."
-            }
-          ]
-        },
-        {
-          "pageId": "16B-p25",
-          "stage": "see",
-          "title": "",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
               "text": "For example, the entire Development team may need to read or to view the schedule for project A, but only the individual project manager should be able to edit or write to that schedule."
-            }
-          ]
-        },
-        {
-          "pageId": "16B-p26",
-          "stage": "understand",
-          "title": "",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "In other cases, an entire department has different levels of permission related to a directory, but members of other departments can't access that set of files at all. Financial and human resource files, containing sensitive information, fall into this category. Setting group permissions makes the IT department's job much simpler."
@@ -23724,7 +23402,7 @@
           ]
         },
         {
-          "pageId": "16B-p27",
+          "pageId": "16B-p23",
           "stage": "understand",
           "title": "Least Privilege",
           "blocks": [
@@ -23743,7 +23421,7 @@
           ]
         },
         {
-          "pageId": "16B-p28",
+          "pageId": "16B-p24",
           "stage": "understand",
           "title": "Least Privilege",
           "blocks": [
@@ -23754,7 +23432,7 @@
           ]
         },
         {
-          "pageId": "16B-p29",
+          "pageId": "16B-p25",
           "stage": "understand",
           "title": "Administrators and Standard Users",
           "blocks": [
@@ -23773,33 +23451,19 @@
           ]
         },
         {
-          "pageId": "16B-p30",
+          "pageId": "16B-p26",
           "stage": "understand",
           "title": "Accounting and Tracking",
           "blocks": [
             {
               "type": "paragraph",
               "text": "Accounting is the process of documenting user actions on the computer system. Accounting uses specialized software to log, or record, events that take place on the network. Events are things like sign-on attempts, software use, and file modification. When you log into a system that has this type of security logging software, that software will record how you logged in, what time you logged in, which programs and files you worked on (and at what times), and when you sign out. Accounting can keep track of different things like computer systems, people using the computer, files, and even remote connections."
-            }
-          ]
-        },
-        {
-          "pageId": "16B-p31",
-          "stage": "see",
-          "title": "Accounting and Tracking",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
               "text": "For example, the resources could be the database programs the user opens in the course of their day-to-day work. This database generates monthly sales reports, and the user prints out these reports."
-            }
-          ]
-        },
-        {
-          "pageId": "16B-p32",
-          "stage": "understand",
-          "title": "",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Another example is the history of websites visited while browsing the web. This allows the accounting system to track what users are doing within the system."
@@ -23811,7 +23475,7 @@
           ]
         },
         {
-          "pageId": "16B-p33",
+          "pageId": "16B-p27",
           "stage": "understand",
           "title": "Location Tracking",
           "blocks": [
@@ -23830,7 +23494,7 @@
           ]
         },
         {
-          "pageId": "16B-p34",
+          "pageId": "16B-p28",
           "stage": "understand",
           "title": "Web Browser History",
           "blocks": [
@@ -24868,14 +24532,7 @@
             {
               "type": "paragraph",
               "text": "Records are unique. They collect information about only one entity. The entity in that record can be a type of vehicle, a specific piece of art, a single park in a national parks system, or a person. The record is always unique, even if the entity shares some data in common with other entities."
-            }
-          ]
-        },
-        {
-          "pageId": "17A-p15",
-          "stage": "see",
-          "title": "Relational and Non-Relational Databases",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
@@ -24884,7 +24541,7 @@
           ]
         },
         {
-          "pageId": "17A-p16",
+          "pageId": "17A-p15",
           "stage": "understand",
           "title": "Michael Smith Freeport Bailey S&L Suspended",
           "blocks": [
@@ -24903,7 +24560,7 @@
           ]
         },
         {
-          "pageId": "17A-p17",
+          "pageId": "17A-p16",
           "stage": "understand",
           "title": "Employee Name Employee ID Site Client Account Status",
           "blocks": [
@@ -24914,7 +24571,7 @@
           ]
         },
         {
-          "pageId": "17A-p18",
+          "pageId": "17A-p17",
           "stage": "understand",
           "title": "Managing Relational Databases",
           "blocks": [
@@ -24929,7 +24586,7 @@
           ]
         },
         {
-          "pageId": "17A-p19",
+          "pageId": "17A-p18",
           "stage": "understand",
           "title": "Non-relational Databases",
           "blocks": [
@@ -25721,14 +25378,7 @@
             {
               "type": "paragraph",
               "text": "When learning a programming language, you commonly start by writing a program that prints the words \"Hello World\" on the screen. In this case, \"printing\" means showing those words on the screen when the program runs, and doesn't have anything to do with putting ink on paper."
-            }
-          ]
-        },
-        {
-          "pageId": "18A-p6",
-          "stage": "understand",
-          "title": "What is a Programming Language?",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Here are some examples of how some programming languages print \"Hello World\" to the screen."
@@ -25736,7 +25386,7 @@
           ]
         },
         {
-          "pageId": "18A-p7",
+          "pageId": "18A-p6",
           "stage": "understand",
           "title": "C++",
           "blocks": [
@@ -25747,7 +25397,7 @@
           ]
         },
         {
-          "pageId": "18A-p8",
+          "pageId": "18A-p7",
           "stage": "understand",
           "title": "C++",
           "blocks": [
@@ -25769,7 +25419,7 @@
           ]
         },
         {
-          "pageId": "18A-p9",
+          "pageId": "18A-p8",
           "stage": "understand",
           "title": "Runtime Engines",
           "blocks": [
@@ -25788,7 +25438,7 @@
           ]
         },
         {
-          "pageId": "18A-p10",
+          "pageId": "18A-p9",
           "stage": "understand",
           "title": "Scripting Functions",
           "blocks": [
@@ -25807,7 +25457,7 @@
           ]
         },
         {
-          "pageId": "18A-p11",
+          "pageId": "18A-p10",
           "stage": "understand",
           "title": "Interpreted Languages",
           "blocks": [
@@ -25830,7 +25480,7 @@
           ]
         },
         {
-          "pageId": "18A-p12",
+          "pageId": "18A-p11",
           "stage": "understand",
           "title": "Assembly Language",
           "blocks": [
@@ -25849,7 +25499,7 @@
           ]
         },
         {
-          "pageId": "18A-p13",
+          "pageId": "18A-p12",
           "stage": "understand",
           "title": "Query Languages",
           "blocks": [
@@ -25864,7 +25514,7 @@
           ]
         },
         {
-          "pageId": "18A-p14",
+          "pageId": "18A-p13",
           "stage": "see",
           "title": "Query Languages",
           "blocks": [
@@ -25876,7 +25526,7 @@
           ]
         },
         {
-          "pageId": "18A-p15",
+          "pageId": "18A-p14",
           "stage": "understand",
           "title": "",
           "blocks": [
@@ -25887,7 +25537,7 @@
           ]
         },
         {
-          "pageId": "18A-p16",
+          "pageId": "18A-p15",
           "stage": "understand",
           "title": "Activity: Excel VBA Assignment",
           "blocks": [
@@ -25902,7 +25552,7 @@
           ]
         },
         {
-          "pageId": "18A-p17",
+          "pageId": "18A-p16",
           "stage": "understand",
           "title": "Task Steps",
           "blocks": [
@@ -25949,7 +25599,7 @@
           ]
         },
         {
-          "pageId": "18A-p18",
+          "pageId": "18A-p17",
           "stage": "understand",
           "title": "Paste programming code into",
           "blocks": [
@@ -26146,14 +25796,7 @@
                 "Rectangle: Processes.",
                 "Arrow: The logical flow of the program."
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "18B-p6",
-          "stage": "understand",
-          "title": "Map Out the Program Sequence",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "You could use a flowchart for your Rock-Paper-Scissors program."
@@ -26165,7 +25808,7 @@
           ]
         },
         {
-          "pageId": "18B-p7",
+          "pageId": "18B-p6",
           "stage": "understand",
           "title": "Pseudocode",
           "blocks": [
@@ -26184,7 +25827,7 @@
           ]
         },
         {
-          "pageId": "18B-p8",
+          "pageId": "18B-p7",
           "stage": "understand",
           "title": "Pseudocode and Programming Constructs",
           "blocks": [
@@ -26209,7 +25852,7 @@
           ]
         },
         {
-          "pageId": "18B-p9",
+          "pageId": "18B-p8",
           "stage": "understand",
           "title": "OBTAIN, GET",
           "blocks": [
@@ -26246,7 +25889,7 @@
           ]
         },
         {
-          "pageId": "18B-p10",
+          "pageId": "18B-p9",
           "stage": "understand",
           "title": "Using Operators",
           "blocks": [
@@ -26277,7 +25920,7 @@
           ]
         },
         {
-          "pageId": "18B-p11",
+          "pageId": "18B-p10",
           "stage": "understand",
           "title": "Explaining Your Code",
           "blocks": [
@@ -26292,7 +25935,7 @@
           ]
         },
         {
-          "pageId": "18B-p12",
+          "pageId": "18B-p11",
           "stage": "see",
           "title": "Working with Pseudocode",
           "blocks": [
@@ -26304,7 +25947,7 @@
           ]
         },
         {
-          "pageId": "18B-p13",
+          "pageId": "18B-p12",
           "stage": "understand",
           "title": "",
           "blocks": [
@@ -26323,7 +25966,7 @@
           ]
         },
         {
-          "pageId": "18B-p14",
+          "pageId": "18B-p13",
           "stage": "understand",
           "title": "Programming Tools",
           "blocks": [
@@ -26334,7 +25977,7 @@
           ]
         },
         {
-          "pageId": "18B-p15",
+          "pageId": "18B-p14",
           "stage": "understand",
           "title": "Text Editors",
           "blocks": [
@@ -26345,7 +25988,7 @@
           ]
         },
         {
-          "pageId": "18B-p16",
+          "pageId": "18B-p15",
           "stage": "understand",
           "title": "Console Editors",
           "blocks": [
@@ -26356,7 +25999,7 @@
           ]
         },
         {
-          "pageId": "18B-p17",
+          "pageId": "18B-p16",
           "stage": "understand",
           "title": "Integrated Development Environments (IDEs)",
           "blocks": [
@@ -27112,14 +26755,7 @@
             {
               "type": "paragraph",
               "text": "The program waits for each player to click their choice of rock, paper, or scissors. When one player clicks, the program checks if the second player has made their choice. If both players have chosen, the program shows their selections. If the other player hasn't chosen yet, the program reminds them to make their choice."
-            }
-          ]
-        },
-        {
-          "pageId": "18E-p3",
-          "stage": "understand",
-          "title": "Programming Logic",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Beyond branching and looping, here is an additional concept worth understanding."
@@ -27127,7 +26763,7 @@
           ]
         },
         {
-          "pageId": "18E-p4",
+          "pageId": "18E-p3",
           "stage": "understand",
           "title": "Term Description",
           "blocks": [
@@ -27138,7 +26774,7 @@
           ]
         },
         {
-          "pageId": "18E-p5",
+          "pageId": "18E-p4",
           "stage": "understand",
           "title": "IF Then Else",
           "blocks": [
@@ -27157,7 +26793,7 @@
           ]
         },
         {
-          "pageId": "18E-p6",
+          "pageId": "18E-p5",
           "stage": "understand",
           "title": "If-Else Statements",
           "blocks": [
@@ -27168,7 +26804,7 @@
           ]
         },
         {
-          "pageId": "18E-p7",
+          "pageId": "18E-p6",
           "stage": "understand",
           "title": "If-Else Statements",
           "blocks": [
@@ -27187,7 +26823,7 @@
           ]
         },
         {
-          "pageId": "18E-p8",
+          "pageId": "18E-p7",
           "stage": "understand",
           "title": "Code Blocks",
           "blocks": [
@@ -27202,7 +26838,7 @@
           ]
         },
         {
-          "pageId": "18E-p9",
+          "pageId": "18E-p8",
           "stage": "understand",
           "title": "Branching Statements",
           "blocks": [
@@ -27213,7 +26849,7 @@
           ]
         },
         {
-          "pageId": "18E-p10",
+          "pageId": "18E-p9",
           "stage": "understand",
           "title": "Switch Statement Syntax",
           "blocks": [
@@ -27224,14 +26860,7 @@
             {
               "type": "paragraph",
               "text": "In this switch statement, the variable x is set to Ellie's friend Evie. The switch statement lists each of her friends and what they like to do. When the switch statement tests the variable x and determines that it equals Evie, the program displays the activity that Evie likes to do for Ellie to recommend: \"Let's go to the beach!\" The break command exits the switch statement, which sends the program out of the switch statement to finish the program."
-            }
-          ]
-        },
-        {
-          "pageId": "18E-p11",
-          "stage": "understand",
-          "title": "Looping",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "The flowchart below shows how looping fits into a real-world decision process, followed by examples of both loop types."
@@ -27239,7 +26868,7 @@
           ]
         },
         {
-          "pageId": "18E-p12",
+          "pageId": "18E-p10",
           "stage": "see",
           "title": "For Loops",
           "blocks": [
@@ -27251,7 +26880,7 @@
           ]
         },
         {
-          "pageId": "18E-p13",
+          "pageId": "18E-p11",
           "stage": "understand",
           "title": "",
           "blocks": [
@@ -27262,7 +26891,7 @@
           ]
         },
         {
-          "pageId": "18E-p14",
+          "pageId": "18E-p12",
           "stage": "understand",
           "title": "While Loops",
           "blocks": [
@@ -27281,7 +26910,7 @@
           ]
         },
         {
-          "pageId": "18E-p15",
+          "pageId": "18E-p13",
           "stage": "understand",
           "title": "While Loop",
           "blocks": [
@@ -27303,7 +26932,7 @@
           ]
         },
         {
-          "pageId": "18E-p16",
+          "pageId": "18E-p14",
           "stage": "understand",
           "title": "While Loops",
           "blocks": [
@@ -27314,7 +26943,7 @@
           ]
         },
         {
-          "pageId": "18E-p17",
+          "pageId": "18E-p15",
           "stage": "understand",
           "title": "While Loops",
           "blocks": [
@@ -27337,7 +26966,7 @@
           ]
         },
         {
-          "pageId": "18E-p18",
+          "pageId": "18E-p16",
           "stage": "understand",
           "title": "Infinite Loops",
           "blocks": [
@@ -27348,7 +26977,7 @@
           ]
         },
         {
-          "pageId": "18E-p19",
+          "pageId": "18E-p17",
           "stage": "understand",
           "title": "Term Description",
           "blocks": [
@@ -27371,7 +27000,7 @@
           ]
         },
         {
-          "pageId": "18E-p20",
+          "pageId": "18E-p18",
           "stage": "understand",
           "title": "For Loops",
           "blocks": [
@@ -27382,7 +27011,7 @@
           ]
         },
         {
-          "pageId": "18E-p21",
+          "pageId": "18E-p19",
           "stage": "understand",
           "title": "For Loops",
           "blocks": [
@@ -27408,7 +27037,7 @@
           ]
         },
         {
-          "pageId": "18E-p22",
+          "pageId": "18E-p20",
           "stage": "understand",
           "title": "For Loops",
           "blocks": [
@@ -27425,7 +27054,7 @@
           ]
         },
         {
-          "pageId": "18E-p23",
+          "pageId": "18E-p21",
           "stage": "understand",
           "title": "Term Description",
           "blocks": [
@@ -27448,7 +27077,7 @@
           ]
         },
         {
-          "pageId": "18E-p24",
+          "pageId": "18E-p22",
           "stage": "understand",
           "title": "Troubleshooting and Debugging",
           "blocks": [
@@ -27463,7 +27092,7 @@
           ]
         },
         {
-          "pageId": "18E-p25",
+          "pageId": "18E-p23",
           "stage": "understand",
           "title": "Troubleshoot Your Code",
           "blocks": [
@@ -27486,7 +27115,7 @@
           ]
         },
         {
-          "pageId": "18E-p26",
+          "pageId": "18E-p24",
           "stage": "understand",
           "title": "Troubleshoot Your Code",
           "blocks": [
@@ -27509,7 +27138,7 @@
           ]
         },
         {
-          "pageId": "18E-p27",
+          "pageId": "18E-p25",
           "stage": "understand",
           "title": "Programming Terminology",
           "blocks": [
@@ -27524,7 +27153,7 @@
           ]
         },
         {
-          "pageId": "18E-p28",
+          "pageId": "18E-p26",
           "stage": "understand",
           "title": "Term Description",
           "blocks": [
@@ -27555,7 +27184,7 @@
           ]
         },
         {
-          "pageId": "18E-p29",
+          "pageId": "18E-p27",
           "stage": "understand",
           "title": "Term Description",
           "blocks": [
@@ -27570,26 +27199,12 @@
             {
               "type": "paragraph",
               "text": "Constants are useful to programmers because they make programs more readable and easier to debug."
-            }
-          ]
-        },
-        {
-          "pageId": "18E-p30",
-          "stage": "see",
-          "title": "Term Description",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
               "text": "For example, when calculating the area of a circle, a programmer could create a constant for the value of PI instead of typing 3.14159265358973 into the program wherever the value of PI is used."
-            }
-          ]
-        },
-        {
-          "pageId": "18E-p31",
-          "stage": "understand",
-          "title": "",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Data types A data type is the classification of a Variable which tells a computer how the programmer intends to use a variable in a program. Most programming languages support various types of data, including integer, floating point, character or string, and Boolean."
@@ -27601,7 +27216,7 @@
           ]
         },
         {
-          "pageId": "18E-p32",
+          "pageId": "18E-p28",
           "stage": "understand",
           "title": "Term Description",
           "blocks": [
@@ -27740,14 +27355,7 @@
             {
               "type": "paragraph",
               "text": "Arrays can also be multidimensional, which means you can have an array of arrays (2- dimensional) or an array of arrays of arrays (3-dimensional), and so on. A table is two- dimensional, like a grid, and a cube is three-dimensional. Even if you add more columns to a table, it stays two-dimensional."
-            }
-          ]
-        },
-        {
-          "pageId": "18F-p4",
-          "stage": "understand",
-          "title": "Arrays",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Vectors are groups of the same type of variable. During the time that the program runs, the number of variables within that vector, or group, can change depending on the program's needs."
@@ -27755,7 +27363,7 @@
           ]
         },
         {
-          "pageId": "18F-p5",
+          "pageId": "18F-p4",
           "stage": "understand",
           "title": "Index Notation",
           "blocks": [
@@ -27782,7 +27390,7 @@
           ]
         },
         {
-          "pageId": "18F-p6",
+          "pageId": "18F-p5",
           "stage": "understand",
           "title": "Index Notation",
           "blocks": [
@@ -27793,7 +27401,7 @@
           ]
         },
         {
-          "pageId": "18F-p7",
+          "pageId": "18F-p6",
           "stage": "understand",
           "title": "Displaying Array Members",
           "blocks": [
@@ -27812,7 +27420,7 @@
           ]
         },
         {
-          "pageId": "18F-p8",
+          "pageId": "18F-p7",
           "stage": "understand",
           "title": "Displaying Array Members",
           "blocks": [
@@ -27823,7 +27431,7 @@
           ]
         },
         {
-          "pageId": "18F-p9",
+          "pageId": "18F-p8",
           "stage": "understand",
           "title": "Displaying Array Members",
           "blocks": [
@@ -27842,7 +27450,7 @@
           ]
         },
         {
-          "pageId": "18F-p10",
+          "pageId": "18F-p9",
           "stage": "understand",
           "title": "Classes",
           "blocks": [
@@ -27865,7 +27473,7 @@
           ]
         },
         {
-          "pageId": "18F-p11",
+          "pageId": "18F-p10",
           "stage": "understand",
           "title": "Objects",
           "blocks": [
@@ -27880,7 +27488,7 @@
           ]
         },
         {
-          "pageId": "18F-p12",
+          "pageId": "18F-p11",
           "stage": "see",
           "title": "Objects",
           "blocks": [
@@ -27892,7 +27500,7 @@
           ]
         },
         {
-          "pageId": "18F-p13",
+          "pageId": "18F-p12",
           "stage": "understand",
           "title": "",
           "blocks": [
@@ -28318,14 +27926,7 @@
             {
               "type": "paragraph",
               "text": "The restaurant industry is using automation to make sure customers have a consistent experience. In the kitchen, robots help prepare food to reduce wait times and lower labor costs."
-            }
-          ]
-        },
-        {
-          "pageId": "19C-p12",
-          "stage": "understand",
-          "title": "Automation",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Often, these automated systems are combined with front-end kiosks, where customers can place orders on a large tablet."
@@ -28333,7 +27934,7 @@
           ]
         },
         {
-          "pageId": "19C-p13",
+          "pageId": "19C-p12",
           "stage": "understand",
           "title": "Automation in Practice",
           "blocks": [
@@ -28356,7 +27957,7 @@
           ]
         },
         {
-          "pageId": "19C-p14",
+          "pageId": "19C-p13",
           "stage": "understand",
           "title": "Virtual Reality",
           "blocks": [
@@ -28367,7 +27968,7 @@
           ]
         },
         {
-          "pageId": "19C-p15",
+          "pageId": "19C-p14",
           "stage": "understand",
           "title": "Mixed and Augmented Reality",
           "blocks": [
@@ -28390,7 +27991,7 @@
           ]
         },
         {
-          "pageId": "19C-p16",
+          "pageId": "19C-p15",
           "stage": "understand",
           "title": "VR Games and Other Uses",
           "blocks": [
@@ -28413,7 +28014,7 @@
           ]
         },
         {
-          "pageId": "19C-p17",
+          "pageId": "19C-p16",
           "stage": "understand",
           "title": "VR Games and Other Uses",
           "blocks": [
@@ -28424,7 +28025,7 @@
           ]
         },
         {
-          "pageId": "19C-p18",
+          "pageId": "19C-p17",
           "stage": "understand",
           "title": "The Internet of Things",
           "blocks": [
@@ -28435,7 +28036,7 @@
           ]
         },
         {
-          "pageId": "19C-p19",
+          "pageId": "19C-p18",
           "stage": "understand",
           "title": "IoT Televisions",
           "blocks": [
@@ -28446,7 +28047,7 @@
           ]
         },
         {
-          "pageId": "19C-p20",
+          "pageId": "19C-p19",
           "stage": "understand",
           "title": "IoT Speakers",
           "blocks": [
@@ -28457,7 +28058,7 @@
           ]
         },
         {
-          "pageId": "19C-p21",
+          "pageId": "19C-p20",
           "stage": "understand",
           "title": "IoT Lightbulbs",
           "blocks": [
@@ -28468,7 +28069,7 @@
           ]
         },
         {
-          "pageId": "19C-p22",
+          "pageId": "19C-p21",
           "stage": "understand",
           "title": "IoT Security Devices",
           "blocks": [
@@ -28479,7 +28080,7 @@
           ]
         },
         {
-          "pageId": "19C-p23",
+          "pageId": "19C-p22",
           "stage": "understand",
           "title": "IoT Wearable Devices",
           "blocks": [
@@ -28490,7 +28091,7 @@
           ]
         },
         {
-          "pageId": "19C-p24",
+          "pageId": "19C-p23",
           "stage": "understand",
           "title": "Popular IoT Devices",
           "blocks": [
@@ -28505,7 +28106,7 @@
           ]
         },
         {
-          "pageId": "19C-p25",
+          "pageId": "19C-p24",
           "stage": "understand",
           "title": "Device Device Name Description",
           "blocks": [
@@ -28516,7 +28117,7 @@
           ]
         },
         {
-          "pageId": "19C-p26",
+          "pageId": "19C-p25",
           "stage": "understand",
           "title": "Device Device Name Description",
           "blocks": [
@@ -28543,7 +28144,7 @@
           ]
         },
         {
-          "pageId": "19C-p27",
+          "pageId": "19C-p26",
           "stage": "understand",
           "title": "Device Device Name Description",
           "blocks": [
@@ -28566,7 +28167,7 @@
           ]
         },
         {
-          "pageId": "19C-p28",
+          "pageId": "19C-p27",
           "stage": "understand",
           "title": "When Using IoT Devices",
           "blocks": [
@@ -28581,7 +28182,7 @@
           ]
         },
         {
-          "pageId": "19C-p29",
+          "pageId": "19C-p28",
           "stage": "understand",
           "title": "IoT Security",
           "blocks": [
@@ -28596,7 +28197,7 @@
           ]
         },
         {
-          "pageId": "19C-p30",
+          "pageId": "19C-p29",
           "stage": "understand",
           "title": "IoT Security",
           "blocks": [
@@ -28607,7 +28208,7 @@
           ]
         },
         {
-          "pageId": "19C-p31",
+          "pageId": "19C-p30",
           "stage": "understand",
           "title": "Privacy and Patching",
           "blocks": [
@@ -28622,7 +28223,7 @@
           ]
         },
         {
-          "pageId": "19C-p32",
+          "pageId": "19C-p31",
           "stage": "understand",
           "title": "Voice Assistants",
           "blocks": [
@@ -28637,7 +28238,7 @@
           ]
         },
         {
-          "pageId": "19C-p33",
+          "pageId": "19C-p32",
           "stage": "understand",
           "title": "Quantum Computing",
           "blocks": [
@@ -28656,7 +28257,7 @@
           ]
         },
         {
-          "pageId": "19C-p34",
+          "pageId": "19C-p33",
           "stage": "understand",
           "title": "Using Quantum Computing",
           "blocks": [
@@ -28675,7 +28276,7 @@
           ]
         },
         {
-          "pageId": "19C-p35",
+          "pageId": "19C-p34",
           "stage": "understand",
           "title": "Storage",
           "blocks": [
@@ -28690,7 +28291,7 @@
           ]
         },
         {
-          "pageId": "19C-p36",
+          "pageId": "19C-p35",
           "stage": "understand",
           "title": "Heat-Assisted Magnetic Recording",
           "blocks": [
@@ -28709,7 +28310,7 @@
           ]
         },
         {
-          "pageId": "19C-p37",
+          "pageId": "19C-p36",
           "stage": "understand",
           "title": "Heat-Assisted Magnetic Recording",
           "blocks": [
@@ -29542,26 +29143,12 @@
             {
               "type": "paragraph",
               "text": "Do you know how frustrating it can be when a game crashes or an app doesn’t work the way it should? There are special tech heroes who make sure those problems don’t happen. They’re called Software Quality Assurance (Q A) Analysts or Software Test Engineers."
-            }
-          ]
-        },
-        {
-          "pageId": "20C-p7",
-          "stage": "see",
-          "title": "Software QA Analyst or Test Engineer",
-          "blocks": [
+            },
             {
               "type": "example",
               "title": "Example",
               "text": "Imagine playing a game and discovering bugs or issues before anyone else does. Your job is to find these problems and help the developers fix them, so everyone has a smooth experience."
-            }
-          ]
-        },
-        {
-          "pageId": "20C-p8",
-          "stage": "understand",
-          "title": "",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "You’ll create plans and strategies to test every part of the software, making sure nothing is left unchecked."
@@ -29573,7 +29160,7 @@
           ]
         },
         {
-          "pageId": "20C-p9",
+          "pageId": "20C-p7",
           "stage": "understand",
           "title": "Careers in Operating Systems",
           "blocks": [
@@ -29584,7 +29171,7 @@
           ]
         },
         {
-          "pageId": "20C-p10",
+          "pageId": "20C-p8",
           "stage": "understand",
           "title": "Systems Administrator",
           "blocks": [
@@ -29599,7 +29186,7 @@
           ]
         },
         {
-          "pageId": "20C-p11",
+          "pageId": "20C-p9",
           "stage": "understand",
           "title": "DevOps Engineer",
           "blocks": [
@@ -29614,7 +29201,7 @@
           ]
         },
         {
-          "pageId": "20C-p12",
+          "pageId": "20C-p10",
           "stage": "understand",
           "title": "OS Developer",
           "blocks": [
@@ -29625,14 +29212,7 @@
             {
               "type": "paragraph",
               "text": "As an OS Developer, you'll work with low-level programming languages like C and C++ and need a strong understanding of how hardware communicates with software. You might contribute to open-source projects like Linux or work at a major tech company improving Windows, macOS, or mobile operating systems. If you love digging into how things work at the deepest level and want to build technology that millions of people rely on every day, this career could be your calling."
-            }
-          ]
-        },
-        {
-          "pageId": "20C-p13",
-          "stage": "understand",
-          "title": "Careers in Computer Hardware",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "CompTIA’s Career Explorer is ready to help you dive into these job roles with information about hiring practices, job outlooks, and potential salaries."
@@ -29640,7 +29220,7 @@
           ]
         },
         {
-          "pageId": "20C-p14",
+          "pageId": "20C-p11",
           "stage": "understand",
           "title": "Computer Hardware Design Engineer",
           "blocks": [
@@ -29655,7 +29235,7 @@
           ]
         },
         {
-          "pageId": "20C-p15",
+          "pageId": "20C-p12",
           "stage": "understand",
           "title": "Electrical Engineer",
           "blocks": [
@@ -29674,7 +29254,7 @@
           ]
         },
         {
-          "pageId": "20C-p16",
+          "pageId": "20C-p13",
           "stage": "understand",
           "title": "Industrial Engineer",
           "blocks": [
@@ -29689,7 +29269,7 @@
           ]
         },
         {
-          "pageId": "20C-p17",
+          "pageId": "20C-p14",
           "stage": "understand",
           "title": "Software Engineer Common Job Duties",
           "blocks": [
@@ -29755,7 +29335,7 @@
           ]
         },
         {
-          "pageId": "20C-p18",
+          "pageId": "20C-p15",
           "stage": "understand",
           "title": "Web Developer Common Job Duties",
           "blocks": [
@@ -29835,7 +29415,7 @@
           ]
         },
         {
-          "pageId": "20C-p19",
+          "pageId": "20C-p16",
           "stage": "understand",
           "title": "Web Developer Common Job Duties",
           "blocks": [
@@ -29863,7 +29443,7 @@
           ]
         },
         {
-          "pageId": "20C-p20",
+          "pageId": "20C-p17",
           "stage": "understand",
           "title": "Quality Assurance (Q A) Engineer Common Job Duties",
           "blocks": [
@@ -29920,14 +29500,7 @@
             {
               "type": "paragraph",
               "text": "(RCC A) investigations."
-            }
-          ]
-        },
-        {
-          "pageId": "20C-p21",
-          "stage": "understand",
-          "title": "Quality Assurance (Q A) Engineer Common Job Duties",
-          "blocks": [
+            },
             {
               "type": "list",
               "items": [
@@ -29938,7 +29511,7 @@
           ]
         },
         {
-          "pageId": "20C-p22",
+          "pageId": "20C-p18",
           "stage": "understand",
           "title": "Electrical Engineer Common Job Duties",
           "blocks": [
@@ -29998,7 +29571,7 @@
           ]
         },
         {
-          "pageId": "20C-p23",
+          "pageId": "20C-p19",
           "stage": "understand",
           "title": "Mechanical Engineer Common Job Duties",
           "blocks": [
@@ -30050,7 +29623,7 @@
           ]
         },
         {
-          "pageId": "20C-p24",
+          "pageId": "20C-p20",
           "stage": "understand",
           "title": "Chemical Engineer Common Job Duties",
           "blocks": [
@@ -30068,7 +29641,7 @@
           ]
         },
         {
-          "pageId": "20C-p25",
+          "pageId": "20C-p21",
           "stage": "understand",
           "title": "Electrical Engineering, or a closely related field",
           "blocks": [
@@ -30336,14 +29909,7 @@
             {
               "type": "paragraph",
               "text": "Data Scientists often work on complex problems that require advanced statistical and machine learning techniques, while Data Analysts focus more on analyzing data to answer specific questions or solve defined problems using tools like Excel or SQL. For example, Data Scientists might figure out what products people will like in the future or how to improve things like healthcare or the environment, whereas Data Analysts might analyze sales trends or customer behavior to help a company make marketing decisions."
-            }
-          ]
-        },
-        {
-          "pageId": "20D-p12",
-          "stage": "understand",
-          "title": "Explore Job Roles",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "You can find out more at CompTIA’s Career Explorer with information about specific job roles, such as business intelligence analyst, as well as personal stories directly from database managers themselves."
@@ -30351,7 +29917,7 @@
           ]
         },
         {
-          "pageId": "20D-p13",
+          "pageId": "20D-p12",
           "stage": "understand",
           "title": "Careers in Coding",
           "blocks": [
@@ -30362,7 +29928,7 @@
           ]
         },
         {
-          "pageId": "20D-p14",
+          "pageId": "20D-p13",
           "stage": "understand",
           "title": "Web Developer",
           "blocks": [
@@ -30377,14 +29943,7 @@
             {
               "type": "paragraph",
               "text": "Back-end development is about what happens behind the scenes. Back-end developers write code that powers the website’s functionality, like storing user information, processing transactions, and retrieving data. They use languages like Python, Ruby, or PHP, and work with databases to ensure the website runs smoothly."
-            }
-          ]
-        },
-        {
-          "pageId": "20D-p15",
-          "stage": "understand",
-          "title": "Web Developer",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "If you love technology, enjoy being creative, and want to build the future of the Internet, a career as a Web Developer could be perfect for you."
@@ -30392,7 +29951,7 @@
           ]
         },
         {
-          "pageId": "20D-p16",
+          "pageId": "20D-p14",
           "stage": "understand",
           "title": "Cloud Architect",
           "blocks": [
@@ -30407,7 +29966,7 @@
           ]
         },
         {
-          "pageId": "20D-p17",
+          "pageId": "20D-p15",
           "stage": "understand",
           "title": "Cloud Architect",
           "blocks": [
@@ -30418,7 +29977,7 @@
           ]
         },
         {
-          "pageId": "20D-p18",
+          "pageId": "20D-p16",
           "stage": "understand",
           "title": "Video Game Designer",
           "blocks": [
@@ -30437,7 +29996,7 @@
           ]
         },
         {
-          "pageId": "20D-p19",
+          "pageId": "20D-p17",
           "stage": "understand",
           "title": "Data Engineer Common Job Duties",
           "blocks": [
@@ -30476,7 +30035,7 @@
           ]
         },
         {
-          "pageId": "20D-p20",
+          "pageId": "20D-p18",
           "stage": "understand",
           "title": "Amazon Web Services (A WS)",
           "blocks": [
@@ -30501,7 +30060,7 @@
           ]
         },
         {
-          "pageId": "20D-p21",
+          "pageId": "20D-p19",
           "stage": "understand",
           "title": "Data Analyst Common Job Duties",
           "blocks": [
@@ -30562,7 +30121,7 @@
           ]
         },
         {
-          "pageId": "20D-p22",
+          "pageId": "20D-p20",
           "stage": "understand",
           "title": "Database Administrator Common Job Duties",
           "blocks": [
@@ -30594,7 +30153,7 @@
           ]
         },
         {
-          "pageId": "20D-p23",
+          "pageId": "20D-p21",
           "stage": "understand",
           "title": "SQL server tools",
           "blocks": [
@@ -30628,7 +30187,7 @@
           ]
         },
         {
-          "pageId": "20D-p24",
+          "pageId": "20D-p22",
           "stage": "understand",
           "title": "Cybersecurity Analyst",
           "blocks": [
@@ -30647,7 +30206,7 @@
           ]
         },
         {
-          "pageId": "20D-p25",
+          "pageId": "20D-p23",
           "stage": "understand",
           "title": "Cybersecurity Engineer",
           "blocks": [
@@ -30666,7 +30225,7 @@
           ]
         },
         {
-          "pageId": "20D-p26",
+          "pageId": "20D-p24",
           "stage": "understand",
           "title": "Penetration Tester",
           "blocks": [
@@ -30685,18 +30244,18 @@
             {
               "type": "paragraph",
               "text": "You'll work within legal and ethical boundaries to help organizations fortify their defenses against malicious hackers. Your work directly contributes to making the digital world safer."
+            },
+            {
+              "type": "paragraph",
+              "text": "Whether it's protecting sensitive data, securing financial transactions, or safeguarding critical infrastructure, your efforts will have a tangible impact on cybersecurity."
             }
           ]
         },
         {
-          "pageId": "20D-p27",
+          "pageId": "20D-p25",
           "stage": "understand",
-          "title": "Penetration Tester",
+          "title": "Cybersecurity Analyst Common Job Duties",
           "blocks": [
-            {
-              "type": "paragraph",
-              "text": "Whether it's protecting sensitive data, securing financial transactions, or safeguarding critical infrastructure, your efforts will have a tangible impact on cybersecurity."
-            },
             {
               "type": "paragraph",
               "text": "Salary Range: $50,000 - $170,000 annually Education:"
@@ -30731,7 +30290,7 @@
           ]
         },
         {
-          "pageId": "20D-p28",
+          "pageId": "20D-p26",
           "stage": "understand",
           "title": "Professional (CISSP)",
           "blocks": [
@@ -30764,14 +30323,7 @@
                 "Proactively monitor the enterprise network for vulnerabilities and indicators of breach.",
                 "Investigate security events, independently or in conjunction with the corporate security office, city, state, or federal agencies."
               ]
-            }
-          ]
-        },
-        {
-          "pageId": "20D-p29",
-          "stage": "understand",
-          "title": "Cybersecurity Engineer Common Job Duties",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Salary Range: $60,000 - $165,000 annually Education:"
@@ -30782,7 +30334,14 @@
                 "Two- or four-year degree from an accredited institution preferred",
                 "Bachelor’s degree in Cybersecurity, Information"
               ]
-            },
+            }
+          ]
+        },
+        {
+          "pageId": "20D-p27",
+          "stage": "understand",
+          "title": "Information Systems, or a closely related field",
+          "blocks": [
             {
               "type": "list",
               "items": [
@@ -30806,7 +30365,7 @@
           ]
         },
         {
-          "pageId": "20D-p30",
+          "pageId": "20D-p28",
           "stage": "understand",
           "title": "Professional (CISSP)",
           "blocks": [
@@ -30853,7 +30412,7 @@
           ]
         },
         {
-          "pageId": "20D-p31",
+          "pageId": "20D-p29",
           "stage": "understand",
           "title": "Penetration Tester Common Job Duties",
           "blocks": [
@@ -30912,7 +30471,7 @@
           ]
         },
         {
-          "pageId": "20D-p32",
+          "pageId": "20D-p30",
           "stage": "understand",
           "title": "Cloud computing environments preferred",
           "blocks": [
@@ -30936,7 +30495,7 @@
           ]
         },
         {
-          "pageId": "20D-p33",
+          "pageId": "20D-p31",
           "stage": "understand",
           "title": "Careers in Creative Technology",
           "blocks": [
@@ -30947,7 +30506,7 @@
           ]
         },
         {
-          "pageId": "20D-p34",
+          "pageId": "20D-p32",
           "stage": "understand",
           "title": "Graphic Designer",
           "blocks": [
@@ -30962,7 +30521,7 @@
           ]
         },
         {
-          "pageId": "20D-p35",
+          "pageId": "20D-p33",
           "stage": "understand",
           "title": "Photographer and Videographer",
           "blocks": [
@@ -30977,7 +30536,7 @@
           ]
         },
         {
-          "pageId": "20D-p36",
+          "pageId": "20D-p34",
           "stage": "understand",
           "title": "Animator",
           "blocks": [
@@ -30992,7 +30551,7 @@
           ]
         },
         {
-          "pageId": "20D-p37",
+          "pageId": "20D-p35",
           "stage": "understand",
           "title": "Graphic Designer Common Job Duties",
           "blocks": [
@@ -31021,7 +30580,7 @@
           ]
         },
         {
-          "pageId": "20D-p38",
+          "pageId": "20D-p36",
           "stage": "understand",
           "title": "Photoshop, or XD",
           "blocks": [
@@ -31044,7 +30603,7 @@
           ]
         },
         {
-          "pageId": "20D-p39",
+          "pageId": "20D-p37",
           "stage": "understand",
           "title": "Photographer and Videographer Common Job Duties",
           "blocks": [
@@ -31095,7 +30654,7 @@
           ]
         },
         {
-          "pageId": "20D-p40",
+          "pageId": "20D-p38",
           "stage": "understand",
           "title": "Animator Common Job Duties",
           "blocks": [
@@ -31480,14 +31039,7 @@
             {
               "type": "paragraph",
               "text": "However, in competitive job markets, some students see the value in receiving a bachelor's or master's degree. These degrees can give candidates an edge in certain higher-paying IT careers, such as systems analysis, software engineering, and data science."
-            }
-          ]
-        },
-        {
-          "pageId": "20E-p16",
-          "stage": "understand",
-          "title": "Four-Year Colleges and Universities",
-          "blocks": [
+            },
             {
               "type": "paragraph",
               "text": "Many high school students can also take advantage of AP courses, dual-credit, or dual- enrollment opportunities. They can earn 16 or more college credits while still in high school."
@@ -31495,7 +31047,7 @@
           ]
         },
         {
-          "pageId": "20E-p17",
+          "pageId": "20E-p16",
           "stage": "understand",
           "title": "Gaining Work Experience",
           "blocks": [
@@ -31510,7 +31062,7 @@
           ]
         },
         {
-          "pageId": "20E-p18",
+          "pageId": "20E-p17",
           "stage": "understand",
           "title": "Networking",
           "blocks": [
@@ -31529,7 +31081,7 @@
           ]
         },
         {
-          "pageId": "20E-p19",
+          "pageId": "20E-p18",
           "stage": "understand",
           "title": "Networking",
           "blocks": [
@@ -31554,7 +31106,7 @@
           ]
         },
         {
-          "pageId": "20E-p20",
+          "pageId": "20E-p19",
           "stage": "understand",
           "title": "Resume Writing",
           "blocks": [
@@ -31578,7 +31130,7 @@
           ]
         },
         {
-          "pageId": "20E-p21",
+          "pageId": "20E-p20",
           "stage": "understand",
           "title": "Resume Formatting",
           "blocks": [
@@ -31599,7 +31151,7 @@
           ]
         },
         {
-          "pageId": "20E-p22",
+          "pageId": "20E-p21",
           "stage": "understand",
           "title": "Section Description",
           "blocks": [
@@ -31630,7 +31182,7 @@
           ]
         },
         {
-          "pageId": "20E-p23",
+          "pageId": "20E-p22",
           "stage": "understand",
           "title": "Section Description",
           "blocks": [
@@ -31641,7 +31193,7 @@
           ]
         },
         {
-          "pageId": "20E-p24",
+          "pageId": "20E-p23",
           "stage": "understand",
           "title": "Interviewing Skills",
           "blocks": [
@@ -31652,7 +31204,7 @@
           ]
         },
         {
-          "pageId": "20E-p25",
+          "pageId": "20E-p24",
           "stage": "understand",
           "title": "Types of Interviews",
           "blocks": [
@@ -31672,7 +31224,7 @@
           ]
         },
         {
-          "pageId": "20E-p26",
+          "pageId": "20E-p25",
           "stage": "understand",
           "title": "Interview Attire",
           "blocks": [
@@ -31695,7 +31247,7 @@
           ]
         },
         {
-          "pageId": "20E-p27",
+          "pageId": "20E-p26",
           "stage": "understand",
           "title": "Interview Attire",
           "blocks": [
@@ -31706,7 +31258,7 @@
           ]
         },
         {
-          "pageId": "20E-p28",
+          "pageId": "20E-p27",
           "stage": "understand",
           "title": "Potential Interview Questions",
           "blocks": [
@@ -31717,7 +31269,7 @@
           ]
         },
         {
-          "pageId": "20E-p29",
+          "pageId": "20E-p28",
           "stage": "understand",
           "title": "Question Question Tips",
           "blocks": [
@@ -31740,7 +31292,7 @@
           ]
         },
         {
-          "pageId": "20E-p30",
+          "pageId": "20E-p29",
           "stage": "understand",
           "title": "Question Question Tips",
           "blocks": [
@@ -31751,7 +31303,7 @@
           ]
         },
         {
-          "pageId": "20E-p31",
+          "pageId": "20E-p30",
           "stage": "understand",
           "title": "Question Question Tips",
           "blocks": [

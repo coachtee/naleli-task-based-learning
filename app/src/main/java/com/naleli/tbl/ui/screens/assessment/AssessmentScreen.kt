@@ -138,6 +138,13 @@ fun AssessmentScreen(
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                     )
+                } else if (assessment.result == CompetenceResult.NOT_YET_ASSESSED) {
+                    Text(
+                        "Checking your work against the criteria…",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                    )
                 } else {
                     Text(
                         "Review the criteria above, then go back and resubmit.",

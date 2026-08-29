@@ -299,11 +299,19 @@ def paginate(blocks: list[dict], lesson_code: str) -> list[dict]:
             continue
 
         # A worked example is the SEE stage: the learner is shown the idea
-        # working, not told it again.
+        # working, not told it again. Only a substantial one earns its own
+        # screen, though — "For example: Mb = megabit / MB = megabyte" on a
+        # screen of its own left almost the whole phone empty and cost the
+        # learner a tap for two lines.
         if kind == "example":
-            start(current["title"] if current else "In practice", stage="see")
-            current["blocks"].append(block)
-            current = None  # an example stands alone on its screen
+            if block_chars(block) >= MIN_PAGE_CHARS:
+                start(current["title"] if current else "In practice", stage="see")
+                current["blocks"].append(block)
+                current = None  # a real worked example stands alone
+            else:
+                if current is None:
+                    start("In this lesson" if not pages else "")
+                current["blocks"].append(block)
             continue
 
         if current is None:
@@ -324,9 +332,12 @@ def paginate(blocks: list[dict], lesson_code: str) -> list[dict]:
         size = sum(block_chars(b) for b in page["blocks"])
         if merged and size < MIN_PAGE_CHARS:
             prev = merged[-1]
+            # A slightly over-long screen that scrolls beats a near-empty
+            # one that costs a tap for two lines, so the merge is allowed to
+            # overshoot the budget rather than strand a fragment.
             if (
                 prev["stage"] == page["stage"]
-                and sum(block_chars(b) for b in prev["blocks"]) + size <= MAX_PAGE_CHARS
+                and sum(block_chars(b) for b in prev["blocks"]) + size <= MAX_PAGE_CHARS * 1.4
             ):
                 prev["blocks"].extend(page["blocks"])
                 continue

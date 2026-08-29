@@ -147,7 +147,12 @@ fun LessonScreen(
         // a learner deep in a long Understand stage is actually asking.
         val sameStage = stages.filter { it.lessonStage == stage.lessonStage }
         val positionInStage = stages.take(safeIndex + 1).count { it.lessonStage == stage.lessonStage }
-        val isStageEnd = positionInStage == sameStage.size
+        // Only when the NEXT screen belongs to a LATER stage. Worked
+        // examples interleave with explanation, so a SEE screen is often
+        // followed by more UNDERSTAND — which read as "SEE complete — next
+        // is UNDERSTAND", telling the learner the arc had gone backwards.
+        val nextStage = stages.getOrNull(safeIndex + 1)?.lessonStage
+        val isStageEnd = nextStage != null && nextStage.ordinal1 > stage.lessonStage.ordinal1
 
         LessonTopBar(
             task = task,
@@ -162,7 +167,7 @@ fun LessonScreen(
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 24.dp)
-                .padding(top = 26.dp, bottom = 12.dp),
+                .padding(top = 18.dp, bottom = 8.dp),
         ) {
             when (stage) {
                 is Stage.Reading -> ReadingStage(stage.page)
@@ -175,14 +180,11 @@ fun LessonScreen(
                     onAddEvidence = onAddEvidence,
                 )
             }
-            if (isStageEnd && !isLast) {
-                Spacer(Modifier.height(24.dp))
-                StageComplete(
-                    finished = stage.lessonStage,
-                    next = stages[safeIndex + 1].lessonStage,
-                )
+            if (isStageEnd && nextStage != null) {
+                Spacer(Modifier.height(18.dp))
+                StageComplete(finished = stage.lessonStage, next = nextStage)
             }
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(16.dp))
         }
 
         LessonFooter(
@@ -329,7 +331,7 @@ private fun ReadingStage(page: LessonPage) {
             color = OnHeroSurface,
             lineHeight = 34.sp,
         )
-        Spacer(Modifier.height(18.dp))
+        Spacer(Modifier.height(14.dp))
     }
     page.blocks.forEach { block -> Block(block) }
 }
@@ -360,12 +362,12 @@ private fun TryStage(practice: LessonPractice?, fallback: String) {
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(14.dp))
-                    .background(SurfaceWhite.copy(alpha = 0.07f))
-                    .padding(16.dp),
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(SurfaceWhite.copy(alpha = 0.06f))
+                    .padding(horizontal = 14.dp, vertical = 12.dp),
             ) {
-                Text("EXAMPLE ANSWER", style = MaterialTheme.typography.labelMedium, color = OnHeroSurfaceSoft)
-                Spacer(Modifier.height(6.dp))
+                Text("EXAMPLE ANSWER", style = MaterialTheme.typography.labelSmall, color = OnHeroSurfaceSoft)
+                Spacer(Modifier.height(4.dp))
                 Text(
                     practice.exampleAnswer,
                     style = MaterialTheme.typography.bodyMedium,
@@ -407,14 +409,14 @@ private fun ApplyStage(task: WorkTask, mission: LessonMission?) {
         // The steps arrive already numbered by the converter, so they are
         // rendered as written rather than re-numbered here.
         mission.steps.forEach { step -> TaskStep(step) }
-        Spacer(Modifier.height(22.dp))
+        Spacer(Modifier.height(18.dp))
     }
 
     if (mission.successCriteria.isNotEmpty()) {
         Text("WHAT GOOD WORK LOOKS LIKE", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
         Spacer(Modifier.height(8.dp))
         mission.successCriteria.forEach { Bullet(it) }
-        Spacer(Modifier.height(22.dp))
+        Spacer(Modifier.height(18.dp))
     }
 
     Text("WHAT TO SUBMIT", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
@@ -428,7 +430,7 @@ private fun ApplyStage(task: WorkTask, mission: LessonMission?) {
 @Composable
 private fun MissionSection(label: String, body: String) {
     if (body.isBlank()) return
-    Column(Modifier.padding(bottom = 22.dp)) {
+    Column(Modifier.padding(bottom = 18.dp)) {
         Text(label, style = MaterialTheme.typography.labelLarge, color = NibsOrange)
         Spacer(Modifier.height(6.dp))
         Text(body, style = MaterialTheme.typography.bodyLarge, color = OnHeroSurface, lineHeight = 27.sp)
@@ -437,7 +439,7 @@ private fun MissionSection(label: String, body: String) {
 
 @Composable
 private fun NumberedStep(number: Int, text: String) {
-    Row(Modifier.fillMaxWidth().padding(vertical = 7.dp), verticalAlignment = Alignment.Top) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 5.dp), verticalAlignment = Alignment.Top) {
         Box(
             Modifier
                 .size(24.dp)
@@ -487,9 +489,9 @@ private fun ShowStage(task: WorkTask, mission: LessonMission?, evidenceCount: In
     Column(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(SurfaceWhite.copy(alpha = 0.07f))
-            .padding(18.dp),
+            .clip(RoundedCornerShape(14.dp))
+            .background(SurfaceWhite.copy(alpha = 0.06f))
+            .padding(horizontal = 16.dp, vertical = 14.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
@@ -521,7 +523,7 @@ private fun ShowStage(task: WorkTask, mission: LessonMission?, evidenceCount: In
 
 @Composable
 private fun ChecklistItem(text: String) {
-    Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.Top) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.Top) {
         Box(
             Modifier
                 .padding(top = 2.dp)
@@ -560,29 +562,28 @@ private fun Block(block: ContentBlock) {
             block.text,
             style = MaterialTheme.typography.bodyLarge,
             color = OnHeroSurface,
-            lineHeight = 27.sp,
-            modifier = Modifier.padding(bottom = 16.dp),
+            lineHeight = 26.sp,
+            modifier = Modifier.padding(bottom = 12.dp),
         )
 
         BlockType.HEADING -> Text(
             block.text,
             style = MaterialTheme.typography.titleLarge,
             color = OnHeroSurface,
-            modifier = Modifier.padding(top = 8.dp, bottom = 10.dp),
+            modifier = Modifier.padding(top = 6.dp, bottom = 8.dp),
         )
 
         BlockType.LIST -> Column(Modifier.padding(bottom = 12.dp)) {
             block.items.forEach { Bullet(it) }
         }
 
-        BlockType.LEARNING_OUTCOMES -> Callout(
+        BlockType.LEARNING_OUTCOMES -> PlainBlock(
             title = block.title.ifBlank { "What you should be able to answer" },
-            icon = Icons.Filled.Lightbulb,
         ) {
             block.items.forEach { Bullet(it) }
         }
 
-        BlockType.KEY_CONCEPT -> Callout(block.title.ifBlank { "Key concept" }, Icons.Filled.Lightbulb) {
+        BlockType.KEY_CONCEPT -> PlainBlock(block.title.ifBlank { "Key concept" }) {
             if (block.text.isNotBlank()) CalloutBody(block.text)
             block.items.forEach { Bullet(it) }
         }
@@ -628,16 +629,36 @@ private fun CalloutBody(text: String) {
 
 @Composable
 private fun Bullet(text: String) {
-    Row(Modifier.fillMaxWidth().padding(vertical = 5.dp), verticalAlignment = Alignment.Top) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 3.dp), verticalAlignment = Alignment.Top) {
         Box(
             Modifier
-                .padding(top = 9.dp)
-                .size(6.dp)
+                .padding(top = 8.dp)
+                .size(5.dp)
                 .clip(CircleShape)
                 .background(NibsOrange),
         )
-        Spacer(Modifier.width(12.dp))
-        Text(text, style = MaterialTheme.typography.bodyMedium, color = OnHeroSurface, lineHeight = 23.sp)
+        Spacer(Modifier.width(10.dp))
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = OnHeroSurface, lineHeight = 22.sp)
+    }
+}
+
+/**
+ * Reference material — outcomes, objectives — as a labelled block rather
+ * than a boxed card. Cards are reserved for what the learner must act on or
+ * pay special attention to; boxing everything made the lesson feel like
+ * tapping through containers instead of moving through learning.
+ */
+@Composable
+private fun PlainBlock(title: String, content: @Composable () -> Unit) {
+    Column(Modifier.fillMaxWidth().padding(bottom = 14.dp)) {
+        Text(
+            title.uppercase(),
+            style = MaterialTheme.typography.labelMedium,
+            color = NibsOrange,
+            fontWeight = FontWeight.SemiBold,
+        )
+        Spacer(Modifier.height(6.dp))
+        content()
     }
 }
 
@@ -648,23 +669,23 @@ private fun Callout(title: String, icon: ImageVector, content: @Composable () ->
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(SurfaceWhite.copy(alpha = 0.07f))
-            .border(1.dp, NibsOrange.copy(alpha = 0.35f), RoundedCornerShape(16.dp))
-            .padding(16.dp),
+            .padding(vertical = 6.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(SurfaceWhite.copy(alpha = 0.06f))
+            .border(1.dp, NibsOrange.copy(alpha = 0.30f), RoundedCornerShape(12.dp))
+            .padding(horizontal = 14.dp, vertical = 12.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(icon, contentDescription = null, tint = NibsOrange, modifier = Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
+            Icon(icon, contentDescription = null, tint = NibsOrange, modifier = Modifier.size(15.dp))
+            Spacer(Modifier.width(7.dp))
             Text(
                 title.uppercase(),
-                style = MaterialTheme.typography.labelLarge,
+                style = MaterialTheme.typography.labelMedium,
                 color = NibsOrange,
                 fontWeight = FontWeight.SemiBold,
             )
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         content()
     }
 }
@@ -676,17 +697,17 @@ private fun StageComplete(finished: LessonStage, next: LessonStage) {
     Row(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(SuccessGreen.copy(alpha = 0.14f))
-            .padding(horizontal = 14.dp, vertical = 12.dp),
+            .clip(RoundedCornerShape(8.dp))
+            .background(SuccessGreen.copy(alpha = 0.12f))
+            .padding(horizontal = 10.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(Icons.Filled.Check, contentDescription = null, tint = SuccessGreen, modifier = Modifier.size(18.dp))
-        Spacer(Modifier.width(10.dp))
+        Icon(Icons.Filled.Check, contentDescription = null, tint = SuccessGreen, modifier = Modifier.size(13.dp))
+        Spacer(Modifier.width(7.dp))
         Text(
             "${finished.label.uppercase()} complete — next is ${next.label.uppercase()}",
-            style = MaterialTheme.typography.labelMedium,
-            color = OnHeroSurface,
+            style = MaterialTheme.typography.labelSmall,
+            color = OnHeroSurfaceSoft,
         )
     }
 }
