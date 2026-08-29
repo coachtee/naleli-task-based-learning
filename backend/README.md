@@ -25,18 +25,35 @@ No Docker, no Redis, no queue worker infrastructure. Queues use the database
 driver; cache and sessions use files. A normal VPS or cPanel account with
 shell access and one cron entry is the whole deployment target.
 
-## Local setup
+## Run it locally
+
+`.env.example` targets MySQL, because that is what production is. To just
+look at the dashboard you do not need a database server — point it at SQLite:
 
 ```bash
 composer install
 cp .env.example .env
 php artisan key:generate
+
+# Two lines make it run with no database server at all.
+sed -i 's/^DB_CONNECTION=mysql/DB_CONNECTION=sqlite/' .env
+touch database/database.sqlite
+
 php artisan migrate --seed
-php artisan test
+php artisan db:seed --class=DemoDataSeeder   # optional: a sample intake
+php artisan serve
 ```
 
-Local development defaults to SQLite so the suite runs without a database
-server. Production is MySQL/MariaDB — see `.env.example`.
+Then open **http://127.0.0.1:8000/admin** and sign in with
+`admin@kcs.edu.za` / `password`.
+
+**Change that password before this is reachable by anyone else.** The seeded
+account exists so a fresh clone is openable; it is not a production
+credential, and `AdminUserSeeder` is not run in production.
+
+For MySQL, leave `.env` as it comes, create the database and user named in
+it, and skip the two SQLite lines. The test suite always runs on SQLite in
+memory regardless — see `phpunit.xml`.
 
 ## Phase 1 scope
 
