@@ -3,8 +3,9 @@ package com.naleli.tbl.ui.screens.mywork
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.naleli.tbl.AppContainer
+import com.naleli.tbl.data.content.CourseStage
 import com.naleli.tbl.data.content.WorkTask
-import com.naleli.tbl.data.content.WorkspaceMockContent
+import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.SubStepStatusEntity
 import com.naleli.tbl.domain.TaskProgressState
@@ -37,9 +38,9 @@ data class MyWorkUiState(
     val inProgress: List<WorkTaskRow> = emptyList(),
     val assessment: List<WorkTaskRow> = emptyList(),
     val done: List<WorkTaskRow> = emptyList(),
-    val phaseName: String = "Learn the Role",
+    val phaseName: String = "",
     val phaseCompletedCount: Int = 0,
-    val phasePlannedCount: Int = WorkspaceMockContent.PHASE_1_PLANNED_TASK_COUNT,
+    val phasePlannedCount: Int = 0,
 )
 
 class MyWorkViewModel(private val container: AppContainer) : ViewModel() {
@@ -48,25 +49,33 @@ class MyWorkViewModel(private val container: AppContainer) : ViewModel() {
 
     init {
         viewModelScope.launch {
+            val profile = container.profileRepository.getProfile()
+            val stages = profile?.let { container.contentRepository.getCourse(it.programmeId).stages }.orEmpty()
+
             combine(
                 container.workspaceRepository.observeSubSteps(),
                 container.workspaceRepository.observeAssessments(),
-            ) { subSteps, assessments -> buildState(subSteps.associateBy { it.subStepId }, assessments.associateBy { it.taskId }) }
-                .collect { _state.value = it }
+            ) { subSteps, assessments ->
+                buildState(stages, subSteps.associateBy { it.subStepId }, assessments.associateBy { it.taskId })
+            }.collect { _state.value = it }
         }
     }
 
-    private fun buildState(subStepStatuses: Map<String, SubStepStatusEntity>, assessmentByTask: Map<String, AssessmentEntity>): MyWorkUiState {
-        val allTasks = WorkspaceMockContent.allTasks()
+    private fun buildState(
+        stages: List<CourseStage>,
+        subStepStatuses: Map<String, SubStepStatusEntity>,
+        assessmentByTask: Map<String, AssessmentEntity>,
+    ): MyWorkUiState {
+        val allTasks = WorkspaceCurriculum.allTasks()
         val currentId = currentTaskId(subStepStatuses, assessmentByTask)
 
         val rows = allTasks.map { task ->
             val locked = isTaskLocked(task.taskId, assessmentByTask)
             val state = taskProgressState(task, subStepStatuses, assessmentByTask[task.taskId])
-            val prereqTitle = WorkspaceMockContent.UNLOCK_REQUIRES[task.taskId]?.let { WorkspaceMockContent.taskById(it)?.title }
+            val prereqTitle = WorkspaceCurriculum.prerequisiteFor(task.taskId)?.let { WorkspaceCurriculum.taskById(it)?.title }
             WorkTaskRow(
                 task = task,
-                workstreamName = WorkspaceMockContent.workstreamFor(task.taskId)?.name ?: "",
+                workstreamName = WorkspaceCurriculum.workstreamFor(task.taskId)?.name ?: "",
                 state = state,
                 isCurrent = task.taskId == currentId,
                 locked = locked,
@@ -76,15 +85,29 @@ class MyWorkViewModel(private val container: AppContainer) : ViewModel() {
             )
         }
 
-        val completedCount = rows.count { it.state == TaskProgressState.COMPETENT }
+        // The phase header tracks the phase the learner is actually in —
+        // the stage owning the current task — not a hardcoded Phase 1, now
+        // that all four phases carry real content.
+        val activeStageId = currentId?.let { WorkspaceCurriculum.stageIdFor(it) }
+            ?: WorkspaceCurriculum.stageIdFor(allTasks.lastOrNull()?.taskId.orEmpty())
+        val phaseTaskIds = activeStageId?.let { stageId ->
+            WorkspaceCurriculum.tasksForStage(stageId).map { it.taskId }.toSet()
+        }.orEmpty()
+
+        // Scoped to the current phase: the real curriculum is 90 days, so
+        // an unscoped To Do would be one unlocked task followed by 89 locked
+        // rows. Journey is where all four phases are seen at once.
+        val phaseRows = rows.filter { it.task.taskId in phaseTaskIds }
 
         return MyWorkUiState(
             isLoading = false,
-            toDo = rows.filter { it.state == TaskProgressState.NOT_STARTED },
-            inProgress = rows.filter { it.state == TaskProgressState.IN_PROGRESS || it.state == TaskProgressState.NEEDS_REVISION },
-            assessment = rows.filter { it.state == TaskProgressState.SUBMITTED },
-            done = rows.filter { it.state == TaskProgressState.COMPETENT },
-            phaseCompletedCount = completedCount,
+            toDo = phaseRows.filter { it.state == TaskProgressState.NOT_STARTED },
+            inProgress = phaseRows.filter { it.state == TaskProgressState.IN_PROGRESS || it.state == TaskProgressState.NEEDS_REVISION },
+            assessment = phaseRows.filter { it.state == TaskProgressState.SUBMITTED },
+            done = phaseRows.filter { it.state == TaskProgressState.COMPETENT },
+            phaseName = stages.firstOrNull { it.stageId == activeStageId }?.name.orEmpty(),
+            phaseCompletedCount = phaseRows.count { it.state == TaskProgressState.COMPETENT },
+            phasePlannedCount = phaseTaskIds.size,
         )
     }
 }

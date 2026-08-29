@@ -60,7 +60,8 @@ fun MyWorkScreen(onOpenTask: (taskId: String) -> Unit) {
         item {
             Text("My Work", style = MaterialTheme.typography.headlineSmall)
             Text(
-                "Your responsibilities on this project",
+                if (state.phaseName.isBlank()) "Your responsibilities on this project"
+                else "Your responsibilities in ${state.phaseName}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

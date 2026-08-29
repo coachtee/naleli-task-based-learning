@@ -29,28 +29,6 @@ class EvidenceRepository(
     fun evidenceDir(taskId: String): File =
         File(context.filesDir, "evidence/$taskId").apply { mkdirs() }
 
-    /** For seeding demonstration history only (Naleli Workspace's first-run
-     * "mid-journey" state) — writes a small local placeholder file directly,
-     * with no real content:// source, so a fresh install shows real,
-     * queryable evidence rows rather than fabricated UI numbers. */
-    suspend fun attachPlaceholder(taskId: String, fileName: String, createdAt: Long, description: String?): EvidenceEntity =
-        withContext(Dispatchers.IO) {
-            val destFile = File(evidenceDir(taskId), fileName)
-            destFile.writeText("Seeded demo evidence for $taskId.")
-            val entity = EvidenceEntity(
-                evidenceId = UUID.randomUUID().toString(),
-                taskId = taskId,
-                dayNumber = 0,
-                fileName = fileName,
-                fileType = "text/plain",
-                localPath = destFile.absolutePath,
-                createdAt = createdAt,
-                description = description,
-            )
-            dao.insert(entity)
-            entity
-        }
-
     suspend fun attachFromUri(
         taskId: String,
         dayNumber: Int,

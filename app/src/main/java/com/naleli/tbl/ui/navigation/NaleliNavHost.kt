@@ -181,7 +181,7 @@ fun NaleliNavHost(
                 arguments = listOf(navArgument("taskId") { type = androidx.navigation.NavType.StringType }),
             ) { backStackEntry ->
                 val taskId = backStackEntry.arguments?.getString("taskId") ?: ""
-                val taskTitle = com.naleli.tbl.data.content.WorkspaceMockContent.taskById(taskId)?.title ?: "Task"
+                val taskTitle = com.naleli.tbl.data.content.WorkspaceCurriculum.taskById(taskId)?.title ?: "Task"
                 AddEvidenceScreen(
                     taskId = taskId,
                     taskTitle = taskTitle,

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.naleli.tbl.AppContainer
 import com.naleli.tbl.data.content.WorkTask
-import com.naleli.tbl.data.content.WorkspaceMockContent
+import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.domain.AssessmentEngine
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +30,7 @@ data class AssessmentUiState(
 class AssessmentViewModel(private val container: AppContainer, private val taskId: String) : ViewModel() {
     private val _state = MutableStateFlow(AssessmentUiState())
     val state: StateFlow<AssessmentUiState> = _state.asStateFlow()
-    private val task: WorkTask? = WorkspaceMockContent.taskById(taskId)
+    private val task: WorkTask? = WorkspaceCurriculum.taskById(taskId)
 
     init {
         viewModelScope.launch {

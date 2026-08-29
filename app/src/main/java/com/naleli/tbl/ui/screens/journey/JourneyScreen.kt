@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,11 +26,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.naleli.tbl.data.content.CourseStage
 import com.naleli.tbl.ui.components.BadgeMark
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.NaleliProgressBar
@@ -66,29 +65,61 @@ fun JourneyScreen(onOpenTask: (taskId: String) -> Unit) {
             )
         }
 
-        item {
-            NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text("PHASE 01", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text("Active", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
-                }
-                Text(state.phase1Name, style = MaterialTheme.typography.titleLarge)
-                Text(state.phase1Description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Spacer(Modifier.height(10.dp))
-                NaleliProgressBar(progressFraction = state.phase1CompletedCount / state.phase1PlannedCount.toFloat())
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(state.phase1DayRange, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text("${state.phase1CompletedCount} / ${state.phase1PlannedCount} tasks", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
+        items(state.phases, key = { it.stage.stageId }) { phase -> PhaseCard(phase, onOpenTask) }
+    }
+}
 
-                Spacer(Modifier.height(12.dp))
-                Text("WORKSTREAMS", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                Spacer(Modifier.height(4.dp))
-                state.workstreams.forEach { ws -> WorkstreamRow(ws, onOpenTask) }
+@Composable
+private fun PhaseCard(phase: PhaseUi, onOpenTask: (String) -> Unit) {
+    NaleliCard(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                "PHASE ${phase.stage.stageNumber.toString().padStart(2, '0')}",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            when {
+                phase.isActive -> Text("Active", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                phase.isComplete -> StatusBadge("Complete", SuccessGreen, BadgeMark.CHECK)
+                else -> Icon(
+                    Icons.Filled.Lock,
+                    contentDescription = "Locked",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(16.dp),
+                )
             }
         }
+        Text(
+            phase.stage.name,
+            style = if (phase.isActive) MaterialTheme.typography.titleLarge else MaterialTheme.typography.titleMedium,
+            color = if (phase.isActive) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(phase.stage.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Spacer(Modifier.height(10.dp))
+        NaleliProgressBar(
+            progressFraction = if (phase.plannedCount == 0) 0f else phase.completedCount / phase.plannedCount.toFloat(),
+        )
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(
+                "Days ${phase.stage.dayStart}–${phase.stage.dayEnd}",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                "${phase.completedCount} / ${phase.plannedCount} tasks",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
 
-        items(state.lockedPhases, key = { it.stageId }) { stage -> LockedPhaseCard(stage) }
+        // Only the phase being worked opens into its workstreams — the rest
+        // stay a one-line summary so all four phases stay readable at once.
+        if (phase.isActive && phase.workstreams.isNotEmpty()) {
+            Spacer(Modifier.height(12.dp))
+            Text("WORKSTREAMS", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+            Spacer(Modifier.height(4.dp))
+            phase.workstreams.forEach { ws -> WorkstreamRow(ws, onOpenTask) }
+        }
     }
 }
 
@@ -115,7 +146,7 @@ private fun WorkstreamRow(ws: WorkstreamUi, onOpenTask: (String) -> Unit) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = if (isCurrent) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
-                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis,
             )
         }
         when {
@@ -123,19 +154,5 @@ private fun WorkstreamRow(ws: WorkstreamUi, onOpenTask: (String) -> Unit) {
             allDone -> StatusBadge("Complete", SuccessGreen, BadgeMark.CHECK)
             else -> Text("${ws.completedCount}/${ws.totalCount}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-    }
-}
-
-@Composable
-private fun LockedPhaseCard(stage: CourseStage) {
-    NaleliCard(modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-            Text("PHASE ${stage.stageNumber.toString().padStart(2, '0')}", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Icon(Icons.Filled.Lock, contentDescription = "Locked", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
-        }
-        Text(stage.name, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Text(stage.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Spacer(Modifier.height(6.dp))
-        Text("Days ${stage.dayStart}–${stage.dayEnd}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

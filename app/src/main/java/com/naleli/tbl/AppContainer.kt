@@ -2,6 +2,7 @@ package com.naleli.tbl
 
 import android.content.Context
 import com.naleli.tbl.data.content.ContentRepository
+import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.data.db.NaleliDatabase
 import com.naleli.tbl.data.preferences.WorkspacePreferences
 import com.naleli.tbl.data.repository.BackupRepository
@@ -22,6 +23,14 @@ import com.naleli.tbl.ui.theme.ThemePreferences
  */
 class AppContainer(val context: Context) {
     private val database = NaleliDatabase.getInstance(context)
+
+    init {
+        // Parse the 90-day curriculum once, before any screen composes.
+        // NaleliApplication builds this container in onCreate, so every
+        // ViewModel and calculator can read WorkspaceCurriculum directly
+        // without a not-loaded-yet state to handle.
+        WorkspaceCurriculum.load(context)
+    }
 
     val themePreferences = ThemePreferences(context)
     val workspacePreferences = WorkspacePreferences(context)

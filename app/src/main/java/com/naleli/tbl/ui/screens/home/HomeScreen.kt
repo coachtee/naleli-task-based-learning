@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.naleli.tbl.data.content.WorkspaceMockContent
+import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.domain.TaskProgressState
 import com.naleli.tbl.ui.components.NaleliCard
 import com.naleli.tbl.ui.components.NaleliProgressBar
@@ -105,7 +105,7 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
             state.priorityTask?.let { task ->
-                val workstreamName = WorkspaceMockContent.workstreamFor(task.taskId)?.name ?: course.programmeName
+                val workstreamName = WorkspaceCurriculum.workstreamFor(task.taskId)?.name ?: course.programmeName
                 Box(
                     modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(NaleliGradients.missionCard).padding(20.dp),
                 ) {

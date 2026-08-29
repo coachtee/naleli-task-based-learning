@@ -24,6 +24,7 @@ work — see `source/README.md`. The JSON files under `content/` are the
 content/
   digital-foundation/
     course.json
+    workspace-content.json              generated from the workbook — see below
     days/
       day-01.json ... day-90.json     (Days 1–7 populated in V1)
     lessons/                            reserved for future longer-form lesson bodies
@@ -139,6 +140,61 @@ first pass.
 `status`, `assessmentStatus`, and `feedback` are **not** in the content
 JSON — they are runtime state stored in Room, keyed by `taskId` (see
 `docs/ARCHITECTURE.md`).
+
+## `workspace-content.json` — the 90-day workspace curriculum
+
+The Workspace screens (Home, My Work, Journey, Portfolio) read a second,
+generated package: `content/digital-foundation/workspace-content.json`.
+Where `days/day-NN.json` is hand-authored per day, this file is the whole
+90-day programme **converted straight out of the workbook**, so the app and
+the curriculum cannot drift apart.
+
+```
+source/Naleli_Task_Based_Digital_Foundation_90_Day_Workbook.xlsx
+        │
+        │  source/build_workspace_content.py     (the only thing that writes the JSON)
+        ▼
+content/digital-foundation/workspace-content.json   →  data/content/WorkspaceCurriculum.kt
+```
+
+**Never hand-edit the JSON.** Edit the workbook, re-run
+`python3 source/build_workspace_content.py`, and commit both.
+
+### Shape
+
+`Phase → Workstream → Task (a day) → Sub-step`, matching
+`data/content/WorkspaceContent.kt`:
+
+| Model | Source |
+|---|---|
+| Phase (`stageId`) | the ROADMAP's Stage column → `course.json`'s four stages |
+| Workstream | one module (M1–M20) within one stage, named for the module's Main Skill |
+| Task | one workbook day (`day-01` … `day-90`) |
+| Sub-step | one row of that day's TASKS block (Learn / Practice / Work Mission / Review) |
+| `assessmentCriteria` | that day's SOURCE LEARNING QUESTIONS |
+| `deliverableLabel` | the day's first Evidence / Output cell |
+
+A module that crosses a stage boundary (M9, M16, M20) becomes two
+workstreams — the later one suffixed "(continued)" — so no day is dragged
+into the wrong phase.
+
+### What is derived, not authored
+
+These are computed by the converter and are **not** curriculum text:
+
+- `tier` — `ASSESSMENT` for the capstone days (80–90), `REQUIRED` otherwise.
+- `estimatedMinutes` — 45 for a standard day, 90 for a capstone day, split
+  across that day's sub-steps so the parts always re-add to the whole.
+- `whyItMatters` — a one-line frame built from the day's skill and stage.
+- Unlocking — sequential, derived from `dayNumber` (`prerequisiteFor` in
+  `WorkspaceContentPackage`), not stored as 89 prerequisite rows.
+- Task title on capstone days — days 80–90 share one source lesson name, so
+  the title comes from the day's own first non-review task
+  ("Capstone Brief", "Build — Part 1", "Present").
+
+### Current package
+
+23 workstreams · 90 tasks · 371 sub-steps · 20 portfolio skills.
 
 ## Mapping the workbook onto this model
 

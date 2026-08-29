@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.naleli.tbl.AppContainer
 import com.naleli.tbl.data.content.WorkSubStep
 import com.naleli.tbl.data.content.WorkTask
-import com.naleli.tbl.data.content.WorkspaceMockContent
+import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.SubStepStatusEntity
 import com.naleli.tbl.domain.TaskProgressState
@@ -37,7 +37,7 @@ data class TaskWorkspaceUiState(
 class TaskWorkspaceViewModel(private val container: AppContainer, private val taskId: String) : ViewModel() {
     private val _state = MutableStateFlow(TaskWorkspaceUiState())
     val state: StateFlow<TaskWorkspaceUiState> = _state.asStateFlow()
-    val task: WorkTask? = WorkspaceMockContent.taskById(taskId)
+    val task: WorkTask? = WorkspaceCurriculum.taskById(taskId)
 
     init {
         viewModelScope.launch {
@@ -52,7 +52,7 @@ class TaskWorkspaceViewModel(private val container: AppContainer, private val ta
                 TaskWorkspaceUiState(
                     isLoading = false,
                     task = task,
-                    workstreamName = WorkspaceMockContent.workstreamFor(taskId)?.name ?: "",
+                    workstreamName = WorkspaceCurriculum.workstreamFor(taskId)?.name ?: "",
                     locked = isTaskLocked(taskId, assessmentByTask),
                     subStepStatuses = subStepStatuses,
                     evidenceCount = evidence.size,

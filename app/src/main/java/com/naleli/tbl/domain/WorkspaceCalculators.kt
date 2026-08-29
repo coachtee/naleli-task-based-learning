@@ -2,7 +2,7 @@ package com.naleli.tbl.domain
 
 import com.naleli.tbl.data.content.WorkSubStep
 import com.naleli.tbl.data.content.WorkTask
-import com.naleli.tbl.data.content.WorkspaceMockContent
+import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.data.db.entity.EvidenceEntity
@@ -28,7 +28,7 @@ fun taskProgressState(task: WorkTask, subStepStatuses: Map<String, SubStepStatus
 }
 
 fun isTaskLocked(taskId: String, assessmentByTask: Map<String, AssessmentEntity>): Boolean {
-    val prerequisiteTaskId = WorkspaceMockContent.UNLOCK_REQUIRES[taskId] ?: return false
+    val prerequisiteTaskId = WorkspaceCurriculum.prerequisiteFor(taskId) ?: return false
     return assessmentByTask[prerequisiteTaskId]?.result != CompetenceResult.COMPETENT
 }
 
@@ -36,7 +36,7 @@ fun isTaskLocked(taskId: String, assessmentByTask: Map<String, AssessmentEntity>
  * kept in one place so the three screens can never quietly disagree with
  * each other about which task the learner is meant to be doing right now. */
 fun currentTaskId(subStepStatuses: Map<String, SubStepStatusEntity>, assessmentByTask: Map<String, AssessmentEntity>): String? {
-    val reachable = WorkspaceMockContent.allTasks().filterNot { isTaskLocked(it.taskId, assessmentByTask) }
+    val reachable = WorkspaceCurriculum.allTasks().filterNot { isTaskLocked(it.taskId, assessmentByTask) }
     val stateByTask = reachable.associate { it.taskId to taskProgressState(it, subStepStatuses, assessmentByTask[it.taskId]) }
     return reachable.firstOrNull { it.tier == com.naleli.tbl.data.content.TaskTier.REQUIRED && stateByTask[it.taskId] != TaskProgressState.COMPETENT }?.taskId
         ?: reachable.firstOrNull { stateByTask[it.taskId] != TaskProgressState.COMPETENT }?.taskId
@@ -117,7 +117,7 @@ data class PortfolioSkill(
 object PortfolioSkillCalculator {
     fun summarize(assessments: List<AssessmentEntity>, evidenceCountByTask: Map<String, Int>): List<PortfolioSkill> {
         val assessmentByTask = assessments.associateBy { it.taskId }
-        val tasksBySkill = WorkspaceMockContent.allTasks().groupBy { it.skillDeveloped }
+        val tasksBySkill = WorkspaceCurriculum.allTasks().groupBy { it.skillDeveloped }
         return tasksBySkill.map { (skill, tasks) ->
             val taskAssessments = tasks.mapNotNull { assessmentByTask[it.taskId] }
             val result = when {
