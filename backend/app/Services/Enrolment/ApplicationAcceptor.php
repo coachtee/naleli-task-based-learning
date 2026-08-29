@@ -7,29 +7,29 @@ namespace App\Services\Enrolment;
 use App\Enums\ApplicationStatus;
 use App\Enums\EnrolmentStatus;
 use App\Enums\InvoiceStatus;
+use App\Enums\OfferingStatus;
 use App\Models\Application;
 use App\Models\Enrolment;
 use App\Models\Invoice;
+use App\Models\Offering;
 use App\Models\User;
+use App\Services\Billing\FeeSchedule;
 use DomainException;
 use Illuminate\Support\Facades\DB;
 
 /**
  * Accepts an application into a pending enrolment and raises what is owed.
  *
- * Invoices are supplied by the caller rather than generated from a fee rule,
- * because the commercial model is deliberately still open: R500 plus R950 a
- * month, a single programme fee and a three-month block are all just different
- * row counts here. Exactly one invoice carries `activates_enrolment`, and that
- * is the only thing the activation rule cares about — so confirming the model
- * later changes which rows a registrar raises, not this code.
+ * The invoices come from the offering's own commercial configuration, not
+ * from whoever is accepting the application. That is the correction: a fixed
+ * three-month block produces one invoice because its billing model says so,
+ * and no registrar can accidentally turn it into three.
  */
 class ApplicationAcceptor
 {
-    /**
-     * @param  array<int, array{description: string, amount_cents: int, due_on?: string|null, activates?: bool}>  $invoices
-     */
-    public function accept(Application $application, array $invoices, ?User $actor = null): Enrolment
+    public function __construct(private readonly FeeSchedule $fees) {}
+
+    public function accept(Application $application, Offering $offering, ?User $actor = null): Enrolment
     {
         if ($application->programme_id === null) {
             throw new DomainException(
@@ -37,13 +37,26 @@ class ApplicationAcceptor
             );
         }
 
-        if (count(array_filter($invoices, fn (array $i): bool => $i['activates'] ?? false)) !== 1) {
+        if ($offering->programme_id !== $application->programme_id) {
             throw new DomainException(
-                'Exactly one invoice must be marked as activating the enrolment.',
+                "Offering [{$offering->code}] does not belong to the programme this application is for.",
             );
         }
 
-        return DB::transaction(function () use ($application, $invoices, $actor) {
+        // A draft offering is one whose price has not been confirmed. Selling
+        // under it is exactly the mistake this whole correction is about, so
+        // it is refused rather than trusted.
+        if ($offering->status !== OfferingStatus::OPEN) {
+            throw new DomainException(
+                "Offering [{$offering->code}] is {$offering->status->value}, not open. ".
+                'Confirm its price and open it before accepting applications against it.',
+            );
+        }
+
+        $lines = $this->fees->linesFor($offering);
+        $this->fees->assertConsistent($offering, $lines);
+
+        return DB::transaction(function () use ($application, $offering, $lines, $actor) {
             $enrolment = Enrolment::firstOrCreate(
                 [
                     'learner_id' => $application->learner_id,
@@ -52,24 +65,23 @@ class ApplicationAcceptor
                 ],
                 [
                     'application_id' => $application->id,
+                    'offering_id' => $offering->id,
                     'status' => EnrolmentStatus::PENDING,
                     'starts_on' => $application->intake?->starts_on,
                     'ends_on' => $application->intake?->ends_on,
                 ],
             );
 
-            foreach (array_values($invoices) as $index => $line) {
+            foreach ($lines as $line) {
                 Invoice::firstOrCreate(
-                    [
-                        'enrolment_id' => $enrolment->id,
-                        'sequence' => $index + 1,
-                    ],
+                    ['enrolment_id' => $enrolment->id, 'sequence' => $line->sequence],
                     [
                         'learner_id' => $application->learner_id,
-                        'description' => $line['description'],
-                        'amount_cents' => $line['amount_cents'],
-                        'due_on' => $line['due_on'] ?? null,
-                        'activates_enrolment' => $line['activates'] ?? false,
+                        'description' => $line->description,
+                        'amount_cents' => $line->amountCents,
+                        'currency' => $offering->currency,
+                        'due_on' => now()->addDays($line->dueInDays)->toDateString(),
+                        'activates_enrolment' => $line->activatesEnrolment,
                         'status' => InvoiceStatus::DUE,
                         'created_by' => $actor?->id,
                     ],

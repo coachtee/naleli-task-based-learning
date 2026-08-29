@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\ActivationRule;
+use App\Enums\BillingModel;
 use App\Enums\IntakeStatus;
+use App\Enums\OfferingStatus;
 use App\Enums\ProgrammeStatus;
 use App\Enums\ProgrammeTier;
 use App\Enums\RequirementRule;
 use App\Models\Intake;
+use App\Models\Offering;
 use App\Models\Programme;
 use App\Models\ProgrammeRequirement;
 use Illuminate\Database\Seeder;
@@ -32,6 +36,7 @@ class ProgrammeSeeder extends Seeder
 
         $this->seedIntakes();
         $this->seedRequirements();
+        $this->seedOfferings();
     }
 
     /**
@@ -49,7 +54,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'R500 once-off, then R950 per month',
+                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 10,
@@ -63,7 +68,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'R500 once-off, then R950 per month',
+                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 20,
@@ -77,7 +82,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'R500 once-off, then R950 per month',
+                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 30,
@@ -91,7 +96,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'R500 once-off, then R950 per month',
+                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 40,
@@ -105,7 +110,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'R500 once-off, then R950 per month',
+                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 50,
@@ -119,7 +124,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'R500 once-off, then R950 per month',
+                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 60,
@@ -133,7 +138,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'R500 once-off, then R950 per month',
+                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 70,
@@ -251,6 +256,44 @@ class ProgrammeSeeder extends Seeder
                 'sort_order' => 200,
             ],
         ];
+    }
+
+    /**
+     * One offering per programme, every one of them DRAFT.
+     *
+     * Draft is the whole point. Nothing can be sold under an offering until a
+     * person confirms its price and opens it, because the last time a price
+     * was inferred rather than confirmed, a fixed three-month block came out
+     * as three monthly instalments.
+     *
+     * The R950 / 90-day shape is seeded on the Career Modules because that is
+     * the one price actually confirmed — "a specialisation such as Payroll or
+     * CRM costs R950 for a three-month block", and Payroll and CRM are Career
+     * Modules in this catalogue. Everything else is priced at zero and stays
+     * shut until someone says otherwise.
+     */
+    private function seedOfferings(): void
+    {
+        foreach (Programme::all() as $programme) {
+            $isCareerModule = $programme->tier === ProgrammeTier::CAREER_MODULE;
+
+            Offering::updateOrCreate(
+                ['code' => "{$programme->code}-2027-BLOCK"],
+                [
+                    'programme_id' => $programme->id,
+                    'name' => "{$programme->name} — 3-month block",
+                    'description' => $isCareerModule
+                        ? 'Confirm the price before opening this offering.'
+                        : 'Price not yet confirmed. Fees are on enquiry for this programme.',
+                    'billing_model' => BillingModel::FIXED_BLOCK,
+                    'price_cents' => $isCareerModule ? 95000 : 0,
+                    'access_duration_days' => 90,
+                    'activation_rule' => ActivationRule::ON_FIRST_PAYMENT,
+                    'status' => OfferingStatus::DRAFT,
+                    'sort_order' => $programme->sort_order,
+                ],
+            );
+        }
     }
 
     /**

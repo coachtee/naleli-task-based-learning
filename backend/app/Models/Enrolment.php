@@ -44,6 +44,12 @@ class Enrolment extends Model
         return $this->belongsTo(Application::class);
     }
 
+    /** The commercial terms this enrolment was sold under. */
+    public function offering(): BelongsTo
+    {
+        return $this->belongsTo(Offering::class);
+    }
+
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);

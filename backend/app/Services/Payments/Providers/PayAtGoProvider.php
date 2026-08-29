@@ -13,23 +13,23 @@ use App\Services\Payments\Contracts\PaymentProvider;
 use Illuminate\Http\Request;
 
 /**
- * A payment a person confirms: cash at reception, a bank transfer seen on a
- * statement, a card machine in the office.
+ * Pay@ Go — cash paid at a retail counter against a reference number.
  *
- * This is the only provider in Phase 1, and it does not go away when the
- * gateways arrive — cash and counter payments will not stop, and a system that
- * cannot record them pushes staff into a spreadsheet.
+ * This already works operationally at KCS and is the most accessible method
+ * on offer: a learner without a bank card or data can still pay. Recorded as
+ * its own provider rather than lumped in with manual entries so takings
+ * reconcile against the Pay@ statement line by line.
  */
-class ManualPaymentProvider implements PaymentProvider
+class PayAtGoProvider implements PaymentProvider
 {
     public function key(): string
     {
-        return 'manual';
+        return 'payat_go';
     }
 
     public function label(): string
     {
-        return 'Cash or other (manual)';
+        return 'Pay@ Go';
     }
 
     public function isRedirect(): bool
@@ -42,6 +42,11 @@ class ManualPaymentProvider implements PaymentProvider
         return null;
     }
 
+    /**
+     * No callback: settlement is a person reading the Pay@ statement and confirming it
+     * in the dashboard. When an automated feed exists this is where it lands,
+     * and nothing above this interface changes.
+     */
     public function verifyCallback(Request $request): ?CallbackResult
     {
         return null;
@@ -51,7 +56,7 @@ class ManualPaymentProvider implements PaymentProvider
     {
         return new CallbackResult(
             provider: $this->key(),
-            providerReference: $reference ?? "manual-{$payment->id}",
+            providerReference: $reference ?? 'payat_go-'.$payment->id,
             status: PaymentStatus::SETTLED,
             amountCents: $payment->amount_cents,
             raw: ['confirmed_by_user_id' => $payment->confirmed_by],

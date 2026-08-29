@@ -5,21 +5,25 @@ declare(strict_types=1);
 namespace Tests\Feature\Flow;
 
 use App\Enums\ApplicationStatus;
+use App\Enums\BillingModel;
 use App\Enums\EnrolmentStatus;
 use App\Enums\EntitlementState;
 use App\Enums\InvoiceStatus;
 use App\Enums\LearnerStatus;
+use App\Enums\OfferingStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\TokenStatus;
 use App\Models\AccessToken;
 use App\Models\Application;
 use App\Models\Enrolment;
 use App\Models\Learner;
+use App\Models\Offering;
 use App\Models\Payment;
 use App\Services\Enrolment\ApplicationAcceptor;
 use App\Services\Enrolment\EnrolmentActivator;
 use App\Services\Tokens\AccessTokenIssuer;
 use Database\Seeders\ProgrammeSeeder;
+use DomainException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
@@ -66,27 +70,25 @@ class ApplicationToTokenTest extends TestCase
         // The SA ID validated itself, so identity is already established.
         $this->assertTrue($learner->hasVerifiedIdentity());
 
-        // 2 — the registrar accepts and raises what is owed. Four invoices
-        //     here, but the shape is the registrar's choice, not the code's.
-        $enrolment = app(ApplicationAcceptor::class)->accept($application, [
-            ['description' => 'Registration fee', 'amount_cents' => 50000, 'activates' => true],
-            ['description' => 'Block 1 of 3', 'amount_cents' => 95000],
-            ['description' => 'Block 2 of 3', 'amount_cents' => 95000],
-            ['description' => 'Block 3 of 3', 'amount_cents' => 95000],
-        ]);
+        // 2 — the registrar accepts against the offering. The invoices come
+        //     from the product's own billing model, so a three-month block
+        //     produces ONE charge of R950 and nobody can turn it into three.
+        $enrolment = app(ApplicationAcceptor::class)->accept($application, $this->openBlockOffering());
 
         $this->assertSame(EnrolmentStatus::PENDING, $enrolment->status);
-        $this->assertCount(4, $enrolment->invoices);
+        $this->assertCount(1, $enrolment->invoices, 'R950 for three months is one payment');
         $this->assertSame(ApplicationStatus::AWAITING_PAYMENT, $application->fresh()->status);
 
-        // 3 — payment confirmed by hand, exactly as Filament does it.
+        // 3 — payment confirmed by hand, exactly as Filament does it. Pay@ Go
+        //     because that is what a learner without a card actually uses.
         $activating = $enrolment->activatingInvoice();
-        $this->assertSame(50000, $activating->amount_cents);
+        $this->assertSame(95000, $activating->amount_cents);
+        $this->assertSame(95000, $enrolment->invoices->sum('amount_cents'), 'total charged is the price on the product');
 
         $result = app(EnrolmentActivator::class)->confirmInvoiceManually(
             invoice: $activating,
-            providerKey: 'manual',
-            reference: 'FNB-20270114-0001',
+            providerKey: 'payat_go',
+            reference: 'PAYAT-20270114-0001',
         );
 
         // 4 — enrolment activated, entitlement opened, token issued.
@@ -109,9 +111,16 @@ class ApplicationToTokenTest extends TestCase
         // The plain value is never stored — only its hash.
         $this->assertDatabaseMissing('access_tokens', ['token_prefix' => $plain]);
 
-        // The three unpaid blocks are untouched: settling one invoice settles
-        // one invoice.
-        $this->assertSame(3, $enrolment->invoices()->where('status', InvoiceStatus::DUE)->count());
+        // Nothing is left owing: the block was one charge and it is settled.
+        $this->assertSame(0, $enrolment->invoices()->where('status', InvoiceStatus::DUE)->count());
+
+        // Access is dated from activation and lasts exactly the ninety days
+        // the offering sells — not "until someone remembers to switch it off".
+        $this->assertNotNull($entitlement->fresh()->expires_at);
+        $this->assertSame(
+            90,
+            (int) $enrolment->fresh()->activated_at->diffInDays($entitlement->fresh()->expires_at),
+        );
 
         // 5 — the app activates with the token it was given.
         $activation = $this->postJson('/api/v1/tokens/activate', [
@@ -193,9 +202,7 @@ class ApplicationToTokenTest extends TestCase
         $learner = $application->learner;
         $this->assertFalse($learner->hasVerifiedIdentity());
 
-        $enrolment = app(ApplicationAcceptor::class)->accept($application, [
-            ['description' => 'Registration fee', 'amount_cents' => 50000, 'activates' => true],
-        ]);
+        $enrolment = app(ApplicationAcceptor::class)->accept($application, $this->openBlockOffering());
 
         $result = app(EnrolmentActivator::class)
             ->confirmInvoiceManually($enrolment->activatingInvoice(), 'manual', 'NO-ID-REF');
@@ -246,6 +253,19 @@ class ApplicationToTokenTest extends TestCase
         ])->assertCreated();
     }
 
+    public function test_a_draft_offering_cannot_be_sold(): void
+    {
+        $this->postSignedApplication($this->formEightPayload())->assertCreated();
+
+        $draft = Offering::where('code', 'PPO-2027-BLOCK')->firstOrFail();
+        $this->assertSame(OfferingStatus::DRAFT, $draft->status, 'seeded offerings start closed');
+
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessageMatches('/not open/');
+
+        app(ApplicationAcceptor::class)->accept(Application::firstOrFail(), $draft);
+    }
+
     public function test_the_public_endpoints_need_no_authentication(): void
     {
         $this->getJson('/api/v1/health')->assertOk()->assertJsonPath('status', 'ok');
@@ -261,13 +281,29 @@ class ApplicationToTokenTest extends TestCase
     // ---------------------------------------------------------------- helpers
 
     /** @return array{0: Enrolment} */
+    /**
+     * The Payroll block as it is actually sold: R950, ninety days, one
+     * payment. Seeded offerings ship DRAFT so a price cannot be used before a
+     * person confirms it — this opens the one the test needs.
+     */
+    private function openBlockOffering(): Offering
+    {
+        $offering = Offering::where('code', 'PPO-2027-BLOCK')->firstOrFail();
+        $offering->update(['status' => OfferingStatus::OPEN]);
+
+        $this->assertSame(BillingModel::FIXED_BLOCK, $offering->billing_model);
+        $this->assertSame(95000, $offering->price_cents);
+        $this->assertSame(90, $offering->access_duration_days);
+
+        return $offering->refresh();
+    }
+
     private function learnerReadyToPay(): array
     {
         $this->postSignedApplication($this->formEightPayload())->assertCreated();
 
-        $enrolment = app(ApplicationAcceptor::class)->accept(Application::firstOrFail(), [
-            ['description' => 'Registration fee', 'amount_cents' => 50000, 'activates' => true],
-        ]);
+        $enrolment = app(ApplicationAcceptor::class)
+            ->accept(Application::firstOrFail(), $this->openBlockOffering());
 
         return [$enrolment];
     }

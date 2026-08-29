@@ -14,7 +14,10 @@ class ProgrammeRequirement extends Model
 
     protected function casts(): array
     {
-        return ['rule_type' => RequirementRule::class];
+        return [
+            'rule_type' => RequirementRule::class,
+            'requires_certificate' => 'boolean',
+        ];
     }
 
     public function programme(): BelongsTo

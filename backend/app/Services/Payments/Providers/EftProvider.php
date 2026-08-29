@@ -13,23 +13,22 @@ use App\Services\Payments\Contracts\PaymentProvider;
 use Illuminate\Http\Request;
 
 /**
- * A payment a person confirms: cash at reception, a bank transfer seen on a
- * statement, a card machine in the office.
+ * A bank transfer into the school account.
  *
- * This is the only provider in Phase 1, and it does not go away when the
- * gateways arrive — cash and counter payments will not stop, and a system that
- * cannot record them pushes staff into a spreadsheet.
+ * Also already working, and the reference is the bank statement line. Kept
+ * distinct from Pay@ Go and from over-the-counter cash so finance can tell
+ * the three apart when reconciling.
  */
-class ManualPaymentProvider implements PaymentProvider
+class EftProvider implements PaymentProvider
 {
     public function key(): string
     {
-        return 'manual';
+        return 'eft';
     }
 
     public function label(): string
     {
-        return 'Cash or other (manual)';
+        return 'EFT / bank transfer';
     }
 
     public function isRedirect(): bool
@@ -42,6 +41,11 @@ class ManualPaymentProvider implements PaymentProvider
         return null;
     }
 
+    /**
+     * No callback: settlement is a person reading the bank statement and confirming it
+     * in the dashboard. When an automated feed exists this is where it lands,
+     * and nothing above this interface changes.
+     */
     public function verifyCallback(Request $request): ?CallbackResult
     {
         return null;
@@ -51,7 +55,7 @@ class ManualPaymentProvider implements PaymentProvider
     {
         return new CallbackResult(
             provider: $this->key(),
-            providerReference: $reference ?? "manual-{$payment->id}",
+            providerReference: $reference ?? 'eft-'.$payment->id,
             status: PaymentStatus::SETTLED,
             amountCents: $payment->amount_cents,
             raw: ['confirmed_by_user_id' => $payment->confirmed_by],

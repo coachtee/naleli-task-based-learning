@@ -7,9 +7,11 @@ namespace App\Services\Enrolment;
 use App\Enums\EnrolmentStatus;
 use App\Enums\EntitlementState;
 use App\Enums\RequirementRule;
+use App\Models\Enrolment;
 use App\Models\Entitlement;
 use App\Models\Learner;
 use App\Models\Programme;
+use Illuminate\Support\Carbon;
 
 /**
  * Answers one question for one learner: what may they open right now.
@@ -32,7 +34,7 @@ class EntitlementResolver
                 $enrolment?->status === EnrolmentStatus::COMPLETED => EntitlementState::COMPLETED,
                 $enrolment?->status === EnrolmentStatus::ACTIVE => EntitlementState::ACTIVE,
                 $enrolment?->status === EnrolmentStatus::EXPIRED => EntitlementState::EXPIRED,
-                $this->isAvailable($programme) => EntitlementState::AVAILABLE,
+                $this->isAvailable($programme, $learner) => EntitlementState::AVAILABLE,
                 default => EntitlementState::LOCKED,
             };
 
@@ -49,21 +51,73 @@ class EntitlementResolver
                 'state' => $state,
                 'source_enrolment_id' => $enrolment?->id,
                 'unlocked_at' => $entitlement->unlocked_at ?? ($becomingOpen ? now() : null),
+                'expires_at' => $this->expiryFor($enrolment),
                 'reason' => $this->reasonFor($state, $programme),
             ])->save();
         }
     }
 
     /**
-     * Phase 1 records the rules but does not gate on them: nothing has been
-     * completed yet, so enforcing a prerequisite chain would only ever produce
-     * false negatives. Enforcement arrives in Phase 5 with completion.
+     * When access runs out.
+     *
+     * A fixed-duration block is the reason this exists: R950 buys ninety days,
+     * and the day the ninety days start is the day the enrolment activates —
+     * not the day the learner applied and not the day they first opened the
+     * app. An offering with no duration grants open-ended access.
      */
-    private function isAvailable(Programme $programme): bool
+    private function expiryFor(?Enrolment $enrolment): ?Carbon
     {
-        $rule = $programme->requirements()->first()?->rule_type ?? RequirementRule::NONE;
+        $days = $enrolment?->offering?->access_duration_days;
+        $from = $enrolment?->activated_at;
 
-        return $rule === RequirementRule::NONE;
+        if ($days === null || $from === null) {
+            return null;
+        }
+
+        return $from->copy()->addDays($days);
+    }
+
+    /**
+     * Whether a learner may buy into this programme at all.
+     *
+     * A Professional Specialisation requires certification in its prerequisite
+     * — a moderated human decision — not merely having finished the tasks.
+     * Gating on completion would let someone click through a programme into a
+     * paid specialisation they have not been assessed for.
+     */
+    private function isAvailable(Programme $programme, Learner $learner): bool
+    {
+        $requirement = $programme->requirements()->first();
+        $rule = $requirement?->rule_type ?? RequirementRule::NONE;
+
+        return match ($rule) {
+            RequirementRule::NONE => true,
+
+            RequirementRule::COMPLETED_PROGRAMME => $this->hasCompleted(
+                $learner,
+                $requirement?->requires_programme_id,
+            ),
+
+            // Certification does not exist until Phase 5, so this is correctly
+            // false today rather than optimistically true. A specialisation
+            // that cannot yet be earned must not be advertised as available.
+            RequirementRule::CERTIFIED_IN_PROGRAMME => false,
+
+            // Both need a person to decide, so neither is ever automatic.
+            RequirementRule::RPL, RequirementRule::MANUAL_APPROVAL => false,
+        };
+    }
+
+    private function hasCompleted(Learner $learner, ?int $programmeId): bool
+    {
+        if ($programmeId === null) {
+            return false;
+        }
+
+        return $learner->enrolments()
+            ->where('programme_id', $programmeId)
+            ->where('status', EnrolmentStatus::COMPLETED)
+            ->exists();
     }
 
     private function reasonFor(EntitlementState $state, Programme $programme): ?string

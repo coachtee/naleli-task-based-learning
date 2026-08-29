@@ -34,6 +34,7 @@ class DashboardSmokeTest extends TestCase
         $pages = [
             '/admin/learners',
             '/admin/programmes',
+            '/admin/offerings',
             '/admin/applications',
             '/admin/enrolments',
             '/admin/invoices',
