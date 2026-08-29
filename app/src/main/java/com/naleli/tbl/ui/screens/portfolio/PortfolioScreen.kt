@@ -1,5 +1,6 @@
 package com.naleli.tbl.ui.screens.portfolio
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -49,7 +50,7 @@ import com.naleli.tbl.ui.theme.SuccessGreen
  * for the assessment result, and a My Files card that points at — rather
  * than owns — where the learner's evidence actually lives. */
 @Composable
-fun PortfolioScreen() {
+fun PortfolioScreen(onOpenSkill: (String) -> Unit) {
     val container = rememberAppContainer()
     val viewModel: PortfolioViewModel = viewModel(factory = viewModelFactory { initializer { PortfolioViewModel(container) } })
     val state by viewModel.state.collectAsState()
@@ -100,7 +101,7 @@ fun PortfolioScreen() {
         }
 
         item { Text("SKILLS DEMONSTRATED", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary) }
-        items(state.skills, key = { it.skillName }) { skill -> SkillCard(skill) }
+        items(state.skills, key = { it.skillName }) { skill -> SkillCard(skill, onOpenSkill) }
 
         item {
             Spacer(Modifier.height(4.dp))
@@ -145,8 +146,10 @@ fun PortfolioScreen() {
 }
 
 @Composable
-private fun SkillCard(skill: PortfolioSkill) {
-    NaleliCard(modifier = Modifier.fillMaxWidth()) {
+private fun SkillCard(skill: PortfolioSkill, onOpenSkill: (String) -> Unit) {
+    // The chevron used to point at nothing. It now opens the evidence that
+    // backs the claim on the card.
+    NaleliCard(modifier = Modifier.fillMaxWidth().clickable { onOpenSkill(skill.skillName) }) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
                 Text(

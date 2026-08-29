@@ -35,6 +35,7 @@ import com.naleli.tbl.ui.screens.lesson.LessonScreen
 import com.naleli.tbl.ui.screens.onboarding.OrientationScreen
 import com.naleli.tbl.ui.screens.onboarding.PortfolioSetupScreen
 import com.naleli.tbl.ui.screens.portfolio.PortfolioScreen
+import com.naleli.tbl.ui.screens.portfolio.PortfolioSkillScreen
 import com.naleli.tbl.ui.screens.profile.ProfileHubScreen
 import com.naleli.tbl.ui.screens.profile.ProfileScreen
 import com.naleli.tbl.ui.screens.settings.BackupScreen
@@ -154,7 +155,22 @@ fun NaleliNavHost(
             composable(NaleliDestinations.JOURNEY) {
                 JourneyScreen(onOpenTask = { taskId -> navController.navigate(NaleliDestinations.taskWorkspace(taskId)) })
             }
-            composable(NaleliDestinations.PORTFOLIO) { PortfolioScreen() }
+            composable(NaleliDestinations.PORTFOLIO) {
+                PortfolioScreen(
+                    onOpenSkill = { skillName -> navController.navigate(NaleliDestinations.portfolioSkill(skillName)) },
+                )
+            }
+
+            composable(
+                route = NaleliDestinations.PORTFOLIO_SKILL_PATTERN,
+                arguments = listOf(navArgument("skillName") { type = androidx.navigation.NavType.StringType }),
+            ) { backStackEntry ->
+                PortfolioSkillScreen(
+                    skillName = backStackEntry.arguments?.getString("skillName") ?: "",
+                    onBack = { navController.popBackStack() },
+                    onOpenTask = { taskId -> navController.navigate(NaleliDestinations.taskWorkspace(taskId)) },
+                )
+            }
             composable(NaleliDestinations.PROFILE) {
                 ProfileHubScreen(
                     onEditProfile = { navController.navigate(NaleliDestinations.EDIT_PROFILE) },

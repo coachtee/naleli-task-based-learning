@@ -35,6 +35,11 @@ object NaleliDestinations {
     const val ASSESSMENT_PATTERN = "task/{taskId}/assessment"
     fun assessment(taskId: String) = "task/$taskId/assessment"
 
+    // Skill names are real prose ("Set up a computer workstation"), so the
+    // argument is encoded on the way in; Navigation Compose decodes it.
+    const val PORTFOLIO_SKILL_PATTERN = "portfolio/skill/{skillName}"
+    fun portfolioSkill(skillName: String) = "portfolio/skill/${android.net.Uri.encode(skillName)}"
+
     const val ADD_EVIDENCE_PATTERN = "task/{taskId}/evidence"
     fun addEvidence(taskId: String) = "task/$taskId/evidence"
 
