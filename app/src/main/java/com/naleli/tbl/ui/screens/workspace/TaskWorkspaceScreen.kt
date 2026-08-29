@@ -1,7 +1,6 @@
 package com.naleli.tbl.ui.screens.workspace
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,18 +13,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -47,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.naleli.tbl.data.content.LessonStage
 import com.naleli.tbl.domain.TaskProgressState
 import com.naleli.tbl.ui.components.BackHeader
 import com.naleli.tbl.ui.components.NaleliCard
@@ -150,135 +149,35 @@ fun TaskWorkspaceScreen(
             }
         }
 
-        item { WorkflowStepper(state.progressState, state.allStepsDone, state.evidenceCount > 0) }
+        // The lesson's one-line promise, in place of the old BRIEF card —
+        // which restated the title and the Learn sub-step in longer form.
+        item {
+            Text(
+                task.whatYoureDoing,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = 4.dp),
+            )
+        }
 
-        // Reading comes before doing. The lesson sits above the brief so the
-        // learner meets the material first rather than discovering it as a
-        // sub-step halfway down the task.
-        if (state.lessonTitles.isNotEmpty()) {
-            item {
-                NaleliCard(modifier = Modifier.fillMaxWidth().clickable { onOpenLesson() }) {
-                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text("START HERE — THE LESSON", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                            Spacer(Modifier.height(4.dp))
-                            Text(
-                                state.lessonTitles.joinToString(" · "),
-                                style = MaterialTheme.typography.titleMedium,
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                            Spacer(Modifier.height(2.dp))
-                            Text(
-                                "Read this first, then work through the steps below.",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        Icon(
-                            Icons.Filled.ChevronRight,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
+        // YOUR STEPS is now the lesson's roadmap rather than a checklist
+        // buried under five explanatory cards: the learner sees the whole
+        // arc, where they are in it, and one way in.
+        item {
+            NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                Text("YOUR STEPS", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.height(12.dp))
+                val reached = reachedStage(state.progressState, state.allStepsDone, state.evidenceCount > 0)
+                LessonStage.entries.forEach { stage ->
+                    StageRow(stage = stage, reachedOrdinal = reached)
                 }
-            }
-        }
-
-        item {
-            NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                Text("BRIEF", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                Spacer(Modifier.height(6.dp))
-                Text(task.whatYoureDoing, style = MaterialTheme.typography.bodyMedium)
-                Spacer(Modifier.height(8.dp))
-                Text("Why it matters", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text(task.whyItMatters, style = MaterialTheme.typography.bodySmall)
-                Spacer(Modifier.height(8.dp))
-                Text("Skill developed: ${task.skillDeveloped}", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
-            }
-        }
-
-        item {
-            NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                Text("BEFORE YOU START", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                Spacer(Modifier.height(8.dp))
-                BeforeYouStartRow("Understand", task.understandText)
-                task.watchLabel?.let {
-                    Spacer(Modifier.height(10.dp))
-                    BeforeYouStartRow("Watch", it)
-                }
-                if (task.practiseText.isNotBlank()) {
-                    Spacer(Modifier.height(10.dp))
-                    BeforeYouStartRow("Practise", task.practiseText)
-                }
-            }
-        }
-
-        item {
-            NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                Text("YOUR ASSIGNMENT", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                Spacer(Modifier.height(6.dp))
-                Text(task.assignmentText, style = MaterialTheme.typography.bodyMedium)
-            }
-        }
-
-        item {
-            NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                Text("DELIVERABLE", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                Spacer(Modifier.height(6.dp))
-                Text(task.deliverableLabel, style = MaterialTheme.typography.bodyMedium)
-            }
-        }
-
-        item {
-            Text("YOUR STEPS", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-        }
-        items(task.subSteps, key = { it.subStepId }) { subStep ->
-            val complete = state.subStepStatuses[subStep.subStepId]?.complete == true
-            NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
-                    Checkbox(checked = complete, onCheckedChange = { viewModel.toggleSubStep(subStep, it) })
-                    Column(modifier = Modifier.weight(1f).padding(top = 12.dp)) {
-                        Text(subStep.title, style = MaterialTheme.typography.titleSmall)
-                        Text("${subStep.estimatedMinutes} min", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        if (subStep.instructions.isNotBlank()) {
-                            Spacer(Modifier.height(6.dp))
-                            Text(subStep.instructions, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface)
-                        }
-                        if (subStep.evidence.isNotBlank()) {
-                            Spacer(Modifier.height(6.dp))
-                            Text(
-                                "Produces: ${subStep.evidence}",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.primary,
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        if (task.reviewQuestions.isNotEmpty()) {
-            item {
-                NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                    Text("PROVE YOU CAN DO IT", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        "Answer these in your own words, without reopening the lesson.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    task.reviewQuestions.forEach { question ->
-                        Row(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.Top) {
-                            Text("•", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
-                            Text(
-                                question,
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(start = 8.dp),
-                            )
-                        }
-                    }
+                Spacer(Modifier.height(16.dp))
+                Button(
+                    onClick = onOpenLesson,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = NibsOrange, contentColor = SurfaceWhite),
+                ) {
+                    Text(if (reached > 1) "CONTINUE LEARNING" else "START LEARNING")
                 }
             }
         }
@@ -371,69 +270,77 @@ fun TaskWorkspaceScreen(
  * never disagree with what the rest of the screen shows.
  */
 @Composable
-private fun WorkflowStepper(progressState: TaskProgressState, allStepsDone: Boolean, hasEvidence: Boolean) {
-    val currentIndex = when {
-        progressState == TaskProgressState.COMPETENT -> 4
-        progressState == TaskProgressState.SUBMITTED -> 4
-        hasEvidence -> 3
-        allStepsDone -> 2
-        else -> 1
-    }
-    val labels = listOf("Brief", "Learn", "Do", "Evidence", "Assess")
+/**
+ * How far the learner has actually got, expressed as a stage ordinal.
+ * Derived from the real rows — sub-steps, evidence, assessment — so the
+ * roadmap can never claim progress the data does not support.
+ */
+private fun reachedStage(progressState: TaskProgressState, allStepsDone: Boolean, hasEvidence: Boolean): Int = when {
+    progressState == TaskProgressState.COMPETENT -> 5
+    progressState == TaskProgressState.SUBMITTED -> 5
+    hasEvidence -> 5
+    allStepsDone -> 4
+    progressState == TaskProgressState.IN_PROGRESS -> 2
+    else -> 1
+}
 
-    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
-        labels.forEachIndexed { index, label ->
-            val done = index < currentIndex
-            val active = index == currentIndex
-            // NIBS spec: navy for completed steps with white checkmarks,
-            // vibrant orange for the active step, light slate for upcoming.
-            val color = when {
-                done -> HeroSurface
-                active -> NibsOrange
-                else -> SlateGray
-            }
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(26.dp)
-                        .clip(CircleShape)
-                        .background(if (active || done) color else androidx.compose.ui.graphics.Color.Transparent)
-                        .border(1.5.dp, color, CircleShape),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    if (done) {
-                        Icon(Icons.Filled.Check, contentDescription = null, tint = SurfaceWhite, modifier = Modifier.size(14.dp))
-                    } else {
-                        Text(
-                            "0${index + 1}",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = if (active) SurfaceWhite else color,
-                        )
-                    }
-                }
-                Spacer(Modifier.height(4.dp))
+/** One row of the five-stage roadmap: what it is, and whether the learner
+ * has been there. */
+@Composable
+private fun StageRow(stage: LessonStage, reachedOrdinal: Int) {
+    val done = stage.ordinal1 < reachedOrdinal
+    val active = stage.ordinal1 == reachedOrdinal
+    val color = when {
+        done -> HeroSurface
+        active -> NibsOrange
+        else -> SlateGray
+    }
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 7.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(26.dp)
+                .clip(CircleShape)
+                .background(if (active || done) color else androidx.compose.ui.graphics.Color.Transparent)
+                .border(1.5.dp, color, CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (done) {
+                Icon(Icons.Filled.Check, contentDescription = null, tint = SurfaceWhite, modifier = Modifier.size(14.dp))
+            } else {
                 Text(
-                    label,
+                    "0${stage.ordinal1}",
                     style = MaterialTheme.typography.labelSmall,
-                    color = color,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+                    color = if (active) SurfaceWhite else color,
                 )
             }
+        }
+        Spacer(Modifier.width(14.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                stage.label,
+                style = MaterialTheme.typography.titleSmall,
+                color = if (active) NibsOrange else MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                stageHint(stage),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }
 
-@Composable
-private fun BeforeYouStartRow(label: String, description: String) {
-    Column {
-        Text(label, style = MaterialTheme.typography.titleSmall)
-        Text(description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-    }
+private fun stageHint(stage: LessonStage): String = when (stage) {
+    LessonStage.UNDERSTAND -> "Learn the concept, one idea at a time"
+    LessonStage.SEE -> "See it working in a real example"
+    LessonStage.TRY -> "Practise the skill yourself"
+    LessonStage.APPLY -> "Complete a workplace-style task"
+    LessonStage.SHOW -> "Submit the evidence of what you produced"
 }
+
 
 @Composable
 private fun ConfidenceRow(label: String, level: Int, selectedLevel: Int, onSelect: (Int) -> Unit) {

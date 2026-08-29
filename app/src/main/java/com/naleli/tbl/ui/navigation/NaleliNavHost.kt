@@ -190,9 +190,14 @@ fun NaleliNavHost(
                 LessonScreen(
                     taskId = taskId,
                     onBack = { navController.popBackStack() },
-                    // Reading hands straight over to the work it prepares
-                    // for, rather than dropping the learner back at Home.
-                    onStartWork = { navController.popBackStack() },
+                    onAddEvidence = { navController.navigate(NaleliDestinations.addEvidence(taskId)) },
+                    // The lesson now runs the whole arc and ends in the
+                    // submission, so it hands straight to the result.
+                    onSubmitted = {
+                        navController.navigate(NaleliDestinations.assessment(taskId)) {
+                            popUpTo(NaleliDestinations.LESSON_PATTERN) { inclusive = true }
+                        }
+                    },
                 )
             }
 

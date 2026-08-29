@@ -202,6 +202,39 @@ These are computed by the converter and are **not** curriculum text:
 
 23 workstreams · 90 tasks · 371 sub-steps · 20 portfolio skills.
 
+### Lesson screens, not lesson pages
+
+A lesson is a list of `pages` — one idea per screen — not one flat block
+list. The reader advances through them with Continue, the same shape as the
+orientation, because a learner scrolling a wall of extracted textbook is
+being handed a PDF, not taught.
+
+The converter segments on reading length, not block count: a heading starts
+a screen and names it, content past ~820 characters continues onto another
+screen under the same title, and a screen too short to stand alone folds
+back into the one before it. That keeps the median lesson at about 15
+screens of ~640 characters instead of 60 taps of Continue.
+
+Each page carries a `stage`: `understand` for explanation, `see` for a
+worked example. The remaining three stages of the arc — Try, Apply, Show —
+are built from the day's own task record, so every lesson ends in the work
+rather than in more reading.
+
+### Illustrations
+
+Images are Android assets under `content/<programme>/images/`, referenced by
+an `image` block's `url` as an asset-relative path.
+
+They are **not** fetched at runtime. The app holds no INTERNET permission
+and is offline-first for learners who may have no data at all; an
+illustration that only appears on Wi-Fi is worse than none, because the
+lesson silently loses the thing meant to explain it. Stock photography
+(Unsplash, Pexels) and diagrams therefore ride in at content-build time —
+fetch, downsample and commit them under `images/`, then reference the path.
+
+A missing or unreadable image renders as nothing rather than a broken
+placeholder: the lesson text must read correctly without it.
+
 ## Mapping the workbook onto this model
 
 The workbook's per-day tab (`Step, Task, Instructions, Evidence/Output,

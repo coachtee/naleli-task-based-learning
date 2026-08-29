@@ -1,11 +1,11 @@
 package com.naleli.tbl.ui.screens.lesson
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,315 +14,450 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.AttachFile
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.PlayCircleOutline
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.naleli.tbl.data.content.BlockType
 import com.naleli.tbl.data.content.ContentBlock
-import com.naleli.tbl.data.content.Lesson
 import com.naleli.tbl.data.content.LessonLibrary
+import com.naleli.tbl.data.content.LessonPage
+import com.naleli.tbl.data.content.LessonStage
 import com.naleli.tbl.data.content.WorkTask
-import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.ui.components.BackHeader
-import com.naleli.tbl.ui.components.JourneyFlow
-import com.naleli.tbl.ui.components.NaleliCard
-import com.naleli.tbl.ui.components.NaleliProgressBar
+import com.naleli.tbl.ui.components.LessonImage
+import com.naleli.tbl.ui.rememberAppContainer
+import com.naleli.tbl.ui.screens.workspace.TaskWorkspaceViewModel
 import com.naleli.tbl.ui.theme.HeroSurface
 import com.naleli.tbl.ui.theme.NibsOrange
-import com.naleli.tbl.ui.theme.NibsOrangeTint
 import com.naleli.tbl.ui.theme.OnHeroSurface
 import com.naleli.tbl.ui.theme.OnHeroSurfaceSoft
-import com.naleli.tbl.ui.theme.SlateSurface
+import com.naleli.tbl.ui.theme.SuccessGreen
 import com.naleli.tbl.ui.theme.SurfaceWhite
 
 /**
- * The reading half of a day: the lesson, laid out from typed content blocks
- * (see data/content/LessonContent.kt). No lesson text is written here — this
- * file only decides how each block type looks.
+ * The lesson, as a guided sequence rather than a document.
  *
- * A lesson is never a dead end. It opens by answering why the learner is
- * reading it and closes on the work it exists to prepare them for, so
- * reading always leads into UNDERSTAND -> PRACTISE -> TASK -> EVIDENCE ->
- * ASSESSMENT rather than finishing as its own reward.
+ * One idea per screen, advanced with Continue — the same shape as the
+ * orientation, because the same thing is true of both: a learner reading a
+ * wall of extracted textbook is not being taught, they are being handed a
+ * PDF. Screens come from the content package (see LessonContent.kt); this
+ * file only decides how each stage looks.
+ *
+ * The sequence runs the full Naleli Task-Based Learning arc — Understand,
+ * See, Try, Apply, Show — so the last learning screen IS the hand-off to
+ * the work. There is deliberately no quiz stage: competence is shown by
+ * producing evidence, not by answering questions about the reading.
+ *
+ * Surface is navy throughout, matching the orientation. Reading is the one
+ * place in the app that is a focused, full-screen experience rather than a
+ * card on a canvas, and it does not follow the light/dark preference.
  */
 @Composable
-fun LessonScreen(taskId: String, onBack: () -> Unit, onStartWork: () -> Unit) {
+fun LessonScreen(
+    taskId: String,
+    onBack: () -> Unit,
+    onAddEvidence: () -> Unit,
+    onSubmitted: () -> Unit,
+) {
     val context = LocalContext.current
-    val task = WorkspaceCurriculum.taskById(taskId)
-    val lessons = remember(taskId) { LessonLibrary.lessonsForTask(context, taskId) }
-    val listState = rememberLazyListState()
+    val container = rememberAppContainer()
+    val viewModel: TaskWorkspaceViewModel = viewModel(
+        key = "lesson-$taskId",
+        factory = viewModelFactory { initializer { TaskWorkspaceViewModel(container, taskId) } },
+    )
+    val state by viewModel.state.collectAsState()
+    val task = state.task
 
-    // Reading position, from the real scroll state rather than a counter
-    // that could drift from what is on screen.
-    val totalBlocks = lessons.sumOf { it.blocks.size }.coerceAtLeast(1)
-    val readFraction by remember {
-        derivedStateOf {
-            val index = listState.firstVisibleItemIndex.toFloat()
-            (index / (totalBlocks + HEADER_ITEMS + FOOTER_ITEMS)).coerceIn(0f, 1f)
+    val readingPages = remember(taskId) {
+        LessonLibrary.lessonsForTask(context, taskId).flatMap { it.pages }
+    }
+
+    // Reading screens first, then the three working stages. Every lesson
+    // ends in the same place: attach what you made.
+    val stages: List<Stage> = remember(readingPages, task) {
+        buildList {
+            readingPages.forEach { add(Stage.Reading(it)) }
+            task?.let {
+                if (it.practiseText.isNotBlank()) add(Stage.Try(it.practiseText))
+                add(Stage.Apply(it))
+                add(Stage.Show(it))
+            }
         }
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-        LazyColumn(
-            state = listState,
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = 32.dp),
-        ) {
-            item { LessonHeader(task, lessons, readFraction, onBack) }
+    var index by rememberSaveable(taskId) { mutableIntStateOf(0) }
+    BackHandler(enabled = index > 0) { index -= 1 }
 
-            if (lessons.isEmpty()) {
-                item {
-                    NaleliCard(modifier = Modifier.fillMaxWidth().padding(20.dp)) {
-                        Text("No reading for this day", style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(6.dp))
-                        Text(
-                            "This day is practical work rather than a lesson. Open the workspace to see what to do.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                }
-            }
-
-            task?.let { item { WhyThisLesson(it) } }
-
-            lessons.forEach { lesson ->
-                if (lessons.size > 1) {
-                    item { LessonDivider(lesson) }
-                }
-                items(lesson.blocks) { block -> Block(block) }
-            }
-
-            item { WhatHappensNext(task, onStartWork) }
+    if (state.isLoading || task == null || stages.isEmpty()) {
+        Box(Modifier.fillMaxSize().background(HeroSurface), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(color = NibsOrange)
         }
+        return
+    }
+
+    val safeIndex = index.coerceIn(0, stages.lastIndex)
+    val stage = stages[safeIndex]
+    val isLast = safeIndex == stages.lastIndex
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(HeroSurface),
+    ) {
+        LessonTopBar(
+            task = task,
+            stage = stage.lessonStage,
+            position = safeIndex + 1,
+            total = stages.size,
+            onBack = { if (safeIndex == 0) onBack() else index -= 1 },
+        )
+
+        Column(
+            Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 24.dp)
+                .padding(top = 26.dp, bottom = 12.dp),
+        ) {
+            when (stage) {
+                is Stage.Reading -> ReadingStage(stage.page)
+                is Stage.Try -> TryStage(stage.instructions)
+                is Stage.Apply -> ApplyStage(stage.task)
+                is Stage.Show -> ShowStage(
+                    task = stage.task,
+                    evidenceCount = state.evidenceCount,
+                    onAddEvidence = onAddEvidence,
+                )
+            }
+            Spacer(Modifier.height(24.dp))
+        }
+
+        LessonFooter(
+            isLast = isLast,
+            canSubmit = state.evidenceCount > 0,
+            onContinue = {
+                // Passing a stage is what marks its sub-step done, so the
+                // checklist reflects the journey instead of asking the
+                // learner to tick the same work twice.
+                viewModel.completeStageSubStep(stage.lessonStage)
+                index = (safeIndex + 1).coerceAtMost(stages.lastIndex)
+            },
+            onSubmit = {
+                viewModel.completeStageSubStep(LessonStage.SHOW)
+                viewModel.submitForAssessment(SUBMIT_CONFIDENCE)
+                onSubmitted()
+            },
+        )
     }
 }
 
-/** Items rendered around the blocks, so the progress fraction counts the
- * whole scrollable list rather than the blocks alone. */
-private const val HEADER_ITEMS = 2
-private const val FOOTER_ITEMS = 1
+/** Recorded alongside the submission; the rubric never uses it as a result,
+ * only as the learner's own read on how the work went. */
+private const val SUBMIT_CONFIDENCE = 3
+
+/** One screen of the lesson. Reading screens come from content; the last
+ * three are built from the day's own task record. */
+private sealed interface Stage {
+    val lessonStage: LessonStage
+
+    data class Reading(val page: LessonPage) : Stage {
+        override val lessonStage: LessonStage get() = page.lessonStage
+    }
+
+    data class Try(val instructions: String) : Stage {
+        override val lessonStage: LessonStage get() = LessonStage.TRY
+    }
+
+    data class Apply(val task: WorkTask) : Stage {
+        override val lessonStage: LessonStage get() = LessonStage.APPLY
+    }
+
+    data class Show(val task: WorkTask) : Stage {
+        override val lessonStage: LessonStage get() = LessonStage.SHOW
+    }
+}
 
 @Composable
-private fun LessonHeader(task: WorkTask?, lessons: List<Lesson>, readFraction: Float, onBack: () -> Unit) {
-    val lesson = lessons.firstOrNull()
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(HeroSurface)
-            .padding(horizontal = 20.dp, vertical = 16.dp),
-    ) {
-        BackHeader(onBack = onBack, tint = OnHeroSurface)
-        Spacer(Modifier.height(10.dp))
-        Text(
-            lessons.joinToString(" · ") { "Lesson ${it.lessonCode}" }
-                .ifBlank { task?.let { "Day ${it.dayNumber}" }.orEmpty() },
-            style = MaterialTheme.typography.labelLarge,
-            color = NibsOrange,
-        )
-        Spacer(Modifier.height(4.dp))
-        Text(
-            lesson?.title ?: task?.title.orEmpty(),
-            style = MaterialTheme.typography.headlineSmall,
-            color = OnHeroSurface,
-        )
-        lesson?.moduleTitle?.takeIf { it.isNotBlank() }?.let {
-            Spacer(Modifier.height(4.dp))
+private fun LessonTopBar(task: WorkTask, stage: LessonStage, position: Int, total: Int, onBack: () -> Unit) {
+    Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp).padding(top = 8.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            BackHeader(onBack = onBack, tint = OnHeroSurface)
             Text(
-                "Module ${lesson.moduleNumber} — $it",
-                style = MaterialTheme.typography.bodyMedium,
+                "$position of $total",
+                style = MaterialTheme.typography.labelMedium,
                 color = OnHeroSurfaceSoft,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
             )
         }
-        Spacer(Modifier.height(14.dp))
-        NaleliProgressBar(
-            progressFraction = readFraction,
-            trackColor = SurfaceWhite.copy(alpha = 0.22f),
-        )
         Spacer(Modifier.height(6.dp))
+        // The five stages, always visible: the learner can see where this
+        // screen sits in the arc and that reading is only the first part.
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            LessonStage.entries.forEach { entry ->
+                val reached = entry.ordinal1 <= stage.ordinal1
+                Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(3.dp)
+                            .clip(CircleShape)
+                            .background(
+                                when {
+                                    entry == stage -> NibsOrange
+                                    reached -> OnHeroSurface
+                                    else -> SurfaceWhite.copy(alpha = 0.22f)
+                                },
+                            ),
+                    )
+                    Spacer(Modifier.height(5.dp))
+                    Text(
+                        entry.label,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (entry == stage) NibsOrange else OnHeroSurfaceSoft,
+                        fontWeight = if (entry == stage) FontWeight.SemiBold else FontWeight.Normal,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
+        Spacer(Modifier.height(10.dp))
         Text(
-            "${(readFraction * 100).toInt()}% read",
+            task.title,
             style = MaterialTheme.typography.labelSmall,
             color = OnHeroSurfaceSoft,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }
 
+// ---------------------------------------------------------------- stages
+
+@Composable
+private fun ReadingStage(page: LessonPage) {
+    if (page.title.isNotBlank()) {
+        Text(
+            page.title,
+            style = MaterialTheme.typography.headlineMedium,
+            color = OnHeroSurface,
+            lineHeight = 34.sp,
+        )
+        Spacer(Modifier.height(18.dp))
+    }
+    page.blocks.forEach { block -> Block(block) }
+}
+
+@Composable
+private fun TryStage(instructions: String) {
+    StageIntro(
+        eyebrow = "TRY IT",
+        title = "Now do it yourself",
+        body = "Follow this with your own device. Reading it is not the same as having done it.",
+    )
+    Spacer(Modifier.height(20.dp))
+    Text(instructions, style = MaterialTheme.typography.bodyLarge, color = OnHeroSurface, lineHeight = 27.sp)
+}
+
 /**
- * The five questions the brief says every module must answer, on the screen
- * where the learner starts. Built from the day's own curriculum record, so
- * it stays true as content changes.
+ * The word "Brief" is reserved for this screen alone: a workplace
+ * assignment with a requester, a task and a deliverable — not another
+ * restatement of the lesson.
  */
 @Composable
-private fun WhyThisLesson(task: WorkTask) {
-    NaleliCard(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 16.dp)) {
-        Text("WHY YOU ARE READING THIS", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(10.dp))
-        QuestionRow("What am I learning?", task.skillDeveloped)
-        QuestionRow("Why does it matter?", task.whyItMatters)
-        QuestionRow("What will I have to do?", task.assignmentText)
-        QuestionRow("What proves I can do it?", task.deliverableLabel)
+private fun ApplyStage(task: WorkTask) {
+    StageIntro(
+        eyebrow = "WORK MISSION",
+        title = "Apply it to real work",
+        body = "",
+    )
+    Spacer(Modifier.height(20.dp))
+    MissionSection("THE BRIEF", task.whyItMatters)
+    MissionSection("YOUR TASK", task.assignmentText)
+    MissionSection("WHAT TO SUBMIT", task.deliverableLabel)
+}
+
+@Composable
+private fun MissionSection(label: String, body: String) {
+    if (body.isBlank()) return
+    Column(Modifier.padding(bottom = 22.dp)) {
+        Text(label, style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+        Spacer(Modifier.height(6.dp))
+        Text(body, style = MaterialTheme.typography.bodyLarge, color = OnHeroSurface, lineHeight = 27.sp)
     }
 }
 
 @Composable
-private fun QuestionRow(question: String, answer: String) {
-    if (answer.isBlank()) return
-    Column(Modifier.padding(bottom = 12.dp)) {
-        Text(question, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Spacer(Modifier.height(2.dp))
-        Text(answer, style = MaterialTheme.typography.bodyMedium, lineHeight = 21.sp)
-    }
-}
+private fun ShowStage(task: WorkTask, evidenceCount: Int, onAddEvidence: () -> Unit) {
+    StageIntro(
+        eyebrow = "SHOW YOUR WORK",
+        title = "Submit your evidence",
+        body = "This is what proves you can do it — and it becomes part of your portfolio.",
+    )
+    Spacer(Modifier.height(20.dp))
 
-@Composable
-private fun LessonDivider(lesson: Lesson) {
-    Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp)) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(SurfaceWhite.copy(alpha = 0.07f))
+            .padding(18.dp),
+    ) {
+        Text("WHAT TO SUBMIT", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+        Spacer(Modifier.height(6.dp))
+        Text(task.deliverableLabel, style = MaterialTheme.typography.bodyLarge, color = OnHeroSurface, lineHeight = 26.sp)
+        Spacer(Modifier.height(16.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                if (evidenceCount > 0) Icons.Filled.Check else Icons.Filled.AttachFile,
+                contentDescription = null,
+                tint = if (evidenceCount > 0) SuccessGreen else OnHeroSurfaceSoft,
+                modifier = Modifier.size(18.dp),
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                if (evidenceCount == 0) "Nothing attached yet" else "$evidenceCount file(s) attached",
+                style = MaterialTheme.typography.bodyMedium,
+                color = OnHeroSurfaceSoft,
+            )
+        }
+        Spacer(Modifier.height(12.dp))
+        OutlinedButton(onClick = onAddEvidence, modifier = Modifier.fillMaxWidth()) {
+            Text(if (evidenceCount == 0) "ATTACH EVIDENCE" else "ADD ANOTHER FILE")
+        }
+    }
+
+    if (task.reviewQuestions.isNotEmpty()) {
+        Spacer(Modifier.height(22.dp))
+        Text("BEFORE YOU SUBMIT", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+        Spacer(Modifier.height(4.dp))
         Text(
-            "LESSON ${lesson.lessonCode}",
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.primary,
+            "Answer these in your own words. If you cannot, go back through the lesson.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = OnHeroSurfaceSoft,
+            lineHeight = 22.sp,
         )
-        Text(lesson.title, style = MaterialTheme.typography.titleLarge)
+        Spacer(Modifier.height(10.dp))
+        task.reviewQuestions.forEach { question -> Bullet(question) }
     }
 }
+
+@Composable
+private fun StageIntro(eyebrow: String, title: String, body: String) {
+    Text(eyebrow, style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+    Spacer(Modifier.height(10.dp))
+    Text(title, style = MaterialTheme.typography.headlineMedium, color = OnHeroSurface, lineHeight = 34.sp)
+    if (body.isNotBlank()) {
+        Spacer(Modifier.height(12.dp))
+        Text(body, style = MaterialTheme.typography.bodyLarge, color = OnHeroSurfaceSoft, lineHeight = 26.sp)
+    }
+}
+
+// ---------------------------------------------------------------- blocks
 
 /**
- * One block, one layout. An unrecognised type renders nothing rather than
- * failing — content is authored outside this app and may run ahead of it.
+ * One block, one layout. Every colour here is explicit against the navy
+ * surface — an earlier version let body text inherit the theme's on-surface
+ * ink while hardcoding a pale callout background, which rendered white on
+ * near-white for anyone in dark mode.
  */
 @Composable
 private fun Block(block: ContentBlock) {
-    val sidePadding = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
     when (block.type) {
-        BlockType.HEADING -> Text(
-            block.text,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = sidePadding.padding(top = 24.dp, bottom = 8.dp),
-        )
-
         BlockType.PARAGRAPH -> Text(
             block.text,
             style = MaterialTheme.typography.bodyLarge,
-            // Long-form reading needs more line height than the app's
-            // default UI text: this is a page, not a label.
-            lineHeight = 26.sp,
-            modifier = sidePadding.padding(bottom = 14.dp),
+            color = OnHeroSurface,
+            lineHeight = 27.sp,
+            modifier = Modifier.padding(bottom = 16.dp),
         )
 
-        BlockType.LIST -> Column(sidePadding.padding(bottom = 14.dp)) {
-            block.items.forEach { item -> BulletRow(item) }
+        BlockType.HEADING -> Text(
+            block.text,
+            style = MaterialTheme.typography.titleLarge,
+            color = OnHeroSurface,
+            modifier = Modifier.padding(top = 8.dp, bottom = 10.dp),
+        )
+
+        BlockType.LIST -> Column(Modifier.padding(bottom = 12.dp)) {
+            block.items.forEach { Bullet(it) }
         }
 
         BlockType.LEARNING_OUTCOMES -> Callout(
-            title = block.title.ifBlank { "Learning outcomes" },
-            accent = MaterialTheme.colorScheme.primary,
-            tint = NibsOrangeTint,
+            title = block.title.ifBlank { "What you should be able to answer" },
             icon = Icons.Filled.Lightbulb,
         ) {
-            block.items.forEach { item -> BulletRow(item) }
+            block.items.forEach { Bullet(it) }
         }
 
-        BlockType.KEY_CONCEPT -> Callout(
-            title = block.title.ifBlank { "Key concept" },
-            accent = HeroSurface,
-            tint = SlateSurface,
-            icon = Icons.Filled.Lightbulb,
-        ) {
-            if (block.text.isNotBlank()) {
-                Text(block.text, style = MaterialTheme.typography.bodyMedium, lineHeight = 22.sp)
-            }
-            block.items.forEach { item -> BulletRow(item) }
+        BlockType.KEY_CONCEPT -> Callout(block.title.ifBlank { "Key concept" }, Icons.Filled.Lightbulb) {
+            if (block.text.isNotBlank()) CalloutBody(block.text)
+            block.items.forEach { Bullet(it) }
         }
 
-        BlockType.EXAMPLE -> Callout(
-            title = block.title.ifBlank { "Example" },
-            accent = HeroSurface,
-            tint = SlateSurface,
-            icon = Icons.Filled.Description,
-        ) {
-            if (block.text.isNotBlank()) {
-                Text(block.text, style = MaterialTheme.typography.bodyMedium, lineHeight = 22.sp)
-            }
-            block.items.forEach { item -> BulletRow(item) }
+        BlockType.EXAMPLE -> Callout(block.title.ifBlank { "Example" }, Icons.Filled.Visibility) {
+            if (block.text.isNotBlank()) CalloutBody(block.text)
+            block.items.forEach { Bullet(it) }
         }
 
-        BlockType.REFLECTION -> Callout(
-            title = block.title.ifBlank { "Think about it" },
-            accent = MaterialTheme.colorScheme.primary,
-            tint = NibsOrangeTint,
-            icon = Icons.Filled.Lightbulb,
-        ) {
-            if (block.text.isNotBlank()) {
-                Text(block.text, style = MaterialTheme.typography.bodyMedium, lineHeight = 22.sp)
-            }
-            block.items.forEach { item -> BulletRow(item) }
+        BlockType.REFLECTION -> Callout(block.title.ifBlank { "Think about it" }, Icons.Filled.Lightbulb) {
+            if (block.text.isNotBlank()) CalloutBody(block.text)
+            block.items.forEach { Bullet(it) }
         }
 
         BlockType.PRACTICE, BlockType.TASK -> Callout(
-            title = block.title.ifBlank { if (block.type == BlockType.TASK) "Your task" else "Practise this" },
-            accent = MaterialTheme.colorScheme.primary,
-            tint = NibsOrangeTint,
-            icon = Icons.Filled.Description,
+            block.title.ifBlank { if (block.type == BlockType.TASK) "Your task" else "Practise this" },
+            Icons.Filled.Check,
         ) {
-            if (block.text.isNotBlank()) {
-                Text(block.text, style = MaterialTheme.typography.bodyMedium, lineHeight = 22.sp)
-            }
-            block.items.forEach { item -> BulletRow(item) }
+            if (block.text.isNotBlank()) CalloutBody(block.text)
+            block.items.forEach { Bullet(it) }
         }
 
-        // Media the app cannot play inline offline. Rather than pretend, the
-        // block states plainly what it is and where it lives, which is the
-        // honest offline-first behaviour.
-        BlockType.VIDEO -> Callout(
-            title = block.title.ifBlank { "Watch" },
-            accent = HeroSurface,
-            tint = SlateSurface,
-            icon = Icons.Filled.PlayCircleOutline,
-        ) {
-            Text(
-                block.caption.ifBlank { "Video lesson" },
-                style = MaterialTheme.typography.bodyMedium,
-                lineHeight = 22.sp,
-            )
-            if (block.url.isNotBlank()) {
-                Spacer(Modifier.height(4.dp))
-                Text(block.url, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
+        BlockType.IMAGE -> LessonImage(assetPath = block.url, caption = block.caption)
+
+        BlockType.VIDEO -> Callout(block.title.ifBlank { "Watch" }, Icons.Filled.PlayCircleOutline) {
+            CalloutBody(block.caption.ifBlank { "Video lesson" })
         }
 
-        BlockType.IMAGE, BlockType.RESOURCE -> if (block.caption.isNotBlank() || block.title.isNotBlank()) {
-            Callout(
-                title = block.title.ifBlank { "Resource" },
-                accent = HeroSurface,
-                tint = SlateSurface,
-                icon = Icons.Filled.Description,
-            ) {
-                Text(block.caption, style = MaterialTheme.typography.bodyMedium)
+        BlockType.RESOURCE -> if (block.caption.isNotBlank() || block.title.isNotBlank()) {
+            Callout(block.title.ifBlank { "Resource" }, Icons.Filled.AttachFile) {
+                CalloutBody(block.caption)
             }
         }
 
@@ -331,44 +466,45 @@ private fun Block(block: ContentBlock) {
 }
 
 @Composable
-private fun BulletRow(text: String) {
-    Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.Top) {
-        Box(
-            Modifier
-                .padding(top = 9.dp)
-                .size(5.dp)
-                .clip(RoundedCornerShape(3.dp))
-                .background(MaterialTheme.colorScheme.primary),
-        )
-        Spacer(Modifier.width(10.dp))
-        Text(text, style = MaterialTheme.typography.bodyMedium, lineHeight = 22.sp)
-    }
+private fun CalloutBody(text: String) {
+    Text(text, style = MaterialTheme.typography.bodyMedium, color = OnHeroSurface, lineHeight = 23.sp)
 }
 
 @Composable
-private fun Callout(
-    title: String,
-    accent: androidx.compose.ui.graphics.Color,
-    tint: androidx.compose.ui.graphics.Color,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    content: @Composable () -> Unit,
-) {
+private fun Bullet(text: String) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 5.dp), verticalAlignment = Alignment.Top) {
+        Box(
+            Modifier
+                .padding(top = 9.dp)
+                .size(6.dp)
+                .clip(CircleShape)
+                .background(NibsOrange),
+        )
+        Spacer(Modifier.width(12.dp))
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = OnHeroSurface, lineHeight = 23.sp)
+    }
+}
+
+/** A raised panel on the navy surface — never a pale tint, which is what
+ * made these unreadable in dark mode before. */
+@Composable
+private fun Callout(title: String, icon: ImageVector, content: @Composable () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 10.dp)
+            .padding(vertical = 8.dp)
             .clip(RoundedCornerShape(16.dp))
-            .background(tint)
-            .border(1.dp, accent.copy(alpha = 0.25f), RoundedCornerShape(16.dp))
+            .background(SurfaceWhite.copy(alpha = 0.07f))
+            .border(1.dp, NibsOrange.copy(alpha = 0.35f), RoundedCornerShape(16.dp))
             .padding(16.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(icon, contentDescription = null, tint = accent, modifier = Modifier.size(18.dp))
+            Icon(icon, contentDescription = null, tint = NibsOrange, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(8.dp))
             Text(
                 title.uppercase(),
                 style = MaterialTheme.typography.labelLarge,
-                color = accent,
+                color = NibsOrange,
                 fontWeight = FontWeight.SemiBold,
             )
         }
@@ -377,46 +513,36 @@ private fun Callout(
     }
 }
 
-/** Reading is never the end of a day — this is the hand-off into the work. */
 @Composable
-private fun WhatHappensNext(task: WorkTask?, onStartWork: () -> Unit) {
-    Column(Modifier.fillMaxWidth().padding(20.dp)) {
-        Spacer(Modifier.height(8.dp))
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(20.dp))
-                .background(HeroSurface)
-                .padding(20.dp),
-        ) {
-            Text("NOW PUT IT TO WORK", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
-            Spacer(Modifier.height(6.dp))
-            Text(
-                "Reading tells you what. The work is how you show you can do it.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = OnHeroSurfaceSoft,
-                lineHeight = 21.sp,
-            )
-            Spacer(Modifier.height(16.dp))
-            JourneyFlow(
-                steps = listOf("Understand", "Practise", "Complete task", "Submit evidence", "Assessment"),
-                activeIndex = 0,
-                onDark = true,
-            )
-            Spacer(Modifier.height(18.dp))
+private fun LessonFooter(isLast: Boolean, canSubmit: Boolean, onContinue: () -> Unit, onSubmit: () -> Unit) {
+    Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp).padding(bottom = 24.dp, top = 8.dp)) {
+        if (isLast) {
             Button(
-                onClick = onStartWork,
+                onClick = onSubmit,
+                enabled = canSubmit,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = NibsOrange,
+                    contentColor = SurfaceWhite,
+                    disabledContainerColor = SurfaceWhite.copy(alpha = 0.12f),
+                    disabledContentColor = OnHeroSurfaceSoft,
+                ),
+            ) { Text("SUBMIT FOR ASSESSMENT") }
+            if (!canSubmit) {
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    "Attach your evidence first.",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = OnHeroSurfaceSoft,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        } else {
+            Button(
+                onClick = onContinue,
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = NibsOrange, contentColor = SurfaceWhite),
-            ) { Text("START THE WORK") }
-        }
-        task?.deliverableLabel?.takeIf { it.isNotBlank() }?.let {
-            Spacer(Modifier.height(12.dp))
-            Text(
-                "You will finish today with: $it",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            ) { Text("CONTINUE") }
         }
     }
 }

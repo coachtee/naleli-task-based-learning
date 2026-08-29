@@ -44,18 +44,55 @@ data class ContentBlock(
     val caption: String = "",
 )
 
+/**
+ * The five stages of a Naleli Task-Based Learning day. A lesson's reading
+ * covers the first two; the last three are the work.
+ *
+ * There is deliberately no CHECK or quiz stage. A quiz can appear inside a
+ * lesson where it earns its place, but competence is demonstrated by
+ * producing evidence, not by answering questions about it.
+ */
+enum class LessonStage(val label: String, val ordinal1: Int) {
+    UNDERSTAND("Understand", 1),
+    SEE("See", 2),
+    TRY("Try", 3),
+    APPLY("Apply", 4),
+    SHOW("Show", 5);
+
+    companion object {
+        fun from(raw: String): LessonStage =
+            entries.firstOrNull { it.name.equals(raw, ignoreCase = true) } ?: UNDERSTAND
+    }
+}
+
+/**
+ * One screen of a lesson — a single idea, sized to be read without
+ * scrolling a wall of text. The reader pages through these rather than
+ * presenting the whole lesson as one document.
+ */
+@Serializable
+data class LessonPage(
+    val pageId: String,
+    /** "understand" or "see" — the reading stages. */
+    val stage: String = "understand",
+    val title: String = "",
+    val blocks: List<ContentBlock> = emptyList(),
+) {
+    val lessonStage: LessonStage get() = LessonStage.from(stage)
+}
+
 @Serializable
 data class Lesson(
     val lessonCode: String,
     val moduleNumber: Int = 0,
     val moduleTitle: String = "",
     val title: String,
+    /** One sentence naming what the learner will be able to do. Shown on
+     * the lesson's landing page in place of the old Brief card. */
+    val summary: String = "",
     val sourcePages: List<Int> = emptyList(),
-    val blocks: List<ContentBlock> = emptyList(),
-) {
-    /** Reading blocks only — the count the progress indicator divides by. */
-    val readingBlockCount: Int get() = blocks.count { it.type != BlockType.LEARNING_OUTCOMES }
-}
+    val pages: List<LessonPage> = emptyList(),
+)
 
 @Serializable
 data class LessonPackage(

@@ -6,6 +6,7 @@ import com.naleli.tbl.AppContainer
 import com.naleli.tbl.data.content.WorkSubStep
 import com.naleli.tbl.data.content.WorkTask
 import com.naleli.tbl.data.content.LessonLibrary
+import com.naleli.tbl.data.content.LessonStage
 import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.SubStepStatusEntity
@@ -80,6 +81,41 @@ class TaskWorkspaceViewModel(private val container: AppContainer, private val ta
 
     fun toggleSubStep(subStep: WorkSubStep, complete: Boolean) {
         viewModelScope.launch { container.workspaceRepository.setSubStepComplete(subStep, taskId, complete) }
+    }
+
+    /**
+     * Marks the sub-step a lesson stage corresponds to.
+     *
+     * The workbook already names each day's steps Learn / Practice / Work
+     * Mission / Review, which is the same arc the lesson pages walk. So
+     * passing a stage completes its step rather than asking the learner to
+     * tick a checklist describing work they have just done.
+     */
+    fun completeStageSubStep(stage: LessonStage) {
+        val steps = task?.subSteps.orEmpty()
+        if (steps.isEmpty()) return
+
+        val targets = if (stage == LessonStage.SHOW) {
+            // Reaching Show means the learner has walked the whole arc, so
+            // everything the day asked for is done. This is also what makes
+            // the eleven capstone days submittable: they name their steps
+            // for the artefact ("Role-to-Skill Map"), which no prefix below
+            // matches, and without this they could never satisfy
+            // allStepsDone and would be unable to submit at all.
+            steps
+        } else {
+            val prefixes = when (stage) {
+                LessonStage.UNDERSTAND, LessonStage.SEE -> listOf("learn")
+                LessonStage.TRY -> listOf("practice", "practise")
+                LessonStage.APPLY -> listOf("work mission", "portfolio", "capstone")
+                LessonStage.SHOW -> emptyList()
+            }
+            steps.filter { step -> prefixes.any { step.title.lowercase().startsWith(it) } }
+        }
+
+        viewModelScope.launch {
+            targets.forEach { container.workspaceRepository.setSubStepComplete(it, taskId, complete = true) }
+        }
     }
 
     fun submitForAssessment(confidenceRating: Int) {

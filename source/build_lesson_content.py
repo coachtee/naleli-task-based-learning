@@ -263,6 +263,91 @@ def promote_examples(blocks: list[dict]) -> list[dict]:
     return out
 
 
+# A screen holds one idea, measured in reading length rather than block
+# count: two short paragraphs and one long one are very different screens.
+# ~820 characters is about a comfortable phone screenful at our body size.
+MAX_PAGE_CHARS = 820
+MIN_PAGE_CHARS = 220
+
+
+def block_chars(block: dict) -> int:
+    return len(block.get("text", "")) + sum(len(i) for i in block.get("items", []))
+
+
+def paginate(blocks: list[dict], lesson_code: str) -> list[dict]:
+    """Flat blocks -> one-idea screens.
+
+    A heading starts a new screen and names it; the blocks under it are that
+    idea. A heading whose content runs past a screenful is continued onto
+    another screen under the same title, and a screen too short to stand on
+    its own is folded back into the one before it — otherwise a long lesson
+    turns into sixty taps of Continue.
+    """
+    pages: list[dict] = []
+    current: dict | None = None
+
+    def start(title: str, stage: str = "understand"):
+        nonlocal current
+        current = {"pageId": "", "stage": stage, "title": title, "blocks": []}
+        pages.append(current)
+
+    for block in blocks:
+        kind = block["type"]
+
+        if kind == "heading":
+            start(block["text"])
+            continue
+
+        # A worked example is the SEE stage: the learner is shown the idea
+        # working, not told it again.
+        if kind == "example":
+            start(current["title"] if current else "In practice", stage="see")
+            current["blocks"].append(block)
+            current = None  # an example stands alone on its screen
+            continue
+
+        if current is None:
+            start("In this lesson" if not pages else "")
+
+        used = sum(block_chars(b) for b in current["blocks"])
+        if used >= MAX_PAGE_CHARS and kind in ("paragraph", "list"):
+            start(current["title"], stage=current["stage"])
+
+        current["blocks"].append(block)
+
+    # Fold a screen too short to stand alone back into the previous one,
+    # as long as the result still fits a screenful.
+    merged: list[dict] = []
+    for page in pages:
+        if not page["blocks"]:
+            continue
+        size = sum(block_chars(b) for b in page["blocks"])
+        if merged and size < MIN_PAGE_CHARS:
+            prev = merged[-1]
+            if (
+                prev["stage"] == page["stage"]
+                and sum(block_chars(b) for b in prev["blocks"]) + size <= MAX_PAGE_CHARS
+            ):
+                prev["blocks"].extend(page["blocks"])
+                continue
+        merged.append(page)
+
+    for i, page in enumerate(merged, start=1):
+        page["pageId"] = f"{lesson_code}-p{i}"
+    return merged
+
+
+def summarise(blocks: list[dict]) -> str:
+    """One sentence for the lesson's landing page — the first real sentence
+    of the lesson's own opening, never invented here."""
+    for block in blocks:
+        if block["type"] == "paragraph":
+            text = block["text"]
+            stop = text.find(". ")
+            return (text[: stop + 1] if stop > 40 else text).strip()
+    return ""
+
+
 def build():
     export = json.loads(EXPORT.read_text())
     pages = {p["page"]: p["text"] for p in export["pages"]}
@@ -319,8 +404,9 @@ def build():
                     "moduleNumber": module["module_number"],
                     "moduleTitle": module["title"],
                     "title": lesson["title"],
+                    "summary": summarise(blocks),
                     "sourcePages": lesson.get("content_pages") or [],
-                    "blocks": blocks,
+                    "pages": paginate(blocks, lesson["lesson_code"]),
                 }
             )
 
@@ -337,15 +423,18 @@ def build():
 
     counts: dict[str, int] = {}
     for lesson in lessons:
-        for block in lesson["blocks"]:
-            counts[block["type"]] = counts.get(block["type"], 0) + 1
+        for page in lesson["pages"]:
+            for block in page["blocks"]:
+                counts[block["type"]] = counts.get(block["type"], 0) + 1
+    page_count = sum(len(l["pages"]) for l in lessons)
     print(f"wrote {OUT.relative_to(ROOT)}")
     print(f"  lessons     : {len(lessons)}")
-    print(f"  blocks      : {sum(len(l['blocks']) for l in lessons)}")
+    print(f"  screens     : {page_count} (avg {page_count / max(len(lessons), 1):.1f} per lesson)")
+    print(f"  blocks      : {sum(len(p['blocks']) for l in lessons for p in l['pages'])}")
     print(f"  size        : {OUT.stat().st_size / 1024:.0f} KB")
     for block_type, count in sorted(counts.items(), key=lambda kv: -kv[1]):
         print(f"    {block_type:18s} {count}")
-    empty = [l["lessonCode"] for l in lessons if not l["blocks"]]
+    empty = [l["lessonCode"] for l in lessons if not l["pages"]]
     print(f"  lessons with no blocks: {empty or 'none'}")
 
 
