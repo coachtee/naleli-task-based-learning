@@ -10,11 +10,11 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
     :root{
-      --bg:#071525; --surface:#0D2138; --surface-elevated:#132A45;
-      --primary:#1677FF; --active:#2997FF; --light-blue:#8CCBFF;
-      --text:#F4F7FB; --text-secondary:#AAB8C8; --border:#29415A;
-      --required:#DC2626; --supporting:#2563EB; --assessment:#7C3AED;
-      --competent:#059669; --current:#D97706; --locked:#6B7280;
+      --bg:#F8FAFC; --surface:#FFFFFF; --surface-elevated:#FFFFFF;
+      --primary:#F05A00; --active:#F05A00; --light-blue:#F05A00;
+      --text:#0A1140; --text-secondary:#64748B; --border:#E2E8F0;
+      --required:#DC2626; --supporting:#64748B; --assessment:#7C3AED;
+      --competent:#059669; --current:#F05A00; --locked:#64748B;
     }
     *{box-sizing:border-box; margin:0; padding:0;}
     body{background:transparent;}
@@ -24,7 +24,7 @@
     .t-title{font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600;}
     .t-body{font-size:14px; font-weight:400; line-height:1.5; color:var(--text-secondary);}
     .t-label{font-size:12px; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; color:var(--text-secondary);}
-    .navbar{display:flex; border-top:1px solid var(--border); background:var(--surface); padding:10px 8px 16px;}
+    .navbar{display:flex; border-top:1px solid #141C55; background:#0A1140; padding:10px 8px 16px;}
     .navitem{flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;}
     .navlabel{font-size:10px; font-weight:500; font-family:'Plus Jakarta Sans',sans-serif;}
   </style>
@@ -78,7 +78,7 @@
       <div style="height:1px; background:var(--border); opacity:0.5; margin-top:6px;"></div>
 
       <div style="display:flex; align-items:center; gap:12px; padding:13px 0;">
-        <svg width="17" height="17" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.25" stroke="#AAB8C8" stroke-width="1.5" fill="none"/></svg>
+        <svg width="17" height="17" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.25" stroke="#64748B" stroke-width="1.5" fill="none"/></svg>
         <div style="flex:1; display:flex; flex-direction:column; gap:1px;">
           <div class="t-title" style="font-weight:500; color:var(--text-secondary);">Digital Productivity</div>
           <div class="t-body" style="font-size:12px;">Up next</div>
@@ -87,7 +87,7 @@
       <div style="height:1px; background:var(--border); opacity:0.5;"></div>
 
       <div style="display:flex; align-items:center; gap:12px; padding:13px 0;">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" stroke="#6B7280" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="#6B7280" stroke-width="1.3"/></svg>
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" stroke="#64748B" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="#64748B" stroke-width="1.3"/></svg>
         <div style="flex:1; display:flex; flex-direction:column; gap:1px;">
           <div class="t-title" style="font-weight:500; color:var(--text-secondary);">Workplace Evidence &amp; Assessment</div>
           <div class="t-body" style="font-size:12px;">Locked</div>
@@ -101,31 +101,31 @@
         <div class="t-label">Phase 02</div>
         <div class="t-body" style="color:var(--text);">Do the Work</div>
       </div>
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" stroke="#6B7280" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="#6B7280" stroke-width="1.3"/></svg>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" stroke="#64748B" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="#64748B" stroke-width="1.3"/></svg>
     </div>
 
   </div>
 
   <div class="navbar">
     <div class="navitem">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11.5L12 4l8 7.5" stroke="#6B7280" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9" stroke="#6B7280" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <div class="navlabel" style="color:#6B7280;">Home</div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11.5L12 4l8 7.5" stroke="#B8BFCC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9" stroke="#B8BFCC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="navlabel" style="color:#B8BFCC;">Home</div>
     </div>
     <div class="navitem">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="17" rx="2" stroke="#6B7280" stroke-width="1.6"/><path d="M9 3.5h6a1 1 0 0 1 1 1V6H8V4.5a1 1 0 0 1 1-1Z" stroke="#6B7280" stroke-width="1.6"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <div class="navlabel" style="color:#6B7280;">My Work</div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="17" rx="2" stroke="#B8BFCC" stroke-width="1.6"/><path d="M9 3.5h6a1 1 0 0 1 1 1V6H8V4.5a1 1 0 0 1 1-1Z" stroke="#B8BFCC" stroke-width="1.6"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" stroke="#B8BFCC" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="navlabel" style="color:#B8BFCC;">My Work</div>
     </div>
     <div class="navitem">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#1677FF" stroke-width="1.6"/><path d="M15 9l-2 5-4.5 1.5L10.5 10 15 9Z" stroke="#1677FF" stroke-width="1.5" stroke-linejoin="round"/></svg>
-      <div class="navlabel" style="color:#1677FF;">Journey</div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#F05A00" stroke-width="1.6"/><path d="M15 9l-2 5-4.5 1.5L10.5 10 15 9Z" stroke="#F05A00" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      <div class="navlabel" style="color:#F05A00;">Journey</div>
     </div>
     <div class="navitem">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="7.5" width="17" height="12" rx="2" stroke="#6B7280" stroke-width="1.6"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5" stroke="#6B7280" stroke-width="1.6"/></svg>
-      <div class="navlabel" style="color:#6B7280;">Portfolio</div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="7.5" width="17" height="12" rx="2" stroke="#B8BFCC" stroke-width="1.6"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5" stroke="#B8BFCC" stroke-width="1.6"/></svg>
+      <div class="navlabel" style="color:#B8BFCC;">Portfolio</div>
     </div>
     <div class="navitem">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="#6B7280" stroke-width="1.6"/><path d="M5 20c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5" stroke="#6B7280" stroke-width="1.6" stroke-linecap="round"/></svg>
-      <div class="navlabel" style="color:#6B7280;">Me</div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="#B8BFCC" stroke-width="1.6"/><path d="M5 20c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5" stroke="#B8BFCC" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div class="navlabel" style="color:#B8BFCC;">Me</div>
     </div>
   </div>
 </div>

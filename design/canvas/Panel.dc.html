@@ -10,11 +10,11 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
     :root{
-      --bg:#071525; --surface:#0D2138; --surface-elevated:#132A45;
-      --primary:#1677FF; --active:#2997FF; --light-blue:#8CCBFF;
-      --text:#F4F7FB; --text-secondary:#AAB8C8; --border:#29415A;
-      --required:#DC2626; --supporting:#2563EB; --assessment:#7C3AED;
-      --competent:#059669; --current:#D97706; --locked:#6B7280;
+      --bg:#F8FAFC; --surface:#FFFFFF; --surface-elevated:#FFFFFF;
+      --primary:#F05A00; --active:#F05A00; --light-blue:#F05A00;
+      --text:#0A1140; --text-secondary:#64748B; --border:#E2E8F0;
+      --required:#DC2626; --supporting:#64748B; --assessment:#7C3AED;
+      --competent:#059669; --current:#F05A00; --locked:#64748B;
     }
     *{box-sizing:border-box; margin:0; padding:0;}
     body{background:transparent;}
@@ -84,47 +84,47 @@
     <div class="section-title">Color Palette</div>
     <div style="display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:12px;">
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <div class="swatch" style="background:#071525;"></div>
-        <div class="t-label" style="text-transform:none; letter-spacing:0;">Background<br><span style="color:var(--text);">#071525</span></div>
+        <div class="swatch" style="background:#F8FAFC;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Background<br><span style="color:var(--text);">#F8FAFC</span></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <div class="swatch" style="background:#0D2138;"></div>
-        <div class="t-label" style="text-transform:none; letter-spacing:0;">Surface<br><span style="color:var(--text);">#0D2138</span></div>
+        <div class="swatch" style="background:#FFFFFF;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Surface<br><span style="color:var(--text);">#FFFFFF</span></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <div class="swatch" style="background:#132A45;"></div>
-        <div class="t-label" style="text-transform:none; letter-spacing:0;">Elevated<br><span style="color:var(--text);">#132A45</span></div>
+        <div class="swatch" style="background:#FFFFFF;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Elevated<br><span style="color:var(--text);">#FFFFFF</span></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <div class="swatch" style="background:#1677FF;"></div>
-        <div class="t-label" style="text-transform:none; letter-spacing:0;">Primary<br><span style="color:var(--text);">#1677FF</span></div>
+        <div class="swatch" style="background:#F05A00;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Primary<br><span style="color:var(--text);">#F05A00</span></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <div class="swatch" style="background:#2997FF;"></div>
-        <div class="t-label" style="text-transform:none; letter-spacing:0;">Active<br><span style="color:var(--text);">#2997FF</span></div>
+        <div class="swatch" style="background:#F05A00;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Active<br><span style="color:var(--text);">#F05A00</span></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <div class="swatch" style="background:#8CCBFF;"></div>
-        <div class="t-label" style="text-transform:none; letter-spacing:0;">Light Blue<br><span style="color:var(--text);">#8CCBFF</span></div>
+        <div class="swatch" style="background:#F05A00;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Accent<br><span style="color:var(--text);">#F05A00</span></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <div class="swatch" style="background:#F4F7FB;"></div>
-        <div class="t-label" style="text-transform:none; letter-spacing:0; color:#0D2138;">Text Primary<br><span>#F4F7FB</span></div>
+        <div class="swatch" style="background:#0A1140;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0; color:#FFFFFF;">Text Primary<br><span>#0A1140</span></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <div class="swatch" style="background:#AAB8C8;"></div>
-        <div class="t-label" style="text-transform:none; letter-spacing:0; color:#0D2138;">Text Secondary<br><span>#AAB8C8</span></div>
+        <div class="swatch" style="background:#64748B;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0; color:#FFFFFF;">Text Secondary<br><span>#64748B</span></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <div class="swatch" style="background:#29415A;"></div>
-        <div class="t-label" style="text-transform:none; letter-spacing:0;">Border<br><span style="color:var(--text);">#29415A</span></div>
+        <div class="swatch" style="background:#E2E8F0;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Border<br><span style="color:var(--text);">#E2E8F0</span></div>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;">
         <div class="swatch" style="background:#F87171;"></div>
         <div class="t-label" style="text-transform:none; letter-spacing:0;">Danger Text<br><span style="color:var(--text);">#F87171</span></div>
       </div>
     </div>
-    <div class="t-body" style="font-size:12px;">Danger Text is a lighter tint of the Required/crimson hue, used for destructive labels and links on dark surfaces where the saturated #DC2626 reads too dark to stay legible.</div>
+    <div class="t-body" style="font-size:12px;">Danger Text is a lighter tint of the Required/crimson hue, kept for destructive labels on the navy surfaces — the top bar, the Current Focus card and the lesson reader — where the saturated #DC2626 reads too dark to stay legible.</div>
   </div>
 
   <div class="divider"></div>
@@ -137,15 +137,15 @@
         <div class="t-body" style="color:var(--text);">Completed</div>
       </div>
       <div style="display:flex; align-items:center; gap:8px;">
-        <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#D97706"/></svg>
+        <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#F05A00"/></svg>
         <div class="t-body" style="color:var(--text);">In Progress</div>
       </div>
       <div style="display:flex; align-items:center; gap:8px;">
-        <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.25" stroke="#6B7280" stroke-width="1.5" fill="none"/></svg>
+        <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.25" stroke="#64748B" stroke-width="1.5" fill="none"/></svg>
         <div class="t-body" style="color:var(--text);">Available</div>
       </div>
       <div style="display:flex; align-items:center; gap:8px;">
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" stroke="#6B7280" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="#6B7280" stroke-width="1.3"/></svg>
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" stroke="#64748B" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="#64748B" stroke-width="1.3"/></svg>
         <div class="t-body" style="color:var(--text);">Locked</div>
       </div>
       <div style="display:flex; align-items:center; gap:8px;">
@@ -153,7 +153,7 @@
         <div class="t-body" style="color:var(--text);">Required tier</div>
       </div>
       <div style="display:flex; align-items:center; gap:8px;">
-        <div style="width:8px; height:8px; border-radius:2px; background:#2563EB;"></div>
+        <div style="width:8px; height:8px; border-radius:2px; background:#64748B;"></div>
         <div class="t-body" style="color:var(--text);">Supporting tier</div>
       </div>
       <div style="display:flex; align-items:center; gap:8px;">
