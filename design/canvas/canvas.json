@@ -1,0 +1,182 @@
+{
+  "artboards": [
+    {
+      "file": "Panel.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 440,
+      "h": 1120,
+      "title": "Design System"
+    },
+    {
+      "file": "Main.dc.html",
+      "x": 560,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Home"
+    },
+    {
+      "file": "MyWork.dc.html",
+      "x": 1030,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "My Work"
+    },
+    {
+      "file": "TaskWorkspace.dc.html",
+      "x": 1500,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Task Workspace"
+    },
+    {
+      "file": "Evidence.dc.html",
+      "x": 1970,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Evidence Submission"
+    },
+    {
+      "file": "Assessment.dc.html",
+      "x": 2440,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Assessment & Competence"
+    },
+    {
+      "file": "Journey.dc.html",
+      "x": 560,
+      "y": 964,
+      "w": 390,
+      "h": 844,
+      "title": "Journey"
+    },
+    {
+      "file": "Portfolio.dc.html",
+      "x": 1030,
+      "y": 964,
+      "w": 390,
+      "h": 844,
+      "title": "Portfolio"
+    },
+    {
+      "file": "Me.dc.html",
+      "x": 1500,
+      "y": 964,
+      "w": 390,
+      "h": 844,
+      "title": "Me"
+    },
+    {
+      "file": "OrientWelcome.dc.html",
+      "x": 560,
+      "y": 1928,
+      "w": 390,
+      "h": 844,
+      "title": "1 \u00b7 Welcome"
+    },
+    {
+      "file": "OrientDigitalOps.dc.html",
+      "x": 1030,
+      "y": 1928,
+      "w": 390,
+      "h": 844,
+      "title": "2 \u00b7 Digital Operations"
+    },
+    {
+      "file": "OrientJourney.dc.html",
+      "x": 1500,
+      "y": 1928,
+      "w": 390,
+      "h": 844,
+      "title": "3 \u00b7 The Journey"
+    },
+    {
+      "file": "OrientMethod.dc.html",
+      "x": 1970,
+      "y": 1928,
+      "w": 390,
+      "h": 844,
+      "title": "4 \u00b7 Task-Based Learning"
+    },
+    {
+      "file": "OrientWhy.dc.html",
+      "x": 2440,
+      "y": 1928,
+      "w": 390,
+      "h": 844,
+      "title": "5 \u00b7 Why This Way"
+    },
+    {
+      "file": "OrientPortfolio.dc.html",
+      "x": 2910,
+      "y": 1928,
+      "w": 390,
+      "h": 844,
+      "title": "6 \u00b7 Evidence & Portfolio"
+    },
+    {
+      "file": "LessonReader.dc.html",
+      "x": 560,
+      "y": 2892,
+      "w": 390,
+      "h": 844,
+      "title": "Lesson \u2014 Opening"
+    },
+    {
+      "file": "LessonBlocks.dc.html",
+      "x": 1030,
+      "y": 2892,
+      "w": 390,
+      "h": 844,
+      "title": "Lesson \u2014 Content Blocks"
+    },
+    {
+      "file": "LessonMedia.dc.html",
+      "x": 1500,
+      "y": 2892,
+      "w": 390,
+      "h": 844,
+      "title": "Lesson \u2014 Video & Practice"
+    },
+    {
+      "file": "TaskPrep.dc.html",
+      "x": 1970,
+      "y": 2892,
+      "w": 390,
+      "h": 844,
+      "title": "Lesson \u2014 Into the Task"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "flow-note",
+      "x": 560,
+      "y": -90,
+      "w": 2270,
+      "text": "The Golden Flow \u2014 Home -> My Work -> Task Workspace -> Evidence -> Assessment, then Journey / Portfolio / Me"
+    },
+    {
+      "id": "orientation-note",
+      "x": 560,
+      "y": 1838,
+      "w": 2270,
+      "text": "Post-profile orientation \u2014 shown once, between creating a profile and Day 1. Six steps, Continue through, ending on Begin My Learning Journey."
+    },
+    {
+      "id": "lesson-note",
+      "x": 560,
+      "y": 2802,
+      "w": 1790,
+      "text": "The native lesson reader \u2014 content rendered from structured JSON blocks, never a PDF. Reading always ends by handing over to the work."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

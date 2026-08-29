@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+    :root{
+      --bg:#071525; --surface:#0D2138; --surface-elevated:#132A45;
+      --primary:#1677FF; --active:#2997FF; --light-blue:#8CCBFF;
+      --text:#F4F7FB; --text-secondary:#AAB8C8; --border:#29415A;
+      --required:#DC2626; --supporting:#2563EB; --assessment:#7C3AED;
+      --competent:#059669; --current:#D97706; --locked:#6B7280;
+    }
+    *{box-sizing:border-box; margin:0; padding:0;}
+    body{background:transparent;}
+    .frame{ width:390px; height:844px; background:var(--bg); border-radius:32px; border:1px solid var(--border); overflow:hidden; position:relative; font-family:'IBM Plex Sans',sans-serif; color:var(--text); display:flex; flex-direction:column; }
+    .scroll{flex:1; overflow-y:auto; display:flex; flex-direction:column; padding:20px 20px 28px;}
+    .t-title{font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600; line-height:1.35;}
+    .t-body{font-size:14px; font-weight:400; line-height:1.5; color:var(--text-secondary);}
+    .t-label{font-size:12px; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; color:var(--text-secondary);}
+    .btn-primary{background:var(--primary); color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; border:none; border-radius:10px; padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:8px; width:100%;}
+    .btn-secondary{background:transparent; color:var(--text); font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; border:1px solid var(--border); border-radius:9px; padding:11px 16px; display:flex; align-items:center; justify-content:center; gap:6px;}
+  </style>
+</helmet>
+<div class="frame">
+  <div class="scroll">
+
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="#AAB8C8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="t-label">My Work</div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:6px;">
+      <div class="t-label" style="color:var(--light-blue);">Microsoft Word Foundations</div>
+      <div class="t-title" style="font-size:19px; font-family:'Plus Jakarta Sans',sans-serif;">Create a Professional Document</div>
+      <div style="display:flex; align-items:center; gap:8px; margin-top:2px;">
+        <div style="font-size:11px; font-weight:600; font-family:'Plus Jakarta Sans',sans-serif; padding:3px 8px; border-radius:5px; background:rgba(220,38,38,0.15); color:#F87171;">Required</div>
+        <div class="t-label">~45 min</div>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; margin:24px 0 26px;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <svg width="22" height="22" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#0D2138" stroke="#059669" stroke-width="1.5"/><path d="M5 8.2L7 10.2L11 6" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        <div class="t-label" style="font-size:10px; color:#059669;">Understand</div>
+      </div>
+      <div style="flex:1; height:1.5px; background:#059669; margin:0 4px 18px;"></div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div style="width:22px; height:22px; border-radius:50%; background:var(--current); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif; color:#071525;">2</div>
+        <div class="t-label" style="font-size:10px; color:var(--current);">Practise</div>
+      </div>
+      <div style="flex:1; height:1.5px; background:var(--border); margin:0 4px 18px;"></div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div style="width:22px; height:22px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif; color:var(--text-secondary);">3</div>
+        <div class="t-label" style="font-size:10px;">Assignment</div>
+      </div>
+      <div style="flex:1; height:1.5px; background:var(--border); margin:0 4px 18px;"></div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div style="width:22px; height:22px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif; color:var(--text-secondary);">4</div>
+        <div class="t-label" style="font-size:10px;">Evidence</div>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:18px; background:var(--surface-elevated); border:1px solid var(--border); border-radius:16px; padding:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <div class="t-label" style="color:var(--current);">Step 2</div>
+        <div class="t-title" style="font-size:17px;">Practise Formatting</div>
+      </div>
+      <div class="t-body" style="color:var(--text);">Before completing your assignment, practise these skills on a blank document. Take your time &mdash; this step isn&rsquo;t graded.</div>
+
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <svg width="17" height="17" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#132A45" stroke="#059669" stroke-width="1.5"/><path d="M5 8.2L7 10.2L11 6" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          <div class="t-body" style="color:var(--text); text-decoration:line-through; text-decoration-color:var(--text-secondary);">Open Microsoft Word</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <svg width="17" height="17" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#132A45" stroke="#059669" stroke-width="1.5"/><path d="M5 8.2L7 10.2L11 6" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          <div class="t-body" style="color:var(--text); text-decoration:line-through; text-decoration-color:var(--text-secondary);">Set margins to Normal (2.54cm)</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <svg width="17" height="17" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.25" stroke="#AAB8C8" stroke-width="1.5" fill="none"/></svg>
+          <div class="t-body" style="color:var(--text);">Apply Heading 1 style to the document title</div>
+        </div>
+      </div>
+
+      <button class="btn-secondary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M14 3.5H6.5A1.5 1.5 0 0 0 5 5v14a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19V8.5L14 3.5Z" stroke="#F4F7FB" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 3.5V8h4.5" stroke="#F4F7FB" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        Open Example File
+      </button>
+    </div>
+
+    <div style="flex:1; min-height:20px;"></div>
+
+    <button class="btn-primary" style="margin-top:20px;">I&rsquo;ve Completed This Step</button>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+    :root{
+      --bg:#071525; --surface:#0D2138; --surface-elevated:#132A45;
+      --primary:#1677FF; --active:#2997FF; --light-blue:#8CCBFF;
+      --text:#F4F7FB; --text-secondary:#AAB8C8; --border:#29415A;
+      --required:#DC2626; --supporting:#2563EB; --assessment:#7C3AED;
+      --competent:#059669; --current:#D97706; --locked:#6B7280;
+    }
+    *{box-sizing:border-box; margin:0; padding:0;}
+    body{background:transparent;}
+    a{color:var(--active);} a:hover{color:var(--light-blue);}
+    .panel{
+      width:400px; min-height:1040px; background:var(--bg); border-radius:20px;
+      border:1px solid var(--border); font-family:'IBM Plex Sans',sans-serif; color:var(--text);
+      padding:28px 24px 40px; display:flex; flex-direction:column; gap:28px;
+    }
+    .t-display{font-family:'Plus Jakarta Sans',sans-serif; font-size:24px; font-weight:600;}
+    .t-heading{font-family:'Plus Jakarta Sans',sans-serif; font-size:18px; font-weight:500;}
+    .t-title{font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600;}
+    .t-body{font-size:14px; font-weight:400; line-height:1.5; color:var(--text-secondary);}
+    .t-label{font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-secondary);}
+    .section-title{font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--light-blue);}
+    .divider{height:1px; background:var(--border); width:100%;}
+    .swatch{width:100%; height:52px; border-radius:8px; border:1px solid var(--border);}
+    .btn-primary{background:var(--primary); color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; border:none; border-radius:10px; padding:12px 18px;}
+    .btn-secondary{background:transparent; color:var(--text); font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; border:1px solid var(--border); border-radius:10px; padding:11px 18px;}
+    .btn-text{background:transparent; color:var(--active); font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; border:none;}
+    .spacer-sq{background:var(--surface-elevated); border:1px solid var(--border); border-radius:4px;}
+  </style>
+</helmet>
+<div class="panel">
+
+  <div style="display:flex; align-items:center; gap:10px;">
+    <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, var(--primary), var(--light-blue)); flex-shrink:0;"></div>
+    <div class="t-title" style="letter-spacing:0.02em;">NALELI WORKSPACE</div>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:4px;">
+    <div class="t-display">Design System</div>
+    <div class="t-body">Primitives for the workspace redesign</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="display:flex; flex-direction:column; gap:14px;">
+    <div class="section-title">Typography</div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div style="display:grid; grid-template-columns: 74px 1fr; gap:14px; align-items:baseline;">
+        <div class="t-label" style="color:var(--text-secondary);">Display</div>
+        <div class="t-display">Naleli Workspace</div>
+      </div>
+      <div style="display:grid; grid-template-columns: 74px 1fr; gap:14px; align-items:baseline;">
+        <div class="t-label">Heading</div>
+        <div class="t-heading">Phase 01 &middot; Learn the Role</div>
+      </div>
+      <div style="display:grid; grid-template-columns: 74px 1fr; gap:14px; align-items:baseline;">
+        <div class="t-label">Title</div>
+        <div class="t-title">Create a Professional Document</div>
+      </div>
+      <div style="display:grid; grid-template-columns: 74px 1fr; gap:14px; align-items:baseline;">
+        <div class="t-label">Body</div>
+        <div class="t-body" style="color:var(--text);">This task involves formatting a business letter to a professional standard.</div>
+      </div>
+      <div style="display:grid; grid-template-columns: 74px 1fr; gap:14px; align-items:baseline;">
+        <div class="t-label">Label</div>
+        <div class="t-label">Required &middot; In Progress</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="display:flex; flex-direction:column; gap:14px;">
+    <div class="section-title">Color Palette</div>
+    <div style="display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:12px;">
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#071525;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Background<br><span style="color:var(--text);">#071525</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#0D2138;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Surface<br><span style="color:var(--text);">#0D2138</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#132A45;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Elevated<br><span style="color:var(--text);">#132A45</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#1677FF;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Primary<br><span style="color:var(--text);">#1677FF</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#2997FF;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Active<br><span style="color:var(--text);">#2997FF</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#8CCBFF;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Light Blue<br><span style="color:var(--text);">#8CCBFF</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#F4F7FB;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0; color:#0D2138;">Text Primary<br><span>#F4F7FB</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#AAB8C8;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0; color:#0D2138;">Text Secondary<br><span>#AAB8C8</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#29415A;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Border<br><span style="color:var(--text);">#29415A</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="swatch" style="background:#F87171;"></div>
+        <div class="t-label" style="text-transform:none; letter-spacing:0;">Danger Text<br><span style="color:var(--text);">#F87171</span></div>
+      </div>
+    </div>
+    <div class="t-body" style="font-size:12px;">Danger Text is a lighter tint of the Required/crimson hue, used for destructive labels and links on dark surfaces where the saturated #DC2626 reads too dark to stay legible.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="display:flex; flex-direction:column; gap:14px;">
+    <div class="section-title">Status &amp; Tier System</div>
+    <div style="display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px 16px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="#059669" stroke-width="1.5" fill="none"/><path d="M5 8.2L7 10.2L11 6" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        <div class="t-body" style="color:var(--text);">Completed</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#D97706"/></svg>
+        <div class="t-body" style="color:var(--text);">In Progress</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.25" stroke="#6B7280" stroke-width="1.5" fill="none"/></svg>
+        <div class="t-body" style="color:var(--text);">Available</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" stroke="#6B7280" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="#6B7280" stroke-width="1.3"/></svg>
+        <div class="t-body" style="color:var(--text);">Locked</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div style="width:8px; height:8px; border-radius:2px; background:#DC2626;"></div>
+        <div class="t-body" style="color:var(--text);">Required tier</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div style="width:8px; height:8px; border-radius:2px; background:#2563EB;"></div>
+        <div class="t-body" style="color:var(--text);">Supporting tier</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div style="width:8px; height:8px; border-radius:2px; background:#7C3AED;"></div>
+        <div class="t-body" style="color:var(--text);">Assessment tier</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="display:flex; flex-direction:column; gap:14px;">
+    <div class="section-title">Buttons</div>
+    <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+      <button class="btn-primary">Continue Work</button>
+      <button class="btn-secondary">View Example</button>
+      <button class="btn-text">View all work &rarr;</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="display:flex; flex-direction:column; gap:14px;">
+    <div class="section-title">Spacing Scale</div>
+    <div style="display:flex; align-items:flex-end; gap:10px;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div class="spacer-sq" style="width:4px; height:4px;"></div>
+        <div class="t-label" style="text-transform:none;">4</div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div class="spacer-sq" style="width:8px; height:8px;"></div>
+        <div class="t-label" style="text-transform:none;">8</div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div class="spacer-sq" style="width:12px; height:12px;"></div>
+        <div class="t-label" style="text-transform:none;">12</div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div class="spacer-sq" style="width:16px; height:16px;"></div>
+        <div class="t-label" style="text-transform:none;">16</div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div class="spacer-sq" style="width:24px; height:24px;"></div>
+        <div class="t-label" style="text-transform:none;">24</div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div class="spacer-sq" style="width:32px; height:32px;"></div>
+        <div class="t-label" style="text-transform:none;">32</div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div class="spacer-sq" style="width:40px; height:40px;"></div>
+        <div class="t-label" style="text-transform:none;">40</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="display:flex; flex-direction:column; gap:10px; padding:14px; background:var(--surface); border-radius:10px; border:1px solid var(--border);">
+    <div class="section-title" style="color:var(--light-blue);">Core Principle</div>
+    <div class="t-body" style="color:var(--text);">Completion measures activity. Competence measures demonstrated ability. Portfolio measures professional evidence. These stay visually separate everywhere.</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

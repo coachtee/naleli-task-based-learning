@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+    :root{
+      --navy:#0A1140; --navy-raised:#141C55;
+      --orange:#F05A00; --orange-dark:#C24700; --orange-tint:#FFEDE3;
+      --canvas:#F8FAFC; --surface:#FFFFFF;
+      --border:#E2E8F0; --slate:#64748B; --slate-surface:#F1F5F9;
+      --green:#059669; --red:#DC2626; --purple:#7C3AED;
+      --on-navy:#FFFFFF; --on-navy-soft:#B8BFCC;
+    }
+    *{box-sizing:border-box; margin:0; padding:0;}
+    body{background:transparent;}
+    .frame{
+      width:390px; height:844px; border-radius:32px;
+      border:1px solid var(--border); overflow:hidden; position:relative;
+      font-family:'IBM Plex Sans',sans-serif;
+      display:flex; flex-direction:column;
+    }
+    .frame-light{background:var(--canvas); color:var(--navy);}
+    .frame-navy{background:var(--navy); color:var(--on-navy);}
+    .scroll{flex:1; overflow:hidden; display:flex; flex-direction:column;}
+    .t-display{font-family:'Plus Jakarta Sans',sans-serif; font-size:26px; font-weight:600; line-height:1.22;}
+    .t-heading{font-family:'Plus Jakarta Sans',sans-serif; font-size:19px; font-weight:600; line-height:1.3;}
+    .t-title{font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600; line-height:1.35;}
+    .t-body{font-size:14px; font-weight:400; line-height:1.62;}
+    .t-read{font-size:14.5px; font-weight:400; line-height:1.72;}
+    .t-label{font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;}
+    .t-small{font-size:12px; font-weight:400; line-height:1.5;}
+    .btn{font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600;
+         letter-spacing:0.04em; border:none; border-radius:12px; padding:16px 20px;
+         display:flex; align-items:center; justify-content:center; gap:8px; width:100%;}
+    .btn-orange{background:var(--orange); color:#fff;}
+    .card{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:18px;}
+    .dot{width:6px; height:6px; border-radius:50%; background:var(--orange); flex-shrink:0; margin-top:8px;}
+</style>
+</helmet>
+<div class="frame frame-navy">
+  <div style="padding:22px 24px 0; display:flex; flex-direction:column; gap:14px;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div class="t-small" style="color:var(--on-navy-soft);">2 of 6</div>
+      <div class="t-small" style="color:var(--on-navy-soft);">Skip</div>
+    </div>
+    <div style="display:flex; gap:6px; width:100%;"><div style="flex:1; height:3px; border-radius:2px; background:var(--orange);"></div><div style="flex:1; height:3px; border-radius:2px; background:var(--orange);"></div><div style="flex:1; height:3px; border-radius:2px; background:rgba(255,255,255,0.22);"></div><div style="flex:1; height:3px; border-radius:2px; background:rgba(255,255,255,0.22);"></div><div style="flex:1; height:3px; border-radius:2px; background:rgba(255,255,255,0.22);"></div><div style="flex:1; height:3px; border-radius:2px; background:rgba(255,255,255,0.22);"></div></div>
+  </div>
+
+  <div class="scroll" style="padding:34px 24px 0; gap:16px;">
+    <div class="t-label" style="color:var(--orange);">YOUR FIELD</div>
+    <div class="t-display" style="color:var(--on-navy);">What is Digital Operations?</div>
+    <div class="t-body" style="color:var(--on-navy-soft); font-size:15px;">Every organisation runs on digital tools, information and processes — files that must be found, data that must be right, systems that must stay secure, messages that must reach the right person.</div>
+    <div style="height:8px;"></div>
+    <div style="display:flex; flex-direction:column; gap:14px;"><div style="display:flex; gap:12px; align-items:flex-start;"><div class="dot"></div><div class="t-body" style="color:var(--on-navy);"><strong style="font-weight:600;">Tools</strong> — the software people work in every day</div></div><div style="display:flex; gap:12px; align-items:flex-start;"><div class="dot"></div><div class="t-body" style="color:var(--on-navy);"><strong style="font-weight:600;">Systems</strong> — the devices and networks that connect them</div></div><div style="display:flex; gap:12px; align-items:flex-start;"><div class="dot"></div><div class="t-body" style="color:var(--on-navy);"><strong style="font-weight:600;">Information</strong> — the files, records and data an organisation depends on</div></div><div style="display:flex; gap:12px; align-items:flex-start;"><div class="dot"></div><div class="t-body" style="color:var(--on-navy);"><strong style="font-weight:600;">Processes</strong> — the steps that keep work consistent</div></div></div>
+    <div style="height:8px;"></div>
+    <div class="t-title" style="color:var(--on-navy); font-size:16px; line-height:1.5;">Digital Operations is the work of keeping all four running well. It is a profession, and it is what you are training for.</div>
+  </div>
+
+  <div style="padding:16px 24px 26px;">
+    <button class="btn btn-orange">CONTINUE</button>
+  </div>
+</div>
+
+</x-dc>
+</body>
+</html>
