@@ -51,7 +51,7 @@ class Offering extends Model
     /** How this reads on a quote or an invoice line. */
     public function terms(): string
     {
-        $price = 'R'.$this->price_rands;
+        $price = self::rands($this->price_cents);
 
         return match ($this->billing_model) {
             BillingModel::FIXED_BLOCK => $this->access_duration_days !== null
@@ -73,18 +73,22 @@ class Offering extends Model
         $count = max(1, $this->instalment_count ?? 1);
         $per = intdiv($balance, $count);
 
-        $registration = 'R'.number_format($deposit / 100, 2).' registration';
+        $registration = self::rands($deposit).' registration';
 
         if ($count === 1) {
-            return $registration.', then R'.number_format($balance / 100, 2);
+            return $registration.' + '.self::rands($balance);
         }
 
-        return sprintf(
-            '%s, then R%s x %d months',
-            $registration,
-            number_format($per / 100, 2),
-            $count,
-        );
+        return sprintf('%s + %s × %d months', $registration, self::rands($per), $count);
+    }
+
+    /**
+     * Rands for reading, not for accounting: a whole amount loses its decimals
+     * so a list of prices stays narrow enough to sit beside the name.
+     */
+    private static function rands(int $cents): string
+    {
+        return 'R'.number_format($cents / 100, $cents % 100 === 0 ? 0 : 2);
     }
 
     public function accessMonths(): string

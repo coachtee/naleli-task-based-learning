@@ -66,7 +66,7 @@ class FeeScheduleTest extends TestCase
         }
 
         $this->assertSame(335000, array_sum(array_map(fn ($l) => $l->amountCents, $lines)));
-        $this->assertSame('R500.00 registration, then R950.00 x 3 months', $offering->terms());
+        $this->assertSame('R500 registration + R950 × 3 months', $offering->terms());
     }
 
     public function test_a_fixed_block_is_one_invoice(): void

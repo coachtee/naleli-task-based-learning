@@ -23,11 +23,13 @@ class OfferingsTable
                 TextColumn::make('name')
                     ->searchable()
                     ->weight('medium')
-                    // The commercial terms sit under the name rather than in
-                    // their own column: a price that wraps onto four lines is
-                    // harder to read than one that sits where you look first.
+                    // Code and terms sit under the name: what it costs is
+                    // read together with what it is, not two columns away.
                     ->description(fn ($record): string => $record->code.'  ·  '.$record->terms()),
 
+                // The terms under the name already say how this is billed, so
+                // the badge repeated it and cost the width of the one column
+                // that says whether it can be sold at all.
                 TextColumn::make('billing_model')
                     ->label('Billed as')
                     ->badge()
@@ -36,7 +38,8 @@ class OfferingsTable
                         'fixed_block' => 'primary',
                         'subscription' => 'gray',
                         default => 'info',
-                    }),
+                    })
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('price_cents')
                     ->label('Total')

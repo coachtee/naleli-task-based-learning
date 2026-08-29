@@ -20,43 +20,63 @@ class AccessTokensTable
     {
         return $table
             ->columns([
-                TextColumn::make('learner.id')
-                    ->searchable(),
-                TextColumn::make('enrolment.id')
-                    ->searchable(),
-                TextColumn::make('token_hash')
-                    ->searchable(),
+                TextColumn::make('learner.learner_ref')
+                    ->label('Learner')
+                    ->searchable()
+                    ->weight('medium')
+                    ->description(fn (AccessToken $record): ?string => $record->enrolment?->programme?->name),
+
                 TextColumn::make('token_prefix')
-                    ->searchable(),
+                    ->label('Token')
+                    // The prefix is all we can ever show: only the hash is
+                    // stored, and the full token is displayed once, at issue.
+                    // It is enough to match a learner reading theirs aloud.
+                    ->formatStateUsing(fn (?string $state): string => $state === null ? '—' : $state.'…')
+                    ->searchable()
+                    ->tooltip('The full token is shown once when it is issued and never stored in readable form.'),
+
                 TextColumn::make('status')
                     ->badge()
-                    ->searchable(),
+                    ->formatStateUsing(fn ($state): string => $state->label())
+                    ->color(fn ($state): string => match ($state->value) {
+                        'active' => 'success',
+                        'issued' => 'warning',
+                        'revoked' => 'danger',
+                        default => 'gray',
+                    })
+                    ->description(fn (AccessToken $record): ?string => $record->revoked_reason),
+
                 TextColumn::make('issued_at')
-                    ->dateTime()
+                    ->label('Issued')
+                    ->date('j M Y')
                     ->sortable(),
-                TextColumn::make('issued_by')
-                    ->numeric()
-                    ->sortable(),
+
                 TextColumn::make('activated_at')
-                    ->dateTime()
+                    ->label('Opened in app')
+                    ->date('j M Y')
+                    ->placeholder('Not yet')
                     ->sortable(),
+
                 TextColumn::make('expires_at')
-                    ->dateTime()
+                    ->label('Access until')
+                    ->date('j M Y')
+                    ->placeholder('No expiry')
                     ->sortable(),
-                TextColumn::make('revoked_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('revoked_reason')
-                    ->searchable(),
+
+                TextColumn::make('token_hash')
+                    ->label('Hash')
+                    ->searchable()
+                    ->limit(16)
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('issued_at', 'desc')
+            ->emptyStateHeading('No access tokens yet')
+            ->emptyStateDescription('A token is issued automatically when an activating payment settles and the learner\'s identity is verified.')
             ->filters([
                 //
             ])

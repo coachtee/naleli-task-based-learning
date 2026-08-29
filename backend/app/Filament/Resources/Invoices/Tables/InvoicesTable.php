@@ -52,20 +52,27 @@ class InvoicesTable
                 TextColumn::make('status')
                     ->badge()
                     ->formatStateUsing(fn ($state): string => $state->label())
-                    ->color(fn ($state): string => match ($state->value) {
-                        'paid' => 'success',
-                        'due' => 'warning',
-                        'refunded' => 'info',
+                    // An invoice that is late reads red at a glance rather
+                    // than needing the due date to be read and compared.
+                    ->color(fn ($state, Invoice $record): string => match (true) {
+                        $state->value === 'due' && $record->due_on?->isPast() => 'danger',
+                        $state->value === 'paid' => 'success',
+                        $state->value === 'due' => 'warning',
+                        $state->value === 'refunded' => 'info',
                         default => 'gray',
+                    })
+                    ->description(fn (Invoice $record): ?string => match (true) {
+                        $record->due_on === null => null,
+                        $record->status->value === 'due' && $record->due_on->isPast() => 'Overdue '.$record->due_on->format('j M Y'),
+                        $record->status->value === 'due' => 'Due '.$record->due_on->format('j M Y'),
+                        default => null,
                     }),
 
                 TextColumn::make('due_on')
                     ->label('Due')
                     ->date('j M Y')
                     ->sortable()
-                    ->color(fn ($record): string => $record->status->value === 'due' && $record->due_on?->isPast()
-                        ? 'danger'
-                        : 'gray'),
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at', 'desc')
             ->emptyStateHeading('Nothing invoiced')

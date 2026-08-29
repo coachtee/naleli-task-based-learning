@@ -17,9 +17,9 @@ enum ApplicationSource: string
     public function label(): string
     {
         return match ($this) {
-            self::FLUENTFORM => 'Fluentform',
-            self::ADMIN => 'Admin',
-            self::WALK_IN => 'Walk in',
+            self::FLUENTFORM => 'Website form',
+            self::ADMIN => 'Captured by staff',
+            self::WALK_IN => 'Walk-in',
         };
     }
 }
