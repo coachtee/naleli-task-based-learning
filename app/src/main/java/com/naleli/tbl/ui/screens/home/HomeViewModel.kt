@@ -82,9 +82,21 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
             else -> "Ready to submit for assessment."
         }
 
-        val nextMilestone = allTasks.firstOrNull {
-            it.tier == TaskTier.ASSESSMENT && (assessmentByTask[it.taskId]?.result ?: CompetenceResult.NOT_YET_ASSESSED) != CompetenceResult.COMPETENT
-        }?.title ?: course.stages.getOrNull(1)?.name ?: "Next Phase"
+        // The nearest real checkpoint is finishing the workstream in hand —
+        // a few days out. The capstone tasks are the only ASSESSMENT-tier
+        // ones in the 90-day curriculum, so keying off those would show the
+        // same day-80 milestone for the first seventy-nine days.
+        val currentWorkstream = priorityTask?.let { WorkspaceCurriculum.workstreamFor(it.taskId) }
+        val nextMilestone = when {
+            currentWorkstream != null -> {
+                val lastDay = currentWorkstream.tasks.maxOfOrNull { it.dayNumber } ?: 0
+                "Finish ${currentWorkstream.name} · Day $lastDay"
+            }
+            else -> allTasks.firstOrNull {
+                it.tier == TaskTier.ASSESSMENT &&
+                    (assessmentByTask[it.taskId]?.result ?: CompetenceResult.NOT_YET_ASSESSED) != CompetenceResult.COMPETENT
+            }?.title ?: course.stages.lastOrNull()?.name ?: "Next Phase"
+        }
 
         val recentAchievement = assessmentByTask.values
             .filter { it.assessedAt != null && it.result == CompetenceResult.COMPETENT }
