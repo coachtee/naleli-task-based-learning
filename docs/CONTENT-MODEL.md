@@ -220,6 +220,26 @@ worked example. The remaining three stages of the arc — Try, Apply, Show —
 are built from the day's own task record, so every lesson ends in the work
 rather than in more reading.
 
+### Try and Apply: what is authored, what is derived
+
+79 of the 90 workbook days carry the *identical* assignment sentence
+("Imagine you are doing this for a real workplace user..."), so a concrete
+task cannot be read out of the source. Two things fill that gap, and they
+must not be confused:
+
+| | |
+|---|---|
+| **Derived** | The numbered task steps and success criteria, built from each lesson's own learning-outcome questions — real, per-lesson, written by the course author. All 90 missions are now distinct. |
+| **Authored by Naleli** | The twenty module-level workplace situations and the practice framings in `build_lesson_content.py`. These are ours, not the source course's. |
+
+The authored situations are the **first thing a subject lead should
+replace**. Both are overridable: a hand-written `practice` or `mission`
+object on a lesson in the export wins over anything generated.
+
+The day's own `deliverableLabel` always leads the submission list. The
+generated mission deliberately does not name a deliverable — it has no way
+to know one, and a guess would contradict the curriculum.
+
 ### Illustrations
 
 Images are Android assets under `content/<programme>/images/`, referenced by

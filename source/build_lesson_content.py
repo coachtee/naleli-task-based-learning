@@ -348,6 +348,144 @@ def summarise(blocks: list[dict]) -> str:
     return ""
 
 
+# ---------------------------------------------------------------------------
+# Try and Apply
+#
+# IMPORTANT — what is authored here versus derived from the course.
+#
+# 79 of the 90 workbook days carry the identical assignment sentence
+# ("Imagine you are doing this for a real workplace user..."), so a concrete
+# task cannot be read out of the source. Two things fill that gap:
+#
+#   DERIVED  - the numbered steps and success criteria, built from each
+#              lesson's own learning-outcome questions. Those are real,
+#              per-lesson, and written by the course author.
+#   AUTHORED - the twenty workplace situations below, one per module, and
+#              the practice framings. These are Naleli's framing, not the
+#              source course's, and are the first thing to replace when a
+#              subject lead writes real briefs.
+#
+# Both are overridable: hand-authored `practice` / `mission` objects placed
+# on a lesson in the export win over anything generated here.
+# ---------------------------------------------------------------------------
+
+MODULE_SITUATIONS = {
+    1: "You have just started at a small business that is putting its paperwork onto computers for the first time. The owner asks you to explain how the office equipment actually works.",
+    2: "The office has hired someone who types with two fingers and is falling behind on capturing customer forms. You have been asked to help them work faster and more accurately.",
+    3: "A colleague posted something about a customer on social media. The manager asks you to explain what staff may and may not put online.",
+    4: "A manager needs reliable information for a decision by the end of the day and does not know which sources to trust.",
+    5: "A staff member clicked a link in a suspicious email. The office needs to know what to do now and how to avoid it next time.",
+    6: "Your team wants to use an AI assistant for routine writing, but nobody is sure what it may safely be used for.",
+    7: "A shared office computer has become slow and disorganised, and nobody can find last month's files.",
+    8: "The office is choosing software for a task it currently does by hand, and needs a recommendation it can afford.",
+    9: "A customer has asked for a formal letter, and the draft that exists is untidy and hard to read.",
+    10: "The owner keeps daily sales on paper and wants to know the totals without adding them up by hand each week.",
+    11: "Your team must present its work to the owner next week and has only rough notes.",
+    12: "Messages to customers are being missed because everyone uses a different app and nothing is written down.",
+    13: "A computer in the office has stopped working and the owner wants to know whether to repair or replace it.",
+    14: "Staff at one end of the building keep losing the network connection, and nobody knows why.",
+    15: "The office loses work whenever a computer fails, and the owner has heard that files can be kept online.",
+    16: "The business keeps customer records and needs to show it is protecting them properly.",
+    17: "Customer details are spread across several spreadsheets, and the same customer appears three times with different spellings.",
+    18: "A task in the office is repeated by hand every day, and someone has suggested it could be automated.",
+    19: "The owner wants to improve one part of how the business runs but has no plan for doing it.",
+    20: "You are preparing the evidence of your own capability for a real employer.",
+}
+
+MODULE_PRACTICE = {
+    1: ("your own phone or computer", "identify one part of the device and what it does",
+        "I looked at my phone and found the screen. It is an output part, because it shows me what the phone has done."),
+    2: ("a keyboard", "type a short paragraph without looking down",
+        "I typed a paragraph without looking at my hands. I made four mistakes, mostly on the letters furthest from home row."),
+    3: ("your own social media or messaging app", "check what a stranger can see about you",
+        "I opened my profile while logged out. A stranger can see my full name and my photo, so I changed my photo to friends only."),
+    4: ("a web browser", "search for one fact and check it against a second source",
+        "I searched for the population of Katlehong and found two different numbers. I used the one from the official statistics site."),
+    5: ("your own device settings", "check one security setting and improve it",
+        "I checked my screen lock and found it was off. I turned on a PIN so nobody can open my phone if I lose it."),
+    6: ("an AI chat tool, or paper if you have none", "write one clear instruction and judge the answer",
+        "I asked for a short reply to a customer complaint. The first answer was too formal, so I asked again for simpler language."),
+    7: ("your own device's file manager", "create a folder and save a file into it with a clear name",
+        "I made a folder called Invoices and saved a file as 2026-03-invoice-mokoena. I can now find it without opening it."),
+    8: ("your own device", "find one app you use and describe what job it does",
+        "I use WhatsApp to send customers their order updates. Its job is communication, not storing records."),
+    9: ("a word processor, or paper if you have none", "format a short piece of text so it reads professionally",
+        "I put the heading in bold, left one blank line between paragraphs, and used the same font throughout."),
+    10: ("a spreadsheet, or paper if you have none", "enter five numbers and calculate the total",
+        "I entered five daily sales figures and used SUM to total them. The total updated by itself when I corrected one number."),
+    11: ("presentation software, or paper if you have none", "lay out one slide with a title and three points",
+        "I made a slide titled Weekly Sales with three points. I kept each point under eight words so it can be read from the back."),
+    12: ("your email or messaging app", "write one clear, professional message",
+        "I wrote to a customer with a clear subject line, one request, and a deadline. I read it once before sending."),
+    13: ("your own device, or a picture of one", "identify one internal component and say what it does",
+        "I found the RAM in a photo of an open laptop. It holds what the computer is working on right now."),
+    14: ("your own device's network settings", "find the network you are connected to and note its details",
+        "I am connected to a 2.4 GHz Wi-Fi network. My phone shows a full signal in the front room and one bar in the back."),
+    15: ("any cloud storage you have", "save one file online and open it again",
+        "I saved a document to Drive on my phone and opened it on a computer. The same file was there without emailing it."),
+    16: ("your own device", "check one security setting and record what you found",
+        "I checked which apps can use my location. Three did not need it, so I switched them off."),
+    17: ("a spreadsheet or a written list", "organise five records so each field is separate",
+        "I split one Name column into First Name and Surname. Now I can sort by surname without retyping anything."),
+    18: ("paper or any coding tool you have", "write the steps of one everyday task in order",
+        "I wrote out making tea in seven steps. Two of them repeat, which is where a loop would go."),
+    19: ("paper", "write down one problem and one possible improvement",
+        "Customers wait too long for quotes. A saved template would cut the writing time for each quote."),
+    20: ("your own saved work", "choose one piece of work and say what it proves",
+        "I chose my spreadsheet of monthly sales. It proves I can enter data accurately and calculate totals."),
+}
+
+
+def question_to_step(question: str) -> str:
+    """An outcome question, restated as something to do rather than recall."""
+    q = question.strip().rstrip("?")
+    return f"Answer, for your situation: {q}?"
+
+
+def build_practice(module_number: int, lesson_title: str) -> dict:
+    tool, action, example = MODULE_PRACTICE.get(
+        module_number,
+        ("your own device", "try the skill once", "I tried it once and wrote down what happened."),
+    )
+    return {
+        "goal": f"Practise {lesson_title.lower()} once, with guidance.",
+        "steps": [
+            f"Open {tool}.",
+            f"Now {action}.",
+            "Do it once yourself — do not only read about it.",
+            "Write one or two sentences saying what you did and what happened.",
+        ],
+        "exampleAnswer": example,
+    }
+
+
+def build_mission(module_number: int, lesson_title: str, outcomes: list[str]) -> dict:
+    # The steps come from the lesson's own outcome questions, so the task is
+    # about this lesson and no other. Capped so the mission stays a day's
+    # work rather than an exam.
+    focus = [question_to_step(q) for q in outcomes[:4]]
+    steps = (
+        ["Describe the situation above in one or two sentences, in your own words."]
+        + focus
+        + ["Say what you decided to do, and why."]
+    )
+    return {
+        "situation": MODULE_SITUATIONS.get(module_number, MODULE_SITUATIONS[1]),
+        "steps": [f"{i}. {t}" for i, t in enumerate(steps, start=1)],
+        "successCriteria": [
+            f"Every one of the {len(steps)} points above is answered.",
+            "It is written about this situation, not copied from the lesson.",
+            "Someone who did not attend could follow your explanation.",
+        ],
+        # The day's real deliverable is prepended by the app, which has it
+        # from the workbook; naming it here would only ever be a guess.
+        "submit": [
+            "Three to five sentences explaining the decisions you made",
+            "A file, screenshot or photo showing you did the work",
+        ],
+    }
+
+
 def build():
     export = json.loads(EXPORT.read_text())
     pages = {p["page"]: p["text"] for p in export["pages"]}
@@ -405,6 +543,10 @@ def build():
                     "moduleTitle": module["title"],
                     "title": lesson["title"],
                     "summary": summarise(blocks),
+                    "practice": lesson.get("practice")
+                    or build_practice(module["module_number"], lesson["title"]),
+                    "mission": lesson.get("mission")
+                    or build_mission(module["module_number"], lesson["title"], outcomes),
                     "sourcePages": lesson.get("content_pages") or [],
                     "pages": paginate(blocks, lesson["lesson_code"]),
                 }

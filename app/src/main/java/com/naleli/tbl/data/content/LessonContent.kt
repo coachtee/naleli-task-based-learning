@@ -81,6 +81,31 @@ data class LessonPage(
     val lessonStage: LessonStage get() = LessonStage.from(stage)
 }
 
+/** The Try stage: a small guided exercise with numbered steps and one
+ * worked answer, so "practise it" is never left to the learner to invent. */
+@Serializable
+data class LessonPractice(
+    val goal: String = "",
+    val steps: List<String> = emptyList(),
+    val exampleAnswer: String = "",
+)
+
+/**
+ * The Apply stage: a workplace assignment with a situation, a numbered
+ * task, a stated target, and an explicit deliverable.
+ *
+ * [submit] deliberately omits the day's own deliverable — that lives on the
+ * workbook task and is prepended by the screen, so the mission can never
+ * disagree with what the curriculum actually asks for.
+ */
+@Serializable
+data class LessonMission(
+    val situation: String = "",
+    val steps: List<String> = emptyList(),
+    val successCriteria: List<String> = emptyList(),
+    val submit: List<String> = emptyList(),
+)
+
 @Serializable
 data class Lesson(
     val lessonCode: String,
@@ -92,6 +117,8 @@ data class Lesson(
     val summary: String = "",
     val sourcePages: List<Int> = emptyList(),
     val pages: List<LessonPage> = emptyList(),
+    val practice: LessonPractice? = null,
+    val mission: LessonMission? = null,
 )
 
 @Serializable

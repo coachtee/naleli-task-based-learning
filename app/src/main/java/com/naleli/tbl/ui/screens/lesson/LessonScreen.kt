@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Lightbulb
@@ -28,6 +29,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -53,10 +55,11 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.naleli.tbl.data.content.BlockType
 import com.naleli.tbl.data.content.ContentBlock
 import com.naleli.tbl.data.content.LessonLibrary
+import com.naleli.tbl.data.content.LessonMission
+import com.naleli.tbl.data.content.LessonPractice
 import com.naleli.tbl.data.content.LessonPage
 import com.naleli.tbl.data.content.LessonStage
 import com.naleli.tbl.data.content.WorkTask
-import com.naleli.tbl.ui.components.BackHeader
 import com.naleli.tbl.ui.components.LessonImage
 import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.screens.workspace.TaskWorkspaceViewModel
@@ -101,9 +104,8 @@ fun LessonScreen(
     val state by viewModel.state.collectAsState()
     val task = state.task
 
-    val readingPages = remember(taskId) {
-        LessonLibrary.lessonsForTask(context, taskId).flatMap { it.pages }
-    }
+    val lessons = remember(taskId) { LessonLibrary.lessonsForTask(context, taskId) }
+    val readingPages = remember(lessons) { lessons.flatMap { it.pages } }
 
     // Reading screens first, then the three working stages. Every lesson
     // ends in the same place: attach what you made.
@@ -111,8 +113,12 @@ fun LessonScreen(
         buildList {
             readingPages.forEach { add(Stage.Reading(it)) }
             task?.let {
-                if (it.practiseText.isNotBlank()) add(Stage.Try(it.practiseText))
-                add(Stage.Apply(it))
+                val practice = lessons.firstNotNullOfOrNull { it.practice }
+                val mission = lessons.firstNotNullOfOrNull { it.mission }
+                if (practice != null || it.practiseText.isNotBlank()) {
+                    add(Stage.Try(practice, it.practiseText))
+                }
+                add(Stage.Apply(it, mission))
                 add(Stage.Show(it))
             }
         }
@@ -137,11 +143,17 @@ fun LessonScreen(
             .fillMaxSize()
             .background(HeroSurface),
     ) {
+        // Position within this stage, not the whole lesson: the question
+        // a learner deep in a long Understand stage is actually asking.
+        val sameStage = stages.filter { it.lessonStage == stage.lessonStage }
+        val positionInStage = stages.take(safeIndex + 1).count { it.lessonStage == stage.lessonStage }
+        val isStageEnd = positionInStage == sameStage.size
+
         LessonTopBar(
             task = task,
             stage = stage.lessonStage,
-            position = safeIndex + 1,
-            total = stages.size,
+            positionInStage = positionInStage,
+            stageTotal = sameStage.size,
             onBack = { if (safeIndex == 0) onBack() else index -= 1 },
         )
 
@@ -154,12 +166,20 @@ fun LessonScreen(
         ) {
             when (stage) {
                 is Stage.Reading -> ReadingStage(stage.page)
-                is Stage.Try -> TryStage(stage.instructions)
-                is Stage.Apply -> ApplyStage(stage.task)
+                is Stage.Try -> TryStage(stage.practice, stage.fallback)
+                is Stage.Apply -> ApplyStage(stage.task, stage.mission)
                 is Stage.Show -> ShowStage(
                     task = stage.task,
+                    mission = stages.filterIsInstance<Stage.Apply>().firstOrNull()?.mission,
                     evidenceCount = state.evidenceCount,
                     onAddEvidence = onAddEvidence,
+                )
+            }
+            if (isStageEnd && !isLast) {
+                Spacer(Modifier.height(24.dp))
+                StageComplete(
+                    finished = stage.lessonStage,
+                    next = stages[safeIndex + 1].lessonStage,
                 )
             }
             Spacer(Modifier.height(24.dp))
@@ -168,6 +188,8 @@ fun LessonScreen(
         LessonFooter(
             isLast = isLast,
             canSubmit = state.evidenceCount > 0,
+            canGoBack = safeIndex > 0,
+            onBack = { index -= 1 },
             onContinue = {
                 // Passing a stage is what marks its sub-step done, so the
                 // checklist reflects the journey instead of asking the
@@ -197,11 +219,11 @@ private sealed interface Stage {
         override val lessonStage: LessonStage get() = page.lessonStage
     }
 
-    data class Try(val instructions: String) : Stage {
+    data class Try(val practice: LessonPractice?, val fallback: String) : Stage {
         override val lessonStage: LessonStage get() = LessonStage.TRY
     }
 
-    data class Apply(val task: WorkTask) : Stage {
+    data class Apply(val task: WorkTask, val mission: LessonMission?) : Stage {
         override val lessonStage: LessonStage get() = LessonStage.APPLY
     }
 
@@ -210,61 +232,89 @@ private sealed interface Stage {
     }
 }
 
+/**
+ * Two levels of progress, which answer two different questions.
+ *
+ * Level 1 — the five-stage rail — answers "where am I in the lesson's
+ * shape". Level 2 — "UNDERSTAND · 3 of 7" — answers "how much of this is
+ * left", which the rail alone cannot: a learner eleven screens into a long
+ * Understand stage sees the same rail on every one of them.
+ *
+ * Built compact deliberately. The previous version handed BackHeader a Row
+ * with SpaceBetween, but BackHeader fills its own width, so the position
+ * text was pushed off-screen entirely and left a band of empty navy where
+ * the progress should have been.
+ */
 @Composable
-private fun LessonTopBar(task: WorkTask, stage: LessonStage, position: Int, total: Int, onBack: () -> Unit) {
-    Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp).padding(top = 8.dp)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            BackHeader(onBack = onBack, tint = OnHeroSurface)
+private fun LessonTopBar(
+    task: WorkTask,
+    stage: LessonStage,
+    positionInStage: Int,
+    stageTotal: Int,
+    onBack: () -> Unit,
+) {
+    Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(top = 4.dp, bottom = 2.dp)) {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            IconButton(onClick = onBack, modifier = Modifier.size(36.dp)) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = OnHeroSurface,
+                    modifier = Modifier.size(22.dp),
+                )
+            }
+            Spacer(Modifier.width(10.dp))
             Text(
-                "$position of $total",
+                task.title,
                 style = MaterialTheme.typography.labelMedium,
+                color = OnHeroSurfaceSoft,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+            )
+        }
+
+        Spacer(Modifier.height(10.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+            LessonStage.entries.forEach { entry ->
+                Box(
+                    Modifier
+                        .weight(1f)
+                        .height(3.dp)
+                        .clip(CircleShape)
+                        .background(
+                            when {
+                                entry == stage -> NibsOrange
+                                entry.ordinal1 < stage.ordinal1 -> OnHeroSurface
+                                else -> SurfaceWhite.copy(alpha = 0.20f)
+                            },
+                        ),
+                )
+            }
+        }
+
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                stage.label.uppercase(),
+                style = MaterialTheme.typography.labelMedium,
+                color = NibsOrange,
+                fontWeight = FontWeight.SemiBold,
+            )
+            if (stageTotal > 1) {
+                Text(
+                    "  ·  $positionInStage of $stageTotal",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = OnHeroSurfaceSoft,
+                )
+            }
+            Spacer(Modifier.weight(1f))
+            Text(
+                "Step ${stage.ordinal1} of 5",
+                style = MaterialTheme.typography.labelSmall,
                 color = OnHeroSurfaceSoft,
             )
         }
-        Spacer(Modifier.height(6.dp))
-        // The five stages, always visible: the learner can see where this
-        // screen sits in the arc and that reading is only the first part.
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            LessonStage.entries.forEach { entry ->
-                val reached = entry.ordinal1 <= stage.ordinal1
-                Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(3.dp)
-                            .clip(CircleShape)
-                            .background(
-                                when {
-                                    entry == stage -> NibsOrange
-                                    reached -> OnHeroSurface
-                                    else -> SurfaceWhite.copy(alpha = 0.22f)
-                                },
-                            ),
-                    )
-                    Spacer(Modifier.height(5.dp))
-                    Text(
-                        entry.label,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = if (entry == stage) NibsOrange else OnHeroSurfaceSoft,
-                        fontWeight = if (entry == stage) FontWeight.SemiBold else FontWeight.Normal,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
-            }
-        }
-        Spacer(Modifier.height(10.dp))
-        Text(
-            task.title,
-            style = MaterialTheme.typography.labelSmall,
-            color = OnHeroSurfaceSoft,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
     }
 }
 
@@ -284,33 +334,95 @@ private fun ReadingStage(page: LessonPage) {
     page.blocks.forEach { block -> Block(block) }
 }
 
+/**
+ * TRY — "do it with me". Numbered, specific instructions and one worked
+ * answer. The workbook's own practice text is the same paragraph on most
+ * days ("identify, explain and demonstrate the concept"), which tells a
+ * learner nothing about what to actually open or type, so the generated
+ * steps lead and that paragraph is the fallback.
+ */
 @Composable
-private fun TryStage(instructions: String) {
+private fun TryStage(practice: LessonPractice?, fallback: String) {
     StageIntro(
         eyebrow = "TRY IT",
-        title = "Now do it yourself",
-        body = "Follow this with your own device. Reading it is not the same as having done it.",
+        title = "Practise it with guidance",
+        body = practice?.goal?.ifBlank { null } ?: "Follow this on your own device.",
     )
-    Spacer(Modifier.height(20.dp))
-    Text(instructions, style = MaterialTheme.typography.bodyLarge, color = OnHeroSurface, lineHeight = 27.sp)
+    Spacer(Modifier.height(22.dp))
+
+    if (practice != null && practice.steps.isNotEmpty()) {
+        Text("YOUR PRACTICE", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+        Spacer(Modifier.height(10.dp))
+        practice.steps.forEachIndexed { i, step -> NumberedStep(i + 1, step) }
+
+        if (practice.exampleAnswer.isNotBlank()) {
+            Spacer(Modifier.height(18.dp))
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(SurfaceWhite.copy(alpha = 0.07f))
+                    .padding(16.dp),
+            ) {
+                Text("EXAMPLE ANSWER", style = MaterialTheme.typography.labelMedium, color = OnHeroSurfaceSoft)
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    practice.exampleAnswer,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = OnHeroSurface,
+                    lineHeight = 23.sp,
+                )
+            }
+        }
+    } else if (fallback.isNotBlank()) {
+        Text(fallback, style = MaterialTheme.typography.bodyLarge, color = OnHeroSurface, lineHeight = 27.sp)
+    }
 }
 
 /**
- * The word "Brief" is reserved for this screen alone: a workplace
- * assignment with a requester, a task and a deliverable — not another
- * restatement of the lesson.
+ * APPLY — "solve a realistic problem yourself". A fixed four-part shape so
+ * the learner never has to guess what to produce: the situation, a numbered
+ * task, what good work looks like, and exactly what to hand in.
+ *
+ * "Brief" is reserved for this screen alone; everywhere else it would just
+ * be another word for the lesson.
  */
 @Composable
-private fun ApplyStage(task: WorkTask) {
-    StageIntro(
-        eyebrow = "WORK MISSION",
-        title = "Apply it to real work",
-        body = "",
-    )
-    Spacer(Modifier.height(20.dp))
-    MissionSection("THE BRIEF", task.whyItMatters)
-    MissionSection("YOUR TASK", task.assignmentText)
-    MissionSection("WHAT TO SUBMIT", task.deliverableLabel)
+private fun ApplyStage(task: WorkTask, mission: LessonMission?) {
+    StageIntro(eyebrow = "WORK MISSION", title = "Apply it to real work", body = "")
+    Spacer(Modifier.height(22.dp))
+
+    if (mission == null) {
+        MissionSection("THE BRIEF", task.whyItMatters)
+        MissionSection("YOUR TASK", task.assignmentText)
+        MissionSection("WHAT TO SUBMIT", task.deliverableLabel)
+        return
+    }
+
+    MissionSection("THE SITUATION", mission.situation)
+
+    if (mission.steps.isNotEmpty()) {
+        Text("YOUR TASK", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+        Spacer(Modifier.height(10.dp))
+        // The steps arrive already numbered by the converter, so they are
+        // rendered as written rather than re-numbered here.
+        mission.steps.forEach { step -> TaskStep(step) }
+        Spacer(Modifier.height(22.dp))
+    }
+
+    if (mission.successCriteria.isNotEmpty()) {
+        Text("WHAT GOOD WORK LOOKS LIKE", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+        Spacer(Modifier.height(8.dp))
+        mission.successCriteria.forEach { Bullet(it) }
+        Spacer(Modifier.height(22.dp))
+    }
+
+    Text("WHAT TO SUBMIT", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+    Spacer(Modifier.height(8.dp))
+    // The day's own deliverable leads, because the curriculum defines it and
+    // the generated mission must never contradict it.
+    Bullet(task.deliverableLabel)
+    mission.submit.forEach { Bullet(it) }
 }
 
 @Composable
@@ -324,14 +436,54 @@ private fun MissionSection(label: String, body: String) {
 }
 
 @Composable
-private fun ShowStage(task: WorkTask, evidenceCount: Int, onAddEvidence: () -> Unit) {
+private fun NumberedStep(number: Int, text: String) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 7.dp), verticalAlignment = Alignment.Top) {
+        Box(
+            Modifier
+                .size(24.dp)
+                .clip(CircleShape)
+                .background(NibsOrange.copy(alpha = 0.18f)),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text("$number", style = MaterialTheme.typography.labelSmall, color = NibsOrange, fontWeight = FontWeight.SemiBold)
+        }
+        Spacer(Modifier.width(12.dp))
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = OnHeroSurface, lineHeight = 23.sp)
+    }
+}
+
+/** A converter-numbered step ("1. Describe the situation...") rendered with
+ * its number lifted out, so the list looks the same as Try's. */
+@Composable
+private fun TaskStep(step: String) {
+    val split = step.substringBefore(". ", missingDelimiterValue = "")
+    val number = split.toIntOrNull()
+    if (number == null) {
+        Bullet(step)
+    } else {
+        NumberedStep(number, step.substringAfter(". "))
+    }
+}
+
+/**
+ * SHOW — "prove it". No new learning here: a checklist tied to what Apply
+ * asked for, and what counts as evidence.
+ */
+@Composable
+private fun ShowStage(task: WorkTask, mission: LessonMission?, evidenceCount: Int, onAddEvidence: () -> Unit) {
     StageIntro(
         eyebrow = "SHOW YOUR WORK",
         title = "Submit your evidence",
-        body = "This is what proves you can do it — and it becomes part of your portfolio.",
+        body = "Nothing new to learn here — this is where you prove what you just did.",
     )
-    Spacer(Modifier.height(20.dp))
+    Spacer(Modifier.height(22.dp))
 
+    Text("YOU MUST SUBMIT", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+    Spacer(Modifier.height(10.dp))
+    ChecklistItem(task.deliverableLabel)
+    mission?.submit?.forEach { ChecklistItem(it) }
+
+    Spacer(Modifier.height(22.dp))
     Column(
         Modifier
             .fillMaxWidth()
@@ -339,10 +491,6 @@ private fun ShowStage(task: WorkTask, evidenceCount: Int, onAddEvidence: () -> U
             .background(SurfaceWhite.copy(alpha = 0.07f))
             .padding(18.dp),
     ) {
-        Text("WHAT TO SUBMIT", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
-        Spacer(Modifier.height(6.dp))
-        Text(task.deliverableLabel, style = MaterialTheme.typography.bodyLarge, color = OnHeroSurface, lineHeight = 26.sp)
-        Spacer(Modifier.height(16.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 if (evidenceCount > 0) Icons.Filled.Check else Icons.Filled.AttachFile,
@@ -357,24 +505,32 @@ private fun ShowStage(task: WorkTask, evidenceCount: Int, onAddEvidence: () -> U
                 color = OnHeroSurfaceSoft,
             )
         }
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(6.dp))
+        Text(
+            "Accepted: screenshot, document, photograph, file or written response.",
+            style = MaterialTheme.typography.labelSmall,
+            color = OnHeroSurfaceSoft,
+            lineHeight = 17.sp,
+        )
+        Spacer(Modifier.height(14.dp))
         OutlinedButton(onClick = onAddEvidence, modifier = Modifier.fillMaxWidth()) {
             Text(if (evidenceCount == 0) "ATTACH EVIDENCE" else "ADD ANOTHER FILE")
         }
     }
+}
 
-    if (task.reviewQuestions.isNotEmpty()) {
-        Spacer(Modifier.height(22.dp))
-        Text("BEFORE YOU SUBMIT", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
-        Spacer(Modifier.height(4.dp))
-        Text(
-            "Answer these in your own words. If you cannot, go back through the lesson.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = OnHeroSurfaceSoft,
-            lineHeight = 22.sp,
+@Composable
+private fun ChecklistItem(text: String) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.Top) {
+        Box(
+            Modifier
+                .padding(top = 2.dp)
+                .size(16.dp)
+                .clip(RoundedCornerShape(4.dp))
+                .border(1.5.dp, OnHeroSurfaceSoft, RoundedCornerShape(4.dp)),
         )
-        Spacer(Modifier.height(10.dp))
-        task.reviewQuestions.forEach { question -> Bullet(question) }
+        Spacer(Modifier.width(12.dp))
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = OnHeroSurface, lineHeight = 23.sp)
     }
 }
 
@@ -513,36 +669,61 @@ private fun Callout(title: String, icon: ImageVector, content: @Composable () ->
     }
 }
 
+/** Quiet confirmation that a stage is finished — no celebration, just the
+ * fact and what comes next. */
 @Composable
-private fun LessonFooter(isLast: Boolean, canSubmit: Boolean, onContinue: () -> Unit, onSubmit: () -> Unit) {
-    Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp).padding(bottom = 24.dp, top = 8.dp)) {
-        if (isLast) {
+private fun StageComplete(finished: LessonStage, next: LessonStage) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(SuccessGreen.copy(alpha = 0.14f))
+            .padding(horizontal = 14.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(Icons.Filled.Check, contentDescription = null, tint = SuccessGreen, modifier = Modifier.size(18.dp))
+        Spacer(Modifier.width(10.dp))
+        Text(
+            "${finished.label.uppercase()} complete — next is ${next.label.uppercase()}",
+            style = MaterialTheme.typography.labelMedium,
+            color = OnHeroSurface,
+        )
+    }
+}
+
+@Composable
+private fun LessonFooter(
+    isLast: Boolean,
+    canSubmit: Boolean,
+    canGoBack: Boolean,
+    onBack: () -> Unit,
+    onContinue: () -> Unit,
+    onSubmit: () -> Unit,
+) {
+    Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(bottom = 20.dp, top = 6.dp)) {
+        if (isLast && !canSubmit) {
+            Text(
+                "Attach your evidence first.",
+                style = MaterialTheme.typography.labelSmall,
+                color = OnHeroSurfaceSoft,
+                modifier = Modifier.padding(bottom = 8.dp),
+            )
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            if (canGoBack) {
+                OutlinedButton(onClick = onBack) { Text("BACK") }
+            }
             Button(
-                onClick = onSubmit,
-                enabled = canSubmit,
-                modifier = Modifier.fillMaxWidth(),
+                onClick = if (isLast) onSubmit else onContinue,
+                enabled = !isLast || canSubmit,
+                modifier = Modifier.weight(1f),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = NibsOrange,
                     contentColor = SurfaceWhite,
                     disabledContainerColor = SurfaceWhite.copy(alpha = 0.12f),
                     disabledContentColor = OnHeroSurfaceSoft,
                 ),
-            ) { Text("SUBMIT FOR ASSESSMENT") }
-            if (!canSubmit) {
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    "Attach your evidence first.",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = OnHeroSurfaceSoft,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
-        } else {
-            Button(
-                onClick = onContinue,
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = NibsOrange, contentColor = SurfaceWhite),
-            ) { Text("CONTINUE") }
+            ) { Text(if (isLast) "SUBMIT FOR ASSESSMENT" else "CONTINUE") }
         }
     }
 }

@@ -10,6 +10,36 @@
       "moduleTitle": "Introduction to Tech",
       "title": "Starting the Course",
       "summary": "Digital literacy is the ability to use computer technologies and participate in our digital world.",
+      "practice": {
+        "goal": "Practise starting the course once, with guidance.",
+        "steps": [
+          "Open your own phone or computer.",
+          "Now identify one part of the device and what it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I looked at my phone and found the screen. It is an output part, because it shows me what the phone has done."
+      },
+      "mission": {
+        "situation": "You have just started at a small business that is putting its paperwork onto computers for the first time. The owner asks you to explain how the office equipment actually works.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is digital literacy?",
+          "3. Answer, for your situation: What is digital citizenship?",
+          "4. Answer, for your situation: What can you do to be a proactive learner?",
+          "5. Answer, for your situation: What is the role of practice in learning new skills?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         6
       ],
@@ -63,6 +93,36 @@
       "moduleTitle": "Introduction to Tech",
       "title": "Exploring a World of Tech",
       "summary": "Technology is everywhere, and our ability to use it will shape many aspects of our lives.",
+      "practice": {
+        "goal": "Practise exploring a world of tech once, with guidance.",
+        "steps": [
+          "Open your own phone or computer.",
+          "Now identify one part of the device and what it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I looked at my phone and found the screen. It is an output part, because it shows me what the phone has done."
+      },
+      "mission": {
+        "situation": "You have just started at a small business that is putting its paperwork onto computers for the first time. The owner asks you to explain how the office equipment actually works.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How does technology impact my daily life?",
+          "3. Answer, for your situation: How could technology impact my future and my future career?",
+          "4. Answer, for your situation: What are some facts about computing history?",
+          "5. Answer, for your situation: What is a computer system?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         7,
         8,
@@ -320,6 +380,36 @@
       "moduleTitle": "Introduction to Tech",
       "title": "Understanding Computing Basics",
       "summary": "Every time you use a computer, it follows a basic pattern: input, processing, storage, and output.",
+      "practice": {
+        "goal": "Practise understanding computing basics once, with guidance.",
+        "steps": [
+          "Open your own phone or computer.",
+          "Now identify one part of the device and what it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I looked at my phone and found the screen. It is an output part, because it shows me what the phone has done."
+      },
+      "mission": {
+        "situation": "You have just started at a small business that is putting its paperwork onto computers for the first time. The owner asks you to explain how the office equipment actually works.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is Input?",
+          "3. Answer, for your situation: What is Processing?",
+          "4. Answer, for your situation: What is Storage?",
+          "5. Answer, for your situation: What is Output?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         12,
         13,
@@ -631,6 +721,36 @@
       "moduleTitle": "Introduction to Tech",
       "title": "Bit by Bit: Binary Numbers and Data",
       "summary": "In this lesson, you will explore what binary is and how it compares to the decimal number system (0–9) that you use every day in math.",
+      "practice": {
+        "goal": "Practise bit by bit: binary numbers and data once, with guidance.",
+        "steps": [
+          "Open your own phone or computer.",
+          "Now identify one part of the device and what it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I looked at my phone and found the screen. It is an output part, because it shows me what the phone has done."
+      },
+      "mission": {
+        "situation": "You have just started at a small business that is putting its paperwork onto computers for the first time. The owner asks you to explain how the office equipment actually works.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is binary?",
+          "3. Answer, for your situation: What is the relationship between decimal, binary, and hexadecimal numbers?",
+          "4. Answer, for your situation: What are bits and Bytes?",
+          "5. Answer, for your situation: How do computers store and transfer data?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         20,
         21,
@@ -1009,6 +1129,34 @@
       "moduleTitle": "Keyboarding Skills and Ergonomics",
       "title": "What is Keyboarding?",
       "summary": "Keyboarding is a fundamental skill for using computers in both personal and professional life.",
+      "practice": {
+        "goal": "Practise what is keyboarding? once, with guidance.",
+        "steps": [
+          "Open a keyboard.",
+          "Now type a short paragraph without looking down.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I typed a paragraph without looking at my hands. I made four mistakes, mostly on the letters furthest from home row."
+      },
+      "mission": {
+        "situation": "The office has hired someone who types with two fingers and is falling behind on capturing customer forms. You have been asked to help them work faster and more accurately.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is proper keyboarding technique to type more accurately?",
+          "3. Answer, for your situation: What is proper finger placement on the home row?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         28
       ],
@@ -1070,6 +1218,36 @@
       "moduleTitle": "Keyboarding Skills and Ergonomics",
       "title": "Typing Letters",
       "summary": "The letter practice labs are designed to help you learn proper keyboarding techniques and build muscle memory.",
+      "practice": {
+        "goal": "Practise typing letters once, with guidance.",
+        "steps": [
+          "Open a keyboard.",
+          "Now type a short paragraph without looking down.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I typed a paragraph without looking at my hands. I made four mistakes, mostly on the letters furthest from home row."
+      },
+      "mission": {
+        "situation": "The office has hired someone who types with two fingers and is falling behind on capturing customer forms. You have been asked to help them work faster and more accurately.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Use the home row.?",
+          "3. Answer, for your situation: Use your pointer fingers.?",
+          "4. Answer, for your situation: Use your middle fingers.?",
+          "5. Answer, for your situation: Use your ring fingers.?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         29
       ],
@@ -1106,6 +1284,35 @@
       "moduleTitle": "Keyboarding Skills and Ergonomics",
       "title": "Typing Words",
       "summary": "The word labs give you various practice words that take what you learned in the letter labs and apply them to real, written English.",
+      "practice": {
+        "goal": "Practise typing words once, with guidance.",
+        "steps": [
+          "Open a keyboard.",
+          "Now type a short paragraph without looking down.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I typed a paragraph without looking at my hands. I made four mistakes, mostly on the letters furthest from home row."
+      },
+      "mission": {
+        "situation": "The office has hired someone who types with two fingers and is falling behind on capturing customer forms. You have been asked to help them work faster and more accurately.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Type common English words.?",
+          "3. Answer, for your situation: Type common letter combinations in longer words.?",
+          "4. Answer, for your situation: Type proper nouns with capitalized letters.?",
+          "5. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 5 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         30
       ],
@@ -1142,6 +1349,35 @@
       "moduleTitle": "Keyboarding Skills and Ergonomics",
       "title": "Typing Sentences",
       "summary": "The sentence practices are designed to give you experience typing longer passages and improve your typing speed and accuracy.",
+      "practice": {
+        "goal": "Practise typing sentences once, with guidance.",
+        "steps": [
+          "Open a keyboard.",
+          "Now type a short paragraph without looking down.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I typed a paragraph without looking at my hands. I made four mistakes, mostly on the letters furthest from home row."
+      },
+      "mission": {
+        "situation": "The office has hired someone who types with two fingers and is falling behind on capturing customer forms. You have been asked to help them work faster and more accurately.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Type sentences.?",
+          "3. Answer, for your situation: Increase your accuracy.?",
+          "4. Answer, for your situation: Increase your typing speed.?",
+          "5. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 5 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         31
       ],
@@ -1190,6 +1426,36 @@
       "moduleTitle": "Digital Citizenship and Online Reputation",
       "title": "Being a Digital Citizen",
       "summary": "Part of digital literacy is digital citizenship, our roles and responsibilities as participating members of a digital society.",
+      "practice": {
+        "goal": "Practise being a digital citizen once, with guidance.",
+        "steps": [
+          "Open your own social media or messaging app.",
+          "Now check what a stranger can see about you.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I opened my profile while logged out. A stranger can see my full name and my photo, so I changed my photo to friends only."
+      },
+      "mission": {
+        "situation": "A colleague posted something about a customer on social media. The manager asks you to explain what staff may and may not put online.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How do empathy and ehtics apply to digital life?",
+          "3. Answer, for your situation: What does your digital footprints leave behind?",
+          "4. Answer, for your situation: Why does what you say and how you communicate matter?",
+          "5. Answer, for your situation: How can cultural differences affect how people understand what you say?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         33,
         34,
@@ -1707,6 +1973,36 @@
       "moduleTitle": "Digital Citizenship and Online Reputation",
       "title": "Managing Your Digital Footprint",
       "summary": "Every time you go online, liking a post, sharing a photo, filling out a form, or commenting on a video, you leave behind a trail of information.",
+      "practice": {
+        "goal": "Practise managing your digital footprint once, with guidance.",
+        "steps": [
+          "Open your own social media or messaging app.",
+          "Now check what a stranger can see about you.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I opened my profile while logged out. A stranger can see my full name and my photo, so I changed my photo to friends only."
+      },
+      "mission": {
+        "situation": "A colleague posted something about a customer on social media. The manager asks you to explain what staff may and may not put online.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is a digital footprint, and how do you create one?",
+          "3. Answer, for your situation: In what ways do your everyday online actions leave a trace behind?",
+          "4. Answer, for your situation: Why does it matter that the internet can feel temporary but is often permanent?",
+          "5. Answer, for your situation: How can careless posts, pictures, or comments affect your future opportunities?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         40,
         41,
@@ -2187,6 +2483,36 @@
       "moduleTitle": "Digital Citizenship and Online Reputation",
       "title": "Understanding Intellectual Property",
       "summary": "Every day you use and share creative work, music, videos, memes, photos, school assignments, apps, and games.",
+      "practice": {
+        "goal": "Practise understanding intellectual property once, with guidance.",
+        "steps": [
+          "Open your own social media or messaging app.",
+          "Now check what a stranger can see about you.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I opened my profile while logged out. A stranger can see my full name and my photo, so I changed my photo to friends only."
+      },
+      "mission": {
+        "situation": "A colleague posted something about a customer on social media. The manager asks you to explain what staff may and may not put online.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is intellectual property, and what kinds of digital work does it include?",
+          "3. Answer, for your situation: How does copyright protect creators and their work online?",
+          "4. Answer, for your situation: What is plagiarism, and how is it different from simply being inspired by someone else?",
+          "5. Answer, for your situation: In what ways can copying or sharing content without permission harm creators and users?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         46,
         47,
@@ -2538,6 +2864,36 @@
       "moduleTitle": "Digital Citizenship and Online Reputation",
       "title": "Building Media Literacy",
       "summary": "You are surrounded by media every day, videos, posts, news stories, memes, ads, and more.",
+      "practice": {
+        "goal": "Practise building media literacy once, with guidance.",
+        "steps": [
+          "Open your own social media or messaging app.",
+          "Now check what a stranger can see about you.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I opened my profile while logged out. A stranger can see my full name and my photo, so I changed my photo to friends only."
+      },
+      "mission": {
+        "situation": "A colleague posted something about a customer on social media. The manager asks you to explain what staff may and may not put online.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is media literacy, and why is it important in your daily life?",
+          "3. Answer, for your situation: How do common human biases influence what you pay attention to and believe?",
+          "4. Answer, for your situation: How can you tell the difference between facts, opinions, and advertising in the media?",
+          "5. Answer, for your situation: Why is it important to identify who created a message and what their motives or goals might?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         51,
         52,
@@ -2745,6 +3101,36 @@
       "moduleTitle": "The Internet, Search, and Social Media",
       "title": "Understanding the Internet",
       "summary": "The internet connects billions of devices and people around the world.",
+      "practice": {
+        "goal": "Practise understanding the internet once, with guidance.",
+        "steps": [
+          "Open a web browser.",
+          "Now search for one fact and check it against a second source.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I searched for the population of Katlehong and found two different numbers. I used the one from the official statistics site."
+      },
+      "mission": {
+        "situation": "A manager needs reliable information for a decision by the end of the day and does not know which sources to trust.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is the internet, and how is it different from the World Wide Web?",
+          "3. Answer, for your situation: How do computer networks and connectivity allow devices to communicate with each?",
+          "4. Answer, for your situation: other?",
+          "5. Answer, for your situation: What are web pages, websites, and web servers, and how do they work together?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         56,
         57,
@@ -3267,6 +3653,36 @@
       "moduleTitle": "The Internet, Search, and Social Media",
       "title": "Browsing the Web",
       "summary": "Using a web browser is one of the main ways to interact with the internet.",
+      "practice": {
+        "goal": "Practise browsing the web once, with guidance.",
+        "steps": [
+          "Open a web browser.",
+          "Now search for one fact and check it against a second source.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I searched for the population of Katlehong and found two different numbers. I used the one from the official statistics site."
+      },
+      "mission": {
+        "situation": "A manager needs reliable information for a decision by the end of the day and does not know which sources to trust.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is a web browser, and how is it different from other types of software?",
+          "3. Answer, for your situation: What tools and features do most web browsers share in common?",
+          "4. Answer, for your situation: How can you navigate websites effectively and find what you need on a page?",
+          "5. Answer, for your situation: What options are available to personalize or customize how a browser looks and behaves?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         63,
         64,
@@ -3890,6 +4306,36 @@
       "moduleTitle": "The Internet, Search, and Social Media",
       "title": "Searching and Researching Online",
       "summary": "Searching is perhaps the most common activity to do on the internet.",
+      "practice": {
+        "goal": "Practise searching and researching online once, with guidance.",
+        "steps": [
+          "Open a web browser.",
+          "Now search for one fact and check it against a second source.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I searched for the population of Katlehong and found two different numbers. I used the one from the official statistics site."
+      },
+      "mission": {
+        "situation": "A manager needs reliable information for a decision by the end of the day and does not know which sources to trust.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How does a search engine work?",
+          "3. Answer, for your situation: What can you do to improve your internet searches?",
+          "4. Answer, for your situation: Which search tools look to be the most useful?",
+          "5. Answer, for your situation: When and how do you need to give credit for content you find online that you use or share?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         76,
         77,
@@ -4284,6 +4730,36 @@
       "moduleTitle": "The Internet, Search, and Social Media",
       "title": "Using Social Media Responsibly",
       "summary": "Social media refers to a group of apps and websites that allow users to individually share content, connect with one another, and interact with ideas and people.",
+      "practice": {
+        "goal": "Practise using social media responsibly once, with guidance.",
+        "steps": [
+          "Open a web browser.",
+          "Now search for one fact and check it against a second source.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I searched for the population of Katlehong and found two different numbers. I used the one from the official statistics site."
+      },
+      "mission": {
+        "situation": "A manager needs reliable information for a decision by the end of the day and does not know which sources to trust.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the benefits of online communities?",
+          "3. Answer, for your situation: Which types of social platforms look like the most fun to participate in? Which might be the?",
+          "4. Answer, for your situation: most useful?",
+          "5. Answer, for your situation: What does it mean to use social media wisely?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         87,
         88,
@@ -4855,6 +5331,36 @@
       "moduleTitle": "Protecting Yourself Online",
       "title": "Keeping Your Data Private",
       "summary": "There is always a push and pull when it comes to data collection.",
+      "practice": {
+        "goal": "Practise keeping your data private once, with guidance.",
+        "steps": [
+          "Open your own device settings.",
+          "Now check one security setting and improve it.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I checked my screen lock and found it was off. I turned on a PIN so nobody can open my phone if I lose it."
+      },
+      "mission": {
+        "situation": "A staff member clicked a link in a suspicious email. The office needs to know what to do now and how to avoid it next time.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What types of personal data do companies collect when you use the internet?",
+          "3. Answer, for your situation: How is your personal information used by websites and online services?",
+          "4. Answer, for your situation: What steps can you take to protect your privacy online?",
+          "5. Answer, for your situation: Why is it important to understand data collection practices?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         98,
         99,
@@ -5507,6 +6013,36 @@
       "moduleTitle": "Protecting Yourself Online",
       "title": "Using Passwords and Encryption Safely",
       "summary": "Locks protect physical assets like a car or a home.",
+      "practice": {
+        "goal": "Practise using passwords and encryption safely once, with guidance.",
+        "steps": [
+          "Open your own device settings.",
+          "Now check one security setting and improve it.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I checked my screen lock and found it was off. I turned on a PIN so nobody can open my phone if I lose it."
+      },
+      "mission": {
+        "situation": "A staff member clicked a link in a suspicious email. The office needs to know what to do now and how to avoid it next time.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What makes a password strong, and why does password length matter?",
+          "3. Answer, for your situation: What are common password mistakes that put your accounts at risk?",
+          "4. Answer, for your situation: How do password managers and multifactor authentication improve security?",
+          "5. Answer, for your situation: What is encryption, and how does it protect your data?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         109,
         110,
@@ -5964,6 +6500,36 @@
       "moduleTitle": "Protecting Yourself Online",
       "title": "Identifying Common Security Threats",
       "summary": "There's nothing to be gained and much to be lost by not securing your data.",
+      "practice": {
+        "goal": "Practise identifying common security threats once, with guidance.",
+        "steps": [
+          "Open your own device settings.",
+          "Now check one security setting and improve it.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I checked my screen lock and found it was off. I turned on a PIN so nobody can open my phone if I lose it."
+      },
+      "mission": {
+        "situation": "A staff member clicked a link in a suspicious email. The office needs to know what to do now and how to avoid it next time.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How can you recognize phishing attempts and social engineering tactics?",
+          "3. Answer, for your situation: What scam tactics do attackers use to trick people online?",
+          "4. Answer, for your situation: Why are you a target for cyberattacks, even if you think you have nothing worth stealing?",
+          "5. Answer, for your situation: How can misinformation and fake news be a security risk?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         116,
         117,
@@ -6536,6 +7102,36 @@
       "moduleTitle": "Protecting Yourself Online",
       "title": "Browsing Safely Online",
       "summary": "Every time you open a web browser, you are stepping into an environment full of both useful resources and potential risks.",
+      "practice": {
+        "goal": "Practise browsing safely online once, with guidance.",
+        "steps": [
+          "Open your own device settings.",
+          "Now check one security setting and improve it.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I checked my screen lock and found it was off. I turned on a PIN so nobody can open my phone if I lose it."
+      },
+      "mission": {
+        "situation": "A staff member clicked a link in a suspicious email. The office needs to know what to do now and how to avoid it next time.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are browser cache and history, and why should you manage them?",
+          "3. Answer, for your situation: What are cookies, and how do they affect your privacy?",
+          "4. Answer, for your situation: What precautions should you take when shopping or entering personal information online?",
+          "5. Answer, for your situation: What browser security settings can you use to browse more safely?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         124,
         125,
@@ -6961,6 +7557,36 @@
       "moduleTitle": "Protecting Yourself Online",
       "title": "Protecting Your Mental Health",
       "summary": "Technology is a powerful tool, but spending too much time online can take a toll on your mental health.",
+      "practice": {
+        "goal": "Practise protecting your mental health once, with guidance.",
+        "steps": [
+          "Open your own device settings.",
+          "Now check one security setting and improve it.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I checked my screen lock and found it was off. I turned on a PIN so nobody can open my phone if I lose it."
+      },
+      "mission": {
+        "situation": "A staff member clicked a link in a suspicious email. The office needs to know what to do now and how to avoid it next time.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How does technology use affect your mental health, both positively and negatively?",
+          "3. Answer, for your situation: What design features make apps and websites addictive?",
+          "4. Answer, for your situation: What are the signs of technology overuse and technology addiction?",
+          "5. Answer, for your situation: What is cyberbullying, and what should you do if you or someone you know experiences it?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         132,
         133,
@@ -7894,6 +8520,36 @@
       "moduleTitle": "Using Generative AI Wisely",
       "title": "Using AI Chat",
       "summary": "Artificial intelligence is changing how people interact with technology.",
+      "practice": {
+        "goal": "Practise using ai chat once, with guidance.",
+        "steps": [
+          "Open an AI chat tool, or paper if you have none.",
+          "Now write one clear instruction and judge the answer.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I asked for a short reply to a customer complaint. The first answer was too formal, so I asked again for simpler language."
+      },
+      "mission": {
+        "situation": "Your team wants to use an AI assistant for routine writing, but nobody is sure what it may safely be used for.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is artificial intelligence, and why has it advanced so quickly in recent years?",
+          "3. Answer, for your situation: What is generative AI, and what kinds of content can it create?",
+          "4. Answer, for your situation: What are some common AI tools and models, and how do they differ?",
+          "5. Answer, for your situation: What are the key elements of an effective prompt?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         146,
         147,
@@ -8721,6 +9377,36 @@
       "moduleTitle": "Using Generative AI Wisely",
       "title": "Improving AI Output with Better Prompts",
       "summary": "Getting a good answer from AI often takes more than a single try.",
+      "practice": {
+        "goal": "Practise improving ai output with better prompts once, with guidance.",
+        "steps": [
+          "Open an AI chat tool, or paper if you have none.",
+          "Now write one clear instruction and judge the answer.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I asked for a short reply to a customer complaint. The first answer was too formal, so I asked again for simpler language."
+      },
+      "mission": {
+        "situation": "Your team wants to use an AI assistant for routine writing, but nobody is sure what it may safely be used for.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What types of errors can AI produce, and how can you recognize them?",
+          "3. Answer, for your situation: What are AI hallucinations, and why do they happen?",
+          "4. Answer, for your situation: How can adding context files improve an AI tool's responses, and what are the limits?",
+          "5. Answer, for your situation: What should you include in a follow-up prompt to get a better answer from AI?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         155,
         156,
@@ -9350,6 +10036,36 @@
       "moduleTitle": "Using Generative AI Wisely",
       "title": "Using AI Responsibly",
       "summary": "AI tools are incredibly useful, but they come with real risks that you need to understand.",
+      "practice": {
+        "goal": "Practise using ai responsibly once, with guidance.",
+        "steps": [
+          "Open an AI chat tool, or paper if you have none.",
+          "Now write one clear instruction and judge the answer.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I asked for a short reply to a customer complaint. The first answer was too formal, so I asked again for simpler language."
+      },
+      "mission": {
+        "situation": "Your team wants to use an AI assistant for routine writing, but nobody is sure what it may safely be used for.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the main risks of using AI, including data privacy, copyright, and bias?",
+          "3. Answer, for your situation: How can sharing personal information with AI tools put your privacy at risk?",
+          "4. Answer, for your situation: What is bias in AI, and where does it come from?",
+          "5. Answer, for your situation: What copyright issues should you consider when using AI-generated content?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         162,
         163,
@@ -9847,6 +10563,36 @@
       "moduleTitle": "Computers, Operating Systems, and Files",
       "title": "Understanding Operating Systems",
       "summary": "Once all of the computer hardware is connected and turned on, it needs something that interprets all of the electronic signals into something we can use.",
+      "practice": {
+        "goal": "Practise understanding operating systems once, with guidance.",
+        "steps": [
+          "Open your own device's file manager.",
+          "Now create a folder and save a file into it with a clear name.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a folder called Invoices and saved a file as 2026-03-invoice-mokoena. I can now find it without opening it."
+      },
+      "mission": {
+        "situation": "A shared office computer has become slow and disorganised, and nobody can find last month's files.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What does an operating system do?",
+          "3. Answer, for your situation: How does an operating system interact with hardware and applications?",
+          "4. Answer, for your situation: What are the differences between device drivers, utility software, and firmware?",
+          "5. Answer, for your situation: What are the main types of operating systems, and how do they differ?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         169,
         170,
@@ -10122,6 +10868,36 @@
       "moduleTitle": "Computers, Operating Systems, and Files",
       "title": "Identifying Common Operating Systems",
       "summary": "While Windows is the most widely used desktop operating system, there are several other common operating systems you should know.",
+      "practice": {
+        "goal": "Practise identifying common operating systems once, with guidance.",
+        "steps": [
+          "Open your own device's file manager.",
+          "Now create a folder and save a file into it with a clear name.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a folder called Invoices and saved a file as 2026-03-invoice-mokoena. I can now find it without opening it."
+      },
+      "mission": {
+        "situation": "A shared office computer has become slow and disorganised, and nobody can find last month's files.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the key differences between Windows, macOS, Linux, and Chrome OS?",
+          "3. Answer, for your situation: How do you navigate the user interface of each desktop operating system?",
+          "4. Answer, for your situation: What are the two most common mobile operating systems, and how do they differ?",
+          "5. Answer, for your situation: How do you check for updates and manage settings on a mobile device?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         174,
         175,
@@ -10419,6 +11195,35 @@
       "moduleTitle": "Computers, Operating Systems, and Files",
       "title": "Navigating Windows",
       "summary": "Windows is the most widely used desktop operating system.",
+      "practice": {
+        "goal": "Practise navigating windows once, with guidance.",
+        "steps": [
+          "Open your own device's file manager.",
+          "Now create a folder and save a file into it with a clear name.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a folder called Invoices and saved a file as 2026-03-invoice-mokoena. I can now find it without opening it."
+      },
+      "mission": {
+        "situation": "A shared office computer has become slow and disorganised, and nobody can find last month's files.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the key components of the Windows desktop and Start menu?",
+          "3. Answer, for your situation: What common user interface elements do Windows applications share?",
+          "4. Answer, for your situation: How do you install, configure, and remove applications in Windows?",
+          "5. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 5 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         180,
         181,
@@ -10669,6 +11474,36 @@
       "moduleTitle": "Computers, Operating Systems, and Files",
       "title": "Managing Files and Folders",
       "summary": "Almost everything you do on a computer involves files, from the documents you create to the applications you run.",
+      "practice": {
+        "goal": "Practise managing files and folders once, with guidance.",
+        "steps": [
+          "Open your own device's file manager.",
+          "Now create a folder and save a file into it with a clear name.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a folder called Invoices and saved a file as 2026-03-invoice-mokoena. I can now find it without opening it."
+      },
+      "mission": {
+        "situation": "A shared office computer has become slow and disorganised, and nobody can find last month's files.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How does an operating system use a file system to organize and manage data on a storage?",
+          "3. Answer, for your situation: drive?",
+          "4. Answer, for your situation: What is the purpose of file and folder attributes such as permissions, encryption, and hidden?",
+          "5. Answer, for your situation: status?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         186,
         187,
@@ -11192,6 +12027,36 @@
       "moduleTitle": "Computers, Operating Systems, and Files",
       "title": "Configuring Windows Settings and Accounts",
       "summary": "The Settings App is where you configure nearly every aspect of Windows.",
+      "practice": {
+        "goal": "Practise configuring windows settings and accounts once, with guidance.",
+        "steps": [
+          "Open your own device's file manager.",
+          "Now create a folder and save a file into it with a clear name.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a folder called Invoices and saved a file as 2026-03-invoice-mokoena. I can now find it without opening it."
+      },
+      "mission": {
+        "situation": "A shared office computer has become slow and disorganised, and nobody can find last month's files.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the main categories in the Settings App and what does each one control?",
+          "3. Answer, for your situation: How do display settings like resolution, scale, and orientation affect usability?",
+          "4. Answer, for your situation: What is the difference between a standard user account and an administrator account?",
+          "5. Answer, for your situation: What are the characteristics of a strong password?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         196,
         197,
@@ -11414,6 +12279,36 @@
       "moduleTitle": "Computers, Operating Systems, and Files",
       "title": "Maintaining Windows",
       "summary": "Once you are comfortable navigating Windows and managing files, it is time to learn how to keep the system running smoothly.",
+      "practice": {
+        "goal": "Practise maintaining windows once, with guidance.",
+        "steps": [
+          "Open your own device's file manager.",
+          "Now create a folder and save a file into it with a clear name.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a folder called Invoices and saved a file as 2026-03-invoice-mokoena. I can now find it without opening it."
+      },
+      "mission": {
+        "situation": "A shared office computer has become slow and disorganised, and nobody can find last month's files.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How can you use Task Manager to monitor performance and manage running processes?",
+          "3. Answer, for your situation: What are system services and how can Task Scheduler automate tasks?",
+          "4. Answer, for your situation: What is Plug-and-Play and how does it help when connecting new devices?",
+          "5. Answer, for your situation: When would you need to manually install a device driver, and where can you find one?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         201,
         202,
@@ -11845,6 +12740,36 @@
       "moduleTitle": "Computers, Operating Systems, and Files",
       "title": "Using Command-Line Interfaces",
       "summary": "While graphical interfaces make everyday tasks easy, command-line interfaces (CLIs) give you direct, powerful control over your operating system.",
+      "practice": {
+        "goal": "Practise using command-line interfaces once, with guidance.",
+        "steps": [
+          "Open your own device's file manager.",
+          "Now create a folder and save a file into it with a clear name.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a folder called Invoices and saved a file as 2026-03-invoice-mokoena. I can now find it without opening it."
+      },
+      "mission": {
+        "situation": "A shared office computer has become slow and disorganised, and nobody can find last month's files.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is a command-line interface, and why do IT professionals use it?",
+          "3. Answer, for your situation: What are the basic commands for navigating directories and managing files in the Windows?",
+          "4. Answer, for your situation: Command Prompt?",
+          "5. Answer, for your situation: How does the Linux terminal differ from the Windows Command Prompt?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         213,
         214,
@@ -12064,6 +12989,36 @@
       "moduleTitle": "Computers, Operating Systems, and Files",
       "title": "Backing Up Files and Storage",
       "summary": "Nearly everyone who has worked with a computer has a story about losing their data, usually at the worst possible time.",
+      "practice": {
+        "goal": "Practise backing up files and storage once, with guidance.",
+        "steps": [
+          "Open your own device's file manager.",
+          "Now create a folder and save a file into it with a clear name.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a folder called Invoices and saved a file as 2026-03-invoice-mokoena. I can now find it without opening it."
+      },
+      "mission": {
+        "situation": "A shared office computer has become slow and disorganised, and nobody can find last month's files.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What types of local storage do computers use, and how do SSDs, HDDs, optical drives, and?",
+          "3. Answer, for your situation: flash drives compare?",
+          "4. Answer, for your situation: What are Storage Area Networks (SANs), Network Attached Storage (NAS), and file servers,?",
+          "5. Answer, for your situation: and how do organizations use them?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         218,
         219,
@@ -12540,6 +13495,36 @@
       "moduleTitle": "Applications and Software",
       "title": "Exploring Common Applications",
       "summary": "Software is what makes computers, phones, and other devices useful.",
+      "practice": {
+        "goal": "Practise exploring common applications once, with guidance.",
+        "steps": [
+          "Open your own device.",
+          "Now find one app you use and describe what job it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I use WhatsApp to send customers their order updates. Its job is communication, not storing records."
+      },
+      "mission": {
+        "situation": "The office is choosing software for a task it currently does by hand, and needs a recommendation it can afford.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is the difference between commercial and free productivity software, and what are?",
+          "3. Answer, for your situation: some examples of each?",
+          "4. Answer, for your situation: How does SaaS differ from traditional installed software, and what are its benefits and?",
+          "5. Answer, for your situation: drawbacks?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         228,
         229,
@@ -13219,6 +14204,36 @@
       "moduleTitle": "Applications and Software",
       "title": "Managing Software Safely",
       "summary": "Whether you are managing a personal device or working in IT, knowing how to find, install, and remove software safely is essential.",
+      "practice": {
+        "goal": "Practise managing software safely once, with guidance.",
+        "steps": [
+          "Open your own device.",
+          "Now find one app you use and describe what job it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I use WhatsApp to send customers their order updates. Its job is communication, not storing records."
+      },
+      "mission": {
+        "situation": "The office is choosing software for a task it currently does by hand, and needs a recommendation it can afford.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the risks of downloading software from untrusted sources?",
+          "3. Answer, for your situation: How do app stores help ensure that software is safe to install?",
+          "4. Answer, for your situation: What is the difference between open-source and proprietary software?",
+          "5. Answer, for your situation: What are the common types of software licenses, and why do they matter?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         243,
         244,
@@ -13686,6 +14701,36 @@
       "moduleTitle": "Applications and Software",
       "title": "Using Common Software Tools",
       "summary": "Many computer applications share common tools and controls.",
+      "practice": {
+        "goal": "Practise using common software tools once, with guidance.",
+        "steps": [
+          "Open your own device.",
+          "Now find one app you use and describe what job it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I use WhatsApp to send customers their order updates. Its job is communication, not storing records."
+      },
+      "mission": {
+        "situation": "The office is choosing software for a task it currently does by hand, and needs a recommendation it can afford.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How do you create a new file, and what is the difference between Save and Save As?",
+          "3. Answer, for your situation: Why is it important to save your work before closing a file?",
+          "4. Answer, for your situation: How do you access print preview and customize print settings such as page ranges?",
+          "5. Answer, for your situation: What keyboard shortcuts do you use to copy, cut, paste, and undo actions?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         249
       ],
@@ -13740,6 +14785,36 @@
       "moduleTitle": "Word Processing Skills",
       "title": "Using Word Processing Software",
       "summary": "Digital document creation is one of the most common uses for a computer.",
+      "practice": {
+        "goal": "Practise using word processing software once, with guidance.",
+        "steps": [
+          "Open a word processor, or paper if you have none.",
+          "Now format a short piece of text so it reads professionally.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I put the heading in bold, left one blank line between paragraphs, and used the same font throughout."
+      },
+      "mission": {
+        "situation": "A customer has asked for a formal letter, and the draft that exists is untidy and hard to read.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is a word processor, and what are its four basic functions?",
+          "3. Answer, for your situation: Which word processing applications are free, and which require a paid license?",
+          "4. Answer, for your situation: What makes Google Docs well suited for real-time collaboration?",
+          "5. Answer, for your situation: What should you consider when sharing Apple Pages documents with non-Mac users?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         251,
         252,
@@ -13883,6 +14958,34 @@
       "moduleTitle": "Word Processing Skills",
       "title": "Formatting Text in Documents",
       "summary": "Typography is the study and art of fonts and displaying text visually.",
+      "practice": {
+        "goal": "Practise formatting text in documents once, with guidance.",
+        "steps": [
+          "Open a word processor, or paper if you have none.",
+          "Now format a short piece of text so it reads professionally.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I put the heading in bold, left one blank line between paragraphs, and used the same font throughout."
+      },
+      "mission": {
+        "situation": "A customer has asked for a formal letter, and the draft that exists is untidy and hard to read.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How can I make my document easy to follow with formatting?",
+          "3. Answer, for your situation: Which formatting tools will I use most frequently?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         254
       ],
@@ -13921,6 +15024,35 @@
       "moduleTitle": "Word Processing Skills",
       "title": "Formatting Paragraphs and Pages",
       "summary": "Just like specific text can be formatted, entire paragraphs can be modified to make the text easier to read or match specific requirements, like being double-spaced.",
+      "practice": {
+        "goal": "Practise formatting paragraphs and pages once, with guidance.",
+        "steps": [
+          "Open a word processor, or paper if you have none.",
+          "Now format a short piece of text so it reads professionally.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I put the heading in bold, left one blank line between paragraphs, and used the same font throughout."
+      },
+      "mission": {
+        "situation": "A customer has asked for a formal letter, and the draft that exists is untidy and hard to read.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Which paragraph formatting options are required for the documents I make most often, like?",
+          "3. Answer, for your situation: school papers?",
+          "4. Answer, for your situation: How can I use lists to better convey information?",
+          "5. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 5 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         255
       ],
@@ -13960,6 +15092,34 @@
       "moduleTitle": "Word Processing Skills",
       "title": "Using Tables in Documents",
       "summary": "Presenting complex information in a document can sometimes be difficult, but using tables to organize the data can make it easy to read and use.",
+      "practice": {
+        "goal": "Practise using tables in documents once, with guidance.",
+        "steps": [
+          "Open a word processor, or paper if you have none.",
+          "Now format a short piece of text so it reads professionally.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I put the heading in bold, left one blank line between paragraphs, and used the same font throughout."
+      },
+      "mission": {
+        "situation": "A customer has asked for a formal letter, and the draft that exists is untidy and hard to read.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How can I get a table to be the size and shape I need?",
+          "3. Answer, for your situation: When is a table a helpful tool for a document?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         256
       ],
@@ -13998,6 +15158,34 @@
       "moduleTitle": "Word Processing Skills",
       "title": "Working with Images in Documents",
       "summary": "Many documents don't just use text to convey information.",
+      "practice": {
+        "goal": "Practise working with images in documents once, with guidance.",
+        "steps": [
+          "Open a word processor, or paper if you have none.",
+          "Now format a short piece of text so it reads professionally.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I put the heading in bold, left one blank line between paragraphs, and used the same font throughout."
+      },
+      "mission": {
+        "situation": "A customer has asked for a formal letter, and the draft that exists is untidy and hard to read.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What kinds of images would I want to include in documents?",
+          "3. Answer, for your situation: How can I control how images fit into my documents?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         257
       ],
@@ -14036,6 +15224,34 @@
       "moduleTitle": "Spreadsheet Skills",
       "title": "Using Spreadsheet Software",
       "summary": "Managing and getting useful information from data can be tricky, but spreadsheets make it easy to organize and use data.",
+      "practice": {
+        "goal": "Practise using spreadsheet software once, with guidance.",
+        "steps": [
+          "Open a spreadsheet, or paper if you have none.",
+          "Now enter five numbers and calculate the total.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I entered five daily sales figures and used SUM to total them. The total updated by itself when I corrected one number."
+      },
+      "mission": {
+        "situation": "The owner keeps daily sales on paper and wants to know the totals without adding them up by hand each week.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What can spreadsheet software accomplish?",
+          "3. Answer, for your situation: What types of things could a spreadsheet be useful for in your life?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         259,
         260
@@ -14166,6 +15382,34 @@
       "moduleTitle": "Spreadsheet Skills",
       "title": "Navigating Spreadsheets",
       "summary": "Using a spreadsheet is quite different from writing a document or browsing online.",
+      "practice": {
+        "goal": "Practise navigating spreadsheets once, with guidance.",
+        "steps": [
+          "Open a spreadsheet, or paper if you have none.",
+          "Now enter five numbers and calculate the total.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I entered five daily sales figures and used SUM to total them. The total updated by itself when I corrected one number."
+      },
+      "mission": {
+        "situation": "The owner keeps daily sales on paper and wants to know the totals without adding them up by hand each week.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How can you organize rows and columns to fit your data?",
+          "3. Answer, for your situation: Would using multiple sheets make your data easier to use or harder to see?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         261
       ],
@@ -14208,6 +15452,35 @@
       "moduleTitle": "Spreadsheet Skills",
       "title": "Formatting Data in Spreadsheets",
       "summary": "Formatting cells in Excel is the best way to turn sheets of numbers into something that is easy to read and understand.",
+      "practice": {
+        "goal": "Practise formatting data in spreadsheets once, with guidance.",
+        "steps": [
+          "Open a spreadsheet, or paper if you have none.",
+          "Now enter five numbers and calculate the total.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I entered five daily sales figures and used SUM to total them. The total updated by itself when I corrected one number."
+      },
+      "mission": {
+        "situation": "The owner keeps daily sales on paper and wants to know the totals without adding them up by hand each week.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What kinds of formatting would help make the data on the spreadsheet easier to interpret?",
+          "3. Answer, for your situation: How can number formatting help clarify what the various numbers on a spreadsheet?",
+          "4. Answer, for your situation: represent?",
+          "5. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 5 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         262
       ],
@@ -14247,6 +15520,34 @@
       "moduleTitle": "Spreadsheet Skills",
       "title": "Using Formulas and Functions",
       "summary": "Formulas and functions unlock the power of spreadsheets by having the program do the math and calculations so that we don't have to.",
+      "practice": {
+        "goal": "Practise using formulas and functions once, with guidance.",
+        "steps": [
+          "Open a spreadsheet, or paper if you have none.",
+          "Now enter five numbers and calculate the total.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I entered five daily sales figures and used SUM to total them. The total updated by itself when I corrected one number."
+      },
+      "mission": {
+        "situation": "The owner keeps daily sales on paper and wants to know the totals without adding them up by hand each week.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What kinds of calculations would be useful to have a computer do for you?",
+          "3. Answer, for your situation: Which functions seem to be the most useful?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         263
       ],
@@ -14285,6 +15586,34 @@
       "moduleTitle": "Spreadsheet Skills",
       "title": "Creating Tables and Charts",
       "summary": "Excel stores and organizes numerical data well and has powerful tools built-in to convert raw data into organized tables and visual charts.",
+      "practice": {
+        "goal": "Practise creating tables and charts once, with guidance.",
+        "steps": [
+          "Open a spreadsheet, or paper if you have none.",
+          "Now enter five numbers and calculate the total.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I entered five daily sales figures and used SUM to total them. The total updated by itself when I corrected one number."
+      },
+      "mission": {
+        "situation": "The owner keeps daily sales on paper and wants to know the totals without adding them up by hand each week.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Which Excel table features are the most helpful?",
+          "3. Answer, for your situation: How does displaying information in a chart make it easier to understand?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         264
       ],
@@ -14323,6 +15652,36 @@
       "moduleTitle": "Presentation Skills",
       "title": "Using Presentation Software",
       "summary": "Whether you are pitching an idea at work, presenting a school project, or sharing photos at a family gathering, presentation software helps you organize your message into visual slides that keep an audience engaged.",
+      "practice": {
+        "goal": "Practise using presentation software once, with guidance.",
+        "steps": [
+          "Open presentation software, or paper if you have none.",
+          "Now lay out one slide with a title and three points.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a slide titled Weekly Sales with three points. I kept each point under eight words so it can be read from the back."
+      },
+      "mission": {
+        "situation": "Your team must present its work to the owner next week and has only rough notes.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is presentation software, and what elements can slides include?",
+          "3. Answer, for your situation: Which presentation application requires a paid license, and which options are free?",
+          "4. Answer, for your situation: What are the common presentation file formats, and when would you use each one?",
+          "5. Answer, for your situation: When is a presentation the better choice compared to a document, video, or infographic?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         266,
         267,
@@ -14474,6 +15833,34 @@
       "moduleTitle": "Presentation Skills",
       "title": "Managing Slides",
       "summary": "PowerPoint presentations are made up of slides.",
+      "practice": {
+        "goal": "Practise managing slides once, with guidance.",
+        "steps": [
+          "Open presentation software, or paper if you have none.",
+          "Now lay out one slide with a title and three points.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a slide titled Weekly Sales with three points. I kept each point under eight words so it can be read from the back."
+      },
+      "mission": {
+        "situation": "Your team must present its work to the owner next week and has only rough notes.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How can I organize slides to help my audience understand?",
+          "3. Answer, for your situation: How can I design slides to convey the tone I want?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         269
       ],
@@ -14505,6 +15892,35 @@
       "moduleTitle": "Presentation Skills",
       "title": "Formatting Text and Images in Slides",
       "summary": "Formatting text and using images are powerful ways to convey information and the desired mood for your presentation.",
+      "practice": {
+        "goal": "Practise formatting text and images in slides once, with guidance.",
+        "steps": [
+          "Open presentation software, or paper if you have none.",
+          "Now lay out one slide with a title and three points.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a slide titled Weekly Sales with three points. I kept each point under eight words so it can be read from the back."
+      },
+      "mission": {
+        "situation": "Your team must present its work to the owner next week and has only rough notes.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How can I use fonts and size to help prioritize information?",
+          "3. Answer, for your situation: How can I use lists to present information clearly?",
+          "4. Answer, for your situation: How can I modify images to maximize their effect?",
+          "5. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 5 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         270
       ],
@@ -14544,6 +15960,36 @@
       "moduleTitle": "Presentation Skills",
       "title": "Using Transitions and Animations",
       "summary": "Transitions between slides and animating images, shapes, and text can be a good way to increase interest and draw attention to important parts of your presentation.",
+      "practice": {
+        "goal": "Practise using transitions and animations once, with guidance.",
+        "steps": [
+          "Open presentation software, or paper if you have none.",
+          "Now lay out one slide with a title and three points.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a slide titled Weekly Sales with three points. I kept each point under eight words so it can be read from the back."
+      },
+      "mission": {
+        "situation": "Your team must present its work to the owner next week and has only rough notes.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How can I smoothly transition between slides?",
+          "3. Answer, for your situation: How can I animate objects into my slides?",
+          "4. Answer, for your situation: How can I animate objects off of my slides?",
+          "5. Answer, for your situation: How do I control the order and timing of animations?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         271
       ],
@@ -14584,6 +16030,34 @@
       "moduleTitle": "Presentation Skills",
       "title": "Presenting Slideshows",
       "summary": "Presenting your slide show is the last and most important step in creating and using digital presentations.",
+      "practice": {
+        "goal": "Practise presenting slideshows once, with guidance.",
+        "steps": [
+          "Open presentation software, or paper if you have none.",
+          "Now lay out one slide with a title and three points.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I made a slide titled Weekly Sales with three points. I kept each point under eight words so it can be read from the back."
+      },
+      "mission": {
+        "situation": "Your team must present its work to the owner next week and has only rough notes.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Which slide do I want to start my presentation from?",
+          "3. Answer, for your situation: How can I remember what to say while I'm presenting?",
+          "4. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 4 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         272
       ],
@@ -14622,6 +16096,36 @@
       "moduleTitle": "Communication Tools",
       "title": "Understanding Communication Software",
       "summary": "Communication software is at the center of how people connect in both personal and professional settings.",
+      "practice": {
+        "goal": "Practise understanding communication software once, with guidance.",
+        "steps": [
+          "Open your email or messaging app.",
+          "Now write one clear, professional message.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote to a customer with a clear subject line, one request, and a deadline. I read it once before sending."
+      },
+      "mission": {
+        "situation": "Messages to customers are being missed because everyone uses a different app and nothing is written down.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the differences between SMS, MMS, and RCS messaging?",
+          "3. Answer, for your situation: How do VoIP apps differ from traditional cellular phone calls?",
+          "4. Answer, for your situation: What features do email clients provide, and how do webmail and desktop clients compare?",
+          "5. Answer, for your situation: How do messaging and collaboration platforms like Teams and Slack help organize?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         274,
         275,
@@ -15042,6 +16546,36 @@
       "moduleTitle": "Communication Tools",
       "title": "Communicating Effectively",
       "summary": "Whether you are working on a group project for school, coordinating tasks with a remote team, or simply catching up with a friend, how you communicate matters just as much as what you say.",
+      "practice": {
+        "goal": "Practise communicating effectively once, with guidance.",
+        "steps": [
+          "Open your email or messaging app.",
+          "Now write one clear, professional message.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote to a customer with a clear subject line, one request, and a deadline. I read it once before sending."
+      },
+      "mission": {
+        "situation": "Messages to customers are being missed because everyone uses a different app and nothing is written down.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the four main types of communication, and when is each one most effective?",
+          "3. Answer, for your situation: Why are nonverbal cues and active listening important during face-to-face and video?",
+          "4. Answer, for your situation: conversations?",
+          "5. Answer, for your situation: How should you adjust your writing style when communicating in a professional setting?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         280
       ],
@@ -15098,6 +16632,36 @@
       "moduleTitle": "Communication Tools",
       "title": "Using Email Software",
       "summary": "Email remains one of the most important tools for professional and personal communication.",
+      "practice": {
+        "goal": "Practise using email software once, with guidance.",
+        "steps": [
+          "Open your email or messaging app.",
+          "Now write one clear, professional message.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote to a customer with a clear subject line, one request, and a deadline. I read it once before sending."
+      },
+      "mission": {
+        "situation": "Messages to customers are being missed because everyone uses a different app and nothing is written down.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the key features of Microsoft Outlook that help you manage email, contacts, and?",
+          "3. Answer, for your situation: calendars?",
+          "4. Answer, for your situation: How do you compose and send an email, including adding recipients, a subject line, and?",
+          "5. Answer, for your situation: attachments?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         281,
         282,
@@ -15348,6 +16912,36 @@
       "moduleTitle": "Communication Tools",
       "title": "Using Calendaring Software",
       "summary": "Digital calendars help you organize your schedule and coordinate with others.",
+      "practice": {
+        "goal": "Practise using calendaring software once, with guidance.",
+        "steps": [
+          "Open your email or messaging app.",
+          "Now write one clear, professional message.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote to a customer with a clear subject line, one request, and a deadline. I read it once before sending."
+      },
+      "mission": {
+        "situation": "Messages to customers are being missed because everyone uses a different app and nothing is written down.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is the difference between an appointment and a meeting in Outlook?",
+          "3. Answer, for your situation: How do you set up a recurring event on your calendar?",
+          "4. Answer, for your situation: What does the Show As status communicate to others who view your calendar?",
+          "5. Answer, for your situation: How do you invite required and optional attendees to a meeting?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         285
       ],
@@ -15394,6 +16988,36 @@
       "moduleTitle": "How Computers are Built",
       "title": "Understanding Hardware",
       "summary": "Every computing device, whether it is a desktop, notebook, tablet, or phone, is built from hardware components that work together to process, store, and transfer data.",
+      "practice": {
+        "goal": "Practise understanding hardware once, with guidance.",
+        "steps": [
+          "Open your own device, or a picture of one.",
+          "Now identify one internal component and say what it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I found the RAM in a photo of an open laptop. It holds what the computer is working on right now."
+      },
+      "mission": {
+        "situation": "A computer in the office has stopped working and the owner wants to know whether to repair or replace it.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the main types of computing devices, and what are the advantages and?",
+          "3. Answer, for your situation: disadvantages of each?",
+          "4. Answer, for your situation: What is Hertz, and how is it used to measure processing speed?",
+          "5. Answer, for your situation: What are metric prefixes, and how do they help express very large or very small numbers?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         287,
         288,
@@ -15945,6 +17569,36 @@
       "moduleTitle": "How Computers are Built",
       "title": "Connecting External Devices",
       "summary": "While the internal components are what make a computer work, it is the external devices, also called peripherals, that you see and interact with every day.",
+      "practice": {
+        "goal": "Practise connecting external devices once, with guidance.",
+        "steps": [
+          "Open your own device, or a picture of one.",
+          "Now identify one internal component and say what it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I found the RAM in a photo of an open laptop. It holds what the computer is working on right now."
+      },
+      "mission": {
+        "situation": "A computer in the office has stopped working and the owner wants to know whether to repair or replace it.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are peripheral devices, and how are they classified as input or output?",
+          "3. Answer, for your situation: What types of connections do keyboards and mice use, and what are the advantages of?",
+          "4. Answer, for your situation: wired versus wireless?",
+          "5. Answer, for your situation: What ports and connectors are commonly used to attach peripherals, and how do USB,?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         297,
         298,
@@ -16202,6 +17856,36 @@
       "moduleTitle": "How Computers are Built",
       "title": "Using Printers and Power Protection",
       "summary": "Printers and scanners are essential devices used in homes, schools, and offices.",
+      "practice": {
+        "goal": "Practise using printers and power protection once, with guidance.",
+        "steps": [
+          "Open your own device, or a picture of one.",
+          "Now identify one internal component and say what it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I found the RAM in a photo of an open laptop. It holds what the computer is working on right now."
+      },
+      "mission": {
+        "situation": "A computer in the office has stopped working and the owner wants to know whether to repair or replace it.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the differences between laser and inkjet printers, and when would you use each?",
+          "3. Answer, for your situation: type?",
+          "4. Answer, for your situation: What is a 3D printer, and what limits the size of objects it can create?",
+          "5. Answer, for your situation: How do you connect a printer to a computer or network, and what role does an IP address?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         302,
         303,
@@ -16696,6 +18380,36 @@
       "moduleTitle": "How Computers are Built",
       "title": "Installing a Motherboard",
       "summary": "The motherboard is the central circuit board that connects and powers all the components of a computer.",
+      "practice": {
+        "goal": "Practise installing a motherboard once, with guidance.",
+        "steps": [
+          "Open your own device, or a picture of one.",
+          "Now identify one internal component and say what it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I found the RAM in a photo of an open laptop. It holds what the computer is working on right now."
+      },
+      "mission": {
+        "situation": "A computer in the office has stopped working and the owner wants to know whether to repair or replace it.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is the function of a motherboard in a computer system?",
+          "3. Answer, for your situation: How do motherboard specifications affect compatibility with CPUs, memory, and expansion?",
+          "4. Answer, for your situation: cards?",
+          "5. Answer, for your situation: What are the differences between desktop and mobile (laptop, tablet, smartphone)?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         310,
         311,
@@ -16924,6 +18638,36 @@
       "moduleTitle": "How Computers are Built",
       "title": "Connecting Internal Components",
       "summary": "A computer is made up of many internal components that work together to process information, store data, and display output.",
+      "practice": {
+        "goal": "Practise connecting internal components once, with guidance.",
+        "steps": [
+          "Open your own device, or a picture of one.",
+          "Now identify one internal component and say what it does.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I found the RAM in a photo of an open laptop. It holds what the computer is working on right now."
+      },
+      "mission": {
+        "situation": "A computer in the office has stopped working and the owner wants to know whether to repair or replace it.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What does a CPU do, and how do Intel and AMD processors connect to the motherboard?",
+          "3. Answer, for your situation: differently?",
+          "4. Answer, for your situation: What is the difference between volatile memory (RAM) and non-volatile storage (HDD , SSD)?",
+          "5. Answer, for your situation: How do DDR generations improve memory performance, and what is a DIMM?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         315,
         316,
@@ -17283,6 +19027,36 @@
       "moduleTitle": "Connecting Devices and Networks",
       "title": "Understanding Networks",
       "summary": "Networks are everywhere. Every time you check your email, stream a video, pay with a credit card, or connect your phone to a Bluetooth speaker, you are relying on a network to move information between devices. Understanding how networks work is essential for anyone who uses modern technology, whether at home, at school, or in the workplace.",
+      "practice": {
+        "goal": "Practise understanding networks once, with guidance.",
+        "steps": [
+          "Open your own device's network settings.",
+          "Now find the network you are connected to and note its details.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I am connected to a 2.4 GHz Wi-Fi network. My phone shows a full signal in the front room and one bar in the back."
+      },
+      "mission": {
+        "situation": "Staff at one end of the building keep losing the network connection, and nobody knows why.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the three components every computer needs to participate in a network?",
+          "3. Answer, for your situation: How do a client and a server establish a connection using the three-way handshake?",
+          "4. Answer, for your situation: What are the main differences between wired and wireless network connections?",
+          "5. Answer, for your situation: How is an Ethernet cable constructed, and what tools are used to make one?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         324,
         325,
@@ -17695,6 +19469,36 @@
       "moduleTitle": "Connecting Devices and Networks",
       "title": "Using Network Types",
       "summary": "Networks come in many shapes and sizes, from a small home setup connecting a few devices to a massive corporate system spanning entire countries.",
+      "practice": {
+        "goal": "Practise using network types once, with guidance.",
+        "steps": [
+          "Open your own device's network settings.",
+          "Now find the network you are connected to and note its details.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I am connected to a 2.4 GHz Wi-Fi network. My phone shows a full signal in the front room and one bar in the back."
+      },
+      "mission": {
+        "situation": "Staff at one end of the building keep losing the network connection, and nobody knows why.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the different types of networks based on size, and how do PANs, LANs, and WANs?",
+          "3. Answer, for your situation: differ?",
+          "4. Answer, for your situation: What are common network topologies, and how do they affect performance and reliability?",
+          "5. Answer, for your situation: How do the client-server and peer-to-peer networking models differ?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         332,
         333,
@@ -17959,6 +19763,36 @@
       "moduleTitle": "Connecting Devices and Networks",
       "title": "Using Networking Devices",
       "summary": "Every time you browse the web, stream a video, or send an email, your data passes through a series of networking devices that guide it to the right destination.",
+      "practice": {
+        "goal": "Practise using networking devices once, with guidance.",
+        "steps": [
+          "Open your own device's network settings.",
+          "Now find the network you are connected to and note its details.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I am connected to a 2.4 GHz Wi-Fi network. My phone shows a full signal in the front room and one bar in the back."
+      },
+      "mission": {
+        "situation": "Staff at one end of the building keep losing the network connection, and nobody knows why.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What do modems, routers, switches, and firewalls do, and how do they work together in a?",
+          "3. Answer, for your situation: network?",
+          "4. Answer, for your situation: What is a network interface card (NIC), and how does it connect a device to a network?",
+          "5. Answer, for your situation: What is the difference between a physical (MA C) address and a logical (IP) address?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         337,
         338,
@@ -18878,6 +20712,36 @@
       "moduleTitle": "Connecting Devices and Networks",
       "title": "Working with an ISP",
       "summary": "To connect to the Internet, you need an Internet Service Provider (ISP).",
+      "practice": {
+        "goal": "Practise working with an isp once, with guidance.",
+        "steps": [
+          "Open your own device's network settings.",
+          "Now find the network you are connected to and note its details.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I am connected to a 2.4 GHz Wi-Fi network. My phone shows a full signal in the front room and one bar in the back."
+      },
+      "mission": {
+        "situation": "Staff at one end of the building keep losing the network connection, and nobody knows why.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is an ISP, and what services do ISPs typically provide?",
+          "3. Answer, for your situation: How do tiered service plans work, and what factors affect which plan you need?",
+          "4. Answer, for your situation: What equipment does an ISP provide, and what does a modem do?",
+          "5. Answer, for your situation: What is the difference between bandwidth and throughput?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         352,
         353,
@@ -19056,6 +20920,36 @@
       "moduleTitle": "Connecting Devices and Networks",
       "title": "Creating a Home Network",
       "summary": "A wireless local area network (WLAN) lets you share an Internet connection with every device in your home or small office without running cables through walls and ceilings.",
+      "practice": {
+        "goal": "Practise creating a home network once, with guidance.",
+        "steps": [
+          "Open your own device's network settings.",
+          "Now find the network you are connected to and note its details.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I am connected to a 2.4 GHz Wi-Fi network. My phone shows a full signal in the front room and one bar in the back."
+      },
+      "mission": {
+        "situation": "Staff at one end of the building keep losing the network connection, and nobody knows why.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is a WLAN, and what can devices on a small wireless network share?",
+          "3. Answer, for your situation: How do signal strength and router placement affect wireless connectivity?",
+          "4. Answer, for your situation: What are the key differences between the 2.4 GHz, 5 GHz, and 6 GHz frequency bands?",
+          "5. Answer, for your situation: How have Wi-Fi standards evolved from 802.11b through Wi-Fi 6E?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         355,
         356,
@@ -19324,6 +21218,36 @@
       "moduleTitle": "Connecting Devices and Networks",
       "title": "Troubleshooting Connectivity",
       "summary": "Network connectivity issues are some of the most common problems you will face when working with technology.",
+      "practice": {
+        "goal": "Practise troubleshooting connectivity once, with guidance.",
+        "steps": [
+          "Open your own device's network settings.",
+          "Now find the network you are connected to and note its details.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I am connected to a 2.4 GHz Wi-Fi network. My phone shows a full signal in the front room and one bar in the back."
+      },
+      "mission": {
+        "situation": "Staff at one end of the building keep losing the network connection, and nobody knows why.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the key differences between older and newer Wi-Fi standards, and how do they?",
+          "3. Answer, for your situation: affect network performance?",
+          "4. Answer, for your situation: How do latency, attenuation, and interference impact wireless network speed?",
+          "5. Answer, for your situation: What are the seven layers of the OSI model, and how can they help you troubleshoot?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         360,
         361,
@@ -19883,6 +21807,36 @@
       "moduleTitle": "Cloud Computing and Virtualization",
       "title": "Understanding the Cloud",
       "summary": "Cloud computing has changed how people and businesses use technology.",
+      "practice": {
+        "goal": "Practise understanding the cloud once, with guidance.",
+        "steps": [
+          "Open any cloud storage you have.",
+          "Now save one file online and open it again.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I saved a document to Drive on my phone and opened it on a computer. The same file was there without emailing it."
+      },
+      "mission": {
+        "situation": "The office loses work whenever a computer fails, and the owner has heard that files can be kept online.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is cloud computing, and how does it differ from on-premises solutions?",
+          "3. Answer, for your situation: What are the differences between SaaS, PaaS, and IaaS?",
+          "4. Answer, for your situation: What are the benefits and drawbacks of using cloud services?",
+          "5. Answer, for your situation: How do public, private, and hybrid cloud deployments differ?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         370,
         371,
@@ -20108,6 +22062,36 @@
       "moduleTitle": "Cloud Computing and Virtualization",
       "title": "Using Cloud Storage",
       "summary": "Storing files only on your computer means you could lose everything if the device is damaged, stolen, or hit by malware.",
+      "practice": {
+        "goal": "Practise using cloud storage once, with guidance.",
+        "steps": [
+          "Open any cloud storage you have.",
+          "Now save one file online and open it again.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I saved a document to Drive on my phone and opened it on a computer. The same file was there without emailing it."
+      },
+      "mission": {
+        "situation": "The office loses work whenever a computer fails, and the owner has heard that files can be kept online.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is cloud storage, and how does it differ from local storage?",
+          "3. Answer, for your situation: What are the main benefits and drawbacks of using cloud storage?",
+          "4. Answer, for your situation: How do popular cloud storage providers (OneDr iv e, Google Drive, iCloud, Dropbox) differ in?",
+          "5. Answer, for your situation: features and free storage?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         376,
         377,
@@ -20543,6 +22527,36 @@
       "moduleTitle": "Cloud Computing and Virtualization",
       "title": "Using Virtualization",
       "summary": "Virtualization lets a single physical computer run multiple operating systems at the same time, each in its own isolated virtual machine.",
+      "practice": {
+        "goal": "Practise using virtualization once, with guidance.",
+        "steps": [
+          "Open any cloud storage you have.",
+          "Now save one file online and open it again.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I saved a document to Drive on my phone and opened it on a computer. The same file was there without emailing it."
+      },
+      "mission": {
+        "situation": "The office loses work whenever a computer fails, and the owner has heard that files can be kept online.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is virtualization, and what are common uses for virtual machines on desktops and?",
+          "3. Answer, for your situation: servers?",
+          "4. Answer, for your situation: What is the difference between a Type 1 and a Type 2 hypervisor?",
+          "5. Answer, for your situation: What is a guest operating system, and how does it run inside a virtual machine?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         384,
         385,
@@ -21004,6 +23018,36 @@
       "moduleTitle": "Keeping Devices and Networks Secure",
       "title": "Understanding Technology Risks",
       "summary": "Every time you connect to the internet or install a new program, you are exposing your computer to potential threats.",
+      "practice": {
+        "goal": "Practise understanding technology risks once, with guidance.",
+        "steps": [
+          "Open your own device.",
+          "Now check one security setting and record what you found.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I checked which apps can use my location. Three did not need it, so I switched them off."
+      },
+      "mission": {
+        "situation": "The business keeps customer records and needs to show it is protecting them properly.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is malware, and what are the main types of malicious software?",
+          "3. Answer, for your situation: How do viruses, worms, and ransomware differ in how they spread and what they do?",
+          "4. Answer, for your situation: What is spyware, and how does it typically get installed on a computer?",
+          "5. Answer, for your situation: What is a firewall, and how does it help protect a computer or network?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         392,
         393,
@@ -21174,6 +23218,36 @@
       "moduleTitle": "Keeping Devices and Networks Secure",
       "title": "Applying Basic Security Concepts",
       "summary": "Security is the practice of controlling access to something important, like information or a place.",
+      "practice": {
+        "goal": "Practise applying basic security concepts once, with guidance.",
+        "steps": [
+          "Open your own device.",
+          "Now check one security setting and record what you found.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I checked which apps can use my location. Three did not need it, so I switched them off."
+      },
+      "mission": {
+        "situation": "The business keeps customer records and needs to show it is protecting them properly.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Why is physical security important for computers, and what tools can help prevent theft?",
+          "3. Answer, for your situation: What are confidentiality, integrity, and availability, and why do they matter in cybersecurity?",
+          "4. Answer, for your situation: What are the different factors of authentication, and how does multi-factor authentication?",
+          "5. Answer, for your situation: improve security?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         395,
         396,
@@ -21778,6 +23852,36 @@
       "moduleTitle": "Keeping Devices and Networks Secure",
       "title": "Using Device Security Tools",
       "summary": "Keeping a computer safe requires more than just being careful online.",
+      "practice": {
+        "goal": "Practise using device security tools once, with guidance.",
+        "steps": [
+          "Open your own device.",
+          "Now check one security setting and record what you found.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I checked which apps can use my location. Three did not need it, so I switched them off."
+      },
+      "mission": {
+        "situation": "The business keeps customer records and needs to show it is protecting them properly.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is the primary function of antivirus software, and how does real-time scanning protect?",
+          "3. Answer, for your situation: your computer?",
+          "4. Answer, for your situation: What is a firewall, and how does it use rules to filter network traffic?",
+          "5. Answer, for your situation: Why is defense in depth important, and how do separation of duties and network?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         404,
         405,
@@ -22190,6 +24294,36 @@
       "moduleTitle": "Keeping Devices and Networks Secure",
       "title": "Securing Small Networks",
       "summary": "A wireless network is only as secure as its weakest setting.",
+      "practice": {
+        "goal": "Practise securing small networks once, with guidance.",
+        "steps": [
+          "Open your own device.",
+          "Now check one security setting and record what you found.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I checked which apps can use my location. Three did not need it, so I switched them off."
+      },
+      "mission": {
+        "situation": "The business keeps customer records and needs to show it is protecting them properly.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Why is it important to use encryption on a wireless network, and what are the risks of?",
+          "3. Answer, for your situation: leaving a network open?",
+          "4. Answer, for your situation: How have wireless security standards evolved from WEP to WPA3, and which should you?",
+          "5. Answer, for your situation: use today?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         410,
         411,
@@ -22422,6 +24556,36 @@
       "moduleTitle": "Databases and Structured Information",
       "title": "Understanding Database Basics",
       "summary": "Almost everything you do online depends on a database.",
+      "practice": {
+        "goal": "Practise understanding database basics once, with guidance.",
+        "steps": [
+          "Open a spreadsheet or a written list.",
+          "Now organise five records so each field is separate.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I split one Name column into First Name and Surname. Now I can sort by surname without retyping anything."
+      },
+      "mission": {
+        "situation": "Customer details are spread across several spreadsheets, and the same customer appears three times with different spellings.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is a database, and why are databases important for businesses and organizations?",
+          "3. Answer, for your situation: What are the key characteristics that most databases share?",
+          "4. Answer, for your situation: Why do organizations prefer databases over spreadsheets for managing large amounts of?",
+          "5. Answer, for your situation: data?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         416,
         417,
@@ -22783,6 +24947,36 @@
       "moduleTitle": "Databases and Structured Information",
       "title": "Using a Simple Database",
       "summary": "Now that you understand what a database is and why organizations use them, it's time to start working with one.",
+      "practice": {
+        "goal": "Practise using a simple database once, with guidance.",
+        "steps": [
+          "Open a spreadsheet or a written list.",
+          "Now organise five records so each field is separate.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I split one Name column into First Name and Surname. Now I can sort by surname without retyping anything."
+      },
+      "mission": {
+        "situation": "Customer details are spread across several spreadsheets, and the same customer appears three times with different spellings.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the different ways to get data into a database, and when would you use each?",
+          "3. Answer, for your situation: method?",
+          "4. Answer, for your situation: What is a query, and how can you use it to find and change data in a database?",
+          "5. Answer, for your situation: How do you use forms in Microsoft Access to enter and modify records?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         421,
         422,
@@ -23012,6 +25206,36 @@
       "moduleTitle": "Databases and Structured Information",
       "title": "Using a Relational Database",
       "summary": "Relational databases are the most widely used type of database, and understanding how they work is essential for anyone who manages or interacts with data.",
+      "practice": {
+        "goal": "Practise using a relational database once, with guidance.",
+        "steps": [
+          "Open a spreadsheet or a written list.",
+          "Now organise five records so each field is separate.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I split one Name column into First Name and Surname. Now I can sort by surname without retyping anything."
+      },
+      "mission": {
+        "situation": "Customer details are spread across several spreadsheets, and the same customer appears three times with different spellings.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is a database schema, and what are the three types of data models?",
+          "3. Answer, for your situation: How do tables use records, fields, and constraints to organize data?",
+          "4. Answer, for your situation: What are primary keys and foreign keys, and how do they create relationships between?",
+          "5. Answer, for your situation: tables?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         425,
         426,
@@ -23373,6 +25597,36 @@
       "moduleTitle": "Telling Computers What to Do by Coding",
       "title": "Understanding Coding",
       "summary": "Nearly everything electronic runs on code, from the apps on your phone to the websites you visit every day.",
+      "practice": {
+        "goal": "Practise understanding coding once, with guidance.",
+        "steps": [
+          "Open paper or any coding tool you have.",
+          "Now write the steps of one everyday task in order.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote out making tea in seven steps. Two of them repeat, which is where a loop would go."
+      },
+      "mission": {
+        "situation": "A task in the office is repeated by hand every day, and someone has suggested it could be automated.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is coding, and why do programmers use programming languages instead of machine?",
+          "3. Answer, for your situation: language?",
+          "4. Answer, for your situation: What is the difference between compiled and interpreted programming languages?",
+          "5. Answer, for your situation: What are runtime engines, and how do they combine the benefits of compiled and?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         434,
         435,
@@ -23749,6 +26003,36 @@
       "moduleTitle": "Telling Computers What to Do by Coding",
       "title": "Planning a Coding Project",
       "summary": "Writing code is only part of programming. Before a single line is written, good programmers plan what their program should do and how it should work. This planning phase helps catch problems early, keeps the project organized, and makes the actual coding much smoother.",
+      "practice": {
+        "goal": "Practise planning a coding project once, with guidance.",
+        "steps": [
+          "Open paper or any coding tool you have.",
+          "Now write the steps of one everyday task in order.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote out making tea in seven steps. Two of them repeat, which is where a loop would go."
+      },
+      "mission": {
+        "situation": "A task in the office is repeated by hand every day, and someone has suggested it could be automated.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Why is it important to plan a program before you start writing code?",
+          "3. Answer, for your situation: What is a flowchart, and how do the different shapes represent steps in a program?",
+          "4. Answer, for your situation: What is pseudocode, and how does it help a programmer organize their logic?",
+          "5. Answer, for your situation: How do branching and looping control the flow of a program?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         440,
         441,
@@ -24100,6 +26384,36 @@
       "moduleTitle": "Telling Computers What to Do by Coding",
       "title": "Using Variables, Data Types, and Operators",
       "summary": "Programs need ways to store, organize, and manipulate information.",
+      "practice": {
+        "goal": "Practise using variables, data types, and operators once, with guidance.",
+        "steps": [
+          "Open paper or any coding tool you have.",
+          "Now write the steps of one everyday task in order.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote out making tea in seven steps. Two of them repeat, which is where a loop would go."
+      },
+      "mission": {
+        "situation": "A task in the office is repeated by hand every day, and someone has suggested it could be automated.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is a variable, and how do constants differ from variables?",
+          "3. Answer, for your situation: What are the fundamental data types, and how do integers, floats, characters, strings, and?",
+          "4. Answer, for your situation: Booleans differ?",
+          "5. Answer, for your situation: How do arithmetic, relational, and logical operators transform data in a program?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         447,
         448,
@@ -24490,6 +26804,36 @@
       "moduleTitle": "Telling Computers What to Do by Coding",
       "title": "Functions and Program Flow",
       "summary": "Writing code is more than just telling a computer what to do one step at a time.",
+      "practice": {
+        "goal": "Practise functions and program flow once, with guidance.",
+        "steps": [
+          "Open paper or any coding tool you have.",
+          "Now write the steps of one everyday task in order.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote out making tea in seven steps. Two of them repeat, which is where a loop would go."
+      },
+      "mission": {
+        "situation": "A task in the office is repeated by hand every day, and someone has suggested it could be automated.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How do flowcharts represent the flow of a program?",
+          "3. Answer, for your situation: Why is code documentation important, and how are comments used in programs?",
+          "4. Answer, for your situation: What is modular programming, and why is it useful?",
+          "5. Answer, for your situation: What is a function, and how do parameters and arguments make functions reusable?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         453,
         454,
@@ -24667,6 +27011,36 @@
       "moduleTitle": "Telling Computers What to Do by Coding",
       "title": "Branching, Looping, and Debugging",
       "summary": "Programs need to do more than run the same steps every time.",
+      "practice": {
+        "goal": "Practise branching, looping, and debugging once, with guidance.",
+        "steps": [
+          "Open paper or any coding tool you have.",
+          "Now write the steps of one everyday task in order.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote out making tea in seven steps. Two of them repeat, which is where a loop would go."
+      },
+      "mission": {
+        "situation": "A task in the office is repeated by hand every day, and someone has suggested it could be automated.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How does a program use branching to make decisions based on conditions?",
+          "3. Answer, for your situation: What is the difference between an IF- THEN-ELSE statement and a switch statement?",
+          "4. Answer, for your situation: How do code blocks organize related statements in a program?",
+          "5. Answer, for your situation: What is the difference between a while loop and a for loop?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         457,
         458,
@@ -25257,6 +27631,36 @@
       "moduleTitle": "Telling Computers What to Do by Coding",
       "title": "Working with Arrays and Objects",
       "summary": "Programs often need to store and work with collections of related data, not just single values.",
+      "practice": {
+        "goal": "Practise working with arrays and objects once, with guidance.",
+        "steps": [
+          "Open paper or any coding tool you have.",
+          "Now write the steps of one everyday task in order.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I wrote out making tea in seven steps. Two of them repeat, which is where a loop would go."
+      },
+      "mission": {
+        "situation": "A task in the office is repeated by hand every day, and someone has suggested it could be automated.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What is an array, and why is it useful for storing multiple related values?",
+          "3. Answer, for your situation: How does index notation work, and why do most programming languages start counting at?",
+          "4. Answer, for your situation: zero?",
+          "5. Answer, for your situation: How can you use a loop to iterate through the elements of an array?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         471,
         472,
@@ -25510,6 +27914,36 @@
       "moduleTitle": "Using Technology to Plan and Innovate",
       "title": "Planning a Project",
       "summary": "Every successful project starts with a solid plan.",
+      "practice": {
+        "goal": "Practise planning a project once, with guidance.",
+        "steps": [
+          "Open paper.",
+          "Now write down one problem and one possible improvement.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "Customers wait too long for quotes. A saved template would cut the writing time for each quote."
+      },
+      "mission": {
+        "situation": "The owner wants to improve one part of how the business runs but has no plan for doing it.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: Why is it important to define the problem before starting a project?",
+          "3. Answer, for your situation: How does identifying your audience change the way you communicate?",
+          "4. Answer, for your situation: What are some methods you can use to visualize a solution before building it?",
+          "5. Answer, for your situation: How do you break a complex project into smaller, manageable tasks?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         478
       ],
@@ -25556,6 +27990,36 @@
       "moduleTitle": "Using Technology to Plan and Innovate",
       "title": "Carrying Out a Project",
       "summary": "Once you have a plan in place, it is time to put it into action.",
+      "practice": {
+        "goal": "Practise carrying out a project once, with guidance.",
+        "steps": [
+          "Open paper.",
+          "Now write down one problem and one possible improvement.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "Customers wait too long for quotes. A saved template would cut the writing time for each quote."
+      },
+      "mission": {
+        "situation": "The owner wants to improve one part of how the business runs but has no plan for doing it.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What makes a goal SMART, and why does that matter for project success?",
+          "3. Answer, for your situation: How do collaborative tools like cloud storage and shared documents help teams work?",
+          "4. Answer, for your situation: together?",
+          "5. Answer, for your situation: What is the difference between positive and negative feedback, and why are both?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         479
       ],
@@ -25603,6 +28067,36 @@
       "moduleTitle": "Using Technology to Plan and Innovate",
       "title": "Exploring Future Technologies",
       "summary": "Technology is evolving faster than ever, and the innovations being developed today will shape how people live, work, and solve problems in the years ahead.",
+      "practice": {
+        "goal": "Practise exploring future technologies once, with guidance.",
+        "steps": [
+          "Open paper.",
+          "Now write down one problem and one possible improvement.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "Customers wait too long for quotes. A saved template would cut the writing time for each quote."
+      },
+      "mission": {
+        "situation": "The owner wants to improve one part of how the business runs but has no plan for doing it.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: How does an AI agent differ from an AI chatbot, and what makes agents more autonomous?",
+          "3. Answer, for your situation: In what ways are robotics and automation being used in industries like manufacturing,?",
+          "4. Answer, for your situation: farming, healthcare, and restaurants?",
+          "5. Answer, for your situation: What is the difference between virtual reality, augmented reality, and mixed reality?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         480,
         481,
@@ -26233,6 +28727,36 @@
       "moduleTitle": "Use Tech to Succeed Capstone Project",
       "title": "Information Systems",
       "summary": "Every organization relies on information systems to collect, organize, and use data effectively.",
+      "practice": {
+        "goal": "Practise information systems once, with guidance.",
+        "steps": [
+          "Open your own saved work.",
+          "Now choose one piece of work and say what it proves.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I chose my spreadsheet of monthly sales. It proves I can enter data accurately and calculate totals."
+      },
+      "mission": {
+        "situation": "You are preparing the evidence of your own capability for a real employer.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the three main components of an information system, and how do they work?",
+          "3. Answer, for your situation: together?",
+          "4. Answer, for your situation: What can happen when people do not fully understand the technology they use?",
+          "5. Answer, for your situation: What is the System Development Life Cycle, and what are its five main phases?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         491,
         492,
@@ -26382,6 +28906,36 @@
       "moduleTitle": "Use Tech to Succeed Capstone Project",
       "title": "ICT Industry and IT Careers",
       "summary": "The information and communications technology (ICT) industry is one of the largest and fastest-growing sectors in the world, spanning everything from hardware manufacturing and telecommunications to cloud services and cybersecurity.",
+      "practice": {
+        "goal": "Practise ict industry and it careers once, with guidance.",
+        "steps": [
+          "Open your own saved work.",
+          "Now choose one piece of work and say what it proves.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I chose my spreadsheet of monthly sales. It proves I can enter data accurately and calculate totals."
+      },
+      "mission": {
+        "situation": "You are preparing the evidence of your own capability for a real employer.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What are the major sectors of the ICT industry, and what types of companies operate in?",
+          "3. Answer, for your situation: each?",
+          "4. Answer, for your situation: What career opportunities exist in internet technologies, such as web design, social media?",
+          "5. Answer, for your situation: marketing, and browser extension development?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         494,
         495,
@@ -26846,6 +29400,36 @@
       "moduleTitle": "Use Tech to Succeed Capstone Project",
       "title": "Software and Engineering Careers",
       "summary": "The tech industry offers a wide range of career paths, from building the software that powers our devices to designing the hardware inside them.",
+      "practice": {
+        "goal": "Practise software and engineering careers once, with guidance.",
+        "steps": [
+          "Open your own saved work.",
+          "Now choose one piece of work and say what it proves.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I chose my spreadsheet of monthly sales. It proves I can enter data accurately and calculate totals."
+      },
+      "mission": {
+        "situation": "You are preparing the evidence of your own capability for a real employer.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What do application developers and web developers do, and how do their roles differ?",
+          "3. Answer, for your situation: What are the three types of web developers, and what does each one focus on?",
+          "4. Answer, for your situation: What does a quality assurance (Q A) engineer do to ensure software quality?",
+          "5. Answer, for your situation: What kinds of careers exist in computer hardware and engineering?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         501,
         502,
@@ -27534,6 +30118,36 @@
       "moduleTitle": "Use Tech to Succeed Capstone Project",
       "title": "Data, Security, and Creative Careers",
       "summary": "Technology careers span far beyond writing code.",
+      "practice": {
+        "goal": "Practise data, security, and creative careers once, with guidance.",
+        "steps": [
+          "Open your own saved work.",
+          "Now choose one piece of work and say what it proves.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I chose my spreadsheet of monthly sales. It proves I can enter data accurately and calculate totals."
+      },
+      "mission": {
+        "situation": "You are preparing the evidence of your own capability for a real employer.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What types of careers focus on data privacy, and why is protecting personal information?",
+          "3. Answer, for your situation: important?",
+          "4. Answer, for your situation: What do database professionals like database administrators, data engineers, and data?",
+          "5. Answer, for your situation: scientists do?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         511,
         512,
@@ -28534,6 +31148,36 @@
       "moduleTitle": "Use Tech to Succeed Capstone Project",
       "title": "Planning Your Tech Career",
       "summary": "The IT field is full of exciting career opportunities, from computer support and network administration to cybersecurity and software development.",
+      "practice": {
+        "goal": "Practise planning your tech career once, with guidance.",
+        "steps": [
+          "Open your own saved work.",
+          "Now choose one piece of work and say what it proves.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I chose my spreadsheet of monthly sales. It proves I can enter data accurately and calculate totals."
+      },
+      "mission": {
+        "situation": "You are preparing the evidence of your own capability for a real employer.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: What types of careers are available in the IT field, and how do generalist and specialist roles?",
+          "3. Answer, for your situation: differ?",
+          "4. Answer, for your situation: How can you use the SMART framework to set achievable career goals?",
+          "5. Answer, for your situation: What education and training options can help you prepare for a career in IT?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         527,
         528,
@@ -29129,6 +31773,36 @@
       "moduleTitle": "Use Tech to Succeed Capstone Project",
       "title": "Capstone: Using Tech to Succeed",
       "summary": "Throughout this module, you explored the technology industry, learned about dozens of career paths, and built the job-readiness skills you need to get started.",
+      "practice": {
+        "goal": "Practise capstone: using tech to succeed once, with guidance.",
+        "steps": [
+          "Open your own saved work.",
+          "Now choose one piece of work and say what it proves.",
+          "Do it once yourself — do not only read about it.",
+          "Write one or two sentences saying what you did and what happened."
+        ],
+        "exampleAnswer": "I chose my spreadsheet of monthly sales. It proves I can enter data accurately and calculate totals."
+      },
+      "mission": {
+        "situation": "You are preparing the evidence of your own capability for a real employer.",
+        "steps": [
+          "1. Describe the situation above in one or two sentences, in your own words.",
+          "2. Answer, for your situation: As you complete this lesson, you will:?",
+          "3. Answer, for your situation: Research and compare two technology careers from different areas of the industry.?",
+          "4. Answer, for your situation: Create a structured career action plan with a SMART goal and an education roadmap.?",
+          "5. Answer, for your situation: Draft a resume tailored to a specific technology career.?",
+          "6. Say what you decided to do, and why."
+        ],
+        "successCriteria": [
+          "Every one of the 6 points above is answered.",
+          "It is written about this situation, not copied from the lesson.",
+          "Someone who did not attend could follow your explanation."
+        ],
+        "submit": [
+          "Three to five sentences explaining the decisions you made",
+          "A file, screenshot or photo showing you did the work"
+        ]
+      },
       "sourcePages": [
         537,
         538,
