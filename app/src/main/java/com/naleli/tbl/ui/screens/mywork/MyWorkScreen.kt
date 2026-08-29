@@ -111,6 +111,8 @@ private fun TaskRow(row: WorkTaskRow, onOpenTask: (String) -> Unit) {
         row.locked -> row.lockReason ?: "Locked"
         row.state == TaskProgressState.READY_TO_SUBMIT -> "${row.workstreamName} · All steps done, evidence attached"
         row.state == TaskProgressState.NEEDS_REVISION -> "${row.workstreamName} · Feedback is waiting for you"
+        row.state == TaskProgressState.IN_PROGRESS && row.evidenceCount > 0 ->
+            "${row.workstreamName} · ${row.evidenceCount} item(s) attached"
         row.state == TaskProgressState.IN_PROGRESS ->
             "${row.workstreamName} · Step ${row.stepsDone} of ${row.stepsTotal}"
         row.state == TaskProgressState.SUBMITTED -> "${row.workstreamName} · Waiting for review"

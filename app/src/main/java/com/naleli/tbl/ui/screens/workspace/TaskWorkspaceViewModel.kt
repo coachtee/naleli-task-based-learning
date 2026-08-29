@@ -53,9 +53,17 @@ data class TaskWorkspaceUiState(
         get() = task?.let { SubmissionChecklist.requirements(it, subStepStatuses, evidence) }.orEmpty()
     val missingRequirements: List<SubmissionRequirement> get() = submissionRequirements.filterNot { it.met }
 
-    /** Read straight off the shared state rather than recomputed here — the
-     * button the learner sees and the badge the other screens see are now
-     * the same decision. */
+    /**
+     * Whether SUBMIT should be pressable — every requirement met.
+     *
+     * Deliberately not `progressState == READY_TO_SUBMIT`: a task sent back
+     * as NEEDS_REVISION has met every requirement too, and gating the
+     * resubmit button on the state would leave it disabled forever.
+     */
+    val canSubmit: Boolean get() = task != null && missingRequirements.isEmpty()
+
+    /** The badge's reading of the same facts — READY_TO_SUBMIT is
+     * [canSubmit] before anything has been submitted. */
     val readyToSubmit: Boolean get() = progressState == TaskProgressState.READY_TO_SUBMIT
 }
 

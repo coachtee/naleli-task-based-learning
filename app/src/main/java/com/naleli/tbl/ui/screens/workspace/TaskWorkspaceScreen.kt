@@ -211,7 +211,7 @@ fun TaskWorkspaceScreen(
                     Button(
                         onClick = { showConfidenceDialog = true },
                         modifier = Modifier.fillMaxWidth(),
-                        enabled = state.readyToSubmit,
+                        enabled = state.canSubmit,
                     ) { Text("Resubmit for Assessment") }
                     Spacer(Modifier.height(4.dp))
                     OutlinedButton(onClick = onSubmitted, modifier = Modifier.fillMaxWidth()) { Text("View Last Assessment") }
@@ -219,13 +219,13 @@ fun TaskWorkspaceScreen(
                 else -> Button(
                     onClick = { showConfidenceDialog = true },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = state.readyToSubmit,
+                    enabled = state.canSubmit,
                 ) { Text("Submit for Assessment") }
             }
             // Name every outstanding requirement rather than one blanket
             // sentence: a learner staring at a disabled button must be able
             // to see exactly which line is stopping them.
-            if (!state.readyToSubmit &&
+            if (!state.canSubmit &&
                 state.progressState != TaskProgressState.SUBMITTED &&
                 state.progressState != TaskProgressState.COMPETENT
             ) {
