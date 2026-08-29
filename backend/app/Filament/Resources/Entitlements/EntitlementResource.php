@@ -18,7 +18,11 @@ class EntitlementResource extends Resource
 {
     protected static ?string $model = Entitlement::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|\UnitEnum|null $navigationGroup = 'Delivery';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedLockOpen;
 
     public static function form(Schema $schema): Schema
     {

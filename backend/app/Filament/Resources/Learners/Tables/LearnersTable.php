@@ -8,6 +8,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -18,53 +19,53 @@ class LearnersTable
         return $table
             ->columns([
                 TextColumn::make('learner_ref')
-                    ->searchable(),
-                TextColumn::make('first_registered_year')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('first_name')
-                    ->searchable(),
-                TextColumn::make('middle_name')
-                    ->searchable(),
-                TextColumn::make('last_name')
-                    ->searchable(),
-                TextColumn::make('preferred_name')
-                    ->searchable(),
+                    ->label('Learner')
+                    ->searchable()
+                    ->sortable()
+                    ->weight('medium')
+                    ->copyable()
+                    ->description(fn ($record): string => trim("{$record->first_name} {$record->last_name}") ?: '—'),
+
                 TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
-                TextColumn::make('phone')
-                    ->searchable(),
-                TextColumn::make('whatsapp')
-                    ->searchable(),
-                TextColumn::make('id_type')
-                    ->badge()
-                    ->searchable(),
-                TextColumn::make('id_number_hash')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable()
+                    ->description(fn ($record): ?string => $record->phone),
+
                 TextColumn::make('id_number_masked')
-                    ->searchable(),
-                TextColumn::make('date_of_birth')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('identity_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('identity_verified_by')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Identification')
+                    ->placeholder('Not supplied')
+                    // Never the full number in a list. Revealing it is a
+                    // deliberate act on the record, not a side effect of
+                    // scrolling past someone.
+                    ->description(fn ($record): ?string => $record->id_type?->label()),
+
+                IconColumn::make('identity_verified_at')
+                    ->label('Verified')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-badge')
+                    ->falseIcon('heroicon-o-clock')
+                    ->trueColor('success')
+                    ->falseColor('gray'),
+
                 TextColumn::make('status')
                     ->badge()
-                    ->searchable(),
+                    ->formatStateUsing(fn ($state): string => $state->label())
+                    ->color(fn ($state): string => match ($state->value) {
+                        'active' => 'success',
+                        'alumni' => 'info',
+                        'withdrawn', 'suspended' => 'danger',
+                        default => 'gray',
+                    }),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Registered')
+                    ->date('j M Y')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
             ])
+            ->defaultSort('created_at', 'desc')
+            ->emptyStateHeading('No learners yet')
+            ->emptyStateDescription('Learners are created automatically when an application arrives from the website.')
             ->filters([
                 //
             ])

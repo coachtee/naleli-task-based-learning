@@ -23,43 +23,53 @@ class InvoicesTable
     {
         return $table
             ->columns([
-                TextColumn::make('learner.id')
-                    ->searchable(),
-                TextColumn::make('enrolment.id')
-                    ->searchable(),
-                TextColumn::make('sequence')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('learner.learner_ref')
+                    ->label('Learner')
+                    ->searchable()
+                    ->weight('medium')
+                    ->description(fn ($record): ?string => $record->enrolment?->programme?->name),
+
                 TextColumn::make('description')
-                    ->searchable(),
+                    ->searchable()
+                    ->description(fn ($record): string => "Invoice {$record->sequence}"),
+
                 TextColumn::make('amount_cents')
-                    ->numeric()
+                    ->label('Amount')
+                    // Cents are how money is stored; rands are how it is read.
+                    ->formatStateUsing(fn (int $state): string => 'R'.number_format($state / 100, 2))
+                    ->alignEnd()
                     ->sortable(),
-                TextColumn::make('currency')
-                    ->searchable(),
-                TextColumn::make('due_on')
-                    ->date()
-                    ->sortable(),
+
                 IconColumn::make('activates_enrolment')
-                    ->boolean(),
+                    ->label('Activates')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-bolt')
+                    ->falseIcon('heroicon-o-minus-small')
+                    ->trueColor('warning')
+                    ->falseColor('gray')
+                    ->tooltip('Settling this invoice is what turns the enrolment on.'),
+
                 TextColumn::make('status')
                     ->badge()
-                    ->searchable(),
-                TextColumn::make('paid_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('created_by')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                    ->formatStateUsing(fn ($state): string => $state->label())
+                    ->color(fn ($state): string => match ($state->value) {
+                        'paid' => 'success',
+                        'due' => 'warning',
+                        'refunded' => 'info',
+                        default => 'gray',
+                    }),
+
+                TextColumn::make('due_on')
+                    ->label('Due')
+                    ->date('j M Y')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->color(fn ($record): string => $record->status->value === 'due' && $record->due_on?->isPast()
+                        ? 'danger'
+                        : 'gray'),
             ])
+            ->defaultSort('created_at', 'desc')
+            ->emptyStateHeading('Nothing invoiced')
+            ->emptyStateDescription('Invoices are raised when an application is accepted against an offering.')
             ->filters([
                 //
             ])

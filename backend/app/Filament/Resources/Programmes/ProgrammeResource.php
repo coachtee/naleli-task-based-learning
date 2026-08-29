@@ -18,6 +18,10 @@ class ProgrammeResource extends Resource
 {
     protected static ?string $model = Programme::class;
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Catalogue';
+
+    protected static ?int $navigationSort = 1;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     public static function form(Schema $schema): Schema

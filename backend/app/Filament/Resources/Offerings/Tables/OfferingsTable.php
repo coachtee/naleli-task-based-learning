@@ -20,55 +20,44 @@ class OfferingsTable
     {
         return $table
             ->columns([
-                TextColumn::make('programme.name')
-                    ->searchable(),
-                TextColumn::make('code')
-                    ->searchable(),
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('description')
-                    ->searchable(),
+                    ->searchable()
+                    ->weight('medium')
+                    ->description(fn ($record): string => $record->code),
+
                 TextColumn::make('billing_model')
+                    ->label('Billed as')
                     ->badge()
-                    ->searchable(),
+                    ->formatStateUsing(fn ($state): string => $state->label())
+                    ->color(fn ($state): string => match ($state->value) {
+                        'fixed_block' => 'primary',
+                        'subscription' => 'gray',
+                        default => 'info',
+                    }),
+
                 TextColumn::make('price_cents')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('deposit_cents')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('instalment_count')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('currency')
-                    ->searchable(),
+                    ->label('Terms')
+                    // The whole commercial decision in one cell, so a wrong
+                    // price is visible without opening the record.
+                    ->formatStateUsing(fn ($state, $record): string => $record->terms())
+                    ->alignEnd(),
+
                 TextColumn::make('access_duration_days')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('activation_rule')
-                    ->badge()
-                    ->searchable(),
+                    ->label('Access')
+                    ->formatStateUsing(fn ($state, $record): string => $record->accessMonths()),
+
                 TextColumn::make('status')
                     ->badge()
-                    ->searchable(),
-                TextColumn::make('available_from')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('available_until')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('sort_order')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->formatStateUsing(fn ($state): string => $state->label())
+                    ->color(fn ($state): string => match ($state->value) {
+                        'open' => 'success',
+                        'draft' => 'warning',
+                        default => 'gray',
+                    }),
             ])
+            ->defaultSort('sort_order')
+            ->emptyStateHeading('No offerings')
+            ->emptyStateDescription('An offering is how a programme is sold: its price, billing model and access duration.')
             ->filters([
                 //
             ])

@@ -2,16 +2,18 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\PipelineOverview;
+use App\Filament\Widgets\WorkQueue;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
+use Filament\Support\Enums\Width;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -28,8 +30,30 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('KCS Education')
+            ->favicon(asset('favicon.ico'))
+            // The NIBS navy and orange the learner app already uses, so staff
+            // and learners are visibly looking at one system rather than two
+            // products that happen to share a database.
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#0A1140'),
+                'info' => Color::hex('#0A1140'),
+                'warning' => Color::hex('#F05A00'),
+                'success' => Color::hex('#059669'),
+                'danger' => Color::hex('#DC2626'),
+                'gray' => Color::Slate,
+            ])
+            ->font('Archivo')
+            ->maxContentWidth(Width::Full)
+            ->sidebarCollapsibleOnDesktop()
+            // The information architecture, not an alphabetical dump of
+            // tables. A registrar works down Admissions; finance works down
+            // Money; nobody has to know which model backs which screen.
+            ->navigationGroups([
+                NavigationGroup::make('Admissions')->icon('heroicon-o-inbox-arrow-down'),
+                NavigationGroup::make('Money')->icon('heroicon-o-banknotes'),
+                NavigationGroup::make('Delivery')->icon('heroicon-o-academic-cap'),
+                NavigationGroup::make('Catalogue')->icon('heroicon-o-rectangle-stack'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -38,8 +62,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                PipelineOverview::class,
+                WorkQueue::class,
             ])
             ->middleware([
                 EncryptCookies::class,
