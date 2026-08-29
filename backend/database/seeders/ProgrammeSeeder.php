@@ -54,7 +54,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
+                'fee_note' => 'R500 once-off, then R950 per month',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 10,
@@ -68,7 +68,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
+                'fee_note' => 'R500 once-off, then R950 per month',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 20,
@@ -82,7 +82,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
+                'fee_note' => 'R500 once-off, then R950 per month',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 30,
@@ -96,7 +96,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
+                'fee_note' => 'R500 once-off, then R950 per month',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 40,
@@ -110,7 +110,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
+                'fee_note' => 'R500 once-off, then R950 per month',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 50,
@@ -124,7 +124,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
+                'fee_note' => 'R500 once-off, then R950 per month',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 60,
@@ -138,7 +138,7 @@ class ProgrammeSeeder extends Seeder
                 'duration_label' => '3-month block',
                 'duration_days' => 90,
                 'weekly_hours' => '8-10',
-                'fee_note' => 'Website currently advertises: R500 once-off, then R950 per month — confirm against the offering',
+                'fee_note' => 'R500 once-off, then R950 per month',
                 'content_code' => null,
                 'status' => ProgrammeStatus::OPEN,
                 'sort_order' => 70,
@@ -259,18 +259,16 @@ class ProgrammeSeeder extends Seeder
     }
 
     /**
-     * One offering per programme, every one of them DRAFT.
+     * One offering per programme.
      *
-     * Draft is the whole point. Nothing can be sold under an offering until a
-     * person confirms its price and opens it, because the last time a price
-     * was inferred rather than confirmed, a fixed three-month block came out
-     * as three monthly instalments.
+     * Career Modules carry the confirmed commercial model and open for sale:
+     * R500 registration once, then R950 in each of three months — R3,350 in
+     * total, billed as four invoices, with the registration fee opening
+     * access. This is what the website already advertises.
      *
-     * The R950 / 90-day shape is seeded on the Career Modules because that is
-     * the one price actually confirmed — "a specialisation such as Payroll or
-     * CRM costs R950 for a three-month block", and Payroll and CRM are Career
-     * Modules in this catalogue. Everything else is priced at zero and stays
-     * shut until someone says otherwise.
+     * Everything else stays DRAFT at R0 and cannot be sold, because "fees on
+     * enquiry" is not a price. Opening one is a deliberate act in the
+     * dashboard that shows the resulting invoice shape first.
      */
     private function seedOfferings(): void
     {
@@ -281,15 +279,24 @@ class ProgrammeSeeder extends Seeder
                 ['code' => "{$programme->code}-2027-BLOCK"],
                 [
                     'programme_id' => $programme->id,
-                    'name' => "{$programme->name} — 3-month block",
+                    'name' => $isCareerModule
+                        ? "{$programme->name} — February 2027"
+                        : "{$programme->name} — 3-month block",
                     'description' => $isCareerModule
-                        ? 'Confirm the price before opening this offering.'
+                        ? 'R500 registration, then R950 per month for three months.'
                         : 'Price not yet confirmed. Fees are on enquiry for this programme.',
-                    'billing_model' => BillingModel::FIXED_BLOCK,
-                    'price_cents' => $isCareerModule ? 95000 : 0,
+                    // The confirmed KCS Career Module model: R500 registration
+                    // once, then R950 in each of three months. R3,350 total,
+                    // and the registration fee is what opens access.
+                    'billing_model' => $isCareerModule
+                        ? BillingModel::DEPOSIT_BALANCE
+                        : BillingModel::FIXED_BLOCK,
+                    'price_cents' => $isCareerModule ? 335000 : 0,
+                    'deposit_cents' => $isCareerModule ? 50000 : null,
+                    'instalment_count' => $isCareerModule ? 3 : null,
                     'access_duration_days' => 90,
                     'activation_rule' => ActivationRule::ON_FIRST_PAYMENT,
-                    'status' => OfferingStatus::DRAFT,
+                    'status' => $isCareerModule ? OfferingStatus::OPEN : OfferingStatus::DRAFT,
                     'sort_order' => $programme->sort_order,
                 ],
             );

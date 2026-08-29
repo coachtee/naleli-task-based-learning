@@ -23,7 +23,10 @@ class OfferingsTable
                 TextColumn::make('name')
                     ->searchable()
                     ->weight('medium')
-                    ->description(fn ($record): string => $record->code),
+                    // The commercial terms sit under the name rather than in
+                    // their own column: a price that wraps onto four lines is
+                    // harder to read than one that sits where you look first.
+                    ->description(fn ($record): string => $record->code.'  ·  '.$record->terms()),
 
                 TextColumn::make('billing_model')
                     ->label('Billed as')
@@ -36,15 +39,15 @@ class OfferingsTable
                     }),
 
                 TextColumn::make('price_cents')
-                    ->label('Terms')
-                    // The whole commercial decision in one cell, so a wrong
-                    // price is visible without opening the record.
-                    ->formatStateUsing(fn ($state, $record): string => $record->terms())
-                    ->alignEnd(),
+                    ->label('Total')
+                    ->formatStateUsing(fn (int $state): string => 'R'.number_format($state / 100, 2))
+                    ->alignEnd()
+                    ->sortable(),
 
                 TextColumn::make('access_duration_days')
                     ->label('Access')
-                    ->formatStateUsing(fn ($state, $record): string => $record->accessMonths()),
+                    ->formatStateUsing(fn ($state, $record): string => $record->accessMonths())
+                    ->toggleable(),
 
                 TextColumn::make('status')
                     ->badge()

@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Widgets\PipelineOverview;
 use App\Filament\Widgets\WorkQueue;
+use App\Support\LocalAvatarProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -31,18 +32,32 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('KCS Education')
-            ->favicon(asset('favicon.ico'))
             // The NIBS navy and orange the learner app already uses, so staff
             // and learners are visibly looking at one system rather than two
             // products that happen to share a database.
+            //
+            // The ramp is given explicitly rather than via Color::hex(), which
+            // keeps only the hue of what it is passed and regenerates the
+            // lightness steps — handing #0A1140 to it produced a mid indigo,
+            // not navy. These are real NIBS navy values, so shade 600 (what
+            // buttons use) is the colour the brand actually specifies.
             ->colors([
-                'primary' => Color::hex('#0A1140'),
-                'info' => Color::hex('#0A1140'),
+                'primary' => [
+                    50 => '#F2F4FA', 100 => '#E4E8F4', 200 => '#C7CEE7',
+                    300 => '#9BA6CE', 400 => '#6B7AAE', 500 => '#46568F',
+                    600 => '#2E3D73', 700 => '#222E5C', 800 => '#16204A',
+                    900 => '#0F1740', 950 => '#0A1140',
+                ],
                 'warning' => Color::hex('#F05A00'),
                 'success' => Color::hex('#059669'),
                 'danger' => Color::hex('#DC2626'),
+                'info' => Color::Sky,
                 'gray' => Color::Slate,
             ])
+            // Filament's default avatars are fetched from an external service,
+            // which sends staff names off-site and renders broken wherever
+            // outbound traffic is restricted. Initials are drawn locally.
+            ->defaultAvatarProvider(LocalAvatarProvider::class)
             ->font('Archivo')
             ->maxContentWidth(Width::Full)
             ->sidebarCollapsibleOnDesktop()

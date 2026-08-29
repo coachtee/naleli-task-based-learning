@@ -57,14 +57,34 @@ class Offering extends Model
             BillingModel::FIXED_BLOCK => $this->access_duration_days !== null
                 ? "{$price} for {$this->accessMonths()}"
                 : $price,
-            BillingModel::DEPOSIT_BALANCE => sprintf(
-                'R%s deposit, then R%s',
-                number_format(($this->deposit_cents ?? 0) / 100, 2),
-                number_format(($this->price_cents - ($this->deposit_cents ?? 0)) / 100, 2),
-            ),
+            // Written the way it is said out loud: R500 registration, then
+            // R950 a month for three months. A registrar reading a list needs
+            // to recognise the deal, not reconstruct it from a total.
+            BillingModel::DEPOSIT_BALANCE => $this->depositTerms(),
             BillingModel::SUBSCRIPTION => "{$price} per month",
             BillingModel::ONE_TIME => $price,
         };
+    }
+
+    private function depositTerms(): string
+    {
+        $deposit = $this->deposit_cents ?? 0;
+        $balance = $this->price_cents - $deposit;
+        $count = max(1, $this->instalment_count ?? 1);
+        $per = intdiv($balance, $count);
+
+        $registration = 'R'.number_format($deposit / 100, 2).' registration';
+
+        if ($count === 1) {
+            return $registration.', then R'.number_format($balance / 100, 2);
+        }
+
+        return sprintf(
+            '%s, then R%s x %d months',
+            $registration,
+            number_format($per / 100, 2),
+            $count,
+        );
     }
 
     public function accessMonths(): string

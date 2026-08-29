@@ -33,10 +33,10 @@ enum BillingModel: string
     public function label(): string
     {
         return match ($this) {
-            self::ONE_TIME => 'One-time payment',
-            self::DEPOSIT_BALANCE => 'Deposit then balance',
-            self::FIXED_BLOCK => 'Fixed-duration block',
-            self::SUBSCRIPTION => 'Monthly subscription',
+            self::ONE_TIME => 'One-time',
+            self::DEPOSIT_BALANCE => 'Deposit + balance',
+            self::FIXED_BLOCK => 'Block',
+            self::SUBSCRIPTION => 'Monthly',
         };
     }
 

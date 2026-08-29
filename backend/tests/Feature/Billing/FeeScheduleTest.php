@@ -37,7 +37,39 @@ class FeeScheduleTest extends TestCase
         $this->fees = app(FeeSchedule::class);
     }
 
-    public function test_a_three_month_block_is_one_invoice_not_three(): void
+    /**
+     * The confirmed KCS Career Module model, asserted against the seeded
+     * offering rather than a fixture — so a seeder edit that changes what
+     * learners are charged fails here rather than in production.
+     */
+    public function test_the_career_module_bills_r500_registration_then_r950_for_three_months(): void
+    {
+        $offering = Offering::where('code', 'PPO-2027-BLOCK')->firstOrFail();
+
+        $this->assertSame(BillingModel::DEPOSIT_BALANCE, $offering->billing_model);
+        $this->assertSame(335000, $offering->price_cents, 'R3,350 in total');
+
+        $lines = $this->fees->linesFor($offering);
+        $this->fees->assertConsistent($offering, $lines);
+
+        $this->assertCount(4, $lines);
+
+        $this->assertSame('Registration fee', $lines[0]->description);
+        $this->assertSame(50000, $lines[0]->amountCents);
+        $this->assertTrue($lines[0]->activatesEnrolment, 'registration opens access');
+        $this->assertSame(0, $lines[0]->dueInDays);
+
+        foreach ([1, 2, 3] as $month) {
+            $this->assertSame(95000, $lines[$month]->amountCents, "month {$month} is R950");
+            $this->assertFalse($lines[$month]->activatesEnrolment);
+            $this->assertSame(30 * $month, $lines[$month]->dueInDays, 'one month apart');
+        }
+
+        $this->assertSame(335000, array_sum(array_map(fn ($l) => $l->amountCents, $lines)));
+        $this->assertSame('R500.00 registration, then R950.00 x 3 months', $offering->terms());
+    }
+
+    public function test_a_fixed_block_is_one_invoice(): void
     {
         $offering = $this->offering([
             'billing_model' => BillingModel::FIXED_BLOCK,
@@ -47,7 +79,7 @@ class FeeScheduleTest extends TestCase
 
         $lines = $this->fees->linesFor($offering);
 
-        $this->assertCount(1, $lines, 'a block is one payment, not one per month');
+        $this->assertCount(1, $lines, 'a block is one payment for the whole period');
         $this->assertSame(95000, $lines[0]->amountCents);
         $this->assertTrue($lines[0]->activatesEnrolment);
         $this->assertStringContainsString('3 months access', $lines[0]->description);
@@ -139,15 +171,23 @@ class FeeScheduleTest extends TestCase
         $this->fees->linesFor($offering);
     }
 
-    public function test_every_seeded_offering_starts_closed_for_business(): void
+    /**
+     * "Fees on enquiry" is not a price. Anything without a confirmed one
+     * stays shut, so nobody can be charged R0 by clicking through.
+     */
+    public function test_offerings_without_a_confirmed_price_stay_closed(): void
     {
-        $open = Offering::where('status', OfferingStatus::OPEN)->count();
+        $unpriced = Offering::where('price_cents', 0)->get();
 
-        $this->assertSame(
-            0,
-            $open,
-            'no offering may be sellable until a person confirms its price and opens it',
-        );
+        $this->assertGreaterThan(0, $unpriced->count());
+
+        foreach ($unpriced as $offering) {
+            $this->assertSame(
+                OfferingStatus::DRAFT,
+                $offering->status,
+                "{$offering->code} is priced at R0 and must not be open for sale",
+            );
+        }
     }
 
     /** @param array<string, mixed> $attributes */
