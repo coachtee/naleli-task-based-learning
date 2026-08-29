@@ -263,6 +263,13 @@ def build():
                     return t["instructions"]
             return ""
 
+        def evidence_for(*prefixes):
+            for t in sheet["tasks"]:
+                label = (t["title"] or t["step"]).lower()
+                if any(label.startswith(p) for p in prefixes):
+                    return t["evidence"]
+            return ""
+
         learn = instructions_for("learn")
         practice = instructions_for("practice", "practise")
         mission = instructions_for("work mission", "portfolio", "capstone")
@@ -272,9 +279,18 @@ def build():
             # rather than the standard Learn/Practice/Work Mission labels,
             # so fall back to the day's first non-review task.
             mission = first_work_task(sheet)["instructions"]
-        deliverable = next(
-            (t["evidence"] for t in sheet["tasks"] if t["evidence"]),
-            "Working file, screenshot or recorded result",
+        # The day's deliverable is what it finally produces — the Work
+        # Mission's output — not the Learn step's note-taking, which is what
+        # "first task with an evidence cell" was picking up. Capstone days
+        # have no Work Mission label, so their own first task's evidence is
+        # the artefact ("Project brief", "Working version", "Final portfolio
+        # package"). The ROADMAP's Daily Deliverable column is not used: it
+        # is the same boilerplate sentence on 79 of the 90 days.
+        deliverable = (
+            evidence_for("work mission", "portfolio", "capstone")
+            or first_work_task(sheet)["evidence"]
+            or next((t["evidence"] for t in sheet["tasks"] if t["evidence"]), "")
+            or "Working file, screenshot or recorded result"
         )
 
         # Days 80-90 all share one source lesson ("Module 20 — Capstone /
