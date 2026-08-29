@@ -181,9 +181,11 @@ data class SubmissionRequirement(val label: String, val met: Boolean)
  * wrong. These requirements are each shown with their own tick, so what is
  * still missing is always nameable.
  *
- * A typed answer counts as attached evidence, so a learner with no camera
- * and no document app is never locked out — they simply have one tick to
- * clear instead of two.
+ * The file and the explanation are separate requirements because the
+ * curriculum asks for both: 79 of the 90 days name their deliverable
+ * "Workplace-style output + short explanation". A typed answer is real
+ * evidence and goes to the portfolio like any other, but it is the
+ * explanation, not the output.
  */
 object SubmissionChecklist {
     fun requirements(
@@ -196,8 +198,8 @@ object SubmissionChecklist {
             allSubStepsDone(task.subSteps, subStepStatuses),
         ),
         SubmissionRequirement(
-            "Attach the work you produced",
-            evidence.isNotEmpty(),
+            "Attach a file, screenshot or photo of your work",
+            evidence.any { !it.isWrittenAnswer() },
         ),
         SubmissionRequirement(
             "Explain what you did in your own words",
