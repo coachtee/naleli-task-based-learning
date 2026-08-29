@@ -1,19 +1,24 @@
 package com.naleli.tbl.data.repository
 
 import android.content.Context
+import com.naleli.tbl.data.db.dao.AssessmentDao
 import com.naleli.tbl.data.db.dao.CertificateDao
 import com.naleli.tbl.data.db.dao.DayProgressDao
 import com.naleli.tbl.data.db.dao.EvidenceDao
 import com.naleli.tbl.data.db.dao.LearnerProfileDao
 import com.naleli.tbl.data.db.dao.PortfolioDao
+import com.naleli.tbl.data.db.dao.SubStepStatusDao
 import com.naleli.tbl.data.db.dao.TaskStatusDao
+import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.AssessmentStatus
+import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.data.db.entity.CertificateEntity
 import com.naleli.tbl.data.db.entity.DayProgressEntity
 import com.naleli.tbl.data.db.entity.DayStatus
 import com.naleli.tbl.data.db.entity.EvidenceEntity
 import com.naleli.tbl.data.db.entity.LearnerProfileEntity
 import com.naleli.tbl.data.db.entity.PortfolioItemEntity
+import com.naleli.tbl.data.db.entity.SubStepStatusEntity
 import com.naleli.tbl.data.db.entity.TaskStatusEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -37,6 +42,8 @@ class BackupRepository(
     private val evidenceDao: EvidenceDao,
     private val portfolioDao: PortfolioDao,
     private val certificateDao: CertificateDao,
+    private val subStepDao: SubStepStatusDao,
+    private val assessmentDao: AssessmentDao,
 ) {
     private val json = Json { prettyPrint = true; ignoreUnknownKeys = true }
 
@@ -47,6 +54,11 @@ class BackupRepository(
         val evidenceList = evidenceDao.observeAll().first()
         val portfolio = portfolioDao.observeAll().first()
         val certificates = certificateDao.observeAll().first()
+        // The two tables the Workspace rebuild actually writes. Backing up
+        // only the legacy day/task tables meant a restore returned a learner
+        // to zero progress and no competence, silently.
+        val subStepStatus = subStepDao.observeAll().first()
+        val assessments = assessmentDao.observeAll().first()
 
         val manifest = BackupManifest(
             exportedAtEpochMillis = System.currentTimeMillis(),
@@ -62,6 +74,8 @@ class BackupRepository(
             evidence = evidenceList.map { it.toBackup(includeEvidenceFiles) },
             portfolio = portfolio.map { it.toBackup() },
             certificates = certificates.map { it.toBackup() },
+            subStepStatus = subStepStatus.map { it.toBackup() },
+            assessments = assessments.map { it.toBackup() },
         )
 
         ZipOutputStream(destination.outputStream()).use { zip ->
@@ -124,6 +138,8 @@ class BackupRepository(
         evidenceDao.deleteAll()
         portfolioDao.deleteAll()
         certificateDao.deleteAll()
+        subStepDao.deleteAll()
+        assessmentDao.deleteAll()
         File(context.filesDir, "evidence").deleteRecursively()
 
         val now = System.currentTimeMillis()
@@ -139,6 +155,8 @@ class BackupRepository(
             evidenceDao.insert(backup.toEntity(destFile.absolutePath))
         }
         data.portfolio.forEach { portfolioDao.upsert(it.toEntity()) }
+        data.subStepStatus.forEach { subStepDao.upsert(it.toEntity()) }
+        data.assessments.forEach { assessmentDao.upsert(it.toEntity()) }
         data.certificates.forEach { backup ->
             val filePath = File(context.filesDir, "certificates/${backup.certificateNumber}.pdf").absolutePath
             certificateDao.insert(backup.toEntity(filePath))
@@ -212,6 +230,27 @@ private fun PortfolioItemEntity.toBackup() = PortfolioItemBackup(
 private fun PortfolioItemBackup.toEntity() = PortfolioItemEntity(
     dayNumber = dayNumber, taskId = taskId, title = title, skillDemonstrated = skillDemonstrated,
     evidenceId = evidenceId, description = description, createdAt = createdAt,
+)
+
+private fun SubStepStatusEntity.toBackup() = SubStepStatusBackup(
+    subStepId = subStepId, taskId = taskId, complete = complete, completedAt = completedAt,
+)
+
+private fun SubStepStatusBackup.toEntity() = SubStepStatusEntity(
+    subStepId = subStepId, taskId = taskId, complete = complete, completedAt = completedAt,
+)
+
+private fun AssessmentEntity.toBackup() = AssessmentBackup(
+    taskId = taskId, submittedAt = submittedAt, result = result.name,
+    assessedAt = assessedAt, confidenceRating = confidenceRating,
+)
+
+/** An unrecognised result name falls back to "not yet assessed" rather
+ * than throwing: a newer app's extra state must not make a restore fail. */
+private fun AssessmentBackup.toEntity() = AssessmentEntity(
+    taskId = taskId, submittedAt = submittedAt,
+    result = runCatching { CompetenceResult.valueOf(result) }.getOrDefault(CompetenceResult.NOT_YET_ASSESSED),
+    assessedAt = assessedAt, confidenceRating = confidenceRating,
 )
 
 private fun CertificateEntity.toBackup() = CertificateBackup(

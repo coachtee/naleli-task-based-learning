@@ -67,6 +67,7 @@ import com.naleli.tbl.data.content.ContentBlock
 import com.naleli.tbl.data.content.LessonLibrary
 import com.naleli.tbl.data.content.LessonMission
 import com.naleli.tbl.data.content.LessonPractice
+import com.naleli.tbl.data.content.MissionStep
 import com.naleli.tbl.data.content.LessonPage
 import com.naleli.tbl.data.content.LessonStage
 import com.naleli.tbl.data.content.WorkTask
@@ -485,9 +486,7 @@ private fun ApplyStage(task: WorkTask, mission: LessonMission?) {
     if (mission.steps.isNotEmpty()) {
         Text("YOUR TASK", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
         Spacer(Modifier.height(10.dp))
-        // The steps arrive already numbered by the converter, so they are
-        // rendered as written rather than re-numbered here.
-        mission.steps.forEach { step -> TaskStep(step) }
+        mission.steps.forEachIndexed { i, step -> MissionAction(i + 1, step) }
         Spacer(Modifier.height(18.dp))
     }
 
@@ -533,16 +532,42 @@ private fun NumberedStep(number: Int, text: String) {
     }
 }
 
-/** A converter-numbered step ("1. Describe the situation...") rendered with
- * its number lifted out, so the list looks the same as Try's. */
+/**
+ * One action of the Work Mission: "01 — Describe the situation", with the
+ * how-to underneath where there is one.
+ *
+ * The six actions used to render as six equal-weight sentences, which read
+ * as one instruction block however carefully they were written. Lifting the
+ * number and the title out gives the learner something to scan and a place
+ * to resume.
+ */
 @Composable
-private fun TaskStep(step: String) {
-    val split = step.substringBefore(". ", missingDelimiterValue = "")
-    val number = split.toIntOrNull()
-    if (number == null) {
-        Bullet(step)
-    } else {
-        NumberedStep(number, step.substringAfter(". "))
+private fun MissionAction(number: Int, step: MissionStep) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 7.dp), verticalAlignment = Alignment.Top) {
+        Text(
+            "%02d".format(number),
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.Bold,
+            color = NibsOrange,
+        )
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text(
+                step.title,
+                style = MaterialTheme.typography.titleSmall,
+                color = OnHeroSurface,
+                lineHeight = 22.sp,
+            )
+            if (step.detail.isNotBlank()) {
+                Spacer(Modifier.height(3.dp))
+                Text(
+                    step.detail,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = OnHeroSurfaceSoft,
+                    lineHeight = 21.sp,
+                )
+            }
+        }
     }
 }
 

@@ -91,6 +91,21 @@ data class LessonPractice(
 )
 
 /**
+ * One action of the Work Mission: a scannable title and, where it helps, a
+ * line saying how to do it.
+ *
+ * Two fields rather than one sentence because six instructions in a row
+ * read as a wall of text — the title is what the learner scans, the detail
+ * is what they read once. [detail] is deliberately blank on most steps:
+ * repeating the same guidance under every question undoes the chunking.
+ */
+@Serializable
+data class MissionStep(
+    val title: String = "",
+    val detail: String = "",
+)
+
+/**
  * The Apply stage: a workplace assignment with a situation, a numbered
  * task, a stated target, and an explicit deliverable.
  *
@@ -101,7 +116,7 @@ data class LessonPractice(
 @Serializable
 data class LessonMission(
     val situation: String = "",
-    val steps: List<String> = emptyList(),
+    val steps: List<MissionStep> = emptyList(),
     val successCriteria: List<String> = emptyList(),
     val submit: List<String> = emptyList(),
 )

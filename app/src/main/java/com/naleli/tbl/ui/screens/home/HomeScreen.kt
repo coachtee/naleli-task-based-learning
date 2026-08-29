@@ -248,3 +248,30 @@ private fun greetingWord(): String {
         else -> "evening"
     }
 }
+
+/**
+ * The task-state badge, drawn for the navy hero card.
+ *
+ * [com.naleli.tbl.ui.components.TaskStateBadge] takes its colours from the
+ * light theme and disappears on this surface, so the wording comes from the
+ * same [TaskProgressState.label] and only the colours differ — Home names
+ * the state My Work and the workspace name, in the same words.
+ */
+@Composable
+private fun HeroStateChip(state: TaskProgressState) {
+    val dot = when (state) {
+        TaskProgressState.COMPETENT -> SuccessGreenOnDark
+        TaskProgressState.SUBMITTED -> OnHeroSurfaceSoft
+        else -> NibsOrange
+    }
+    Row(
+        modifier = Modifier
+            .background(SurfaceWhite.copy(alpha = 0.12f), RoundedCornerShape(999.dp))
+            .padding(horizontal = 9.dp, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Box(Modifier.size(6.dp).background(dot, CircleShape))
+        Text(state.label, style = MaterialTheme.typography.labelSmall, color = OnHeroSurface)
+    }
+}

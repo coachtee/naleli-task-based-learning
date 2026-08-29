@@ -210,6 +210,14 @@ fun NaleliNavHost(
                     taskId = taskId,
                     onBack = { navController.popBackStack() },
                     onOpenPortfolio = { navController.navigate(NaleliDestinations.PORTFOLIO) },
+                    // Needs Changes returns the learner to their own
+                    // workspace with everything intact — evidence, steps and
+                    // written answers all persist, so "continue" is literal.
+                    onContinueWork = { id ->
+                        navController.navigate(NaleliDestinations.taskWorkspace(id)) {
+                            popUpTo(NaleliDestinations.ASSESSMENT_PATTERN) { inclusive = true }
+                        }
+                    },
                     // Continuing the journey clears the finished task's
                     // workspace and assessment off the back stack: Back
                     // from the next task belongs at Home, not inside work

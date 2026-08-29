@@ -50,5 +50,7 @@ class AppContainer(val context: Context) {
         evidenceDao = database.evidenceDao(),
         portfolioDao = database.portfolioDao(),
         certificateDao = database.certificateDao(),
+        subStepDao = database.subStepStatusDao(),
+        assessmentDao = database.assessmentDao(),
     )
 }

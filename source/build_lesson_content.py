@@ -197,15 +197,24 @@ def parse_page(text: str, skip_title: str | None) -> list[dict]:
 
 
 def outcome_items(learning_outcomes: str | None) -> list[str]:
-    """The lesson's own outcome questions, already bulleted in the export."""
+    """The lesson's own outcome questions, already bulleted in the export.
+
+    Only a bulleted line starts a question. A line without a bullet is the
+    PDF wrapping one - splitting on newlines alone turned "...how does
+    real-time scanning protect / your computer?" into two questions, and the
+    Work Mission then asked the learner to answer "your computer?".
+    """
     if not learning_outcomes:
         return []
-    items = []
+    items: list[str] = []
     for raw in learning_outcomes.split("\n"):
         line = clean(raw)
         if not line or line.lower().startswith("as you study"):
             continue
-        items.append(BULLET.sub("", line))
+        if BULLET.match(line) or not items:
+            items.append(BULLET.sub("", line))
+        else:
+            items[-1] = clean(f"{items[-1]} {line}")
     return items
 
 
@@ -447,10 +456,18 @@ MODULE_PRACTICE = {
 }
 
 
-def question_to_step(question: str) -> str:
-    """An outcome question, restated as something to do rather than recall."""
+def question_to_step(question: str) -> dict:
+    """An outcome question, restated as one action of the Work Mission.
+
+    The question is the title because it is the part worth scanning; the
+    detail says how to answer it. Six of these read as a sequence of actions
+    rather than one block of instructions.
+    """
     q = question.strip().rstrip("?")
-    return f"Answer, for your situation: {q}?"
+    return {
+        "title": f"{q}?",
+        "detail": "Answer this for the situation above, in your own words - not copied from the lesson.",
+    }
 
 
 def build_practice(module_number: int, lesson_title: str) -> dict:
@@ -474,15 +491,32 @@ def build_mission(module_number: int, lesson_title: str, outcomes: list[str]) ->
     # The steps come from the lesson's own outcome questions, so the task is
     # about this lesson and no other. Capped so the mission stays a day's
     # work rather than an exam.
+    # Only the first question carries the "how to answer" line. Repeating
+    # the identical sentence under all four turned a sequence of actions
+    # back into a block of text.
     focus = [question_to_step(q) for q in outcomes[:4]]
+    for step in focus[1:]:
+        step["detail"] = ""
     steps = (
-        ["Describe the situation above in one or two sentences, in your own words."]
+        [
+            {
+                "title": "Describe the situation",
+                "detail": "One or two sentences, in your own words, saying what is happening above.",
+            }
+        ]
         + focus
-        + ["Say what you decided to do, and why."]
+        + [
+            {
+                "title": "Say what you decided, and why",
+                "detail": "Two or three sentences on the choices you made and your reasons.",
+            }
+        ]
     )
     return {
         "situation": MODULE_SITUATIONS.get(module_number, MODULE_SITUATIONS[1]),
-        "steps": [f"{i}. {t}" for i, t in enumerate(steps, start=1)],
+        # Numbered by the reader, not baked into the text: the screen owns
+        # the "01 -" presentation, and the content owns the words.
+        "steps": steps,
         "successCriteria": [
             f"Every one of the {len(steps)} points above is answered.",
             "It is written about this situation, not copied from the lesson.",

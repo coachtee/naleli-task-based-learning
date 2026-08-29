@@ -222,34 +222,43 @@ object SubmissionChecklist {
  * deliverable asked for).
  */
 object AssessmentEngine {
-    data class CriterionCheck(val label: String, val met: Boolean)
+    /** [fix] is what to actually do about an unmet criterion, and is blank
+     * when the criterion is met. "Needs Changes" that only restates the
+     * criterion tells the learner they failed without telling them why. */
+    data class CriterionCheck(val label: String, val met: Boolean, val fix: String = "")
     data class Outcome(val result: CompetenceResult, val checks: List<CriterionCheck>)
 
     fun evaluate(task: WorkTask, subStepStatuses: Map<String, SubStepStatusEntity>, evidence: List<EvidenceEntity>): Outcome {
         val stepsDone = allSubStepsDone(task.subSteps, subStepStatuses)
-        val hasEvidence = evidence.isNotEmpty()
+        val deliverableGap = deliverableGap(task.deliverableLabel, evidence)
         val checks = task.assessmentCriteria.mapIndexed { index, label ->
-            val met = when {
-                !stepsDone || !hasEvidence -> false
-                index == task.assessmentCriteria.lastIndex -> evidenceLooksRight(task.deliverableLabel, evidence)
-                else -> true
+            val fix = when {
+                !stepsDone -> "Work through every stage of this task, then submit again."
+                evidence.isEmpty() -> "Attach the work you produced and explain it in your own words."
+                index == task.assessmentCriteria.lastIndex -> deliverableGap
+                else -> null
             }
-            CriterionCheck(label, met)
+            CriterionCheck(label, met = fix == null, fix = fix.orEmpty())
         }
         val result = if (checks.all { it.met }) CompetenceResult.COMPETENT else CompetenceResult.REQUIRES_IMPROVEMENT
         return Outcome(result, checks)
     }
 
     /** Reads the day's own deliverable label and checks the evidence
-     * against it, rather than accepting any file for any task. */
-    private fun evidenceLooksRight(deliverableLabel: String, evidence: List<EvidenceEntity>): Boolean {
+     * against it, rather than accepting any file for any task. Returns what
+     * is missing, or null when the evidence matches what was asked for. */
+    private fun deliverableGap(deliverableLabel: String, evidence: List<EvidenceEntity>): String? {
         val label = deliverableLabel.lowercase()
-        if ("screenshot" in label && evidence.none { it.fileType.startsWith("image/") }) return false
-        // 79 of the 90 days ask for "output + short explanation" — so on
-        // those days an attachment with nothing written is genuinely not
-        // what was asked for, and the rubric should say so.
-        if ("explanation" in label && evidence.none { it.isWrittenAnswer() }) return false
-        return true
+        if ("screenshot" in label && evidence.none { it.fileType.startsWith("image/") }) {
+            return "This day asks for a screenshot — attach an image of your work."
+        }
+        // 79 of the 90 days ask for "output + short explanation", so on
+        // those days an attachment with nothing written really is not what
+        // was asked for, and the rubric should say so in those words.
+        if ("explanation" in label && evidence.none { it.isWrittenAnswer() }) {
+            return "This day asks for a short explanation — write what you did, in your own words."
+        }
+        return null
     }
 }
 
