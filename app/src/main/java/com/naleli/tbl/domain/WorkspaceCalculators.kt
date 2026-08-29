@@ -1,5 +1,6 @@
 package com.naleli.tbl.domain
 
+import com.naleli.tbl.data.content.TaskTier
 import com.naleli.tbl.data.content.WorkSubStep
 import com.naleli.tbl.data.content.WorkTask
 import com.naleli.tbl.data.content.WorkspaceCurriculum
@@ -17,14 +18,96 @@ import java.time.LocalDate
  * the same underlying rows — never one flag standing in for all three.
  */
 
-enum class TaskProgressState { NOT_STARTED, IN_PROGRESS, SUBMITTED, NEEDS_REVISION, COMPETENT }
+/**
+ * The six states a task can be in — and the only vocabulary any screen is
+ * allowed to use for one. [label] lives on the state itself rather than in
+ * each screen, because "Submitted" on Home and "Awaiting assessment" on My
+ * Work were the same row telling the learner two different things.
+ *
+ * Declared in order of progression, so a screen can compare states rather
+ * than re-deriving them.
+ */
+enum class TaskProgressState(val label: String) {
+    NOT_STARTED("Not Started"),
+    IN_PROGRESS("In Progress"),
+    READY_TO_SUBMIT("Ready to Submit"),
+    SUBMITTED("Submitted"),
+    NEEDS_REVISION("Needs Changes"),
+    COMPETENT("Competent"),
+}
 
-fun taskProgressState(task: WorkTask, subStepStatuses: Map<String, SubStepStatusEntity>, assessment: AssessmentEntity?): TaskProgressState = when {
+/**
+ * The one definition of where a task stands.
+ *
+ * [evidence] is a required parameter rather than a defaulted one on purpose:
+ * READY_TO_SUBMIT means every requirement in [SubmissionChecklist] is met,
+ * and a default would let one screen quietly compute a state the others
+ * disagree with — the exact bug this is fixing. It is the same checklist the
+ * Show screen ticks off, so a task can never badge "Ready to Submit" while
+ * the submit button is still disabled. Prefer [WorkspaceSnapshot.stateOf],
+ * which supplies every input from the same observed data.
+ */
+fun taskProgressState(
+    task: WorkTask,
+    subStepStatuses: Map<String, SubStepStatusEntity>,
+    assessment: AssessmentEntity?,
+    evidence: List<EvidenceEntity>,
+): TaskProgressState = when {
     assessment?.result == CompetenceResult.COMPETENT -> TaskProgressState.COMPETENT
     assessment?.result == CompetenceResult.REQUIRES_IMPROVEMENT -> TaskProgressState.NEEDS_REVISION
     assessment?.submittedAt != null -> TaskProgressState.SUBMITTED
-    task.subSteps.any { subStepStatuses[it.subStepId]?.complete == true } -> TaskProgressState.IN_PROGRESS
+    SubmissionChecklist.missing(task, subStepStatuses, evidence).isEmpty() -> TaskProgressState.READY_TO_SUBMIT
+    evidence.isNotEmpty() || task.subSteps.any { subStepStatuses[it.subStepId]?.complete == true } -> TaskProgressState.IN_PROGRESS
     else -> TaskProgressState.NOT_STARTED
+}
+
+/**
+ * The three tables the whole product reads, resolved once.
+ *
+ * Home, My Work, Journey and Portfolio each used to observe their own
+ * subset of these and derive state their own way — which is how one task
+ * could read "In Progress" on one screen and "Submitted" on the next. They
+ * now build this from the same three flows and ask it the same questions,
+ * so there is one answer per task in the whole app.
+ */
+data class WorkspaceSnapshot(
+    val subStepStatuses: Map<String, SubStepStatusEntity> = emptyMap(),
+    val assessmentByTask: Map<String, AssessmentEntity> = emptyMap(),
+    val evidenceByTask: Map<String, List<EvidenceEntity>> = emptyMap(),
+) {
+    fun stateOf(task: WorkTask): TaskProgressState =
+        taskProgressState(task, subStepStatuses, assessmentByTask[task.taskId], evidenceFor(task.taskId))
+
+    fun stateOf(taskId: String): TaskProgressState =
+        WorkspaceCurriculum.taskById(taskId)?.let { stateOf(it) } ?: TaskProgressState.NOT_STARTED
+
+    fun evidenceFor(taskId: String): List<EvidenceEntity> = evidenceByTask[taskId].orEmpty()
+
+    fun evidenceCount(taskId: String): Int = evidenceFor(taskId).size
+
+    fun assessmentOf(taskId: String): AssessmentEntity? = assessmentByTask[taskId]
+
+    fun isLocked(taskId: String): Boolean = isTaskLocked(taskId, assessmentByTask)
+
+    fun stepsDone(task: WorkTask): Int = task.subSteps.count { subStepStatuses[it.subStepId]?.complete == true }
+
+    fun allStepsDone(task: WorkTask): Boolean = allSubStepsDone(task.subSteps, subStepStatuses)
+
+    /** Fully qualified so it reads as a delegation to the single top-level
+     * definition of "what's next", not a recursive member. */
+    val currentTaskId: String? get() = com.naleli.tbl.domain.currentTaskId(assessmentByTask)
+
+    companion object {
+        fun of(
+            subSteps: List<SubStepStatusEntity>,
+            assessments: List<AssessmentEntity>,
+            evidence: List<EvidenceEntity>,
+        ) = WorkspaceSnapshot(
+            subStepStatuses = subSteps.associateBy { it.subStepId },
+            assessmentByTask = assessments.associateBy { it.taskId },
+            evidenceByTask = evidence.groupBy { it.taskId },
+        )
+    }
 }
 
 fun isTaskLocked(taskId: String, assessmentByTask: Map<String, AssessmentEntity>): Boolean {
@@ -34,12 +117,16 @@ fun isTaskLocked(taskId: String, assessmentByTask: Map<String, AssessmentEntity>
 
 /** The one task Home/My Work/Journey all point to as "what's current" —
  * kept in one place so the three screens can never quietly disagree with
- * each other about which task the learner is meant to be doing right now. */
-fun currentTaskId(subStepStatuses: Map<String, SubStepStatusEntity>, assessmentByTask: Map<String, AssessmentEntity>): String? {
+ * each other about which task the learner is meant to be doing right now.
+ *
+ * Only a recorded competence result closes a task, so this reads the
+ * assessment rows alone: it needs no sub-step or evidence input and
+ * therefore cannot drift from the state badges those inputs produce. */
+fun currentTaskId(assessmentByTask: Map<String, AssessmentEntity>): String? {
     val reachable = WorkspaceCurriculum.allTasks().filterNot { isTaskLocked(it.taskId, assessmentByTask) }
-    val stateByTask = reachable.associate { it.taskId to taskProgressState(it, subStepStatuses, assessmentByTask[it.taskId]) }
-    return reachable.firstOrNull { it.tier == com.naleli.tbl.data.content.TaskTier.REQUIRED && stateByTask[it.taskId] != TaskProgressState.COMPETENT }?.taskId
-        ?: reachable.firstOrNull { stateByTask[it.taskId] != TaskProgressState.COMPETENT }?.taskId
+    fun competent(taskId: String) = assessmentByTask[taskId]?.result == CompetenceResult.COMPETENT
+    return reachable.firstOrNull { it.tier == TaskTier.REQUIRED && !competent(it.taskId) }?.taskId
+        ?: reachable.firstOrNull { !competent(it.taskId) }?.taskId
 }
 
 fun allSubStepsDone(subSteps: List<WorkSubStep>, subStepStatuses: Map<String, SubStepStatusEntity>): Boolean =
@@ -73,6 +160,59 @@ object ProjectHealthCalculator {
 }
 
 /**
+ * A written answer typed into the app, as opposed to a file the learner
+ * attached. Both are evidence and both go to the portfolio; only this one
+ * satisfies "explain your work", which 79 of the 90 days ask for by name
+ * ("Workplace-style output + short explanation").
+ */
+fun EvidenceEntity.isWrittenAnswer(): Boolean =
+    fileType == "text/plain" && fileName.startsWith("written-answer")
+
+/** One thing that must be true before a task can be submitted, in the
+ * words the learner sees. */
+data class SubmissionRequirement(val label: String, val met: Boolean)
+
+/**
+ * What "ready to submit" actually means, defined once.
+ *
+ * The old rule was "all steps done AND some evidence", which the screen
+ * summarised as a single greyed-out button and a sentence. A learner who
+ * had attached a photo but written nothing was told only that something was
+ * wrong. These requirements are each shown with their own tick, so what is
+ * still missing is always nameable.
+ *
+ * A typed answer counts as attached evidence, so a learner with no camera
+ * and no document app is never locked out — they simply have one tick to
+ * clear instead of two.
+ */
+object SubmissionChecklist {
+    fun requirements(
+        task: WorkTask,
+        subStepStatuses: Map<String, SubStepStatusEntity>,
+        evidence: List<EvidenceEntity>,
+    ): List<SubmissionRequirement> = listOf(
+        SubmissionRequirement(
+            "Work through every stage of this task",
+            allSubStepsDone(task.subSteps, subStepStatuses),
+        ),
+        SubmissionRequirement(
+            "Attach the work you produced",
+            evidence.isNotEmpty(),
+        ),
+        SubmissionRequirement(
+            "Explain what you did in your own words",
+            evidence.any { it.isWrittenAnswer() },
+        ),
+    )
+
+    fun missing(
+        task: WorkTask,
+        subStepStatuses: Map<String, SubStepStatusEntity>,
+        evidence: List<EvidenceEntity>,
+    ): List<SubmissionRequirement> = requirements(task, subStepStatuses, evidence).filterNot { it.met }
+}
+
+/**
  * The whole point of a "competence must be assessed, not claimed" rule in an
  * offline, no-backend, no-AI-grading app: the checklist has to be a real,
  * objective, deterministic rubric over what was actually submitted — not a
@@ -100,10 +240,16 @@ object AssessmentEngine {
         return Outcome(result, checks)
     }
 
+    /** Reads the day's own deliverable label and checks the evidence
+     * against it, rather than accepting any file for any task. */
     private fun evidenceLooksRight(deliverableLabel: String, evidence: List<EvidenceEntity>): Boolean {
         val label = deliverableLabel.lowercase()
-        if ("screenshot" !in label) return true
-        return evidence.any { it.fileType.startsWith("image/") }
+        if ("screenshot" in label && evidence.none { it.fileType.startsWith("image/") }) return false
+        // 79 of the 90 days ask for "output + short explanation" — so on
+        // those days an attachment with nothing written is genuinely not
+        // what was asked for, and the rubric should say so.
+        if ("explanation" in label && evidence.none { it.isWrittenAnswer() }) return false
+        return true
     }
 }
 

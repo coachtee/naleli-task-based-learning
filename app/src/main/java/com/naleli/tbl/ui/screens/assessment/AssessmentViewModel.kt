@@ -55,10 +55,7 @@ class AssessmentViewModel(private val container: AppContainer, private val taskI
                 // the next day unlocks and becomes current, so CONTINUE
                 // JOURNEY cannot disagree with what the rest of the app
                 // says the learner should do next.
-                val nextId = currentTaskId(
-                    subSteps.associateBy { it.subStepId },
-                    assessments.associateBy { it.taskId },
-                )?.takeIf { it != taskId }
+                val nextId = currentTaskId(assessments.associateBy { it.taskId })?.takeIf { it != taskId }
 
                 // Run the rubric the moment a submitted-but-unassessed row
                 // appears. Evaluating once in init raced the submit that sent

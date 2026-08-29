@@ -10,6 +10,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material.icons.filled.PriorityHigh
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -52,7 +55,7 @@ fun TierDot(tier: TaskTier, modifier: Modifier = Modifier) {
 }
 
 /** The status-badge marks from the approved design system. */
-enum class BadgeMark { DOT, RING, CHECK, LOCK }
+enum class BadgeMark { DOT, RING, CHECK, LOCK, READY, WAITING, ALERT }
 
 /**
  * A pill-shaped status badge: a small mark plus a label, on a tinted wash
@@ -82,26 +85,40 @@ fun StatusBadge(
             )
             BadgeMark.CHECK -> Icon(Icons.Filled.Check, contentDescription = null, tint = color, modifier = Modifier.size(12.dp))
             BadgeMark.LOCK -> Icon(Icons.Filled.Lock, contentDescription = null, tint = color, modifier = Modifier.size(11.dp))
+            BadgeMark.READY -> Icon(Icons.Filled.ArrowUpward, contentDescription = null, tint = color, modifier = Modifier.size(12.dp))
+            BadgeMark.WAITING -> Icon(Icons.Filled.Schedule, contentDescription = null, tint = color, modifier = Modifier.size(12.dp))
+            BadgeMark.ALERT -> Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = color, modifier = Modifier.size(12.dp))
         }
         Text(label, style = MaterialTheme.typography.labelSmall, color = color)
     }
 }
 
-/** The badge for a task's live state — the single mapping every screen
- * shares, so progress language can't drift between screens. */
+/**
+ * The badge for a task's live state — the single mapping every screen
+ * shares, so progress language can't drift between screens. The words come
+ * from [TaskProgressState.label] itself; only the colour and mark are
+ * decided here.
+ *
+ * Two states that both need the learner to act (In Progress, Ready to
+ * Submit) share the orange accent and are told apart by their mark, rather
+ * than each inventing a colour — orange stays "your move", green stays
+ * earned competence, and nothing else claims either.
+ */
 @Composable
 fun TaskStateBadge(state: TaskProgressState, locked: Boolean, modifier: Modifier = Modifier) {
     if (locked) {
         StatusBadge("Locked", MaterialTheme.colorScheme.onSurfaceVariant, BadgeMark.LOCK, modifier)
         return
     }
-    when (state) {
-        TaskProgressState.NOT_STARTED -> StatusBadge("Available", MaterialTheme.colorScheme.onSurfaceVariant, BadgeMark.RING, modifier)
-        TaskProgressState.IN_PROGRESS -> StatusBadge("In Progress", WarningOrange, BadgeMark.DOT, modifier)
-        TaskProgressState.NEEDS_REVISION -> StatusBadge("Needs Revision", WarningOrange, BadgeMark.DOT, modifier)
-        TaskProgressState.SUBMITTED -> StatusBadge("Submitted", MaterialTheme.colorScheme.primary, BadgeMark.DOT, modifier)
-        TaskProgressState.COMPETENT -> StatusBadge("Competent", SuccessGreen, BadgeMark.CHECK, modifier)
+    val (color, mark) = when (state) {
+        TaskProgressState.NOT_STARTED -> MaterialTheme.colorScheme.onSurfaceVariant to BadgeMark.RING
+        TaskProgressState.IN_PROGRESS -> WarningOrange to BadgeMark.DOT
+        TaskProgressState.READY_TO_SUBMIT -> WarningOrange to BadgeMark.READY
+        TaskProgressState.SUBMITTED -> AssessmentPurple to BadgeMark.WAITING
+        TaskProgressState.NEEDS_REVISION -> WarningOrange to BadgeMark.ALERT
+        TaskProgressState.COMPETENT -> SuccessGreen to BadgeMark.CHECK
     }
+    StatusBadge(state.label, color, mark, modifier)
 }
 
 /** The tier badge — what KIND of task this is, kept visually separate from
@@ -109,14 +126,6 @@ fun TaskStateBadge(state: TaskProgressState, locked: Boolean, modifier: Modifier
 @Composable
 fun TierBadge(tier: TaskTier, modifier: Modifier = Modifier) {
     StatusBadge(tier.label(), tier.color(), BadgeMark.DOT, modifier)
-}
-
-fun TaskProgressState.label(): String = when (this) {
-    TaskProgressState.NOT_STARTED -> "To Do"
-    TaskProgressState.IN_PROGRESS -> "In Progress"
-    TaskProgressState.SUBMITTED -> "Submitted"
-    TaskProgressState.NEEDS_REVISION -> "Needs Revision"
-    TaskProgressState.COMPETENT -> "Competent"
 }
 
 fun CompetenceResult.label(): String = when (this) {

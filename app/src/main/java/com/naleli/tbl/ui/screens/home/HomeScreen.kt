@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -46,6 +48,7 @@ import com.naleli.tbl.ui.theme.NibsOrange
 import com.naleli.tbl.ui.theme.OnHeroSurface
 import com.naleli.tbl.ui.theme.OnHeroSurfaceSoft
 import com.naleli.tbl.ui.theme.SuccessGreen
+import com.naleli.tbl.ui.theme.SuccessGreenOnDark
 import com.naleli.tbl.ui.theme.SurfaceWhite
 
 /**
@@ -129,7 +132,18 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                     modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(NaleliGradients.missionCard).padding(20.dp),
                 ) {
                     Column {
-                        Text("CURRENT FOCUS", style = MaterialTheme.typography.labelLarge, color = OnHeroSurfaceSoft)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text("CURRENT FOCUS", style = MaterialTheme.typography.labelLarge, color = OnHeroSurfaceSoft)
+                            // Home names the same state My Work and the
+                            // workspace name. It is the one screen a learner
+                            // opens first, so it must not be the one screen
+                            // that leaves the state out.
+                            HeroStateChip(state.priorityTaskState)
+                        }
                         Spacer(Modifier.height(2.dp))
                         Text(workstreamName, style = MaterialTheme.typography.bodyMedium, color = OnHeroSurfaceSoft, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Text(task.title, style = MaterialTheme.typography.titleLarge, color = OnHeroSurface, maxLines = 2, overflow = TextOverflow.Ellipsis)
@@ -151,7 +165,7 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(containerColor = NibsOrange, contentColor = SurfaceWhite),
                         ) {
-                            Text(if (state.priorityTaskState == TaskProgressState.NOT_STARTED) "OPEN TASK" else "CONTINUE WORK")
+                            Text(state.priorityActionLabel)
                         }
                     }
                 }

@@ -7,14 +7,11 @@ import com.naleli.tbl.data.content.Course
 import com.naleli.tbl.data.content.TaskTier
 import com.naleli.tbl.data.content.WorkTask
 import com.naleli.tbl.data.content.WorkspaceCurriculum
-import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.CompetenceResult
 import com.naleli.tbl.data.db.entity.LearnerProfileEntity
-import com.naleli.tbl.data.db.entity.SubStepStatusEntity
 import com.naleli.tbl.domain.TaskProgressState
-import com.naleli.tbl.domain.currentTaskId
+import com.naleli.tbl.domain.WorkspaceSnapshot
 import com.naleli.tbl.domain.projectDayNumber
-import com.naleli.tbl.domain.taskProgressState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,6 +31,9 @@ data class HomeUiState(
     val priorityStepsDone: Int = 0,
     val priorityStepsTotal: Int = 0,
     val priorityHint: String? = null,
+    /** The words on the one dominant button, derived from the state rather
+     * than guessed at by the screen. */
+    val priorityActionLabel: String = "OPEN TASK",
     val recentAchievement: ActivityEvent? = null,
     /** What the learner has actually banked so far — every figure counted
      * from real rows, never a display number. */
@@ -61,9 +61,7 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
                 container.evidenceRepository.observeAll(),
             ) { currentProfile, subSteps, assessments, evidence ->
                 val activeProfile = currentProfile ?: profile
-                val subStepStatuses = subSteps.associateBy { it.subStepId }
-                val assessmentByTask = assessments.associateBy { it.taskId }
-                buildState(activeProfile, course, subStepStatuses, assessmentByTask, evidence.size)
+                buildState(activeProfile, course, WorkspaceSnapshot.of(subSteps, assessments, evidence), evidence.size)
             }.collect { _state.value = it }
         }
     }
@@ -71,25 +69,31 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
     private fun buildState(
         profile: LearnerProfileEntity,
         course: Course,
-        subStepStatuses: Map<String, SubStepStatusEntity>,
-        assessmentByTask: Map<String, AssessmentEntity>,
+        snapshot: WorkspaceSnapshot,
         evidenceCount: Int,
     ): HomeUiState {
+        val assessmentByTask = snapshot.assessmentByTask
         val dayNumber = projectDayNumber(profile, course.totalDays)
         val allTasks = WorkspaceCurriculum.allTasks()
 
-        val priorityTask = currentTaskId(subStepStatuses, assessmentByTask)?.let { WorkspaceCurriculum.taskById(it) }
-        val priorityState = priorityTask?.let { taskProgressState(it, subStepStatuses, assessmentByTask[it.taskId]) }
-            ?: TaskProgressState.NOT_STARTED
-        val priorityStepsDone = priorityTask?.subSteps?.count { subStepStatuses[it.subStepId]?.complete == true } ?: 0
+        val priorityTask = snapshot.currentTaskId?.let { WorkspaceCurriculum.taskById(it) }
+        val priorityState = priorityTask?.let { snapshot.stateOf(it) } ?: TaskProgressState.NOT_STARTED
+        val priorityStepsDone = priorityTask?.let { snapshot.stepsDone(it) } ?: 0
         val priorityStepsTotal = priorityTask?.subSteps?.size ?: 0
-        val priorityNextStepTitle = priorityTask?.subSteps?.firstOrNull { subStepStatuses[it.subStepId]?.complete != true }?.title
+        val priorityNextStepTitle = priorityTask?.subSteps
+            ?.firstOrNull { snapshot.subStepStatuses[it.subStepId]?.complete != true }?.title
+
+        // The hint is ordered by state first, step second. Reading the next
+        // unticked step first used to make a submitted task say "Next: Learn
+        // the basics" while its badge read Submitted — the learner was told
+        // to go redo work that was already with the assessor.
         val priorityHint = when {
             priorityTask == null -> null
+            priorityState == TaskProgressState.SUBMITTED -> "Waiting for review. Nothing to do here yet."
+            priorityState == TaskProgressState.NEEDS_REVISION -> "Feedback is waiting — open it to see what to change."
+            priorityState == TaskProgressState.READY_TO_SUBMIT -> "Everything is done. Submit it for review."
             priorityNextStepTitle != null -> "Next: $priorityNextStepTitle"
-            priorityState == TaskProgressState.SUBMITTED -> "Awaiting assessment."
-            priorityState == TaskProgressState.NEEDS_REVISION -> "Resubmit for assessment."
-            else -> "Ready to submit for assessment."
+            else -> "Attach your evidence, then submit."
         }
 
         // The nearest real checkpoint is finishing the workstream in hand —
@@ -138,6 +142,14 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
             priorityStepsDone = priorityStepsDone,
             priorityStepsTotal = priorityStepsTotal,
             priorityHint = priorityHint,
+            priorityActionLabel = when (priorityState) {
+                TaskProgressState.NOT_STARTED -> "START TASK"
+                TaskProgressState.IN_PROGRESS -> "CONTINUE WORK"
+                TaskProgressState.READY_TO_SUBMIT -> "SUBMIT WORK"
+                TaskProgressState.SUBMITTED -> "VIEW SUBMISSION"
+                TaskProgressState.NEEDS_REVISION -> "SEE FEEDBACK"
+                TaskProgressState.COMPETENT -> "OPEN TASK"
+            },
             recentAchievement = recentAchievement,
         )
     }

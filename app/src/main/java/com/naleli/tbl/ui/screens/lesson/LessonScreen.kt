@@ -24,6 +24,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.PlayCircleOutline
 import androidx.compose.material.icons.filled.Visibility
@@ -41,6 +43,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -67,6 +70,8 @@ import com.naleli.tbl.data.content.LessonPractice
 import com.naleli.tbl.data.content.LessonPage
 import com.naleli.tbl.data.content.LessonStage
 import com.naleli.tbl.data.content.WorkTask
+import com.naleli.tbl.data.db.entity.EvidenceEntity
+import com.naleli.tbl.domain.SubmissionRequirement
 import com.naleli.tbl.ui.components.LessonImage
 import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.screens.workspace.TaskWorkspaceViewModel
@@ -147,6 +152,15 @@ fun LessonScreen(
     val stage = stages[safeIndex]
     val isLast = safeIndex == stages.lastIndex
 
+    // Reaching Show means the learner has walked the whole arc, so the
+    // day's steps are genuinely done — mark them on arrival rather than at
+    // submit. Without this the first requirement on the Show checklist
+    // ("work through every stage") could never tick from inside the lesson,
+    // and SUBMIT would be permanently disabled.
+    LaunchedEffect(stage) {
+        if (stage is Stage.Show) viewModel.completeStageSubStep(LessonStage.SHOW)
+    }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -185,7 +199,9 @@ fun LessonScreen(
                 is Stage.Show -> ShowStage(
                     task = stage.task,
                     mission = stages.filterIsInstance<Stage.Apply>().firstOrNull()?.mission,
-                    evidenceCount = state.evidenceCount,
+                    attachedFiles = state.attachedFiles,
+                    writtenAnswers = state.writtenAnswers,
+                    requirements = state.submissionRequirements,
                     answerDraft = answerDraft,
                     onAnswerChange = { answerDraft = it },
                     onSaveAnswer = {
@@ -193,6 +209,7 @@ fun LessonScreen(
                         answerDraft = ""
                     },
                     onAddEvidence = onAddEvidence,
+                    onRemoveEvidence = viewModel::removeEvidence,
                 )
             }
             if (isStageEnd && nextStage != null) {
@@ -204,7 +221,11 @@ fun LessonScreen(
 
         LessonFooter(
             isLast = isLast,
-            canSubmit = state.evidenceCount > 0,
+            // The same rule the badge on every other screen uses, and the
+            // same list Show ticks off — so a disabled SUBMIT always has a
+            // named reason sitting directly above it.
+            canSubmit = state.missingRequirements.isEmpty(),
+            blockingReason = state.missingRequirements.firstOrNull()?.label,
             canGoBack = safeIndex > 0,
             onBack = { index -= 1 },
             onContinue = {
@@ -526,75 +547,125 @@ private fun TaskStep(step: String) {
 }
 
 /**
- * SHOW — "prove it". No new learning here: a checklist tied to what Apply
- * asked for, and what counts as evidence.
+ * SHOW — "prove it". No new learning here: three numbered steps, in the
+ * order they have to happen, each with its own tick.
+ *
+ * This used to be one long screen with a disabled SUBMIT at the bottom and
+ * a single sentence explaining why. A learner who had attached a photo but
+ * written nothing was told only that something was wrong, not what.
  */
 @Composable
 private fun ShowStage(
     task: WorkTask,
     mission: LessonMission?,
-    evidenceCount: Int,
+    attachedFiles: List<EvidenceEntity>,
+    writtenAnswers: List<EvidenceEntity>,
+    requirements: List<SubmissionRequirement>,
     answerDraft: String,
     onAnswerChange: (String) -> Unit,
     onSaveAnswer: () -> Unit,
     onAddEvidence: () -> Unit,
+    onRemoveEvidence: (EvidenceEntity) -> Unit,
 ) {
     StageIntro(
         eyebrow = "SHOW YOUR WORK",
         title = "Submit your evidence",
         body = "Nothing new to learn here — this is where you prove what you just did.",
     )
-    Spacer(Modifier.height(20.dp))
+    Spacer(Modifier.height(18.dp))
 
-    Text("YOU MUST SUBMIT", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
-    Spacer(Modifier.height(8.dp))
+    Text("THIS TASK ASKS FOR", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+    Spacer(Modifier.height(6.dp))
     ChecklistItem(task.deliverableLabel)
     mission?.submit?.forEach { ChecklistItem(it) }
 
-    // Typing the answer here is the whole point: most of what this
-    // programme asks for is written explanation, and sending a learner off
-    // to another app to write it — then back with a photograph — is where
-    // submissions get lost.
     Spacer(Modifier.height(20.dp))
-    Text("WRITE YOUR ANSWER", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
-    Spacer(Modifier.height(4.dp))
-    mission?.steps?.takeIf { it.isNotEmpty() }?.let { steps ->
-        Text(
-            "Answer the ${steps.size} points from your Work Mission.",
-            style = MaterialTheme.typography.labelSmall,
-            color = OnHeroSurfaceSoft,
-        )
-        Spacer(Modifier.height(8.dp))
+    ShowStep(
+        number = "01",
+        title = "Attach your evidence",
+        subtitle = "A file, screenshot or photo of the work you produced.",
+        done = attachedFiles.isNotEmpty(),
+    ) {
+        attachedFiles.forEach { EvidenceRow(it, onRemove = { onRemoveEvidence(it) }) }
+        if (attachedFiles.isNotEmpty()) Spacer(Modifier.height(10.dp))
+        OutlinedButton(onClick = onAddEvidence, modifier = Modifier.fillMaxWidth()) {
+            Text(if (attachedFiles.isEmpty()) "ATTACH A FILE" else "ATTACH ANOTHER")
+        }
     }
-    OutlinedTextField(
-        value = answerDraft,
-        onValueChange = onAnswerChange,
-        modifier = Modifier.fillMaxWidth().heightIn(min = 140.dp),
-        placeholder = {
+
+    Spacer(Modifier.height(14.dp))
+    ShowStep(
+        number = "02",
+        title = "Explain your work",
+        subtitle = "What you did, what you decided, and why you decided it.",
+        done = writtenAnswers.isNotEmpty(),
+    ) {
+        writtenAnswers.forEach { EvidenceRow(it, onRemove = { onRemoveEvidence(it) }) }
+        if (writtenAnswers.isNotEmpty()) Spacer(Modifier.height(10.dp))
+
+        mission?.steps?.takeIf { it.isNotEmpty() }?.let { steps ->
             Text(
-                "Type your answer here…",
-                style = MaterialTheme.typography.bodyMedium,
+                "Answer the ${steps.size} points from your Work Mission.",
+                style = MaterialTheme.typography.labelSmall,
                 color = OnHeroSurfaceSoft,
             )
-        },
-        textStyle = MaterialTheme.typography.bodyMedium.copy(color = OnHeroSurface),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = NibsOrange,
-            unfocusedBorderColor = SurfaceWhite.copy(alpha = 0.30f),
-            cursorColor = NibsOrange,
-            focusedContainerColor = SurfaceWhite.copy(alpha = 0.06f),
-            unfocusedContainerColor = SurfaceWhite.copy(alpha = 0.06f),
-        ),
-        shape = RoundedCornerShape(12.dp),
-    )
-    Spacer(Modifier.height(8.dp))
-    OutlinedButton(
-        onClick = onSaveAnswer,
-        enabled = answerDraft.isNotBlank(),
-        modifier = Modifier.fillMaxWidth(),
-    ) { Text("SAVE MY ANSWER") }
+            Spacer(Modifier.height(8.dp))
+        }
+        // Typing the answer here is the whole point: most of what this
+        // programme asks for is written explanation, and sending a learner
+        // off to another app to write it — then back with a photograph —
+        // is where submissions get lost.
+        OutlinedTextField(
+            value = answerDraft,
+            onValueChange = onAnswerChange,
+            modifier = Modifier.fillMaxWidth().heightIn(min = 130.dp),
+            placeholder = {
+                Text(
+                    "Type your answer here…",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = OnHeroSurfaceSoft,
+                )
+            },
+            textStyle = MaterialTheme.typography.bodyMedium.copy(color = OnHeroSurface),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = NibsOrange,
+                unfocusedBorderColor = SurfaceWhite.copy(alpha = 0.30f),
+                cursorColor = NibsOrange,
+                focusedContainerColor = SurfaceWhite.copy(alpha = 0.06f),
+                unfocusedContainerColor = SurfaceWhite.copy(alpha = 0.06f),
+            ),
+            shape = RoundedCornerShape(12.dp),
+        )
+        Spacer(Modifier.height(8.dp))
+        OutlinedButton(
+            onClick = onSaveAnswer,
+            enabled = answerDraft.isNotBlank(),
+            modifier = Modifier.fillMaxWidth(),
+        ) { Text(if (writtenAnswers.isEmpty()) "SAVE MY ANSWER" else "SAVE ANOTHER ANSWER") }
+    }
 
-    Spacer(Modifier.height(18.dp))
+    Spacer(Modifier.height(14.dp))
+    ShowStep(
+        number = "03",
+        title = "Submit your work",
+        subtitle = "SUBMIT unlocks once every line below is ticked.",
+        done = requirements.all { it.met },
+    ) {
+        requirements.forEach { RequirementRow(it) }
+    }
+}
+
+/** One numbered step of Show. The number is the sequence; the tick is the
+ * state — a learner can see at a glance which of the three still needs
+ * them, without reading a word. */
+@Composable
+private fun ShowStep(
+    number: String,
+    title: String,
+    subtitle: String,
+    done: Boolean,
+    content: @Composable () -> Unit,
+) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -603,30 +674,81 @@ private fun ShowStage(
             .padding(horizontal = 16.dp, vertical = 14.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                if (evidenceCount > 0) Icons.Filled.Check else Icons.Filled.AttachFile,
-                contentDescription = null,
-                tint = if (evidenceCount > 0) SuccessGreen else OnHeroSurfaceSoft,
-                modifier = Modifier.size(18.dp),
-            )
-            Spacer(Modifier.width(8.dp))
             Text(
-                if (evidenceCount == 0) "Nothing attached yet" else "$evidenceCount item(s) attached",
-                style = MaterialTheme.typography.bodyMedium,
-                color = OnHeroSurfaceSoft,
+                number,
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = FontWeight.Bold,
+                color = if (done) SuccessGreen else NibsOrange,
+            )
+            Spacer(Modifier.width(10.dp))
+            Text(
+                title,
+                style = MaterialTheme.typography.titleSmall,
+                color = OnHeroSurface,
+                modifier = Modifier.weight(1f),
+            )
+            if (done) {
+                Icon(Icons.Filled.Check, contentDescription = "Done", tint = SuccessGreen, modifier = Modifier.size(18.dp))
+            }
+        }
+        Spacer(Modifier.height(4.dp))
+        Text(subtitle, style = MaterialTheme.typography.labelSmall, color = OnHeroSurfaceSoft, lineHeight = 17.sp)
+        Spacer(Modifier.height(12.dp))
+        content()
+    }
+}
+
+/** One attached item, with the way to take it off again. Replacing is
+ * remove-then-attach — the learner is never stuck with the wrong file. */
+@Composable
+private fun EvidenceRow(evidence: EvidenceEntity, onRemove: () -> Unit) {
+    Row(
+        Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            if (evidence.fileType.startsWith("image/")) Icons.Filled.Image else Icons.Filled.Description,
+            contentDescription = null,
+            tint = SuccessGreen,
+            modifier = Modifier.size(16.dp),
+        )
+        Spacer(Modifier.width(10.dp))
+        Text(
+            evidence.fileName,
+            style = MaterialTheme.typography.bodyMedium,
+            color = OnHeroSurface,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f),
+        )
+        TextButton(onClick = onRemove) {
+            Text("REMOVE", style = MaterialTheme.typography.labelSmall, color = OnHeroSurfaceSoft)
+        }
+    }
+}
+
+/** One submission requirement, ticked or not. Naming each one is what
+ * makes "you cannot submit yet" answerable. */
+@Composable
+private fun RequirementRow(requirement: SubmissionRequirement) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 5.dp), verticalAlignment = Alignment.CenterVertically) {
+        if (requirement.met) {
+            Icon(Icons.Filled.Check, contentDescription = null, tint = SuccessGreen, modifier = Modifier.size(16.dp))
+        } else {
+            Box(
+                Modifier
+                    .size(16.dp)
+                    .clip(CircleShape)
+                    .border(1.5.dp, OnHeroSurfaceSoft, CircleShape),
             )
         }
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.width(10.dp))
         Text(
-            "You can also attach a file: screenshot, document, photograph or spreadsheet.",
-            style = MaterialTheme.typography.labelSmall,
-            color = OnHeroSurfaceSoft,
-            lineHeight = 17.sp,
+            requirement.label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (requirement.met) OnHeroSurfaceSoft else OnHeroSurface,
+            lineHeight = 21.sp,
         )
-        Spacer(Modifier.height(12.dp))
-        OutlinedButton(onClick = onAddEvidence, modifier = Modifier.fillMaxWidth()) {
-            Text("ATTACH A FILE")
-        }
     }
 }
 
@@ -825,15 +947,16 @@ private fun StageComplete(finished: LessonStage, next: LessonStage) {
 private fun LessonFooter(
     isLast: Boolean,
     canSubmit: Boolean,
+    blockingReason: String?,
     canGoBack: Boolean,
     onBack: () -> Unit,
     onContinue: () -> Unit,
     onSubmit: () -> Unit,
 ) {
     Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(bottom = 20.dp, top = 6.dp)) {
-        if (isLast && !canSubmit) {
+        if (isLast && !canSubmit && blockingReason != null) {
             Text(
-                "Attach your evidence first.",
+                "Still to do: $blockingReason",
                 style = MaterialTheme.typography.labelSmall,
                 color = OnHeroSurfaceSoft,
                 modifier = Modifier.padding(bottom = 8.dp),

@@ -6,12 +6,8 @@ import com.naleli.tbl.AppContainer
 import com.naleli.tbl.data.content.CourseStage
 import com.naleli.tbl.data.content.WorkTask
 import com.naleli.tbl.data.content.WorkspaceCurriculum
-import com.naleli.tbl.data.db.entity.AssessmentEntity
-import com.naleli.tbl.data.db.entity.SubStepStatusEntity
 import com.naleli.tbl.domain.TaskProgressState
-import com.naleli.tbl.domain.currentTaskId
-import com.naleli.tbl.domain.isTaskLocked
-import com.naleli.tbl.domain.taskProgressState
+import com.naleli.tbl.domain.WorkspaceSnapshot
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,6 +23,7 @@ data class WorkTaskRow(
     val lockReason: String?,
     val stepsDone: Int,
     val stepsTotal: Int,
+    val evidenceCount: Int,
 )
 
 /** Four buckets a learner instantly understands (approved redesign §2):
@@ -55,33 +52,29 @@ class MyWorkViewModel(private val container: AppContainer) : ViewModel() {
             combine(
                 container.workspaceRepository.observeSubSteps(),
                 container.workspaceRepository.observeAssessments(),
-            ) { subSteps, assessments ->
-                buildState(stages, subSteps.associateBy { it.subStepId }, assessments.associateBy { it.taskId })
+                container.evidenceRepository.observeAll(),
+            ) { subSteps, assessments, evidence ->
+                buildState(stages, WorkspaceSnapshot.of(subSteps, assessments, evidence))
             }.collect { _state.value = it }
         }
     }
 
-    private fun buildState(
-        stages: List<CourseStage>,
-        subStepStatuses: Map<String, SubStepStatusEntity>,
-        assessmentByTask: Map<String, AssessmentEntity>,
-    ): MyWorkUiState {
+    private fun buildState(stages: List<CourseStage>, snapshot: WorkspaceSnapshot): MyWorkUiState {
         val allTasks = WorkspaceCurriculum.allTasks()
-        val currentId = currentTaskId(subStepStatuses, assessmentByTask)
+        val currentId = snapshot.currentTaskId
 
         val rows = allTasks.map { task ->
-            val locked = isTaskLocked(task.taskId, assessmentByTask)
-            val state = taskProgressState(task, subStepStatuses, assessmentByTask[task.taskId])
             val prereqTitle = WorkspaceCurriculum.prerequisiteFor(task.taskId)?.let { WorkspaceCurriculum.taskById(it)?.title }
             WorkTaskRow(
                 task = task,
                 workstreamName = WorkspaceCurriculum.workstreamFor(task.taskId)?.name ?: "",
-                state = state,
+                state = snapshot.stateOf(task),
                 isCurrent = task.taskId == currentId,
-                locked = locked,
+                locked = snapshot.isLocked(task.taskId),
                 lockReason = prereqTitle?.let { "Unlocks after \"$it\"" },
-                stepsDone = task.subSteps.count { subStepStatuses[it.subStepId]?.complete == true },
+                stepsDone = snapshot.stepsDone(task),
                 stepsTotal = task.subSteps.size,
+                evidenceCount = snapshot.evidenceCount(task.taskId),
             )
         }
 
@@ -101,8 +94,16 @@ class MyWorkViewModel(private val container: AppContainer) : ViewModel() {
 
         return MyWorkUiState(
             isLoading = false,
+            // Six states, four buckets: Ready to Submit and Needs Changes
+            // are both "open work in the learner's hands", so they sit with
+            // In Progress. The badge on the row still names the exact state,
+            // so the bucket never overrides what the task actually says.
             toDo = phaseRows.filter { it.state == TaskProgressState.NOT_STARTED },
-            inProgress = phaseRows.filter { it.state == TaskProgressState.IN_PROGRESS || it.state == TaskProgressState.NEEDS_REVISION },
+            inProgress = phaseRows.filter {
+                it.state == TaskProgressState.IN_PROGRESS ||
+                    it.state == TaskProgressState.READY_TO_SUBMIT ||
+                    it.state == TaskProgressState.NEEDS_REVISION
+            },
             assessment = phaseRows.filter { it.state == TaskProgressState.SUBMITTED },
             done = phaseRows.filter { it.state == TaskProgressState.COMPETENT },
             phaseName = stages.firstOrNull { it.stageId == activeStageId }?.name.orEmpty(),

@@ -148,6 +148,16 @@ private fun WorkstreamRow(ws: WorkstreamUi, onOpenTask: (String) -> Unit) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
+            // A workstream the learner has work sitting in should say so.
+            // Without this a stream reading "0/4" looks identical whether
+            // it has never been opened or has three tasks awaiting review.
+            if (!allDone && ws.openWorkCount > 0) {
+                Text(
+                    "${ws.completedCount} of ${ws.totalCount} complete · ${ws.openWorkCount} in progress",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
         when {
             isCurrent -> StatusBadge("Here", MaterialTheme.colorScheme.primary, BadgeMark.DOT)

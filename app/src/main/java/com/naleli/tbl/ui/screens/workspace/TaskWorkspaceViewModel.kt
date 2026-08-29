@@ -9,11 +9,14 @@ import com.naleli.tbl.data.content.LessonLibrary
 import com.naleli.tbl.data.content.LessonStage
 import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.data.db.entity.AssessmentEntity
+import com.naleli.tbl.data.db.entity.EvidenceEntity
 import com.naleli.tbl.data.db.entity.SubStepStatusEntity
 import com.naleli.tbl.domain.TaskProgressState
+import com.naleli.tbl.domain.SubmissionChecklist
+import com.naleli.tbl.domain.SubmissionRequirement
+import com.naleli.tbl.domain.WorkspaceSnapshot
 import com.naleli.tbl.domain.allSubStepsDone
-import com.naleli.tbl.domain.isTaskLocked
-import com.naleli.tbl.domain.taskProgressState
+import com.naleli.tbl.domain.isWrittenAnswer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,17 +31,32 @@ data class TaskWorkspaceUiState(
     val workstreamName: String = "",
     val locked: Boolean = false,
     val subStepStatuses: Map<String, SubStepStatusEntity> = emptyMap(),
-    val evidenceCount: Int = 0,
+    val evidence: List<EvidenceEntity> = emptyList(),
     val assessment: AssessmentEntity? = null,
     val progressState: TaskProgressState = TaskProgressState.NOT_STARTED,
     /** Titles of the source lessons behind this day, empty when the day is
      * practical work with no reading. */
     val lessonTitles: List<String> = emptyList(),
 ) {
+    val evidenceCount: Int get() = evidence.size
     val allStepsDone: Boolean get() = task?.let { allSubStepsDone(it.subSteps, subStepStatuses) } ?: false
-    val readyToSubmit: Boolean
-        get() = allStepsDone && evidenceCount > 0 &&
-            (progressState == TaskProgressState.IN_PROGRESS || progressState == TaskProgressState.NEEDS_REVISION)
+
+    /** Files the learner attached, kept apart from answers they typed — the
+     * Show screen presents them as two different steps because they are two
+     * different things the day asks for. */
+    val attachedFiles: List<EvidenceEntity> get() = evidence.filterNot { it.isWrittenAnswer() }
+    val writtenAnswers: List<EvidenceEntity> get() = evidence.filter { it.isWrittenAnswer() }
+
+    /** Every requirement with its own tick, so "what is still missing" is
+     * always nameable rather than one greyed-out button. */
+    val submissionRequirements: List<SubmissionRequirement>
+        get() = task?.let { SubmissionChecklist.requirements(it, subStepStatuses, evidence) }.orEmpty()
+    val missingRequirements: List<SubmissionRequirement> get() = submissionRequirements.filterNot { it.met }
+
+    /** Read straight off the shared state rather than recomputed here — the
+     * button the learner sees and the badge the other screens see are now
+     * the same decision. */
+    val readyToSubmit: Boolean get() = progressState == TaskProgressState.READY_TO_SUBMIT
 }
 
 class TaskWorkspaceViewModel(private val container: AppContainer, private val taskId: String) : ViewModel() {
@@ -59,20 +77,21 @@ class TaskWorkspaceViewModel(private val container: AppContainer, private val ta
             combine(
                 container.workspaceRepository.observeSubSteps(),
                 container.workspaceRepository.observeAssessments(),
-                container.evidenceRepository.observeForTask(taskId),
-            ) { subSteps, assessments, evidence ->
-                val subStepStatuses = subSteps.filter { it.taskId == taskId }.associateBy { it.subStepId }
-                val assessmentByTask = assessments.associateBy { it.taskId }
-                val assessment = assessmentByTask[taskId]
+                container.evidenceRepository.observeAll(),
+            ) { subSteps, assessments, allEvidence ->
+                // The same snapshot Home, My Work and Journey build, from
+                // the same three flows — this screen is where a learner acts,
+                // so it must not be the one computing state its own way.
+                val snapshot = WorkspaceSnapshot.of(subSteps, assessments, allEvidence)
                 TaskWorkspaceUiState(
                     isLoading = false,
                     task = task,
                     workstreamName = WorkspaceCurriculum.workstreamFor(taskId)?.name ?: "",
-                    locked = isTaskLocked(taskId, assessmentByTask),
-                    subStepStatuses = subStepStatuses,
-                    evidenceCount = evidence.size,
-                    assessment = assessment,
-                    progressState = task?.let { taskProgressState(it, subStepStatuses, assessment) } ?: TaskProgressState.NOT_STARTED,
+                    locked = snapshot.isLocked(taskId),
+                    subStepStatuses = subSteps.filter { it.taskId == taskId }.associateBy { it.subStepId },
+                    evidence = allEvidence.filter { it.taskId == taskId },
+                    assessment = snapshot.assessmentOf(taskId),
+                    progressState = task?.let { snapshot.stateOf(it) } ?: TaskProgressState.NOT_STARTED,
                     lessonTitles = lessonTitles,
                 )
             }.collect { _state.value = it }
@@ -129,6 +148,13 @@ class TaskWorkspaceViewModel(private val container: AppContainer, private val ta
                 description = task?.deliverableLabel,
             )
         }
+    }
+
+    /** Removes one piece of evidence. Replacing is remove-then-attach: the
+     * learner can always undo a wrong file rather than submitting it because
+     * the app gave them no way back. */
+    fun removeEvidence(evidence: EvidenceEntity) {
+        viewModelScope.launch { container.evidenceRepository.delete(evidence) }
     }
 
     fun submitForAssessment(confidenceRating: Int) {

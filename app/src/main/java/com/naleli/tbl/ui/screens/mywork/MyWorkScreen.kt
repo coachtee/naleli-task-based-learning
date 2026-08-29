@@ -104,11 +104,16 @@ private fun androidx.compose.foundation.lazy.LazyListScope.taskSection(title: St
 
 @Composable
 private fun TaskRow(row: WorkTaskRow, onOpenTask: (String) -> Unit) {
+    // The subtitle says what to do next, never what state this is in —
+    // the badge above already names the state, and two different words for
+    // one state is exactly the contradiction this row used to produce.
     val subtitle = when {
         row.locked -> row.lockReason ?: "Locked"
-        row.state == TaskProgressState.IN_PROGRESS || row.state == TaskProgressState.NEEDS_REVISION ->
+        row.state == TaskProgressState.READY_TO_SUBMIT -> "${row.workstreamName} · All steps done, evidence attached"
+        row.state == TaskProgressState.NEEDS_REVISION -> "${row.workstreamName} · Feedback is waiting for you"
+        row.state == TaskProgressState.IN_PROGRESS ->
             "${row.workstreamName} · Step ${row.stepsDone} of ${row.stepsTotal}"
-        row.state == TaskProgressState.SUBMITTED -> "${row.workstreamName} · Awaiting assessment"
+        row.state == TaskProgressState.SUBMITTED -> "${row.workstreamName} · Waiting for review"
         row.state == TaskProgressState.COMPETENT -> "${row.workstreamName} · Competence recorded"
         else -> "${row.workstreamName} · ~${row.task.estimatedMinutes} min"
     }

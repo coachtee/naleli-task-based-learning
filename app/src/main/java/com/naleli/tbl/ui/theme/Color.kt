@@ -38,6 +38,10 @@ val SlateSurface = Color(0xFFF1F5F9)
 /** Competent / Completed / Verified evidence. */
 val SuccessGreen = Color(0xFF059669)
 val SuccessGreenBg = Color(0xFFE3F6EF)
+// The same success signal, lightened for navy surfaces. SuccessGreen is
+// tuned for white cards and goes muddy on the hero; this is that colour on
+// dark, not a second green in the system.
+val SuccessGreenOnDark = Color(0xFF34D399)
 
 /** Required tasks. */
 val ErrorRed = Color(0xFFDC2626)

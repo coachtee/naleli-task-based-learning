@@ -222,13 +222,39 @@ fun TaskWorkspaceScreen(
                     enabled = state.readyToSubmit,
                 ) { Text("Submit for Assessment") }
             }
-            if (!state.readyToSubmit && state.progressState != TaskProgressState.SUBMITTED) {
-                Spacer(Modifier.height(6.dp))
+            // Name every outstanding requirement rather than one blanket
+            // sentence: a learner staring at a disabled button must be able
+            // to see exactly which line is stopping them.
+            if (!state.readyToSubmit &&
+                state.progressState != TaskProgressState.SUBMITTED &&
+                state.progressState != TaskProgressState.COMPETENT
+            ) {
+                Spacer(Modifier.height(8.dp))
                 Text(
-                    "Complete every step and attach evidence before submitting.",
+                    "STILL TO DO",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                Spacer(Modifier.height(4.dp))
+                state.missingRequirements.forEach { requirement ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Box(
+                            Modifier
+                                .size(14.dp)
+                                .clip(CircleShape)
+                                .border(1.5.dp, MaterialTheme.colorScheme.onSurfaceVariant, CircleShape),
+                        )
+                        Spacer(Modifier.width(10.dp))
+                        Text(
+                            requirement.label,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
+                }
             }
         }
     }
@@ -275,13 +301,15 @@ fun TaskWorkspaceScreen(
  * Derived from the real rows — sub-steps, evidence, assessment — so the
  * roadmap can never claim progress the data does not support.
  */
-private fun reachedStage(progressState: TaskProgressState, allStepsDone: Boolean, hasEvidence: Boolean): Int = when {
-    progressState == TaskProgressState.COMPETENT -> 5
-    progressState == TaskProgressState.SUBMITTED -> 5
-    hasEvidence -> 5
-    allStepsDone -> 4
-    progressState == TaskProgressState.IN_PROGRESS -> 2
-    else -> 1
+private fun reachedStage(progressState: TaskProgressState, allStepsDone: Boolean, hasEvidence: Boolean): Int = when (progressState) {
+    TaskProgressState.COMPETENT, TaskProgressState.SUBMITTED, TaskProgressState.READY_TO_SUBMIT -> 5
+    TaskProgressState.NEEDS_REVISION -> 5
+    TaskProgressState.IN_PROGRESS -> when {
+        hasEvidence -> 5
+        allStepsDone -> 4
+        else -> 2
+    }
+    TaskProgressState.NOT_STARTED -> 1
 }
 
 /** One row of the five-stage roadmap: what it is, and whether the learner
