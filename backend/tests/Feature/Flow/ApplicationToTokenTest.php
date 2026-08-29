@@ -21,6 +21,7 @@ use App\Models\Offering;
 use App\Models\Payment;
 use App\Services\Enrolment\ApplicationAcceptor;
 use App\Services\Enrolment\EnrolmentActivator;
+use App\Services\Registration\ProfileCompleteness;
 use App\Services\Tokens\AccessTokenIssuer;
 use Database\Seeders\ProgrammeSeeder;
 use DomainException;
@@ -64,7 +65,7 @@ class ApplicationToTokenTest extends TestCase
         $learner = Learner::where('learner_ref', $learnerRef)->firstOrFail();
         $application = Application::firstOrFail();
 
-        $this->assertSame(ApplicationStatus::APPLIED, $application->status);
+        $this->assertSame(ApplicationStatus::REGISTRATION_STARTED, $application->status);
         $this->assertSame('PPO', $application->programme->code);
         $this->assertSame('February 2027', $application->intake->label);
         // The SA ID validated itself, so identity is already established.
@@ -99,7 +100,11 @@ class ApplicationToTokenTest extends TestCase
         $this->assertSame(InvoiceStatus::PAID, $activating->fresh()->status);
         $this->assertSame(EnrolmentStatus::ACTIVE, $enrolment->fresh()->status);
         $this->assertSame(LearnerStatus::ACTIVE, $learner->fresh()->status);
-        $this->assertSame(ApplicationStatus::ENROLLED, $application->fresh()->status);
+        // Paid, studying, and still owing us the rest of the profile — which
+        // is the whole point of collecting it after the money rather than
+        // before it. The token was issued anyway; only identity gates that.
+        $this->assertSame(ApplicationStatus::PROFILE_INCOMPLETE, $application->fresh()->status);
+        $this->assertContains('Home address', app(ProfileCompleteness::class)->missing($learner->fresh()));
 
         $entitlement = $learner->entitlements()
             ->where('programme_id', $enrolment->programme_id)
@@ -215,7 +220,7 @@ class ApplicationToTokenTest extends TestCase
         // But no token, and the state says exactly why.
         $this->assertNull($result['plain_token']);
         $this->assertSame(0, AccessToken::count());
-        $this->assertSame(ApplicationStatus::AWAITING_IDENTITY, $application->fresh()->status);
+        $this->assertSame(ApplicationStatus::PROFILE_INCOMPLETE, $application->fresh()->status);
 
         // The registrar sights the passport and issues the token.
         $learner->fresh()->update(['identity_verified_at' => now()]);

@@ -66,7 +66,7 @@ class ApplicationIntake
                 'learner_id' => $learner->id,
                 'programme_id' => $programme?->id,
                 'intake_id' => $intake?->id,
-                'status' => ApplicationStatus::APPLIED,
+                'status' => ApplicationStatus::REGISTRATION_STARTED,
                 'source' => $source,
                 'source_form_id' => $formId,
                 'source_reference' => $reference,

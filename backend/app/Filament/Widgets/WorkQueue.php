@@ -33,8 +33,10 @@ class WorkQueue extends TableWidget
                 Application::query()
                     ->with(['learner', 'programme', 'intake'])
                     ->whereIn('status', [
-                        ApplicationStatus::APPLIED,
-                        ApplicationStatus::AWAITING_IDENTITY,
+                        ApplicationStatus::LEAD,
+                        ApplicationStatus::CONTACTED,
+                        ApplicationStatus::REGISTRATION_STARTED,
+                        ApplicationStatus::PROFILE_INCOMPLETE,
                     ])
                     ->orderBy('applied_at'),
             )
@@ -56,7 +58,7 @@ class WorkQueue extends TableWidget
                     ->badge()
                     ->formatStateUsing(fn (ApplicationStatus $state): string => $state->label())
                     ->color(fn (ApplicationStatus $state): string => match ($state) {
-                        ApplicationStatus::AWAITING_IDENTITY => 'danger',
+                        ApplicationStatus::PROFILE_INCOMPLETE => 'danger',
                         default => 'warning',
                     }),
 

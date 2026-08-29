@@ -15,6 +15,7 @@ use App\Models\Payment;
 use App\Models\User;
 use App\Services\Payments\Contracts\CallbackResult;
 use App\Services\Payments\PaymentProviderRegistry;
+use App\Services\Registration\ProfileCompleteness;
 use App\Services\Tokens\AccessTokenIssuer;
 use DomainException;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +43,7 @@ class EnrolmentActivator
     public function __construct(
         private readonly EntitlementResolver $entitlements,
         private readonly AccessTokenIssuer $tokens,
+        private readonly ProfileCompleteness $profiles,
     ) {}
 
     /**
@@ -184,7 +186,12 @@ class EnrolmentActivator
 
         $learner->update(['status' => LearnerStatus::ACTIVE]);
 
-        $enrolment->application?->update(['status' => ApplicationStatus::ENROLLED]);
+        // Paid is its own rung. Whether they are fully registered depends on
+        // what is still owed, and that is settled a few lines below.
+        $enrolment->application?->update([
+            'status' => ApplicationStatus::PAID,
+            'registered_at' => null,
+        ]);
 
         $this->entitlements->resolveFor($learner->refresh());
 
@@ -199,22 +206,37 @@ class EnrolmentActivator
         $learner = $enrolment->learner;
 
         if (! $learner->hasVerifiedIdentity()) {
-            // Paid, active, but no token yet. The application is parked at a
-            // named state so the registrar can chase the missing document
-            // rather than wondering why nothing arrived.
-            $enrolment->application?->update(['status' => ApplicationStatus::AWAITING_IDENTITY]);
+            // Paid and enrolled, but no token yet. Parked at a named rung so
+            // the registrar chases the missing document rather than wondering
+            // why nothing arrived — and so the learner can see what is left.
+            $this->settleRegistrationStatus($enrolment, $learner);
 
             return ['token' => null, 'plain' => null];
         }
 
         $existing = $enrolment->accessTokens()->first();
 
-        if ($existing !== null) {
-            return ['token' => $existing, 'plain' => null];
-        }
+        $issued = $existing !== null
+            ? ['token' => $existing, 'plain' => null]
+            : $this->tokens->issue($enrolment, $actor);
 
-        $issued = $this->tokens->issue($enrolment, $actor);
+        // Identity is the only thing that gates the token. The rest of the
+        // profile is chased while the learner is already studying.
+        $this->settleRegistrationStatus($enrolment, $learner);
 
-        return ['token' => $issued['token'], 'plain' => $issued['plain']];
+        return ['token' => $issued['token'], 'plain' => $issued['plain'] ?? null];
+    }
+
+    /**
+     * Registered, or still owing us something. Computed from the record rather
+     * than trusted to whoever last touched the form.
+     */
+    private function settleRegistrationStatus($enrolment, $learner): void
+    {
+        $complete = $this->profiles->refresh($learner->refresh());
+
+        $enrolment->application?->update($complete
+            ? ['status' => ApplicationStatus::REGISTERED, 'registered_at' => now()]
+            : ['status' => ApplicationStatus::PROFILE_INCOMPLETE, 'registered_at' => null]);
     }
 }

@@ -7,7 +7,9 @@ namespace Tests\Feature;
 use App\Enums\UserRole;
 use App\Filament\Widgets\PipelineOverview;
 use App\Filament\Widgets\WorkQueue;
+use App\Models\Application;
 use App\Models\User;
+use Database\Seeders\DemoDataSeeder;
 use Database\Seeders\ProgrammeSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -51,12 +53,29 @@ class DashboardSmokeTest extends TestCase
 
         Livewire::test(PipelineOverview::class)
             ->assertSuccessful()
-            ->assertSee('New applications')
-            ->assertSee('Identity outstanding');
+            ->assertSee('New registrations')
+            ->assertSee('Profile incomplete');
 
         Livewire::test(WorkQueue::class)
             ->assertSuccessful()
             ->assertSee('Nothing waiting');
+    }
+
+    /**
+     * Edit pages are where a renamed column or a stale enum default hides —
+     * the list can be perfectly happy while the form throws.
+     */
+    public function test_the_registration_edit_page_loads_with_its_form(): void
+    {
+        $this->seed(ProgrammeSeeder::class);
+        $this->seed(DemoDataSeeder::class);
+
+        $application = Application::firstOrFail();
+
+        $this->actingAs(User::factory()->create(['role' => UserRole::ADMIN]))
+            ->get("/admin/applications/{$application->id}/edit")
+            ->assertSuccessful()
+            ->assertSee('How it is being paid for');
     }
 
     public function test_every_resource_list_page_loads_for_an_administrator(): void

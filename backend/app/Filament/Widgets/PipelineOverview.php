@@ -30,7 +30,7 @@ class PipelineOverview extends StatsOverviewWidget
 {
     protected ?string $heading = 'Pipeline';
 
-    protected ?string $description = 'Where every learner currently sits, from application to activated access.';
+    protected ?string $description = 'Where every learner currently sits, from first contact to activated access.';
 
     protected int|string|array $columnSpan = 'full';
 
@@ -41,18 +41,22 @@ class PipelineOverview extends StatsOverviewWidget
 
     protected function getStats(): array
     {
-        $awaitingDecision = Application::where('status', ApplicationStatus::APPLIED)->count();
+        $awaitingDecision = Application::whereIn('status', [
+            ApplicationStatus::LEAD,
+            ApplicationStatus::CONTACTED,
+            ApplicationStatus::REGISTRATION_STARTED,
+        ])->count();
         $awaitingPayment = Application::where('status', ApplicationStatus::AWAITING_PAYMENT)->count();
         $owedCents = Invoice::where('status', InvoiceStatus::DUE)->sum('amount_cents');
         $settledThisMonth = Payment::where('status', PaymentStatus::SETTLED)
             ->where('paid_at', '>=', now()->startOfMonth())
             ->sum('amount_cents');
         $activeEnrolments = Enrolment::where('status', EnrolmentStatus::ACTIVE)->count();
-        $awaitingIdentity = Application::where('status', ApplicationStatus::AWAITING_IDENTITY)->count();
+        $profileIncomplete = Application::where('status', ApplicationStatus::PROFILE_INCOMPLETE)->count();
         $unredeemed = AccessToken::where('status', TokenStatus::ISSUED)->count();
 
         return [
-            Stat::make('New applications', (string) $awaitingDecision)
+            Stat::make('New registrations', (string) $awaitingDecision)
                 ->description($awaitingDecision > 0 ? 'Waiting for a decision' : 'Nothing waiting')
                 ->descriptionIcon($awaitingDecision > 0 ? 'heroicon-m-inbox-arrow-down' : 'heroicon-m-check')
                 ->color($awaitingDecision > 0 ? 'warning' : 'gray'),
@@ -75,12 +79,12 @@ class PipelineOverview extends StatsOverviewWidget
 
             // Two numbers that mean somebody is stuck. They are the reason
             // this widget exists rather than a row of totals.
-            Stat::make('Identity outstanding', (string) $awaitingIdentity)
-                ->description($awaitingIdentity > 0
-                    ? 'Paid, but no token until ID is verified'
-                    : 'No learner is blocked')
+            Stat::make('Profile incomplete', (string) $profileIncomplete)
+                ->description($profileIncomplete > 0
+                    ? 'Paid, with detail still owed'
+                    : 'Every paid learner is fully registered')
                 ->descriptionIcon('heroicon-m-identification')
-                ->color($awaitingIdentity > 0 ? 'danger' : 'gray'),
+                ->color($profileIncomplete > 0 ? 'danger' : 'gray'),
 
             Stat::make('Tokens unredeemed', (string) $unredeemed)
                 ->description($unredeemed > 0 ? 'Issued but never opened in the app' : 'All issued tokens in use')

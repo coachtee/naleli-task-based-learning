@@ -90,7 +90,7 @@ class AcceptApplicationActionTest extends TestCase
         // The refusal is reported, not thrown at the registrar as a 500, and
         // nothing is committed.
         $this->assertSame(0, Enrolment::count());
-        $this->assertSame(ApplicationStatus::APPLIED, $application->fresh()->status);
+        $this->assertSame(ApplicationStatus::REGISTRATION_STARTED, $application->fresh()->status);
     }
 
     private function pendingApplication(): Application
@@ -110,7 +110,7 @@ class AcceptApplicationActionTest extends TestCase
             'learner_id' => $learner->id,
             'programme_id' => $offering->programme_id,
             'intake_id' => $offering->intake_id,
-            'status' => ApplicationStatus::APPLIED,
+            'status' => ApplicationStatus::REGISTRATION_STARTED,
             'source' => ApplicationSource::FLUENTFORM,
             'applied_at' => now()->subDays(3),
         ]);

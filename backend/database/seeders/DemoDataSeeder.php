@@ -84,7 +84,7 @@ class DemoDataSeeder extends Seeder
 
         // One learner who has also paid their first monthly instalment, so
         // the money screens show partial settlement rather than all-or-nothing.
-        $second = Application::where('status', ApplicationStatus::ENROLLED)
+        $second = Application::where('status', ApplicationStatus::REGISTERED)
             ->first()?->learner?->enrolments()->first()
             ?->invoices()->where('sequence', 2)->first();
 

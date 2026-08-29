@@ -18,6 +18,14 @@ class ApplicationResource extends Resource
 {
     protected static ?string $model = Application::class;
 
+    // A person registers; they do not apply and wait for a decision. The
+    // class and table keep their names — what a registrar reads changes.
+    protected static ?string $modelLabel = 'registration';
+
+    protected static ?string $pluralModelLabel = 'registrations';
+
+    protected static ?string $navigationLabel = 'Registrations';
+
     protected static string|\UnitEnum|null $navigationGroup = 'Admissions';
 
     protected static ?int $navigationSort = 1;

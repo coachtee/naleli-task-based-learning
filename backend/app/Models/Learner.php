@@ -39,6 +39,7 @@ class Learner extends Model implements AuthenticatableContract
             'id_number_encrypted' => 'encrypted',
             'date_of_birth' => 'date',
             'identity_verified_at' => 'datetime',
+            'profile_completed_at' => 'datetime',
         ];
     }
 

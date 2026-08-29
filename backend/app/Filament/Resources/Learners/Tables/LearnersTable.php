@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Learners\Tables;
 
 use App\Models\Learner;
+use App\Services\Registration\ProfileCompleteness;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -46,6 +47,19 @@ class LearnersTable
                     ->falseIcon('heroicon-o-clock')
                     ->trueColor('success')
                     ->falseColor('gray'),
+
+                // The same measure the registration queue shows, on the record
+                // that actually holds the fields.
+                TextColumn::make('profile')
+                    ->label('Profile')
+                    ->state(fn (Learner $record): string => app(ProfileCompleteness::class)->percent($record).'%')
+                    ->badge()
+                    ->color(fn (Learner $record): string => match (true) {
+                        app(ProfileCompleteness::class)->isComplete($record) => 'success',
+                        app(ProfileCompleteness::class)->blocking($record) !== [] => 'danger',
+                        default => 'warning',
+                    })
+                    ->toggleable(),
 
                 TextColumn::make('status')
                     ->badge()
