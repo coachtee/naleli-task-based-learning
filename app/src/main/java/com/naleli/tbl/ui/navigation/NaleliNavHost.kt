@@ -24,12 +24,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.naleli.tbl.ui.rememberAppContainer
 import com.naleli.tbl.ui.screens.assessment.AssessmentScreen
 import com.naleli.tbl.ui.screens.evidence.AddEvidenceScreen
 import com.naleli.tbl.ui.screens.help.HelpScreen
 import com.naleli.tbl.ui.screens.home.HomeScreen
 import com.naleli.tbl.ui.screens.journey.JourneyScreen
 import com.naleli.tbl.ui.screens.mywork.MyWorkScreen
+import com.naleli.tbl.ui.screens.lesson.LessonScreen
+import com.naleli.tbl.ui.screens.onboarding.OrientationScreen
 import com.naleli.tbl.ui.screens.onboarding.PortfolioSetupScreen
 import com.naleli.tbl.ui.screens.portfolio.PortfolioScreen
 import com.naleli.tbl.ui.screens.profile.ProfileHubScreen
@@ -107,11 +110,25 @@ fun NaleliNavHost(
             }
             composable(NaleliDestinations.CREATE_PROFILE) {
                 ProfileScreen(isEditMode = false) {
-                    navController.navigate(NaleliDestinations.PORTFOLIO_SETUP) {
+                    navController.navigate(NaleliDestinations.ORIENTATION) {
                         popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
                     }
                 }
             }
+            // Between "I have an account" and "here is Lesson 1": why any
+            // of the next 90 days is shaped the way it is.
+            composable(NaleliDestinations.ORIENTATION) {
+                val container = rememberAppContainer()
+                OrientationScreen(
+                    onFinished = {
+                        container.workspacePreferences.markOrientationComplete()
+                        navController.navigate(NaleliDestinations.PORTFOLIO_SETUP) {
+                            popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                        }
+                    },
+                )
+            }
+
             composable(NaleliDestinations.PORTFOLIO_SETUP) {
                 PortfolioSetupScreen(
                     onDone = {
@@ -161,6 +178,21 @@ fun NaleliNavHost(
                     onBack = { navController.popBackStack() },
                     onAddEvidence = { navController.navigate(NaleliDestinations.addEvidence(taskId)) },
                     onSubmitted = { navController.navigate(NaleliDestinations.assessment(taskId)) },
+                    onOpenLesson = { navController.navigate(NaleliDestinations.lesson(taskId)) },
+                )
+            }
+
+            composable(
+                route = NaleliDestinations.LESSON_PATTERN,
+                arguments = listOf(navArgument("taskId") { type = androidx.navigation.NavType.StringType }),
+            ) { backStackEntry ->
+                val taskId = backStackEntry.arguments?.getString("taskId") ?: ""
+                LessonScreen(
+                    taskId = taskId,
+                    onBack = { navController.popBackStack() },
+                    // Reading hands straight over to the work it prepares
+                    // for, rather than dropping the learner back at Home.
+                    onStartWork = { navController.popBackStack() },
                 )
             }
 

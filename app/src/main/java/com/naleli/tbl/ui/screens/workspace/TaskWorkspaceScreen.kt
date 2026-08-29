@@ -1,6 +1,7 @@
 package com.naleli.tbl.ui.screens.workspace
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Lock
@@ -66,7 +68,13 @@ import com.naleli.tbl.ui.theme.SurfaceWhite
  * off to Assessment rather than marking the task done on the spot.
  */
 @Composable
-fun TaskWorkspaceScreen(taskId: String, onBack: () -> Unit, onAddEvidence: () -> Unit, onSubmitted: () -> Unit) {
+fun TaskWorkspaceScreen(
+    taskId: String,
+    onBack: () -> Unit,
+    onAddEvidence: () -> Unit,
+    onSubmitted: () -> Unit,
+    onOpenLesson: () -> Unit,
+) {
     val container = rememberAppContainer()
     val viewModel: TaskWorkspaceViewModel = viewModel(
         factory = viewModelFactory { initializer { TaskWorkspaceViewModel(container, taskId) } },
@@ -143,6 +151,39 @@ fun TaskWorkspaceScreen(taskId: String, onBack: () -> Unit, onAddEvidence: () ->
         }
 
         item { WorkflowStepper(state.progressState, state.allStepsDone, state.evidenceCount > 0) }
+
+        // Reading comes before doing. The lesson sits above the brief so the
+        // learner meets the material first rather than discovering it as a
+        // sub-step halfway down the task.
+        if (state.lessonTitles.isNotEmpty()) {
+            item {
+                NaleliCard(modifier = Modifier.fillMaxWidth().clickable { onOpenLesson() }) {
+                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("START HERE — THE LESSON", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.height(4.dp))
+                            Text(
+                                state.lessonTitles.joinToString(" · "),
+                                style = MaterialTheme.typography.titleMedium,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            Spacer(Modifier.height(2.dp))
+                            Text(
+                                "Read this first, then work through the steps below.",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Icon(
+                            Icons.Filled.ChevronRight,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+            }
+        }
 
         item {
             NaleliCard(modifier = Modifier.fillMaxWidth()) {

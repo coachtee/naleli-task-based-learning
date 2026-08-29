@@ -23,6 +23,9 @@
           "practiseText": "Use your own computer/device to identify, explain and demonstrate the concept. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "1A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-01-step-1",
@@ -79,6 +82,9 @@
           "practiseText": "Use your own computer/device to identify, explain and demonstrate the concept. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "1B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-02-step-1",
@@ -135,6 +141,9 @@
           "practiseText": "Use your own computer/device to identify, explain and demonstrate the concept. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "1C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-03-step-1",
@@ -191,6 +200,10 @@
           "practiseText": "Use your own computer/device to identify, explain and demonstrate the concept. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "1D",
+            "2A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-04-step-1",
@@ -278,6 +291,9 @@
           "practiseText": "Complete a short keyboarding practice and record your accuracy/speed or observations. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "2B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-05-step-1",
@@ -334,6 +350,9 @@
           "practiseText": "Complete a short keyboarding practice and record your accuracy/speed or observations. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "2C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-06-step-1",
@@ -389,6 +408,10 @@
           "practiseText": "Complete a short keyboarding practice and record your accuracy/speed or observations. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "2D",
+            "3A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-07-step-1",
@@ -477,6 +500,9 @@
           "practiseText": "Review a realistic online situation and produce a responsible response or checklist. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "3B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-08-step-1",
@@ -533,6 +559,9 @@
           "practiseText": "Review a realistic online situation and produce a responsible response or checklist. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "3C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-09-step-1",
@@ -589,6 +618,10 @@
           "practiseText": "Review a realistic online situation and produce a responsible response or checklist. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "3D",
+            "4A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-10-step-1",
@@ -678,6 +711,9 @@
           "practiseText": "Perform a controlled web/search activity and document how you verified the information. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "4B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-11-step-1",
@@ -734,6 +770,9 @@
           "practiseText": "Perform a controlled web/search activity and document how you verified the information. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "4C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-12-step-1",
@@ -790,6 +829,10 @@
           "practiseText": "Perform a controlled web/search activity and document how you verified the information. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "4D",
+            "5A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-13-step-1",
@@ -878,6 +921,9 @@
           "practiseText": "Inspect a realistic digital-security situation and identify the risk plus the safer action. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "5B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-14-step-1",
@@ -934,6 +980,9 @@
           "practiseText": "Inspect a realistic digital-security situation and identify the risk plus the safer action. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "5C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-15-step-1",
@@ -990,6 +1039,9 @@
           "practiseText": "Inspect a realistic digital-security situation and identify the risk plus the safer action. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "5D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-16-step-1",
@@ -1046,6 +1098,10 @@
           "practiseText": "Inspect a realistic digital-security situation and identify the risk plus the safer action. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "5E",
+            "6A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-17-step-1",
@@ -1135,6 +1191,9 @@
           "practiseText": "Use an AI tool for a small task, improve the prompt/output, then check and explain the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "6B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-18-step-1",
@@ -1191,6 +1250,10 @@
           "practiseText": "Use an AI tool for a small task, improve the prompt/output, then check and explain the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "6C",
+            "7A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-19-step-1",
@@ -1280,6 +1343,9 @@
           "practiseText": "Perform the task on a Windows computer where available and capture evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "7B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-20-step-1",
@@ -1336,6 +1402,9 @@
           "practiseText": "Perform the task on a Windows computer where available and capture evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "7C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-21-step-1",
@@ -1391,6 +1460,9 @@
           "practiseText": "Perform the task on a Windows computer where available and capture evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "7D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-22-step-1",
@@ -1446,6 +1518,9 @@
           "practiseText": "Perform the task on a Windows computer where available and capture evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "7E"
+          ],
           "subSteps": [
             {
               "subStepId": "day-23-step-1",
@@ -1502,6 +1577,9 @@
           "practiseText": "Perform the task on a Windows computer where available and capture evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "7F"
+          ],
           "subSteps": [
             {
               "subStepId": "day-24-step-1",
@@ -1558,6 +1636,9 @@
           "practiseText": "Perform the task on a Windows computer where available and capture evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "7G"
+          ],
           "subSteps": [
             {
               "subStepId": "day-25-step-1",
@@ -1612,6 +1693,10 @@
           "practiseText": "Perform the task on a Windows computer where available and capture evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "7H",
+            "8A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-26-step-1",
@@ -1697,6 +1782,9 @@
           "practiseText": "Open/use the relevant application and complete a small practical output. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "8B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-27-step-1",
@@ -1753,6 +1841,10 @@
           "practiseText": "Open/use the relevant application and complete a small practical output. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "8C",
+            "9A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-28-step-1",
@@ -1842,6 +1934,9 @@
           "practiseText": "Create or edit a professional document and save it using a clear file name. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "9B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-29-step-1",
@@ -1896,6 +1991,9 @@
           "practiseText": "Create or edit a professional document and save it using a clear file name. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "9C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-30-step-1",
@@ -1958,6 +2056,9 @@
           "practiseText": "Create or edit a professional document and save it using a clear file name. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "9D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-31-step-1",
@@ -2012,6 +2113,10 @@
           "practiseText": "Create or edit a professional document and save it using a clear file name. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "9E",
+            "10A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-32-step-1",
@@ -2097,6 +2202,9 @@
           "practiseText": "Create/edit a small data set, apply the required spreadsheet operation, and save the workbook. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "10B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-33-step-1",
@@ -2151,6 +2259,9 @@
           "practiseText": "Create/edit a small data set, apply the required spreadsheet operation, and save the workbook. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "10C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-34-step-1",
@@ -2205,6 +2316,9 @@
           "practiseText": "Create/edit a small data set, apply the required spreadsheet operation, and save the workbook. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "10D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-35-step-1",
@@ -2259,6 +2373,10 @@
           "practiseText": "Create/edit a small data set, apply the required spreadsheet operation, and save the workbook. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "10E",
+            "11A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-36-step-1",
@@ -2346,6 +2464,9 @@
           "practiseText": "Create or edit a short presentation and demonstrate the requested presentation skill. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "11B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-37-step-1",
@@ -2400,6 +2521,9 @@
           "practiseText": "Create or edit a short presentation and demonstrate the requested presentation skill. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "11C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-38-step-1",
@@ -2455,6 +2579,9 @@
           "practiseText": "Create or edit a short presentation and demonstrate the requested presentation skill. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "11D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-39-step-1",
@@ -2511,6 +2638,9 @@
           "practiseText": "Create or edit a short presentation and demonstrate the requested presentation skill. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "11E"
+          ],
           "subSteps": [
             {
               "subStepId": "day-40-step-1",
@@ -2573,6 +2703,9 @@
           "practiseText": "Complete the communication task using professional wording, appropriate tone and correct digital etiquette. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "12A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-41-step-1",
@@ -2629,6 +2762,9 @@
           "practiseText": "Complete the communication task using professional wording, appropriate tone and correct digital etiquette. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "12B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-42-step-1",
@@ -2684,6 +2820,9 @@
           "practiseText": "Complete the communication task using professional wording, appropriate tone and correct digital etiquette. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "12C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-43-step-1",
@@ -2738,6 +2877,9 @@
           "practiseText": "Complete the communication task using professional wording, appropriate tone and correct digital etiquette. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "12D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-44-step-1",
@@ -2802,6 +2944,9 @@
           "practiseText": "Identify, connect or explain hardware components and document the result safely. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "13A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-45-step-1",
@@ -2857,6 +3002,9 @@
           "practiseText": "Identify, connect or explain hardware components and document the result safely. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "13B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-46-step-1",
@@ -2912,6 +3060,9 @@
           "practiseText": "Identify, connect or explain hardware components and document the result safely. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "13C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-47-step-1",
@@ -2968,6 +3119,9 @@
           "practiseText": "Identify, connect or explain hardware components and document the result safely. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "13D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-48-step-1",
@@ -3023,6 +3177,9 @@
           "practiseText": "Identify, connect or explain hardware components and document the result safely. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "13E"
+          ],
           "subSteps": [
             {
               "subStepId": "day-49-step-1",
@@ -3086,6 +3243,9 @@
           "practiseText": "Map, configure or troubleshoot a simple network scenario and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "14A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-50-step-1",
@@ -3142,6 +3302,9 @@
           "practiseText": "Map, configure or troubleshoot a simple network scenario and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "14B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-51-step-1",
@@ -3198,6 +3361,9 @@
           "practiseText": "Map, configure or troubleshoot a simple network scenario and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "14C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-52-step-1",
@@ -3254,6 +3420,9 @@
           "practiseText": "Map, configure or troubleshoot a simple network scenario and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "14D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-53-step-1",
@@ -3310,6 +3479,9 @@
           "practiseText": "Map, configure or troubleshoot a simple network scenario and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "14E"
+          ],
           "subSteps": [
             {
               "subStepId": "day-54-step-1",
@@ -3366,6 +3538,9 @@
           "practiseText": "Map, configure or troubleshoot a simple network scenario and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "14F"
+          ],
           "subSteps": [
             {
               "subStepId": "day-55-step-1",
@@ -3429,6 +3604,9 @@
           "practiseText": "Use or analyse a cloud/virtualisation scenario and explain the practical benefit and risk. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "15A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-56-step-1",
@@ -3485,6 +3663,9 @@
           "practiseText": "Use or analyse a cloud/virtualisation scenario and explain the practical benefit and risk. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "15B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-57-step-1",
@@ -3540,6 +3721,9 @@
           "practiseText": "Use or analyse a cloud/virtualisation scenario and explain the practical benefit and risk. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "15C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-58-step-1",
@@ -3604,6 +3788,9 @@
           "practiseText": "Apply a basic security control to a device or small network scenario and record the evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "16A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-59-step-1",
@@ -3660,6 +3847,9 @@
           "practiseText": "Apply a basic security control to a device or small network scenario and record the evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "16B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-60-step-1",
@@ -3723,6 +3913,9 @@
           "practiseText": "Apply a basic security control to a device or small network scenario and record the evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "16C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-61-step-1",
@@ -3778,6 +3971,9 @@
           "practiseText": "Apply a basic security control to a device or small network scenario and record the evidence. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "16D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-62-step-1",
@@ -3840,6 +4036,9 @@
           "practiseText": "Design or work with structured information and demonstrate how records can be organised and retrieved. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "17A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-63-step-1",
@@ -3896,6 +4095,9 @@
           "practiseText": "Design or work with structured information and demonstrate how records can be organised and retrieved. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "17B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-64-step-1",
@@ -3952,6 +4154,9 @@
           "practiseText": "Design or work with structured information and demonstrate how records can be organised and retrieved. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "17C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-65-step-1",
@@ -4016,6 +4221,9 @@
           "practiseText": "Write pseudocode or a small program, test it, and explain the logic used. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "18A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-66-step-1",
@@ -4071,6 +4279,9 @@
           "practiseText": "Write pseudocode or a small program, test it, and explain the logic used. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "18B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-67-step-1",
@@ -4127,6 +4338,9 @@
           "practiseText": "Write pseudocode or a small program, test it, and explain the logic used. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "18C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-68-step-1",
@@ -4181,6 +4395,9 @@
           "practiseText": "Write pseudocode or a small program, test it, and explain the logic used. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "18D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-69-step-1",
@@ -4237,6 +4454,9 @@
           "practiseText": "Write pseudocode or a small program, test it, and explain the logic used. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "18E"
+          ],
           "subSteps": [
             {
               "subStepId": "day-70-step-1",
@@ -4293,6 +4513,9 @@
           "practiseText": "Write pseudocode or a small program, test it, and explain the logic used. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "18F"
+          ],
           "subSteps": [
             {
               "subStepId": "day-71-step-1",
@@ -4357,6 +4580,9 @@
           "practiseText": "Plan a small technology project, identify the problem, define the outcome and document the approach. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "19A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-72-step-1",
@@ -4413,6 +4639,9 @@
           "practiseText": "Plan a small technology project, identify the problem, define the outcome and document the approach. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "19B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-73-step-1",
@@ -4468,6 +4697,9 @@
           "practiseText": "Plan a small technology project, identify the problem, define the outcome and document the approach. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "19C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-74-step-1",
@@ -4531,6 +4763,9 @@
           "practiseText": "Apply the lesson to a realistic workplace situation and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "20A"
+          ],
           "subSteps": [
             {
               "subStepId": "day-75-step-1",
@@ -4586,6 +4821,9 @@
           "practiseText": "Apply the lesson to a realistic workplace situation and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "20B"
+          ],
           "subSteps": [
             {
               "subStepId": "day-76-step-1",
@@ -4641,6 +4879,9 @@
           "practiseText": "Apply the lesson to a realistic workplace situation and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "20C"
+          ],
           "subSteps": [
             {
               "subStepId": "day-77-step-1",
@@ -4697,6 +4938,9 @@
           "practiseText": "Apply the lesson to a realistic workplace situation and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "20D"
+          ],
           "subSteps": [
             {
               "subStepId": "day-78-step-1",
@@ -4751,6 +4995,9 @@
           "practiseText": "Apply the lesson to a realistic workplace situation and document the result. Complete a small hands-on exercise that demonstrates the main skill in this lesson. Do not only describe it—actually perform it where practical.",
           "assignmentText": "Imagine you are doing this for a real workplace user. Apply the lesson to a simple scenario and produce a usable result. Explain one decision you made.",
           "deliverableLabel": "Workplace-style output + short explanation",
+          "lessonCodes": [
+            "20E"
+          ],
           "subSteps": [
             {
               "subStepId": "day-79-step-1",
@@ -4807,6 +5054,7 @@
           "practiseText": "",
           "assignmentText": "Choose one technology role that interests you. Map the role's typical responsibilities to the skills you have practised in this course.",
           "deliverableLabel": "Role-to-skill map",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-80-step-1",
@@ -4855,6 +5103,7 @@
           "practiseText": "",
           "assignmentText": "Write three possible practical technology projects. Choose the one that gives you the strongest opportunity to demonstrate multiple course skills.",
           "deliverableLabel": "Three ideas + selected project",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-81-step-1",
@@ -4903,6 +5152,7 @@
           "practiseText": "",
           "assignmentText": "Review the work you produced so far. Select your strongest five artefacts and check that the files are named, organised and usable.",
           "deliverableLabel": "Portfolio shortlist",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-82-step-1",
@@ -4959,6 +5209,7 @@
           "practiseText": "",
           "assignmentText": "Choose a practical technology problem you can solve using skills from the course. Define the user, problem, desired outcome and constraints.",
           "deliverableLabel": "Project brief",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-83-step-1",
@@ -5000,6 +5251,7 @@
           "practiseText": "",
           "assignmentText": "Research the problem using appropriate sources. Record the information you need, assumptions, requirements and any risks.",
           "deliverableLabel": "Research notes + requirements",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-84-step-1",
@@ -5041,6 +5293,7 @@
           "practiseText": "",
           "assignmentText": "Create a simple project plan showing tasks, tools, files/data needed, sequence and expected deliverables.",
           "deliverableLabel": "Project plan",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-85-step-1",
@@ -5082,6 +5335,7 @@
           "practiseText": "",
           "assignmentText": "Create the first working version of your solution. Use the appropriate digital tools learned in the course.",
           "deliverableLabel": "Working version",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-86-step-1",
@@ -5123,6 +5377,7 @@
           "practiseText": "",
           "assignmentText": "Improve the solution. Check formatting, usability, accuracy, organisation and basic security/safety considerations.",
           "deliverableLabel": "Improved version",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-87-step-1",
@@ -5164,6 +5419,7 @@
           "practiseText": "",
           "assignmentText": "Test your solution against the requirements. Record problems found, fixes made and the final test result.",
           "deliverableLabel": "Test record",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-88-step-1",
@@ -5205,6 +5461,7 @@
           "practiseText": "",
           "assignmentText": "Prepare a short presentation or demonstration explaining the problem, your solution, how you built it and what you learned.",
           "deliverableLabel": "Presentation/demo",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-89-step-1",
@@ -5246,6 +5503,7 @@
           "practiseText": "",
           "assignmentText": "Submit the final artefact, supporting files, evidence and reflection. Explain how the project demonstrates your digital skills.",
           "deliverableLabel": "Final portfolio package",
+          "lessonCodes": [],
           "subSteps": [
             {
               "subStepId": "day-90-step-1",

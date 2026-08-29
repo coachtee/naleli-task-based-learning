@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(Unit) {
                 startDestination = when {
                     !container.profileRepository.hasProfile() -> NaleliDestinations.WELCOME
+                    !container.workspacePreferences.orientationComplete -> NaleliDestinations.ORIENTATION
                     !container.workspacePreferences.portfolioSetupComplete -> NaleliDestinations.PORTFOLIO_SETUP
                     else -> NaleliDestinations.HOME
                 }

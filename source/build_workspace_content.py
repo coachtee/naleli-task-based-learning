@@ -326,6 +326,9 @@ def build():
                 "practiseText": practice,
                 "assignmentText": mission or practice or learn,
                 "deliverableLabel": deliverable,
+                # The workbook titles its days after the source lessons
+                # ("Lesson 1A - ..."), which is the join to lessons.json.
+                "lessonCodes": re.findall(r"Lesson\s+(\d+[A-Z])", lesson_title),
                 "subSteps": sub_steps,
                 "assessmentCriteria": criteria_for(sub_steps, deliverable),
                 "reviewQuestions": sheet["questions"],

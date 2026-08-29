@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.naleli.tbl.AppContainer
 import com.naleli.tbl.data.content.WorkSubStep
 import com.naleli.tbl.data.content.WorkTask
+import com.naleli.tbl.data.content.LessonLibrary
 import com.naleli.tbl.data.content.WorkspaceCurriculum
 import com.naleli.tbl.data.db.entity.AssessmentEntity
 import com.naleli.tbl.data.db.entity.SubStepStatusEntity
@@ -15,8 +16,10 @@ import com.naleli.tbl.domain.taskProgressState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 data class TaskWorkspaceUiState(
     val isLoading: Boolean = true,
@@ -27,6 +30,9 @@ data class TaskWorkspaceUiState(
     val evidenceCount: Int = 0,
     val assessment: AssessmentEntity? = null,
     val progressState: TaskProgressState = TaskProgressState.NOT_STARTED,
+    /** Titles of the source lessons behind this day, empty when the day is
+     * practical work with no reading. */
+    val lessonTitles: List<String> = emptyList(),
 ) {
     val allStepsDone: Boolean get() = task?.let { allSubStepsDone(it.subSteps, subStepStatuses) } ?: false
     val readyToSubmit: Boolean
@@ -41,6 +47,14 @@ class TaskWorkspaceViewModel(private val container: AppContainer, private val ta
 
     init {
         viewModelScope.launch {
+            // The lesson package is ~1.4 MB, so the first parse goes to IO
+            // rather than freezing the frame that opens the task. It also
+            // warms LessonLibrary's cache, so the reading screen this hands
+            // off to renders from memory.
+            val lessonTitles = withContext(Dispatchers.IO) {
+                LessonLibrary.lessonsForTask(container.context, taskId).map { it.title }
+            }
+
             combine(
                 container.workspaceRepository.observeSubSteps(),
                 container.workspaceRepository.observeAssessments(),
@@ -58,6 +72,7 @@ class TaskWorkspaceViewModel(private val container: AppContainer, private val ta
                     evidenceCount = evidence.size,
                     assessment = assessment,
                     progressState = task?.let { taskProgressState(it, subStepStatuses, assessment) } ?: TaskProgressState.NOT_STARTED,
+                    lessonTitles = lessonTitles,
                 )
             }.collect { _state.value = it }
         }

@@ -49,6 +49,9 @@ data class WorkTask(
     val practiseText: String = "",
     val assignmentText: String,
     val deliverableLabel: String,
+    /** The source lessons this day is built on ("1A", or "1D" + "2A" on the
+     * ten days covering two). The join to LessonLibrary. */
+    val lessonCodes: List<String> = emptyList(),
     val subSteps: List<WorkSubStep> = emptyList(),
     /** The rubric AssessmentEngine applies — structural checks, in the
      * learner's words. Not workbook text; see the converter. */

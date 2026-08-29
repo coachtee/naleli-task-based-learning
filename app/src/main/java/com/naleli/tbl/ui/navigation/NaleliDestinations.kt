@@ -13,6 +13,7 @@ object NaleliDestinations {
     const val WELCOME = "welcome"
     const val CREATE_PROFILE = "create_profile"
     const val EDIT_PROFILE = "edit_profile"
+    const val ORIENTATION = "orientation"
     const val PORTFOLIO_SETUP = "portfolio_setup"
 
     const val HOME = "home"
@@ -27,6 +28,9 @@ object NaleliDestinations {
 
     const val TASK_WORKSPACE_PATTERN = "task/{taskId}"
     fun taskWorkspace(taskId: String) = "task/$taskId"
+
+    const val LESSON_PATTERN = "task/{taskId}/lesson"
+    fun lesson(taskId: String) = "task/$taskId/lesson"
 
     const val ASSESSMENT_PATTERN = "task/{taskId}/assessment"
     fun assessment(taskId: String) = "task/$taskId/assessment"
