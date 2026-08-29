@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+/**
+ * What the app may open, and under which content pack.
+ *
+ * `content_code` is what binds an entitlement to the lesson content already
+ * bundled in the APK, so the app never has to map a programme name to a
+ * content file itself.
+ */
+class EntitlementResource extends JsonResource
+{
+    /** @return array<string, mixed> */
+    public function toArray(Request $request): array
+    {
+        return [
+            'programme_code' => $this->programme->code,
+            'programme_name' => $this->programme->name,
+            'tier' => $this->programme->tier->value,
+            'content_code' => $this->programme->content_code,
+            'content_version' => $this->programme->content_version,
+            'state' => $this->state->value,
+            'reason' => $this->reason,
+            'unlocked_at' => $this->unlocked_at?->toIso8601String(),
+            'expires_at' => $this->expires_at?->toIso8601String(),
+        ];
+    }
+}
