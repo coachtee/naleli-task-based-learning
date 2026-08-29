@@ -117,7 +117,13 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                         Spacer(Modifier.height(10.dp))
                         Text(stepsLabel(task.tier.name, state.priorityStepsDone, state.priorityStepsTotal), style = MaterialTheme.typography.labelSmall, color = OnHeroSurfaceSoft)
                         Spacer(Modifier.height(6.dp))
-                        NaleliProgressBar(progressFraction = if (state.priorityStepsTotal == 0) 0f else state.priorityStepsDone / state.priorityStepsTotal.toFloat())
+                        NaleliProgressBar(
+                            progressFraction = if (state.priorityStepsTotal == 0) 0f else state.priorityStepsDone / state.priorityStepsTotal.toFloat(),
+                            // Translucent white: this bar sits on the navy
+                            // anchor card, where the default pale track
+                            // would look like a completed bar.
+                            trackColor = SurfaceWhite.copy(alpha = 0.22f),
+                        )
                         Spacer(Modifier.height(16.dp))
                         // The hero CTA pops in vibrant orange against the
                         // navy anchor — the screen's one dominant action.

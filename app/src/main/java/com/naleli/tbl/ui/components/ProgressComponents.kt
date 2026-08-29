@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 /**
@@ -19,14 +20,22 @@ import androidx.compose.ui.unit.dp
  * progress rather than a clean empty track.
  */
 @Composable
-fun NaleliProgressBar(progressFraction: Float, modifier: Modifier = Modifier) {
+fun NaleliProgressBar(
+    progressFraction: Float,
+    modifier: Modifier = Modifier,
+    // The track must be given explicitly on dark surfaces. The default
+    // surfaceVariant is a near-white slate in the light theme, so an empty
+    // bar sitting on the navy Current Focus card rendered as a solid pale
+    // bar — reading as 100% complete when it was 0 of 3.
+    trackColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+) {
     val fraction = progressFraction.coerceIn(0f, 1f)
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(6.dp)
             .clip(RoundedCornerShape(50))
-            .background(MaterialTheme.colorScheme.surfaceVariant),
+            .background(trackColor),
     ) {
         Box(
             modifier = Modifier
