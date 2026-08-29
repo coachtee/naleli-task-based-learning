@@ -54,9 +54,9 @@ jobs:
           cat > release-notes.md << 'NOTES_EOF'
           Automated debug build from this commit on the V1 branch.
 
-          **Install:** download `app-debug.apk` on your phone, open it, and allow "install unknown apps" for whatever app you downloaded it with. This is a debug build for testing the Day 1 learning journey, not a signed release build.
+          **Install:** download `app-debug.apk` on your phone, open it, and allow "install unknown apps" for whatever app you downloaded it with. This is a debug build, not a signed release build.
 
-          **Content included:** Days 1-7 of the Digital Foundation programme. See `docs/ROADMAP.md` for what's next.
+          **Content included:** the full 90-day Digital Foundation programme, converted from the course workbook — 23 workstreams, 90 daily tasks, 371 sub-steps across the four phases. Days unlock sequentially, so a fresh install starts at Day 1. See `docs/CONTENT-MODEL.md` for how the content is built and `docs/ROADMAP.md` for what's next.
           NOTES_EOF
 
       - name: Publish GitHub Release with APK attached
