@@ -53,7 +53,12 @@ import com.naleli.tbl.ui.theme.SurfaceWhite
  * has actually run — never an automatic "done = competent".
  */
 @Composable
-fun AssessmentScreen(taskId: String, onBack: () -> Unit, onOpenPortfolio: () -> Unit) {
+fun AssessmentScreen(
+    taskId: String,
+    onBack: () -> Unit,
+    onOpenPortfolio: () -> Unit,
+    onContinueJourney: (nextTaskId: String?) -> Unit,
+) {
     val container = rememberAppContainer()
     val viewModel: AssessmentViewModel = viewModel(factory = viewModelFactory { initializer { AssessmentViewModel(container, taskId) } })
     val state by viewModel.state.collectAsState()
@@ -148,11 +153,25 @@ fun AssessmentScreen(taskId: String, onBack: () -> Unit, onOpenPortfolio: () -> 
             Spacer(Modifier.height(4.dp))
             if (assessment.result == CompetenceResult.COMPETENT) {
                 // Emerald success banner (above) paired with an orange
-                // primary button leading to the next Journey module.
+                // primary button that actually moves the learner on. It
+                // previously called onBack, which returned them to the
+                // workspace of the task they had just finished — the one
+                // place in the flow they are done with.
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    // Naming the destination makes the button's promise
+                    // checkable: the learner sees where it goes before
+                    // pressing it.
+                    Text(
+                        state.nextTaskTitle?.let { "Next: $it" }
+                            ?: "That is everything unlocked so far — back to your Journey.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                     OutlinedButton(onClick = onOpenPortfolio, modifier = Modifier.fillMaxWidth()) { Text("VIEW PORTFOLIO") }
                     Button(
-                        onClick = onBack,
+                        onClick = { onContinueJourney(state.nextTaskId) },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(containerColor = NibsOrange, contentColor = SurfaceWhite),
                     ) { Text("CONTINUE JOURNEY") }

@@ -173,6 +173,18 @@ fun NaleliNavHost(
                     taskId = taskId,
                     onBack = { navController.popBackStack() },
                     onOpenPortfolio = { navController.navigate(NaleliDestinations.PORTFOLIO) },
+                    // Continuing the journey clears the finished task's
+                    // workspace and assessment off the back stack: Back
+                    // from the next task belongs at Home, not inside work
+                    // the learner has already been assessed competent on.
+                    onContinueJourney = { nextTaskId ->
+                        val destination = nextTaskId?.let { NaleliDestinations.taskWorkspace(it) }
+                            ?: NaleliDestinations.JOURNEY
+                        navController.navigate(destination) {
+                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                            launchSingleTop = true
+                        }
+                    },
                 )
             }
 
