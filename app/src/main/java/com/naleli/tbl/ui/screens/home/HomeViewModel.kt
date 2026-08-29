@@ -35,6 +35,14 @@ data class HomeUiState(
     val priorityStepsTotal: Int = 0,
     val priorityHint: String? = null,
     val recentAchievement: ActivityEvent? = null,
+    /** What the learner has actually banked so far — every figure counted
+     * from real rows, never a display number. */
+    val tasksCompetent: Int = 0,
+    val tasksTotal: Int = 0,
+    val evidenceCount: Int = 0,
+    val phaseName: String = "",
+    val phaseCompleted: Int = 0,
+    val phaseTotal: Int = 0,
 )
 
 class HomeViewModel(private val container: AppContainer) : ViewModel() {
@@ -50,11 +58,12 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
                 container.profileRepository.observeProfile(),
                 container.workspaceRepository.observeSubSteps(),
                 container.workspaceRepository.observeAssessments(),
-            ) { currentProfile, subSteps, assessments ->
+                container.evidenceRepository.observeAll(),
+            ) { currentProfile, subSteps, assessments, evidence ->
                 val activeProfile = currentProfile ?: profile
                 val subStepStatuses = subSteps.associateBy { it.subStepId }
                 val assessmentByTask = assessments.associateBy { it.taskId }
-                buildState(activeProfile, course, subStepStatuses, assessmentByTask)
+                buildState(activeProfile, course, subStepStatuses, assessmentByTask, evidence.size)
             }.collect { _state.value = it }
         }
     }
@@ -64,6 +73,7 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
         course: Course,
         subStepStatuses: Map<String, SubStepStatusEntity>,
         assessmentByTask: Map<String, AssessmentEntity>,
+        evidenceCount: Int,
     ): HomeUiState {
         val dayNumber = projectDayNumber(profile, course.totalDays)
         val allTasks = WorkspaceCurriculum.allTasks()
@@ -107,8 +117,18 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
                 }
             }
 
+        val competent = allTasks.count { assessmentByTask[it.taskId]?.result == CompetenceResult.COMPETENT }
+        val phaseId = priorityTask?.let { WorkspaceCurriculum.stageIdFor(it.taskId) }
+        val phaseTasks = phaseId?.let { WorkspaceCurriculum.tasksForStage(it) }.orEmpty()
+
         return HomeUiState(
             isLoading = false,
+            tasksCompetent = competent,
+            tasksTotal = allTasks.size,
+            evidenceCount = evidenceCount,
+            phaseName = course.stages.firstOrNull { it.stageId == phaseId }?.name.orEmpty(),
+            phaseCompleted = phaseTasks.count { assessmentByTask[it.taskId]?.result == CompetenceResult.COMPETENT },
+            phaseTotal = phaseTasks.size,
             profile = profile,
             course = course,
             dayNumber = dayNumber,

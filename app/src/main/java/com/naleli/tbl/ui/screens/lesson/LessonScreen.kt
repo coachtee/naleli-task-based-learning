@@ -6,10 +6,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,17 +27,22 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.PlayCircleOutline
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -125,6 +132,8 @@ fun LessonScreen(
     }
 
     var index by rememberSaveable(taskId) { mutableIntStateOf(0) }
+    var answerDraft by rememberSaveable(taskId) { mutableStateOf("") }
+    var showConfidence by rememberSaveable(taskId) { mutableStateOf(false) }
     BackHandler(enabled = index > 0) { index -= 1 }
 
     if (state.isLoading || task == null || stages.isEmpty()) {
@@ -177,6 +186,12 @@ fun LessonScreen(
                     task = stage.task,
                     mission = stages.filterIsInstance<Stage.Apply>().firstOrNull()?.mission,
                     evidenceCount = state.evidenceCount,
+                    answerDraft = answerDraft,
+                    onAnswerChange = { answerDraft = it },
+                    onSaveAnswer = {
+                        viewModel.saveWrittenAnswer(answerDraft)
+                        answerDraft = ""
+                    },
                     onAddEvidence = onAddEvidence,
                 )
             }
@@ -199,18 +214,61 @@ fun LessonScreen(
                 viewModel.completeStageSubStep(stage.lessonStage)
                 index = (safeIndex + 1).coerceAtMost(stages.lastIndex)
             },
-            onSubmit = {
+            // Asking how confident they feel is the learner's own read on
+            // the work, recorded beside the result and never standing in for
+            // it. The paged rebuild dropped this and submitted a hardcoded 3.
+            onSubmit = { showConfidence = true },
+        )
+    }
+
+    if (showConfidence) {
+        ConfidenceDialog(
+            onDismiss = { showConfidence = false },
+            onRate = { rating ->
+                showConfidence = false
                 viewModel.completeStageSubStep(LessonStage.SHOW)
-                viewModel.submitForAssessment(SUBMIT_CONFIDENCE)
+                viewModel.submitForAssessment(rating)
                 onSubmitted()
             },
         )
     }
 }
 
-/** Recorded alongside the submission; the rubric never uses it as a result,
- * only as the learner's own read on how the work went. */
-private const val SUBMIT_CONFIDENCE = 3
+/** The learner's own confidence, asked once, at submission. It is recorded
+ * alongside the assessment and never used as the result — competence is
+ * what the rubric found, not how the learner felt. */
+@Composable
+private fun ConfidenceDialog(onDismiss: () -> Unit, onRate: (Int) -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("How confident do you feel?") },
+        text = {
+            Column {
+                Text(
+                    "Your answer is recorded with your work. It does not change your result.",
+                    style = MaterialTheme.typography.bodySmall,
+                )
+                Spacer(Modifier.height(12.dp))
+                CONFIDENCE_LABELS.forEachIndexed { i, label ->
+                    TextButton(
+                        onClick = { onRate(i + 1) },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text("${i + 1} — $label", modifier = Modifier.fillMaxWidth()) }
+                }
+            }
+        },
+        confirmButton = {},
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+    )
+}
+
+private val CONFIDENCE_LABELS = listOf(
+    "Not confident yet",
+    "Still learning",
+    "Getting there",
+    "Confident",
+    "Very confident",
+)
 
 /** One screen of the lesson. Reading screens come from content; the last
  * three are built from the day's own task record. */
@@ -472,20 +530,71 @@ private fun TaskStep(step: String) {
  * asked for, and what counts as evidence.
  */
 @Composable
-private fun ShowStage(task: WorkTask, mission: LessonMission?, evidenceCount: Int, onAddEvidence: () -> Unit) {
+private fun ShowStage(
+    task: WorkTask,
+    mission: LessonMission?,
+    evidenceCount: Int,
+    answerDraft: String,
+    onAnswerChange: (String) -> Unit,
+    onSaveAnswer: () -> Unit,
+    onAddEvidence: () -> Unit,
+) {
     StageIntro(
         eyebrow = "SHOW YOUR WORK",
         title = "Submit your evidence",
         body = "Nothing new to learn here — this is where you prove what you just did.",
     )
-    Spacer(Modifier.height(22.dp))
+    Spacer(Modifier.height(20.dp))
 
     Text("YOU MUST SUBMIT", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
-    Spacer(Modifier.height(10.dp))
+    Spacer(Modifier.height(8.dp))
     ChecklistItem(task.deliverableLabel)
     mission?.submit?.forEach { ChecklistItem(it) }
 
-    Spacer(Modifier.height(22.dp))
+    // Typing the answer here is the whole point: most of what this
+    // programme asks for is written explanation, and sending a learner off
+    // to another app to write it — then back with a photograph — is where
+    // submissions get lost.
+    Spacer(Modifier.height(20.dp))
+    Text("WRITE YOUR ANSWER", style = MaterialTheme.typography.labelLarge, color = NibsOrange)
+    Spacer(Modifier.height(4.dp))
+    mission?.steps?.takeIf { it.isNotEmpty() }?.let { steps ->
+        Text(
+            "Answer the ${steps.size} points from your Work Mission.",
+            style = MaterialTheme.typography.labelSmall,
+            color = OnHeroSurfaceSoft,
+        )
+        Spacer(Modifier.height(8.dp))
+    }
+    OutlinedTextField(
+        value = answerDraft,
+        onValueChange = onAnswerChange,
+        modifier = Modifier.fillMaxWidth().heightIn(min = 140.dp),
+        placeholder = {
+            Text(
+                "Type your answer here…",
+                style = MaterialTheme.typography.bodyMedium,
+                color = OnHeroSurfaceSoft,
+            )
+        },
+        textStyle = MaterialTheme.typography.bodyMedium.copy(color = OnHeroSurface),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = NibsOrange,
+            unfocusedBorderColor = SurfaceWhite.copy(alpha = 0.30f),
+            cursorColor = NibsOrange,
+            focusedContainerColor = SurfaceWhite.copy(alpha = 0.06f),
+            unfocusedContainerColor = SurfaceWhite.copy(alpha = 0.06f),
+        ),
+        shape = RoundedCornerShape(12.dp),
+    )
+    Spacer(Modifier.height(8.dp))
+    OutlinedButton(
+        onClick = onSaveAnswer,
+        enabled = answerDraft.isNotBlank(),
+        modifier = Modifier.fillMaxWidth(),
+    ) { Text("SAVE MY ANSWER") }
+
+    Spacer(Modifier.height(18.dp))
     Column(
         Modifier
             .fillMaxWidth()
@@ -502,21 +611,21 @@ private fun ShowStage(task: WorkTask, mission: LessonMission?, evidenceCount: In
             )
             Spacer(Modifier.width(8.dp))
             Text(
-                if (evidenceCount == 0) "Nothing attached yet" else "$evidenceCount file(s) attached",
+                if (evidenceCount == 0) "Nothing attached yet" else "$evidenceCount item(s) attached",
                 style = MaterialTheme.typography.bodyMedium,
                 color = OnHeroSurfaceSoft,
             )
         }
         Spacer(Modifier.height(6.dp))
         Text(
-            "Accepted: screenshot, document, photograph, file or written response.",
+            "You can also attach a file: screenshot, document, photograph or spreadsheet.",
             style = MaterialTheme.typography.labelSmall,
             color = OnHeroSurfaceSoft,
             lineHeight = 17.sp,
         )
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(12.dp))
         OutlinedButton(onClick = onAddEvidence, modifier = Modifier.fillMaxWidth()) {
-            Text(if (evidenceCount == 0) "ATTACH EVIDENCE" else "ADD ANOTHER FILE")
+            Text("ATTACH A FILE")
         }
     }
 }
@@ -744,7 +853,14 @@ private fun LessonFooter(
                     disabledContainerColor = SurfaceWhite.copy(alpha = 0.12f),
                     disabledContentColor = OnHeroSurfaceSoft,
                 ),
-            ) { Text(if (isLast) "SUBMIT FOR ASSESSMENT" else "CONTINUE") }
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+            ) {
+                Text(
+                    if (isLast) "SUBMIT" else "CONTINUE",
+                    style = MaterialTheme.typography.labelLarge,
+                    maxLines = 1,
+                )
+            }
         }
     }
 }

@@ -118,6 +118,19 @@ class TaskWorkspaceViewModel(private val container: AppContainer, private val ta
         }
     }
 
+    /** Saves a typed answer as evidence for this task. */
+    fun saveWrittenAnswer(text: String) {
+        val trimmed = text.trim()
+        if (trimmed.isEmpty()) return
+        viewModelScope.launch {
+            container.evidenceRepository.attachWrittenResponse(
+                taskId = taskId,
+                text = trimmed,
+                description = task?.deliverableLabel,
+            )
+        }
+    }
+
     fun submitForAssessment(confidenceRating: Int) {
         viewModelScope.launch { container.workspaceRepository.submitForAssessment(taskId, confidenceRating) }
     }

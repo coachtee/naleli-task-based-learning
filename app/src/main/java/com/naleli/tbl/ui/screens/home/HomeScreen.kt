@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -75,11 +76,12 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
         ) {
             // Deep Navy top bar (NIBS spec): solid navy structure carrying
             // the identity, against the soft canvas the content sits on.
+            Column(modifier = Modifier.fillMaxWidth().background(HeroSurface).padding(bottom = 16.dp)) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(HeroSurface)
-                    .padding(horizontal = 20.dp, vertical = 18.dp),
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 18.dp, bottom = 14.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -98,6 +100,23 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
                     )
                 }
                 Icon(Icons.Filled.NotificationsNone, contentDescription = "Notifications", tint = OnHeroSurface)
+            }
+
+            // Home was too quiet: it showed the next task but never what the
+            // learner had actually banked. Three counts, all from real rows,
+            // so the screen answers "where am I in this?" at a glance.
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                StatTile("COMPETENT", "${state.tasksCompetent}", "of ${state.tasksTotal} days")
+                StatTile("EVIDENCE", "${state.evidenceCount}", "files in portfolio")
+                StatTile(
+                    "THIS PHASE",
+                    if (state.phaseTotal == 0) "—" else "${state.phaseCompleted}/${state.phaseTotal}",
+                    state.phaseName.ifBlank { "Not started" },
+                )
+            }
             }
 
             Column(
@@ -161,6 +180,30 @@ fun HomeScreen(onOpenTask: (taskId: String) -> Unit, onOpenPortfolio: () -> Unit
             Spacer(Modifier.height(4.dp))
             }
         }
+    }
+}
+
+/** One figure on the navy band. Deliberately not a card — three of these
+ * boxed would be the container-heavy pattern the lesson screens just shed. */
+@Composable
+private fun RowScope.StatTile(label: String, value: String, caption: String) {
+    Column(
+        modifier = Modifier
+            .weight(1f)
+            .clip(RoundedCornerShape(12.dp))
+            .background(SurfaceWhite.copy(alpha = 0.08f))
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+    ) {
+        Text(label, style = MaterialTheme.typography.labelSmall, color = OnHeroSurfaceSoft)
+        Spacer(Modifier.height(2.dp))
+        Text(value, style = MaterialTheme.typography.titleLarge, color = NibsOrange)
+        Text(
+            caption,
+            style = MaterialTheme.typography.labelSmall,
+            color = OnHeroSurfaceSoft,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }
 

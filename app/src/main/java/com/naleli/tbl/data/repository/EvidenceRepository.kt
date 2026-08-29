@@ -29,6 +29,35 @@ class EvidenceRepository(
     fun evidenceDir(taskId: String): File =
         File(context.filesDir, "evidence/$taskId").apply { mkdirs() }
 
+    /**
+     * A written answer, saved as evidence.
+     *
+     * Not every deliverable is a file. A learner explaining Input,
+     * Processing, Storage and Output has produced real evidence, and asking
+     * them to write it elsewhere and then photograph it is a barrier that
+     * costs the submission. Storing it as a text file keeps one evidence
+     * path: the rubric, the portfolio and backup all see it as they see
+     * anything else, with no second code path to keep in step.
+     */
+    suspend fun attachWrittenResponse(taskId: String, text: String, description: String?): EvidenceEntity =
+        withContext(Dispatchers.IO) {
+            val fileName = uniqueFileName(taskId, "written-answer.txt")
+            val destFile = File(evidenceDir(taskId), fileName)
+            destFile.writeText(text)
+            val entity = EvidenceEntity(
+                evidenceId = UUID.randomUUID().toString(),
+                taskId = taskId,
+                dayNumber = 0,
+                fileName = fileName,
+                fileType = "text/plain",
+                localPath = destFile.absolutePath,
+                createdAt = System.currentTimeMillis(),
+                description = description,
+            )
+            dao.insert(entity)
+            entity
+        }
+
     suspend fun attachFromUri(
         taskId: String,
         dayNumber: Int,
