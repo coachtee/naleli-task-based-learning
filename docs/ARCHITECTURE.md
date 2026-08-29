@@ -79,8 +79,20 @@ team and the app never drift out of sync.
   skillDemonstrated, evidenceId (FK, nullable), description, createdAt.
 - **`certificate`** — id (PK), certificateNumber (unique), learnerId,
   programmeId, issuedAt, filePath.
+- **`substep_status`** — subStepId (PK), taskId, complete, completedAt.
+  *Progress*: which stages of which day the learner has worked through.
+- **`assessment`** — taskId (PK), submittedAt, result
+  (`NOT_YET_ASSESSED / REQUIRES_IMPROVEMENT / COMPETENT`), assessedAt,
+  confidenceRating. *Competence*: the only table a portfolio claim is
+  computed from.
 
-Runtime state (the four tables above besides `learner_profile`) is always
+`substep_status` and `assessment` are what the Workspace rebuild writes.
+`day_progress` and `task_status` are the pre-Workspace tables and are no
+longer written by anything — they remain only so an older backup still
+restores, and the Certificate screen still reads them, which is why it is
+currently unreachable (see below).
+
+Runtime state (the tables above besides `learner_profile`) is always
 separate from the static content definition — task/day *content* comes from
 JSON; task/day *progress* comes from Room. This is what lets a future
 assessor feature, or a content update, land without a schema migration for
@@ -94,6 +106,29 @@ certificate eligibility; `days/day-NN.json` defines one day's lesson +
 tasks + review questions + reflection prompt; `resources/` and `downloads/`
 hold read-only sample files a task can reference.
 
+## Task state
+
+`TaskProgressState` in `domain/WorkspaceCalculators.kt` is the only
+vocabulary any screen may use for where a task stands: `NOT_STARTED`,
+`IN_PROGRESS`, `READY_TO_SUBMIT`, `SUBMITTED`, `NEEDS_REVISION`,
+`COMPETENT`. Each carries its own `label`, so the badge, the list-row
+subtitle and the Home button cannot invent three words for one state.
+
+Home, My Work, Journey, the Task Workspace and the Portfolio all build a
+`WorkspaceSnapshot` from the same three flows (sub-steps, assessments,
+evidence) and ask it the same questions. Deriving state per screen is what
+previously let one task read "In Progress" on Home and "Submitted" on My
+Work.
+
+`READY_TO_SUBMIT` is defined by `SubmissionChecklist` — the same list the
+Show screen ticks off — so a task can never badge "Ready to Submit" while
+its submit button is disabled, and a disabled button always has a named
+reason above it.
+
+Competence is only ever an `assessment` row. `PortfolioSkillCalculator`
+reads assessments alone: finishing a lesson can never produce a portfolio
+claim.
+
 ## Certificate eligibility
 
 `CertificateEligibilityEvaluator` (domain layer) reads
@@ -103,19 +138,31 @@ the checklist either way, and only enables **Generate Certificate** when
 every configured rule passes. This keeps the rule set data-driven instead of
 hard-coding "must complete 90 days" in a button's `enabled` check.
 
+**Known gap:** the evaluator reads `day_progress`, which nothing has written
+since the Workspace rebuild, so every rule fails permanently and no
+certificate can be earned. The screen is unrouted for that reason. Fixing it
+means re-expressing the rules over `assessment` rows; it has not been done,
+and is not hidden behind a "coming soon" label pretending otherwise.
+
 ## Backup / export format
 
 `Naleli_Backup_<learnerCode>_<date>.zip` containing:
 
 ```
-manifest.json         schemaVersion, exportedAt, appVersion
-profile.json
-progress.json         all day_progress + task_status rows
-evidence.json         evidence metadata
-portfolio.json        portfolio_item metadata
-certificates.json     certificate metadata
-evidence/              (optional) copies of the actual evidence files
+manifest.json         schemaVersion, exportedAt, appVersion, learnerCode
+learning_data.json    profile + every runtime table, as backup DTOs
+evidence/             (optional) copies of the actual evidence files
 ```
+
+`learning_data.json` carries `subStepStatus` and `assessments` as of schema
+2. Schema 1 omitted them, which meant a restore silently returned a learner
+to zero progress and no recorded competence — their name and their files
+came back, everything they had demonstrated did not. Both lists default to
+empty on decode, so a schema-1 file still restores what it does hold.
+
+Evidence's on-device absolute path is never portable, so the backup stores
+`<taskId>/<fileName>` and restore re-derives the real path from the current
+install's `filesDir`.
 
 Restore parses `manifest.json` first (schema-version gated), shows the
 learner what it's about to overwrite, and only proceeds after explicit

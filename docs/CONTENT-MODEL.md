@@ -229,12 +229,25 @@ must not be confused:
 
 | | |
 |---|---|
-| **Derived** | The numbered task steps and success criteria, built from each lesson's own learning-outcome questions — real, per-lesson, written by the course author. All 90 missions are now distinct. |
+| **Derived** | The mission's actions and success criteria, built from each lesson's own learning-outcome questions — real, per-lesson, written by the course author. All 90 missions are now distinct. |
 | **Authored by Naleli** | The twenty module-level workplace situations and the practice framings in `build_lesson_content.py`. These are ours, not the source course's. |
 
 The authored situations are the **first thing a subject lead should
 replace**. Both are overridable: a hand-written `practice` or `mission`
 object on a lesson in the export wins over anything generated.
+
+Each mission action is a `MissionStep` — a `title` the learner scans and a
+`detail` that says how to do it — rather than one sentence. The reader owns
+the "01 —" numbering, so the content holds words and the screen holds
+presentation. `detail` is deliberately blank on most steps: repeating the
+same guidance under all four questions turned a sequence of actions back
+into a block of text.
+
+Outcome questions are split on the export's bullet markers, never on
+newlines. A PDF wraps a long question across two lines, and splitting on
+newlines had been turning "…how does real-time scanning protect / your
+computer?" into two questions — so a mission asked the learner to answer the
+fragment "your computer?".
 
 The day's own `deliverableLabel` always leads the submission list. The
 generated mission deliberately does not name a deliverable — it has no way
