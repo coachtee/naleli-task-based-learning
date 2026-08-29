@@ -171,7 +171,7 @@ content/digital-foundation/workspace-content.json   →  data/content/WorkspaceC
 | Workstream | one module (M1–M20) within one stage, named for the module's Main Skill |
 | Task | one workbook day (`day-01` … `day-90`) |
 | Sub-step | one row of that day's TASKS block (Learn / Practice / Work Mission / Review) |
-| `assessmentCriteria` | that day's SOURCE LEARNING QUESTIONS |
+| `reviewQuestions` | that day's SOURCE LEARNING QUESTIONS (re-joined where the workbook wrapped one across two rows) |
 | `deliverableLabel` | the day's first Evidence / Output cell |
 
 A module that crosses a stage boundary (M9, M16, M20) becomes two
@@ -191,6 +191,12 @@ These are computed by the converter and are **not** curriculum text:
 - Task title on capstone days — days 80–90 share one source lesson name, so
   the title comes from the day's own first non-review task
   ("Capstone Brief", "Build — Part 1", "Present").
+- `assessmentCriteria` — the three structural checks `AssessmentEngine`
+  actually applies (steps done, evidence attached, evidence matches the
+  deliverable), phrased for the learner. The workbook's learning questions
+  are *not* criteria — an assessor does not tick "What is digital
+  literacy?" — so they live in `reviewQuestions` and are shown in the Task
+  Workspace, where the day's Review step asks the learner to answer them.
 
 ### Current package
 

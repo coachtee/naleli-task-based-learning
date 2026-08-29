@@ -54,6 +54,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is digital literacy?",
             "What is digital citizenship?",
             "What can you do to be a proactive learner?",
@@ -105,6 +110,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How does technology impact my daily life?",
             "How could technology impact my future and my future career?",
             "What are some facts about computing history?",
@@ -156,6 +166,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is Input?",
             "What is Processing?",
             "What is Storage?",
@@ -228,6 +243,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is binary?",
             "What is the relationship between decimal, binary, and hexadecimal numbers?",
             "What are bits and Bytes?",
@@ -289,6 +309,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "Use the home row.",
             "Use your pointer fingers.",
             "Use your middle fingers.",
@@ -340,6 +365,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "Type common English words.",
             "Type common letter combinations in longer words.",
             "Type proper nouns with capitalized letters."
@@ -411,6 +441,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "Type sentences.",
             "Increase your accuracy.",
             "Increase your typing speed.",
@@ -473,6 +508,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is a digital footprint, and how do you create one?",
             "In what ways do your everyday online actions leave a trace behind?",
             "Why does it matter that the internet can feel temporary but is often permanent?",
@@ -524,6 +564,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is intellectual property, and what kinds of digital work does it include?",
             "How does copyright protect creators and their work online?",
             "What is plagiarism, and how is it different from simply being inspired by someone else?",
@@ -596,6 +641,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is media literacy, and why is it important in your daily life?",
             "How do common human biases influence what you pay attention to and believe?",
             "How can you tell the difference between facts, opinions, and advertising in the media?",
@@ -659,6 +709,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is a web browser, and how is it different from other types of software?",
             "What tools and features do most web browsers share in common?",
             "How can you navigate websites effectively and find what you need on a page?",
@@ -710,6 +765,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How does a search engine work?",
             "What can you do to improve your internet searches?",
             "Which search tools look to be the most useful?",
@@ -782,9 +842,13 @@
             }
           ],
           "assessmentCriteria": [
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the benefits of online communities?",
-            "Which types of social platforms look like the most fun to participate in? Which might be the",
-            "most useful?",
+            "Which types of social platforms look like the most fun to participate in? Which might be the most useful?",
             "What does it mean to use social media wisely?",
             "What types of personal data do companies collect when you use the internet?",
             "How is your personal information used by websites and online services?",
@@ -845,6 +909,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What makes a password strong, and why does password length matter?",
             "What are common password mistakes that put your accounts at risk?",
             "How do password managers and multifactor authentication improve security?",
@@ -896,6 +965,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How can you recognize phishing attempts and social engineering tactics?",
             "What scam tactics do attackers use to trick people online?",
             "Why are you a target for cyberattacks, even if you think you have nothing worth stealing?",
@@ -947,6 +1021,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are browser cache and history, and why should you manage them?",
             "What are cookies, and how do they affect your privacy?",
             "What precautions should you take when shopping or entering personal information online?",
@@ -1019,6 +1098,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How does technology use affect your mental health, both positively and negatively?",
             "What design features make apps and websites addictive?",
             "What are the signs of technology overuse and technology addiction?",
@@ -1082,6 +1166,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What types of errors can AI produce, and how can you recognize them?",
             "What are AI hallucinations, and why do they happen?",
             "How can adding context files improve an AI tool's responses, and what are the limits?",
@@ -1154,6 +1243,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the main risks of using AI, including data privacy, copyright, and bias?",
             "How can sharing personal information with AI tools put your privacy at risk?",
             "What is bias in AI, and where does it come from?",
@@ -1217,6 +1311,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the key differences between Windows, macOS, Linux, and Chrome OS?",
             "How do you navigate the user interface of each desktop operating system?",
             "What are the two most common mobile operating systems, and how do they differ?",
@@ -1268,6 +1367,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the key components of the Windows desktop and Start menu?",
             "What common user interface elements do Windows applications share?",
             "How do you install, configure, and remove applications in Windows?"
@@ -1318,10 +1422,14 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How does an operating system use a file system to organize and manage data on a storage",
             "What is the purpose of file and folder attributes such as permissions, encryption, and hidden",
-            "How do file extensions determine which application opens a file, and how can you change",
-            "the default?"
+            "How do file extensions determine which application opens a file, and how can you change the default?"
           ]
         },
         {
@@ -1369,6 +1477,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the main categories in the Settings App and what does each one control?",
             "How do display settings like resolution, scale, and orientation affect usability?",
             "What is the difference between a standard user account and an administrator account?",
@@ -1420,6 +1533,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How can you use Task Manager to monitor performance and manage running processes?",
             "What are system services and how can Task Scheduler automate tasks?",
             "What is Plug-and-Play and how does it help when connecting new devices?",
@@ -1471,6 +1589,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is a command-line interface, and why do IT professionals use it?",
             "What are the basic commands for navigating directories and managing files in the Windows"
           ]
@@ -1541,14 +1664,15 @@
             }
           ],
           "assessmentCriteria": [
-            "What types of local storage do computers use, and how do SSDs, HDDs, optical drives, and",
-            "flash drives compare?",
-            "What are Storage Area Networks (SANs), Network Attached Storage (NAS), and file servers,",
-            "and how do organizations use them?",
-            "What is the difference between commercial and free productivity software, and what are",
-            "some examples of each?",
-            "How does SaaS differ from traditional installed software, and what are its benefits and",
-            "drawbacks?"
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "What types of local storage do computers use, and how do SSDs, HDDs, optical drives, and flash drives compare?",
+            "What are Storage Area Networks (SANs), Network Attached Storage (NAS), and file servers, and how do organizations use them?",
+            "What is the difference between commercial and free productivity software, and what are some examples of each?",
+            "How does SaaS differ from traditional installed software, and what are its benefits and drawbacks?"
           ]
         }
       ]
@@ -1604,6 +1728,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the risks of downloading software from untrusted sources?",
             "How do app stores help ensure that software is safe to install?",
             "What is the difference between open-source and proprietary software?",
@@ -1676,6 +1805,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How do you create a new file, and what is the difference between Save and Save As?",
             "Why is it important to save your work before closing a file?",
             "How do you access print preview and customize print settings such as page ranges?",
@@ -1739,6 +1873,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How can I make my document easy to follow with formatting?",
             "Which formatting tools will I use most frequently?"
           ]
@@ -1788,8 +1927,12 @@
             }
           ],
           "assessmentCriteria": [
-            "Which paragraph formatting options are required for the documents I make most often, like",
-            "school papers?",
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "Which paragraph formatting options are required for the documents I make most often, like school papers?",
             "How can I use lists to better convey information?"
           ]
         }
@@ -1846,6 +1989,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How can I get a table to be the size and shape I need?",
             "When is a table a helpful tool for a document?"
           ]
@@ -1916,6 +2064,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What kinds of images would I want to include in documents?",
             "How can I control how images fit into my documents?",
             "What can spreadsheet software accomplish?",
@@ -1975,6 +2128,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How can you organize rows and columns to fit your data?",
             "Would using multiple sheets make your data easier to use or harder to see?"
           ]
@@ -2024,9 +2182,13 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What kinds of formatting would help make the data on the spreadsheet easier to interpret?",
-            "How can number formatting help clarify what the various numbers on a spreadsheet",
-            "represent?"
+            "How can number formatting help clarify what the various numbers on a spreadsheet represent?"
           ]
         },
         {
@@ -2074,6 +2236,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What kinds of calculations would be useful to have a computer do for you?",
             "Which functions seem to be the most useful?"
           ]
@@ -2144,6 +2311,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 7 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "Which Excel table features are the most helpful?",
             "How does displaying information in a chart make it easier to understand?",
             "What is presentation software, and what elements can slides include?",
@@ -2205,6 +2377,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How can I organize slides to help my audience understand?",
             "How can I design slides to convey the tone I want?"
           ]
@@ -2254,6 +2431,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How can I use fonts and size to help prioritize information?",
             "How can I use lists to present information clearly?",
             "How can I modify images to maximize their effect?"
@@ -2304,6 +2486,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How can I smoothly transition between slides?",
             "How can I animate objects into my slides?",
             "How can I animate objects off of my slides?",
@@ -2355,6 +2542,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "Which slide do I want to start my presentation from?",
             "How can I remember what to say while I'm presenting?"
           ]
@@ -2412,6 +2604,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the differences between SMS, MMS, and RCS messaging?",
             "How do VoIP apps differ from traditional cellular phone calls?",
             "What features do email clients provide, and how do webmail and desktop clients compare?",
@@ -2463,9 +2660,13 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the four main types of communication, and when is each one most effective?",
-            "Why are nonverbal cues and active listening important during face-to-face and video",
-            "conversations?",
+            "Why are nonverbal cues and active listening important during face-to-face and video conversations?",
             "How should you adjust your writing style when communicating in a professional setting"
           ]
         },
@@ -2514,10 +2715,13 @@
             }
           ],
           "assessmentCriteria": [
-            "What are the key features of Microsoft Outlook that help you manage email, contacts, and",
-            "calendars?",
-            "How do you compose and send an email, including adding recipients, a subject line, and",
-            "attachments?"
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "What are the key features of Microsoft Outlook that help you manage email, contacts, and calendars?",
+            "How do you compose and send an email, including adding recipients, a subject line, and attachments?"
           ]
         },
         {
@@ -2565,6 +2769,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is the difference between an appointment and a meeting in Outlook?",
             "How do you set up a recurring event on your calendar?",
             "What does the Show As status communicate to others who view your calendar?",
@@ -2624,8 +2833,12 @@
             }
           ],
           "assessmentCriteria": [
-            "What are the main types of computing devices, and what are the advantages and",
-            "disadvantages of each?",
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "What are the main types of computing devices, and what are the advantages and disadvantages of each?",
             "What is Hertz, and how is it used to measure processing speed?",
             "What are metric prefixes, and how do they help express very large or very small numbers?"
           ]
@@ -2675,9 +2888,13 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are peripheral devices, and how are they classified as input or output?",
-            "What types of connections do keyboards and mice use, and what are the advantages of",
-            "wired versus wireless?",
+            "What types of connections do keyboards and mice use, and what are the advantages of wired versus wireless?",
             "What ports and connectors are commonly used to attach peripherals, and how do USB,"
           ]
         },
@@ -2726,6 +2943,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the differences between laser and inkjet printers, and when would you use each",
             "What is a 3D printer, and what limits the size of objects it can create?",
             "How do you connect a printer to a computer or network, and what role does an IP address",
@@ -2777,10 +2999,14 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is the function of a motherboard in a computer system?",
             "How do motherboard specifications affect compatibility with CPUs, memory, and expansion",
-            "What are the differences between desktop and mobile (laptop, tablet, smartphone)",
-            "motherboards?"
+            "What are the differences between desktop and mobile (laptop, tablet, smartphone) motherboards?"
           ]
         },
         {
@@ -2828,8 +3054,12 @@
             }
           ],
           "assessmentCriteria": [
-            "What does a CPU do, and how do Intel and AMD processors connect to the motherboard",
-            "differently?",
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "What does a CPU do, and how do Intel and AMD processors connect to the motherboard differently?",
             "What is the difference between volatile memory (RAM) and non-volatile storage (HDD , SSD)?",
             "How do DDR generations improve memory performance, and what is a DIMM?"
           ]
@@ -2887,6 +3117,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the three components every computer needs to participate in a network?",
             "How do a client and a server establish a connection using the three-way handshake?",
             "What are the main differences between wired and wireless network connections?",
@@ -2938,6 +3173,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the different types of networks based on size, and how do PANs, LANs, and WANs",
             "What are common network topologies, and how do they affect performance and reliability?",
             "How do the client-server and peer-to-peer networking models differ?",
@@ -2989,6 +3229,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What do modems, routers, switches, and firewalls do, and how do they work together in a",
             "What is a network interface card (NIC), and how does it connect a device to a network?",
             "What is the difference between a physical (MA C) address and a logical (IP) address?",
@@ -3040,6 +3285,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is an ISP, and what services do ISPs typically provide?",
             "How do tiered service plans work, and what factors affect which plan you need?",
             "What equipment does an ISP provide, and what does a modem do?",
@@ -3091,6 +3341,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is a WLAN, and what can devices on a small wireless network share?",
             "How do signal strength and router placement affect wireless connectivity?",
             "What are the key differences between the 2.4 GHz, 5 GHz, and 6 GHz frequency bands?",
@@ -3142,8 +3397,12 @@
             }
           ],
           "assessmentCriteria": [
-            "What are the key differences between older and newer Wi-Fi standards, and how do they",
-            "affect network performance?",
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "What are the key differences between older and newer Wi-Fi standards, and how do they affect network performance?",
             "How do latency, attenuation, and interference impact wireless network speed?",
             "What are the seven layers of the OSI model, and how can they help you troubleshoot"
           ]
@@ -3201,6 +3460,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is cloud computing, and how does it differ from on-premises solutions?",
             "What are the differences between SaaS, PaaS, and IaaS?",
             "What are the benefits and drawbacks of using cloud services?",
@@ -3252,10 +3516,14 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is cloud storage, and how does it differ from local storage?",
             "What are the main benefits and drawbacks of using cloud storage?",
-            "How do popular cloud storage providers (OneDr iv e, Google Drive, iCloud, Dropbox) differ in",
-            "features and free storage?"
+            "How do popular cloud storage providers (OneDr iv e, Google Drive, iCloud, Dropbox) differ in features and free storage?"
           ]
         },
         {
@@ -3303,6 +3571,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is virtualization, and what are common uses for virtual machines on desktops and",
             "What is the difference between a Type 1 and a Type 2 hypervisor?",
             "What is a guest operating system, and how does it run inside a virtual machine?",
@@ -3362,6 +3635,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is malware, and what are the main types of malicious software?",
             "How do viruses, worms, and ransomware differ in how they spread and what they do?",
             "What is spyware, and how does it typically get installed on a computer?",
@@ -3413,10 +3691,14 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "Why is physical security important for computers, and what tools can help prevent theft?",
             "What are confidentiality, integrity, and availability, and why do they matter in cybersecurity?",
-            "What are the different factors of authentication, and how does multi-factor authentication",
-            "improve security?"
+            "What are the different factors of authentication, and how does multi-factor authentication improve security?"
           ]
         }
       ]
@@ -3472,8 +3754,12 @@
             }
           ],
           "assessmentCriteria": [
-            "What is the primary function of antivirus software, and how does real-time scanning protect",
-            "your computer?",
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "What is the primary function of antivirus software, and how does real-time scanning protect your computer?",
             "What is a firewall, and how does it use rules to filter network traffic?",
             "Why is defense in depth important, and how do separation of duties and network"
           ]
@@ -3523,10 +3809,13 @@
             }
           ],
           "assessmentCriteria": [
-            "Why is it important to use encryption on a wireless network, and what are the risks of",
-            "leaving a network open?",
-            "How have wireless security standards evolved from WEP to WPA3, and which should you",
-            "use today?"
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "Why is it important to use encryption on a wireless network, and what are the risks of leaving a network open?",
+            "How have wireless security standards evolved from WEP to WPA3, and which should you use today?"
           ]
         }
       ]
@@ -3582,6 +3871,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is a database, and why are databases important for businesses and organizations?",
             "What are the key characteristics that most databases share?",
             "Why do organizations prefer databases over spreadsheets for managing large amounts of",
@@ -3633,6 +3927,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the different ways to get data into a database, and when would you use each",
             "What is a query, and how can you use it to find and change data in a database?",
             "How do you use forms in Microsoft Access to enter and modify records?",
@@ -3684,6 +3983,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is a database schema, and what are the three types of data models?",
             "How do tables use records, fields, and constraints to organize data?",
             "What are primary keys and foreign keys, and how do they create relationships between",
@@ -3743,8 +4047,12 @@
             }
           ],
           "assessmentCriteria": [
-            "What is coding, and why do programmers use programming languages instead of machine",
-            "language?",
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "What is coding, and why do programmers use programming languages instead of machine language?",
             "What is the difference between compiled and interpreted programming languages?",
             "What are runtime engines, and how do they combine the benefits of compiled and"
           ]
@@ -3794,6 +4102,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "Why is it important to plan a program before you start writing code?",
             "What is a flowchart, and how do the different shapes represent steps in a program?",
             "What is pseudocode, and how does it help a programmer organize their logic?",
@@ -3845,6 +4158,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is a variable, and how do constants differ from variables?",
             "What are the fundamental data types, and how do integers, floats, characters, strings, and"
           ]
@@ -3894,6 +4212,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How do flowcharts represent the flow of a program?",
             "Why is code documentation important, and how are comments used in programs?",
             "What is modular programming, and why is it useful?",
@@ -3945,6 +4268,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How does a program use branching to make decisions based on conditions?",
             "What is the difference between an IF- THEN-ELSE statement and a switch statement?",
             "How do code blocks organize related statements in a program?",
@@ -3996,6 +4324,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What is an array, and why is it useful for storing multiple related values?",
             "How does index notation work, and why do most programming languages start counting at",
             "How can you use a loop to iterate through the elements of an array?",
@@ -4055,6 +4388,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "Why is it important to define the problem before starting a project?",
             "How does identifying your audience change the way you communicate?",
             "What are some methods you can use to visualize a solution before building it?",
@@ -4106,9 +4444,13 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What makes a goal SMART, and why does that matter for project success?",
-            "How do collaborative tools like cloud storage and shared documents help teams work",
-            "together?",
+            "How do collaborative tools like cloud storage and shared documents help teams work together?",
             "What is the difference between positive and negative feedback, and why are both"
           ]
         },
@@ -4157,9 +4499,13 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "How does an AI agent differ from an AI chatbot, and what makes agents more autonomous?",
-            "In what ways are robotics and automation being used in industries like manufacturing,",
-            "farming, healthcare, and restaurants?",
+            "In what ways are robotics and automation being used in industries like manufacturing, farming, healthcare, and restaurants?",
             "What is the difference between virtual reality, augmented reality, and mixed reality?"
           ]
         }
@@ -4216,8 +4562,12 @@
             }
           ],
           "assessmentCriteria": [
-            "What are the three main components of an information system, and how do they work",
-            "together?",
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "What are the three main components of an information system, and how do they work together?",
             "What can happen when people do not fully understand the technology they use?",
             "What is the System Development Life Cycle, and what are its five main phases?"
           ]
@@ -4267,9 +4617,13 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What are the major sectors of the ICT industry, and what types of companies operate in",
-            "What career opportunities exist in internet technologies, such as web design, social media",
-            "marketing, and browser extension development?",
+            "What career opportunities exist in internet technologies, such as web design, social media marketing, and browser extension development?",
             "How do the roles of network administrator, network engineer, and network architect differ"
           ]
         },
@@ -4318,6 +4672,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What do application developers and web developers do, and how do their roles differ?",
             "What are the three types of web developers, and what does each one focus on?",
             "What does a quality assurance (Q A) engineer do to ensure software quality?",
@@ -4369,10 +4728,13 @@
             }
           ],
           "assessmentCriteria": [
-            "What types of careers focus on data privacy, and why is protecting personal information",
-            "important?",
-            "What do database professionals like database administrators, data engineers, and data",
-            "scientists do?"
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
+            "What types of careers focus on data privacy, and why is protecting personal information important?",
+            "What do database professionals like database administrators, data engineers, and data scientists do?"
           ]
         },
         {
@@ -4420,6 +4782,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 4 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: 3 key points / notes"
+          ],
+          "reviewQuestions": [
             "What types of careers are available in the IT field, and how do generalist and specialist roles",
             "How can you use the SMART framework to set achievable career goals?",
             "What education and training options can help you prepare for a career in IT?",
@@ -4464,6 +4831,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 3 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Role-to-skill map"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4507,6 +4879,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 3 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Three ideas + selected project"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4550,6 +4927,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 3 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Career target + evidence list"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4594,6 +4976,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 2 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Project brief"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4630,6 +5017,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 2 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Research notes + requirements"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4666,6 +5058,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 2 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Project plan"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4702,6 +5099,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 2 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Working version"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4738,6 +5140,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 2 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Improved version"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4774,6 +5181,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 2 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Test record"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4810,6 +5222,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 2 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Presentation/demo"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"
@@ -4846,6 +5263,11 @@
             }
           ],
           "assessmentCriteria": [
+            "All 2 steps of the day are complete",
+            "Evidence of the work is attached",
+            "The evidence is the deliverable asked for: Final portfolio package"
+          ],
+          "reviewQuestions": [
             "What problem does your capstone solve?",
             "What evidence proves the solution works?",
             "What did you learn and what would you improve?"

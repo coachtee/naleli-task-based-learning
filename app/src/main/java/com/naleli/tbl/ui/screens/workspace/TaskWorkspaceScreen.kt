@@ -166,8 +166,10 @@ fun TaskWorkspaceScreen(taskId: String, onBack: () -> Unit, onAddEvidence: () ->
                     Spacer(Modifier.height(10.dp))
                     BeforeYouStartRow("Watch", it)
                 }
-                Spacer(Modifier.height(10.dp))
-                BeforeYouStartRow("Practise", task.practiseText)
+                if (task.practiseText.isNotBlank()) {
+                    Spacer(Modifier.height(10.dp))
+                    BeforeYouStartRow("Practise", task.practiseText)
+                }
             }
         }
 
@@ -193,11 +195,48 @@ fun TaskWorkspaceScreen(taskId: String, onBack: () -> Unit, onAddEvidence: () ->
         items(task.subSteps, key = { it.subStepId }) { subStep ->
             val complete = state.subStepStatuses[subStep.subStepId]?.complete == true
             NaleliCard(modifier = Modifier.fillMaxWidth()) {
-                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
                     Checkbox(checked = complete, onCheckedChange = { viewModel.toggleSubStep(subStep, it) })
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(subStep.title, style = MaterialTheme.typography.bodyMedium)
+                    Column(modifier = Modifier.weight(1f).padding(top = 12.dp)) {
+                        Text(subStep.title, style = MaterialTheme.typography.titleSmall)
                         Text("${subStep.estimatedMinutes} min", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        if (subStep.instructions.isNotBlank()) {
+                            Spacer(Modifier.height(6.dp))
+                            Text(subStep.instructions, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface)
+                        }
+                        if (subStep.evidence.isNotBlank()) {
+                            Spacer(Modifier.height(6.dp))
+                            Text(
+                                "Produces: ${subStep.evidence}",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        if (task.reviewQuestions.isNotEmpty()) {
+            item {
+                NaleliCard(modifier = Modifier.fillMaxWidth()) {
+                    Text("PROVE YOU CAN DO IT", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        "Answer these in your own words, without reopening the lesson.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    task.reviewQuestions.forEach { question ->
+                        Row(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.Top) {
+                            Text("•", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
+                            Text(
+                                question,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.padding(start = 8.dp),
+                            )
+                        }
                     }
                 }
             }

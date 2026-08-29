@@ -153,7 +153,14 @@ def read_day_sheet(wb, day):
             )
         elif in_questions and first == "Question":
             q = row[1] if len(row) > 1 else ""
-            if q:
+            if not q:
+                continue
+            # A long question wraps onto a second "Question" row in the
+            # workbook (28 of the 359 do). A fragment starting lower-case is
+            # the tail of the previous question, not a new one.
+            if questions and q[:1].islower():
+                questions[-1] = f"{questions[-1]} {q}"
+            else:
                 questions.append(q)
 
     return {
@@ -164,6 +171,20 @@ def read_day_sheet(wb, day):
         "tasks": tasks,
         "questions": questions,
     }
+
+
+def criteria_for(sub_steps, deliverable):
+    """The rubric AssessmentEngine actually applies, stated in the learner's
+    words. These are DERIVED, not workbook text: the workbook's SOURCE
+    LEARNING QUESTIONS are review questions the learner answers, not things
+    an assessor ticks, so they go to reviewQuestions instead. Order matters
+    — AssessmentEngine checks the last criterion against the evidence's file
+    type, so the deliverable one stays last."""
+    return [
+        f"All {len(sub_steps)} steps of the day are complete",
+        "Evidence of the work is attached",
+        f"The evidence is the deliverable asked for: {deliverable}",
+    ]
 
 
 def first_work_task(sheet):
@@ -290,7 +311,8 @@ def build():
                 "assignmentText": mission or practice or learn,
                 "deliverableLabel": deliverable,
                 "subSteps": sub_steps,
-                "assessmentCriteria": sheet["questions"],
+                "assessmentCriteria": criteria_for(sub_steps, deliverable),
+                "reviewQuestions": sheet["questions"],
             }
         )
 

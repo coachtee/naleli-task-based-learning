@@ -50,7 +50,12 @@ data class WorkTask(
     val assignmentText: String,
     val deliverableLabel: String,
     val subSteps: List<WorkSubStep> = emptyList(),
+    /** The rubric AssessmentEngine applies — structural checks, in the
+     * learner's words. Not workbook text; see the converter. */
     val assessmentCriteria: List<String> = emptyList(),
+    /** The workbook's SOURCE LEARNING QUESTIONS for this day. The learner
+     * answers these in the Review step; they are not assessment criteria. */
+    val reviewQuestions: List<String> = emptyList(),
 )
 
 @Serializable
