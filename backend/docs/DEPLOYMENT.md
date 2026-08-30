@@ -114,13 +114,34 @@ php artisan config:cache && php artisan route:cache && php artisan view:cache
   an unset secret returns 503 rather than accepting unsigned posts.
 - One cron entry for the scheduler:
   `* * * * * cd /home/kcseduza/kcs-backend && php artisan schedule:run >/dev/null 2>&1`
+- The Pay@ reconciliation sweep — installed, and the reason a lost callback is
+  a delay rather than a missed payment:
+  `*/15 * * * * /usr/local/bin/php /home/kcseduza/kcs-backend/artisan payat:reconcile >> /home/kcseduza/logs/payat-reconcile.log 2>&1`
 
 ## Still to do after the first deploy
 
 - Point the Fluent Forms webhook on form 15 at `POST /api/v1/intake/application`.
+- Point the Pay@ merchant portal's notification URL at
+  `https://www.kcs.edu.za/admin/api/v1/payments/payat`. The old WordPress
+  endpoint (`/wp-json/kcs/v1/payat`) only logged deliveries; leave it until one
+  real payment has been proven through the new one. See `docs/PAYMENTS-PAYAT.md`.
 - Revoke the Perfex API token. It is still stored in the body of the now-inactive
   WPCode snippet (post 2477) and in the Perfex install at `public_html/portal`.
 
+
+### A .env value with spaces must be quoted, and a cached config hides it
+
+`PAYAT_MERCHANT_DISPLAY_NAME=Katlehong Computer School` — unquoted — makes
+every artisan command fail with:
+
+```
+Failed to parse dotenv file. Encountered unexpected whitespace at [Katlehong Computer School].
+```
+
+The trap is that a **cached config never reads `.env` at all**, so a malformed
+line sits harmless until the next `optimize:clear` and then takes the whole app
+down at once. Quote any value containing a space, and re-run `config:cache`
+before walking away from a deploy.
 
 ## Two faults that only appear in production
 
