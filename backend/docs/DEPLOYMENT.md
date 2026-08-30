@@ -109,7 +109,7 @@ php artisan config:cache && php artisan route:cache && php artisan view:cache
 - `APP_URL=https://www.kcs.edu.za/admin`.
 - Change the seeded `admin@kcs.edu.za` password. `AdminUserSeeder` exists so a
   fresh copy opens at all; it is not a production credential.
-- Set `WEBHOOK_FLUENTFORM_SECRET` to a generated value and put the same value in
+- Set `KCS_FLUENTFORM_SECRET` to a generated value and put the same value in
   the Fluent Forms webhook integration. `VerifyWebhookSignature` fails closed —
   an unset secret returns 503 rather than accepting unsigned posts.
 - One cron entry for the scheduler:

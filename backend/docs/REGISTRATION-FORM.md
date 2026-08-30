@@ -59,3 +59,50 @@ from there, so the hook survived until that entry was removed. Verified gone on 
 fresh request: the function is undefined and the hook unregistered.
 
 The API token is still stored in the snippet body. Revoke it in Perfex.
+
+
+## How a registration reaches the backend
+
+A must-use plugin on the website, `wp-content/mu-plugins/kcs-registration-bridge.php`,
+hooks `fluentform/submission_inserted` for form 15 and posts to
+
+```
+POST https://www.kcs.edu.za/admin/api/v1/intake/application
+X-KCS-Signature: sha256=<hmac-sha256 of the raw body>
+```
+
+It is a must-use plugin rather than a WPCode snippet on purpose. The Perfex
+bridge it replaces was a WPCode snippet, and drafting that snippet did not stop
+it running — WPCode caches active snippets in an option and evals from there.
+A must-use plugin cannot be deactivated by accident.
+
+The signing secret is read from `/home/kcseduza/kcs-backend/.env` at request
+time, so there is exactly one copy. The Perfex bridge had its API token pasted
+into the snippet body, which left a live credential sitting in the WordPress
+database in plain text.
+
+A delivery that fails is appended to
+`wp-content/uploads/kcs-backups/registration-bridge.log` with the entry id.
+Nothing is lost when that happens: the submission is already stored in Fluent
+Forms, and `inbound_webhooks` records every delivery the backend accepted
+before it interprets it.
+
+### Where the form appears
+
+`kcs.edu.za/application/` — the one registration page. The home page's
+"Register Interest" button links to it.
+
+The form was briefly placed on the home page too, but the front-page template
+does not expand shortcodes: the anchor and heading rendered while the form did
+not, though the identical content renders correctly server-side. One
+destination is better than two anyway.
+
+### Verified end to end on 30 August 2026
+
+A submission through the bridge produced application 1, learner
+`NAL-2026-00001`, programme `ICT` resolved from the name "ICT Systems
+Administration", `funding_source=funding_application`,
+`funding_status=pending`, `campaign` recorded, and the WhatsApp number
+normalised to `+27735550101`. The verification records were then deleted and
+the reference counter reset to 1, so the first real registration takes
+NAL-2026-00001.

@@ -5,9 +5,13 @@ declare(strict_types=1);
 return [
 
     /*
-     * The shared secret Fluent Forms signs its request body with. Generate a
-     * long random value, put it here via the environment, and paste the same
-     * value into the webhook integration on form 8 at kcs.edu.za.
+     * The shared secret the website signs its request body with, as
+     * `X-KCS-Signature: sha256=<hmac>` over the raw body.
+     *
+     * The bridge is a must-use plugin on kcs.edu.za — see
+     * docs/REGISTRATION-FORM.md — and it reads this same value out of this
+     * application's .env rather than keeping a copy of its own. Rotating it
+     * here rotates it everywhere.
      */
     'fluentform' => [
         'secret' => env('KCS_FLUENTFORM_SECRET', ''),
