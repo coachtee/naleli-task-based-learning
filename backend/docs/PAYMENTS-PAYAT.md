@@ -73,6 +73,31 @@ short is worse than carrying a part-paid invoice — and is recorded as a
 `pending` payment against the same reference. When the balance arrives, the
 same row settles.
 
+## Four constraints the specification does not tell you
+
+All four were found by walking the flow against the live merchant account, and
+each one had already produced a broken reference before it was understood.
+
+1. **`clientAccountNumber` is unique forever, including after cancellation.**
+   Pay@ will not reuse a number, so a cancelled reference is permanently dead
+   and its invoice needs a new one. That is what the one-digit attempt on the
+   end of our account numbers is for.
+2. **`clientReferenceNumber` is unique too**, per business —
+   *"Reference number NAL-2026-00002-1 already exists for this business"*. A
+   re-issue carries the attempt here as well (`NAL-2026-00002-1r1`) or Pay@
+   refuses it for colliding with the dead reference it replaces.
+3. **A failed create followed by a successful read does not mean "adopt it".**
+   The read returns cancelled and expired references quite happily. Adopting
+   one stores a number no till will ever accept and shows it to a registrar as
+   payable, so adoption now takes an open reference and refuses a closed one.
+4. **`daysValid` must not be derived from the due date.** The registration fee
+   is due the day it is raised, which minted a reference expiring at midnight
+   that same day. The configured window is a floor, not a default.
+
+One quirk worth knowing: `create` returns `sourceReference` (the number quoted
+at the till) but `read` does not, so the value is stored when the reference is
+minted and never overwritten by a later read.
+
 ## Operating it
 
 **Issue a reference.** Money → Invoices → *Create Pay@ reference*. Deliberate,
@@ -123,9 +148,12 @@ a real payment, then remove it.
 
 ## Still to do before this touches a learner
 
-- Repoint the notification URL in the Pay@ portal (above).
-- Test with one real R500 registration fee. Creating an RTP against the
-  production merchant account mints a genuinely payable reference, so no test
-  reference has been created from here.
+- **Nothing sends the learner their reference.** The website tells them
+  "we will send your registration reference and payment options to your
+  WhatsApp shortly" and no code does. This is the one thing standing between a
+  working flow and a working business — a payable number sitting in the
+  dashboard that the learner has never seen cannot be paid.
+- Pay one real R500 registration fee at a till, to prove settlement end to end
+  against a genuine payment rather than a faked one.
 - Two questions outstanding with Pay@: whether a sandbox exists, and whether
   they reserve any `clientAccountNumber` range (our prefix assumes not).
