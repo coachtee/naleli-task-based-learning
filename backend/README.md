@@ -62,9 +62,14 @@ applications, enrolments, invoices and payments with manual confirmation,
 access tokens, entitlements, the Fluent Forms webhook, and a Filament
 dashboard.
 
-Not built yet, deliberately: live payment gateways (Phase 2), any change to
-the Android app (Phase 3), assessment and moderation (Phase 4), certificates
-(Phase 5). See `docs/API-CONTRACT.md` for the contract the app will use.
+Pay@ Go is live on top of Phase 1 — a learner with no bank card can pay cash
+at any Pay@ till against a reference this backend issues. Its callback is
+unsigned, so every settlement is decided by reading the reference back from
+Pay@ rather than by believing the callback. See `docs/PAYMENTS-PAYAT.md`.
+
+Not built yet, deliberately: any change to the Android app (Phase 3),
+assessment and moderation (Phase 4), certificates (Phase 5). See
+`docs/API-CONTRACT.md` for the contract the app will use.
 
 ## Conventions
 

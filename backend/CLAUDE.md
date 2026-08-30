@@ -27,6 +27,9 @@ verifying on MariaDB in staging — see `LearnerRegistry::allocateReference()`.
 ## Phase
 
 Phase 1: applications in from the website, learner records, payments by manual
-confirmation, enrolments, tokens, entitlements, Filament dashboard.
-Not yet: live payment gateways, any Android app change, assessment,
-moderation, certificates. Do not build ahead of the phase.
+confirmation, enrolments, tokens, entitlements, Filament dashboard. Pay@ Go is
+live on top of that — see `docs/PAYMENTS-PAYAT.md`; its callback is unsigned,
+so settlement is always decided by reading the reference back from Pay@ and
+never from the callback body.
+Not yet: any Android app change, assessment, moderation, certificates. Do not
+build ahead of the phase.

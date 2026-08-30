@@ -27,6 +27,7 @@ class Invoice extends Model
             'activates_enrolment' => 'boolean',
             'due_on' => 'date',
             'paid_at' => 'datetime',
+            'payat_requested_at' => 'datetime',
         ];
     }
 

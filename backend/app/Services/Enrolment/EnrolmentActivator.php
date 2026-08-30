@@ -91,6 +91,10 @@ class EnrolmentActivator
             }
 
             $payment->update([
+                // A part payment that later completes reports a larger amount
+                // against the same reference. Until it settles, the row tracks
+                // what has actually arrived rather than what was first seen.
+                'amount_cents' => $result->amountCents,
                 'status' => $result->status,
                 'paid_at' => $result->isSettled() ? now() : null,
                 'raw_response' => $result->raw,

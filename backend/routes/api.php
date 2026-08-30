@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\MeController;
 use App\Http\Controllers\Api\V1\ProgrammeController;
 use App\Http\Controllers\Api\V1\TokenActivationController;
 use App\Http\Controllers\Webhooks\FluentFormsApplicationController;
+use App\Http\Controllers\Webhooks\PayAtGoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,14 @@ Route::prefix('v1')->group(function (): void {
     // --- the website's application webhook -----------------------------
     Route::post('intake/application', FluentFormsApplicationController::class)
         ->middleware('webhook.signature:fluentform');
+
+    // --- Pay@ Go's payment notification --------------------------------
+    // No signature: Pay@ does not sign this callback. The controller takes
+    // only the identity of a reference from the body and settles from an
+    // authenticated read against Pay@, so an unsigned or forged call cannot
+    // move money. The throttle is there because the endpoint is public.
+    Route::post('payments/payat', PayAtGoController::class)
+        ->middleware('throttle:60,1');
 
     // --- authenticated as a learner device -----------------------------
     Route::middleware('auth:sanctum')->group(function (): void {

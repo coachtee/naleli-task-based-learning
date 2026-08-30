@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Invoices\Tables;
 use App\Enums\InvoiceStatus;
 use App\Models\Invoice;
 use App\Services\Enrolment\EnrolmentActivator;
+use App\Services\Payments\PayAtGo\PayAtGoClient;
 use App\Services\Payments\PaymentProviderRegistry;
+use App\Services\Payments\Providers\PayAtGoProvider;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -16,6 +18,7 @@ use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Throwable;
 
 class InvoicesTable
 {
@@ -67,6 +70,19 @@ class InvoicesTable
                         $record->status->value === 'due' => 'Due '.$record->due_on->format('j M Y'),
                         default => null,
                     }),
+
+                // What the learner quotes at the till. Copyable because that
+                // is what a registrar actually does with it: paste it into a
+                // WhatsApp message.
+                TextColumn::make('payat_source_reference')
+                    ->label('Pay@ reference')
+                    ->placeholder('Not issued')
+                    ->copyable()
+                    ->copyMessage('Pay@ reference copied')
+                    ->url(fn (Invoice $record): ?string => $record->payat_payment_link)
+                    ->openUrlInNewTab()
+                    ->description(fn (Invoice $record): ?string => $record->payat_requested_at?->format('j M Y'))
+                    ->toggleable(),
 
                 TextColumn::make('due_on')
                     ->label('Due')
@@ -126,6 +142,95 @@ class InvoicesTable
                             ->persistent()
                             ->send();
                     }),
+                // Mint the payable reference. Separate from confirming
+                // payment on purpose: this is the school ASKING for money,
+                // and it is the only Pay@ call that costs anything to get
+                // wrong, so it is always deliberate and never automatic.
+                Action::make('createPayAtReference')
+                    ->label('Create Pay@ reference')
+                    ->icon('heroicon-o-qr-code')
+                    ->color('info')
+                    ->visible(fn (Invoice $record): bool => $record->status === InvoiceStatus::DUE
+                        && $record->payat_account_number === null
+                        && app(PayAtGoClient::class)->isConfigured())
+                    ->requiresConfirmation()
+                    ->modalHeading(fn (Invoice $record): string => "Create a Pay@ reference for R{$record->amount_rands}")
+                    ->modalDescription('The learner can then pay this amount in cash at any Pay@ till. Nothing is charged until they do.')
+                    ->action(function (Invoice $record): void {
+                        try {
+                            $intent = app(PayAtGoProvider::class)->createCheckout($record);
+                        } catch (Throwable $e) {
+                            Notification::make()
+                                ->title('Pay@ would not create the reference')
+                                ->body($e->getMessage())
+                                ->danger()
+                                ->persistent()
+                                ->send();
+
+                            return;
+                        }
+
+                        Notification::make()
+                            ->title('Pay@ reference created')
+                            ->body('Reference '.($record->fresh()->payat_source_reference ?? $intent?->providerReference).
+                                ' — send the learner the link on the invoice row.')
+                            ->success()
+                            ->persistent()
+                            ->send();
+                    }),
+
+                // The safety net for a webhook that never arrives. Reads the
+                // reference back from Pay@ and settles on what Pay@ says, not
+                // on what anyone typed.
+                Action::make('checkPayAt')
+                    ->label('Check Pay@')
+                    ->icon('heroicon-o-arrow-path')
+                    ->color('gray')
+                    ->visible(fn (Invoice $record): bool => $record->payat_account_number !== null
+                        && $record->status === InvoiceStatus::DUE)
+                    ->action(function (Invoice $record): void {
+                        try {
+                            $result = app(PayAtGoProvider::class)->reconcile($record);
+                        } catch (Throwable $e) {
+                            Notification::make()->title('Could not reach Pay@')->body($e->getMessage())->danger()->send();
+
+                            return;
+                        }
+
+                        if ($result === null) {
+                            Notification::make()->title('Pay@ has no record of this reference')->warning()->send();
+
+                            return;
+                        }
+
+                        if (! $result->isSettled()) {
+                            $paid = number_format($result->amountCents / 100, 2);
+
+                            Notification::make()
+                                ->title('Not paid yet')
+                                ->body("Pay@ reports R{$paid} received against R{$record->amount_rands}.")
+                                ->warning()
+                                ->send();
+
+                            return;
+                        }
+
+                        $settled = app(EnrolmentActivator::class)->settle($result, $record, auth()->user());
+
+                        $body = 'Enrolment and entitlements updated.';
+
+                        if ($settled['plain_token'] !== null) {
+                            $body .= " Access token: {$settled['plain_token']} (shown once).";
+                        }
+
+                        Notification::make()
+                            ->title($settled['already_settled'] ? 'Already recorded' : 'Paid at Pay@')
+                            ->body($body)
+                            ->success()
+                            ->persistent()
+                            ->send();
+                    }),
+
                 EditAction::make(),
             ])
             ->toolbarActions([
