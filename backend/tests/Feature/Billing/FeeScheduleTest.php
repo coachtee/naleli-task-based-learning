@@ -44,7 +44,7 @@ class FeeScheduleTest extends TestCase
      */
     public function test_the_career_module_bills_r500_registration_then_r950_for_three_months(): void
     {
-        $offering = Offering::where('code', 'PPO-2027-BLOCK')->firstOrFail();
+        $offering = Offering::where('code', 'PPO-2026')->firstOrFail();
 
         $this->assertSame(BillingModel::DEPOSIT_BALANCE, $offering->billing_model);
         $this->assertSame(335000, $offering->price_cents, 'R3,350 in total');

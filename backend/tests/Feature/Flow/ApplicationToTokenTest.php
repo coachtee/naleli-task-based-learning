@@ -67,7 +67,11 @@ class ApplicationToTokenTest extends TestCase
 
         $this->assertSame(ApplicationStatus::REGISTRATION_STARTED, $application->status);
         $this->assertSame('PPO', $application->programme->code);
-        $this->assertSame('February 2027', $application->intake->label);
+        // kcs.edu.za publishes no cohort for a Career Module — the cohort
+        // codes on the application form belong to the short courses — so the
+        // registration lands without one rather than against an invented
+        // intake month. CatalogueDriftTest covers the cohorts that are real.
+        $this->assertNull($application->intake);
         // The SA ID validated itself, so identity is already established.
         $this->assertTrue($learner->hasVerifiedIdentity());
 
@@ -267,7 +271,7 @@ class ApplicationToTokenTest extends TestCase
 
         // A Professional Specialisation: fees on enquiry, so no price and no
         // sale until somebody sets one.
-        $draft = Offering::where('code', 'BIA-2027-BLOCK')->firstOrFail();
+        $draft = Offering::where('code', 'DOA-2026')->firstOrFail();
         $this->assertSame(OfferingStatus::DRAFT, $draft->status);
 
         $application = Application::firstOrFail();
@@ -282,7 +286,9 @@ class ApplicationToTokenTest extends TestCase
     public function test_the_public_endpoints_need_no_authentication(): void
     {
         $this->getJson('/api/v1/health')->assertOk()->assertJsonPath('status', 'ok');
-        $this->getJson('/api/v1/programmes')->assertOk()->assertJsonCount(15, 'data');
+        // Only what the site publishes a price for. The rest of the catalogue is
+        // draft and must not appear to a learner as something they can buy.
+        $this->getJson('/api/v1/programmes')->assertOk()->assertJsonCount(8, 'data');
     }
 
     public function test_the_authenticated_endpoints_refuse_an_anonymous_caller(): void
@@ -301,7 +307,7 @@ class ApplicationToTokenTest extends TestCase
      */
     private function careerModuleOffering(): Offering
     {
-        $offering = Offering::where('code', 'PPO-2027-BLOCK')->firstOrFail();
+        $offering = Offering::where('code', 'PPO-2026')->firstOrFail();
 
         $this->assertSame(BillingModel::DEPOSIT_BALANCE, $offering->billing_model);
         $this->assertSame(335000, $offering->price_cents);
@@ -369,7 +375,6 @@ class ApplicationToTokenTest extends TestCase
                 'referral_source' => 'Facebook',
             ],
             'programme_code' => 'PPO',
-            'intake_label' => 'February 2027',
             'enrolment_plan' => 'monthly',
         ];
     }
