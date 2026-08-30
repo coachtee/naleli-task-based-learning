@@ -15,21 +15,40 @@ Verified against the live host on 30 August 2026.
 | `/home/kcseduza/public_html/admin` | does not exist, so the URL is free |
 | `exec` / `proc_open` | available, nothing in `disable_functions` |
 
-## The one thing that needs a human
-
-The WordPress database user holds `ALL PRIVILEGES` on `kcseduza_wp523` **and nothing
-else** — it cannot `CREATE DATABASE`. A separate database has to be made in cPanel:
+## Database — created
 
 ```
-Database:  kcseduza_kcsedu
-User:      kcseduza_kcsedu
-Password:  [generate a strong one]
-Privileges: ALL on that database
+Database: kcseduza_kcsedu
+User:     kcseduza_thabisonaleli
 ```
 
-The alternative is sharing the WordPress database with a `kcs_` table prefix. That
-works today with no new credentials, but a WordPress restore-from-backup would take
-the Laravel tables with it. Prefer the separate database.
+Confirmed reachable: a deliberate wrong-password connection returns MySQL error
+**1045** (access denied), not 1049 (unknown database) or 1044 (no rights to it),
+so the user exists and is correctly granted on that database.
+
+## Getting the package onto the server
+
+The build container's egress policy denies outbound HTTPS to kcs.edu.za — the
+proxy answers 403 to CONNECT — so the tarball cannot be pushed from there and a
+policy denial is not something to route around. Upload
+`kcs-backend.tar.gz` to `/home/kcseduza/` with cPanel File Manager instead. It
+carries no `.env`, so nothing secret travels in it.
+
+Everything after that runs server-side through the WordPress bridge.
+
+## Panel path
+
+Filament mounts at `config('kcs.panel_path')`, which reads `FILAMENT_PANEL_PATH`.
+Locally that defaults to `admin`, so the panel is at `/admin` as usual. In
+production it is set **empty**, because the front controller already sits inside
+`public_html/admin` — leaving it as `admin` would put the dashboard at
+`kcs.edu.za/admin/admin`. With it empty:
+
+```
+kcs.edu.za/admin           -> dashboard
+kcs.edu.za/admin/login     -> login
+kcs.edu.za/admin/api/v1/*  -> the API the Android app will call
+```
 
 ## Layout
 

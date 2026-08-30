@@ -29,7 +29,9 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            // Empty in production: the front controller already sits in
+            // public_html/admin, so the panel mounts at that directory's root.
+            ->path(config('kcs.panel_path'))
             ->login()
             ->brandName('KCS Education')
             // The NIBS navy and orange the learner app already uses, so staff
