@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Invoices\Tables;
 
 use App\Enums\InvoiceStatus;
+use App\Enums\PayAtAccountState;
 use App\Models\Invoice;
 use App\Services\Enrolment\EnrolmentActivator;
 use App\Services\Payments\PayAtGo\PayAtGoClient;
@@ -81,7 +82,14 @@ class InvoicesTable
                     ->copyMessage('Pay@ reference copied')
                     ->url(fn (Invoice $record): ?string => $record->payat_payment_link)
                     ->openUrlInNewTab()
-                    ->description(fn (Invoice $record): ?string => $record->payat_requested_at?->format('j M Y'))
+                    // A cancelled or expired reference reads as dead here, so
+                    // nobody sends a learner a number that cannot be paid.
+                    ->color(fn (Invoice $record): string => self::payAtState($record)?->isClosed() ? 'danger' : 'gray')
+                    ->description(fn (Invoice $record): ?string => match (true) {
+                        $record->payat_account_number === null => null,
+                        self::payAtState($record)?->isClosed() === true => self::payAtState($record)->label().' — issue a new one',
+                        default => self::payAtState($record)?->label() ?? $record->payat_requested_at?->format('j M Y'),
+                    })
                     ->toggleable(),
 
                 TextColumn::make('due_on')
@@ -179,6 +187,34 @@ class InvoicesTable
                             ->send();
                     }),
 
+                // Pay@ will not reuse an account number, so a cancelled or
+                // expired reference is permanently dead and the invoice needs
+                // a fresh one under a new attempt.
+                Action::make('reissuePayAtReference')
+                    ->label('Issue a new Pay@ reference')
+                    ->icon('heroicon-o-arrow-path-rounded-square')
+                    ->color('warning')
+                    ->visible(fn (Invoice $record): bool => $record->status === InvoiceStatus::DUE
+                        && $record->payat_account_number !== null
+                        && self::payAtState($record)?->isClosed() === true)
+                    ->requiresConfirmation()
+                    ->modalHeading('Replace the dead Pay@ reference')
+                    ->modalDescription('The old number can never be paid. This allocates a new one for the same invoice.')
+                    ->action(function (Invoice $record): void {
+                        try {
+                            app(PayAtGoProvider::class)->reissue($record);
+                        } catch (Throwable $e) {
+                            Notification::make()->title('Pay@ would not issue a new reference')
+                                ->body($e->getMessage())->danger()->persistent()->send();
+
+                            return;
+                        }
+
+                        Notification::make()->title('New Pay@ reference issued')
+                            ->body('Reference '.$record->fresh()->payat_source_reference.' — send this one instead.')
+                            ->success()->persistent()->send();
+                    }),
+
                 // The safety net for a webhook that never arrives. Reads the
                 // reference back from Pay@ and settles on what Pay@ says, not
                 // on what anyone typed.
@@ -238,5 +274,11 @@ class InvoicesTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    /** The last state Pay@ reported, recorded whenever the reference was read. */
+    private static function payAtState(Invoice $invoice): ?PayAtAccountState
+    {
+        return PayAtAccountState::tryFromApi($invoice->payat_state);
     }
 }

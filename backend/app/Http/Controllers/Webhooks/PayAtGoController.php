@@ -77,6 +77,10 @@ class PayAtGoController extends Controller
 
         $invoice = Invoice::where('payat_account_number', $result->providerReference)->first();
 
+        // Same reason as the reconcile sweep: keep the last state Pay@ reported
+        // on the invoice so a registrar sees it without another API call.
+        $invoice?->forceFill(['payat_state' => $result->raw['account_state'] ?? null])->save();
+
         // Nothing has been paid yet — Pay@ notifies on states other than
         // payment too. Recording a zero-rand payment row would be noise.
         if ($result->status !== PaymentStatus::SETTLED && $result->amountCents <= 0) {

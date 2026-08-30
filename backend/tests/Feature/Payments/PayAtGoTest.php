@@ -13,6 +13,7 @@ use App\Models\Invoice;
 use App\Models\Offering;
 use App\Models\Payment;
 use App\Services\Enrolment\ApplicationAcceptor;
+use App\Services\Payments\PayAtGo\PayAtGoException;
 use App\Services\Payments\Providers\PayAtGoProvider;
 use Database\Seeders\ProgrammeSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -199,6 +200,7 @@ class PayAtGoTest extends TestCase
         Http::fake([
             self::TOKEN_URL => Http::response(['access_token' => 'tok-1', 'expires_in' => 3599]),
             self::CREATE_URL => Http::response(['message' => 'clientAccountNumber already in use'], 409),
+            // Still outstanding, so a learner can still pay it.
             self::READ_URL => Http::response($this->rtp($invoice, ['requestToPayId' => 'rtp-existing'])),
         ]);
 
@@ -206,6 +208,69 @@ class PayAtGoTest extends TestCase
 
         $this->assertSame($this->expectedAccountNumber($invoice), $intent->providerReference);
         $this->assertSame('rtp-existing', $invoice->fresh()->payat_request_to_pay_id);
+    }
+
+    /**
+     * The defect this guards was found by walking the flow against the live
+     * account: a cancelled reference read back after a failed create was
+     * adopted and stored, handing the learner a number that can never be paid
+     * and telling the registrar it was payable.
+     */
+    public function test_a_dead_reference_is_never_adopted_as_if_it_were_payable(): void
+    {
+        $invoice = $this->registrationInvoice();
+
+        Http::fake([
+            self::TOKEN_URL => Http::response(['access_token' => 'tok-1', 'expires_in' => 3599]),
+            self::CREATE_URL => Http::response(['message' => 'clientAccountNumber already in use'], 409),
+            self::READ_URL => Http::response($this->rtp($invoice, ['accountState' => 'PAYMENT_CANCELLED'])),
+        ]);
+
+        try {
+            app(PayAtGoProvider::class)->createCheckout($invoice);
+            $this->fail('A cancelled reference must not be adopted.');
+        } catch (PayAtGoException $e) {
+            $this->assertStringContainsString('cannot be paid', $e->getMessage());
+        }
+
+        $this->assertNull($invoice->fresh()->payat_account_number, 'nothing dead was stored');
+    }
+
+    public function test_re_issuing_allocates_a_fresh_number_the_learner_can_pay(): void
+    {
+        $invoice = $this->mintedInvoice();
+        $dead = $invoice->payat_account_number;
+
+        Http::fake([
+            self::TOKEN_URL => Http::response(['access_token' => 'tok-1', 'expires_in' => 3599]),
+            self::CREATE_URL => fn (ClientRequest $request) => Http::response($this->rtp($invoice, [
+                'clientAccountNumber' => $request['clientAccountNumber'],
+                'accountState' => 'PAYMENT_OUTSTANDING',
+            ])),
+        ]);
+
+        $intent = app(PayAtGoProvider::class)->reissue($invoice);
+
+        $this->assertNotSame($dead, $intent->providerReference, 'Pay@ will not reuse a number');
+        $this->assertSame(1, (int) $invoice->fresh()->payat_attempt);
+        $this->assertSame($intent->providerReference, $invoice->fresh()->payat_account_number);
+        $this->assertMatchesRegularExpression('/^9\d{9}$/', $intent->providerReference);
+    }
+
+    public function test_reconciling_records_the_state_pay_at_reported(): void
+    {
+        $invoice = $this->mintedInvoice();
+
+        Http::fake([
+            self::TOKEN_URL => Http::response(['access_token' => 'tok-1', 'expires_in' => 3599]),
+            self::READ_URL => Http::response($this->rtp($invoice, ['accountState' => 'PAYMENT_EXPIRED'])),
+        ]);
+
+        app(PayAtGoProvider::class)->reconcile($invoice);
+
+        // So the dashboard can say "expired, issue a new one" without calling
+        // Pay@ on every page load.
+        $this->assertSame('PAYMENT_EXPIRED', $invoice->fresh()->payat_state);
     }
 
     public function test_without_credentials_checkout_falls_back_to_the_counter_rather_than_failing(): void
@@ -611,7 +676,7 @@ class PayAtGoTest extends TestCase
 
     private function expectedAccountNumber(Invoice $invoice): string
     {
-        return '9'.str_pad((string) $invoice->id, 9, '0', STR_PAD_LEFT);
+        return '9'.str_pad((string) $invoice->id, 8, '0', STR_PAD_LEFT).(int) $invoice->payat_attempt;
     }
 
     /**

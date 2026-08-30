@@ -91,6 +91,20 @@ class PayAtGoProvider implements PaymentProvider
             if ($rtp === null) {
                 throw $e;
             }
+
+            // But only if a learner could still pay it. Pay@ refuses to reuse
+            // an account number, so a cancelled or expired reference comes
+            // back from that read looking like a success — and storing it
+            // hands the learner a dead number and tells a registrar it is
+            // payable. Re-issuing under a new attempt is the way out.
+            if ($rtp->state?->isClosed() === true) {
+                throw new PayAtGoException(
+                    "Pay@ reference {$accountNumber} is {$rtp->state->label()} and cannot be paid. ".
+                    'Issue a new one — it will be allocated a fresh number.',
+                    $e->status,
+                    $rtp->raw,
+                );
+            }
         }
 
         $invoice->forceFill([
@@ -98,10 +112,34 @@ class PayAtGoProvider implements PaymentProvider
             'payat_request_to_pay_id' => $rtp->requestToPayId,
             'payat_source_reference' => $rtp->sourceReference,
             'payat_payment_link' => $rtp->paymentLink,
+            'payat_state' => $rtp->state?->value,
             'payat_requested_at' => now(),
         ])->save();
 
         return $this->intentFor($invoice->refresh());
+    }
+
+    /**
+     * Replace a reference a learner can no longer pay.
+     *
+     * Pay@ will not reuse an account number, so a cancelled or expired
+     * reference is permanently dead and the invoice needs a fresh one. The
+     * attempt counter is what makes that possible while keeping the number
+     * derived from the invoice rather than allocated from a sequence.
+     */
+    public function reissue(Invoice $invoice): ?CheckoutIntent
+    {
+        $invoice->forceFill([
+            'payat_attempt' => (int) $invoice->payat_attempt + 1,
+            'payat_account_number' => null,
+            'payat_request_to_pay_id' => null,
+            'payat_source_reference' => null,
+            'payat_payment_link' => null,
+            'payat_state' => null,
+            'payat_requested_at' => null,
+        ])->save();
+
+        return $this->createCheckout($invoice->refresh());
     }
 
     /**
@@ -140,7 +178,15 @@ class PayAtGoProvider implements PaymentProvider
 
         $rtp = $this->client->readRequestToPay($invoice->payat_account_number);
 
-        return $rtp === null ? null : $this->resultFor($rtp);
+        if ($rtp === null) {
+            return null;
+        }
+
+        // Remember what Pay@ said, so the dashboard can show a dead reference
+        // as dead without calling Pay@ on every page load.
+        $invoice->forceFill(['payat_state' => $rtp->state?->value])->save();
+
+        return $this->resultFor($rtp);
     }
 
     public function confirmManually(Payment $payment, ?string $reference): CallbackResult
@@ -166,8 +212,20 @@ class PayAtGoProvider implements PaymentProvider
     public function accountNumberFor(Invoice $invoice): string
     {
         $prefix = preg_replace('/\D/', '', (string) config('payat.account_prefix', '9')) ?? '';
-        $width = min(14, max(strlen($prefix) + 1, (int) config('payat.account_width', 10)));
-        $digits = $width - strlen($prefix);
+        $width = min(14, max(strlen($prefix) + 2, (int) config('payat.account_width', 10)));
+
+        // The last digit is the attempt, so a cancelled reference can be
+        // replaced without abandoning a scheme derived from the invoice.
+        $attempt = (int) $invoice->payat_attempt;
+
+        if ($attempt > 9) {
+            throw new InvalidArgumentException(
+                "Invoice {$invoice->id} has exhausted its Pay@ reference attempts. ".
+                'Something is wrong with the account rather than with this reference.',
+            );
+        }
+
+        $digits = $width - strlen($prefix) - 1;
         $id = (string) $invoice->id;
 
         if (strlen($id) > $digits) {
@@ -177,7 +235,7 @@ class PayAtGoProvider implements PaymentProvider
             );
         }
 
-        return $prefix.str_pad($id, $digits, '0', STR_PAD_LEFT);
+        return $prefix.str_pad($id, $digits, '0', STR_PAD_LEFT).$attempt;
     }
 
     /**
