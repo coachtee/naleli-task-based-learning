@@ -134,6 +134,48 @@ class PayAtGoTest extends TestCase
         });
     }
 
+    /**
+     * The registration fee is due the day it is raised. Deriving the payable
+     * window from the due date alone minted a reference that expired at
+     * midnight the same day — dead before anyone had sent it to the learner.
+     */
+    public function test_a_fee_due_today_is_still_payable_for_the_configured_window(): void
+    {
+        config(['payat.days_valid' => 60]);
+        $invoice = $this->registrationInvoice();
+
+        $this->assertTrue($invoice->due_on->isToday(), 'the registration fee is due immediately');
+
+        Http::fake([
+            self::TOKEN_URL => Http::response(['access_token' => 'tok-1', 'expires_in' => 3599]),
+            self::CREATE_URL => Http::response($this->rtp($invoice)),
+        ]);
+
+        app(PayAtGoProvider::class)->createCheckout($invoice);
+
+        Http::assertSent(fn (ClientRequest $r): bool => $r->url() === self::CREATE_URL
+            && $r['daysValid'] === 60);
+    }
+
+    public function test_an_instalment_due_beyond_the_window_stays_payable_until_it_is_due(): void
+    {
+        config(['payat.days_valid' => 60]);
+
+        $invoice = $this->enrolment()->invoices()->where('sequence', 4)->sole();
+        $daysOut = (int) ceil(now()->startOfDay()->diffInDays($invoice->due_on->endOfDay(), false));
+        $this->assertGreaterThan(60, $daysOut, 'the last instalment falls outside the default window');
+
+        Http::fake([
+            self::TOKEN_URL => Http::response(['access_token' => 'tok-1', 'expires_in' => 3599]),
+            self::CREATE_URL => Http::response($this->rtp($invoice)),
+        ]);
+
+        app(PayAtGoProvider::class)->createCheckout($invoice);
+
+        Http::assertSent(fn (ClientRequest $r): bool => $r->url() === self::CREATE_URL
+            && $r['daysValid'] === $daysOut && $r['daysValid'] <= 120);
+    }
+
     public function test_a_second_checkout_reuses_the_reference_the_learner_was_already_given(): void
     {
         $invoice = $this->registrationInvoice();
@@ -187,8 +229,8 @@ class PayAtGoTest extends TestCase
 
         $this->assertNotNull(app(PayAtGoProvider::class)->createCheckout($invoice->fresh()));
 
-        Http::assertSent(fn (ClientRequest $r): bool => $r->url() !== self::CREATE_URL
-            || ! array_key_exists('customerMobileNumber', $r->data()));
+        Http::assertSent(fn (ClientRequest $r): bool => $r->url() === self::CREATE_URL
+            && ! array_key_exists('customerMobileNumber', $r->data()));
     }
 
     // ------------------------------------------------------------ the callback

@@ -248,16 +248,24 @@ class PayAtGoProvider implements PaymentProvider
         return substr("{$ref}-{$invoice->sequence}", 0, 40);
     }
 
-    /** Payable until the invoice is due, inside Pay@'s 1–120 day window. */
+    /**
+     * How long the reference stays payable, inside Pay@'s 1–120 day window.
+     *
+     * The due date says when the school WANTS the money; it must never shorten
+     * how long the learner has to actually pay it. Deriving the window from the
+     * due date alone minted a registration-fee reference that expired at
+     * midnight the same day it was created — dead before anyone had even sent
+     * it to the learner. The configured window is a floor, not a default.
+     */
     private function daysValidFor(Invoice $invoice): int
     {
-        $default = (int) config('payat.days_valid', 60);
+        $floor = (int) config('payat.days_valid', 60);
 
-        $days = $invoice->due_on !== null
+        $untilDue = $invoice->due_on !== null
             ? (int) ceil(now()->startOfDay()->diffInDays($invoice->due_on->endOfDay(), false))
-            : $default;
+            : 0;
 
-        return max(1, min(120, $days > 0 ? $days : $default));
+        return max(1, min(120, max($floor, $untilDue)));
     }
 
     private function intentFor(Invoice $invoice): CheckoutIntent
