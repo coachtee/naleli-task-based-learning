@@ -41,6 +41,13 @@ So: to put something on a page, edit its template and call the function
 The `[kcs_register]` shortcode exists for the few pages that do render post
 content.
 
+## Styling travels with the form
+
+`kcs_registration_section()` prints its own CSS, once per request. Those rules
+previously lived in an inline `<style>` at the bottom of `homepage.php`, which
+was fine while the form only appeared there — and would have rendered it
+unstyled on all 13 programme pages, dark labels directly on the navy CTA band.
+
 ## Pre-selecting the programme
 
 `kcs_registration_section($programme)` sets the choice server-side through

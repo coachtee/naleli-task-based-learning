@@ -85,6 +85,8 @@ add_filter('fluentform/rendering_field_data_input_hidden', function ($data, $for
  * the shortcode-that-never-renders problem this replaces.
  */
 function kcs_registration_section(?string $programme = null, ?string $campaign = null, ?string $heading = null): void {
+    kcs_registration_styles();
+
     $GLOBALS['kcs_registration_context'] = [
         'programme' => $programme,
         'campaign'  => $campaign ?: 'website',
@@ -115,3 +117,31 @@ add_shortcode('kcs_register', function ($atts) {
     kcs_registration_section($atts['programme'] ?: null, $atts['campaign'] ?: null);
     return ob_get_clean();
 });
+
+/**
+ * The form's own styling, printed once wherever it is embedded.
+ *
+ * These rules used to live in an inline <style> at the bottom of homepage.php,
+ * which meant the form rendered unstyled on every programme page: dark labels
+ * directly on the navy CTA band, effectively unreadable. Styling travels with
+ * the component instead.
+ */
+function kcs_registration_styles(): void {
+    static $printed = false;
+    if ($printed) { return; }
+    $printed = true;
+    ?>
+    <style id="kcs-regform-css">
+    .kcs-regform{max-width:560px;margin:24px auto 0;text-align:left;background:#fff;padding:28px;border-radius:4px}
+    .kcs-regform label{color:#12203D;font-weight:600;font-size:14px}
+    .kcs-regform input[type=text],.kcs-regform input[type=email],.kcs-regform input[type=tel],.kcs-regform select{width:100%;padding:12px 14px;border:1px solid #C9D2DE;border-radius:4px;font-size:15px;background:#fff;color:#12203D}
+    .kcs-regform select{appearance:auto}
+    .kcs-regform .ff-btn-submit{background:#FF7A59!important;color:#0A192F!important;border:0!important;border-radius:4px!important;padding:14px 28px!important;font-weight:700!important;font-size:15px!important;box-shadow:none!important;width:100%}
+    .kcs-regform .ff-el-input--label label{margin-bottom:6px;display:block}
+    .kcs-regform .ff-el-group{margin-bottom:18px}
+    .kcs-regform .ff-el-form-check label{font-weight:400;font-size:14px}
+    .kcs-regform .ff-message-success{color:#12203D}
+    .kcs-regform .text-danger,.kcs-regform .error{color:#B3261E}
+    </style>
+    <?php
+}
