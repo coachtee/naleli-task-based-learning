@@ -54,6 +54,27 @@ final class Normalise
         return $digits;
     }
 
+    /**
+     * The digits wa.me wants: international, no plus, no spaces.
+     *
+     * Returns null for anything that is not a plausible South African mobile,
+     * because a WhatsApp link built on a landline or a typo opens a chat with
+     * a stranger — and the message carries a learner's name and what they owe.
+     */
+    public static function whatsappNumber(?string $phone): ?string
+    {
+        $e164 = self::phone($phone);
+
+        if ($e164 === null) {
+            return null;
+        }
+
+        $digits = ltrim($e164, '+');
+
+        // 27 followed by a mobile prefix (6, 7 or 8) and eight more digits.
+        return preg_match('/^27[6-8]\d{8}$/', $digits) === 1 ? $digits : null;
+    }
+
     public static function idNumber(?string $number): ?string
     {
         $number = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', (string) $number) ?? '');

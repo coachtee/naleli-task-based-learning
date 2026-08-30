@@ -6,6 +6,7 @@ use App\Enums\InvoiceStatus;
 use App\Enums\PayAtAccountState;
 use App\Models\Invoice;
 use App\Services\Enrolment\EnrolmentActivator;
+use App\Services\Messaging\PaymentMessage;
 use App\Services\Payments\PayAtGo\PayAtGoClient;
 use App\Services\Payments\PaymentProviderRegistry;
 use App\Services\Payments\Providers\PayAtGoProvider;
@@ -186,6 +187,18 @@ class InvoicesTable
                             ->persistent()
                             ->send();
                     }),
+
+                // The step that was missing entirely: telling the learner.
+                // Opens WhatsApp with the reference, the amount and the QR
+                // link already written, so nobody retypes a payment number.
+                Action::make('sendOnWhatsApp')
+                    ->label('Send on WhatsApp')
+                    ->icon('heroicon-o-chat-bubble-left-right')
+                    ->color('success')
+                    ->visible(fn (Invoice $record): bool => $record->status === InvoiceStatus::DUE
+                        && app(PaymentMessage::class)->whatsAppLinkFor($record) !== null)
+                    ->url(fn (Invoice $record): ?string => app(PaymentMessage::class)->whatsAppLinkFor($record))
+                    ->openUrlInNewTab(),
 
                 // Pay@ will not reuse an account number, so a cancelled or
                 // expired reference is permanently dead and the invoice needs
