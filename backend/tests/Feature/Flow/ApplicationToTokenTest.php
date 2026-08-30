@@ -267,28 +267,23 @@ class ApplicationToTokenTest extends TestCase
 
     public function test_an_unpriced_offering_cannot_be_sold(): void
     {
+        // Every block is priced today, so this makes the case it guards
+        // against: an offering added later with no fee agreed on it.
+        $draft = Offering::where('code', 'PPO-2027')->firstOrFail();
+        $draft->update(['price_cents' => 0, 'status' => OfferingStatus::DRAFT]);
+
         $this->postSignedApplication($this->formEightPayload())->assertCreated();
 
-        // A Professional Specialisation: fees on enquiry, so no price and no
-        // sale until somebody sets one.
-        $draft = Offering::where('code', 'DOA-2026')->firstOrFail();
-        $this->assertSame(OfferingStatus::DRAFT, $draft->status);
-
-        $application = Application::firstOrFail();
-        $application->update(['programme_id' => $draft->programme_id]);
-
         $this->expectException(DomainException::class);
-        $this->expectExceptionMessageMatches('/not open/');
 
-        app(ApplicationAcceptor::class)->accept($application->fresh(), $draft);
+        app(ApplicationAcceptor::class)->accept(Application::firstOrFail(), $draft->fresh());
     }
 
     public function test_the_public_endpoints_need_no_authentication(): void
     {
         $this->getJson('/api/v1/health')->assertOk()->assertJsonPath('status', 'ok');
-        // Only what the site publishes a price for. The rest of the catalogue is
-        // draft and must not appear to a learner as something they can buy.
-        $this->getJson('/api/v1/programmes')->assertOk()->assertJsonCount(8, 'data');
+        // One catalogue: the Foundation plus twelve specialisations.
+        $this->getJson('/api/v1/programmes')->assertOk()->assertJsonCount(13, 'data');
     }
 
     public function test_the_authenticated_endpoints_refuse_an_anonymous_caller(): void
@@ -307,7 +302,7 @@ class ApplicationToTokenTest extends TestCase
      */
     private function careerModuleOffering(): Offering
     {
-        $offering = Offering::where('code', 'PPO-2026')->firstOrFail();
+        $offering = Offering::where('code', 'PPO-2027')->firstOrFail();
 
         $this->assertSame(BillingModel::DEPOSIT_BALANCE, $offering->billing_model);
         $this->assertSame(335000, $offering->price_cents);

@@ -42,7 +42,7 @@ class AcceptApplicationActionTest extends TestCase
     public function test_a_registrar_accepts_an_application_and_the_offering_decides_the_invoices(): void
     {
         $application = $this->pendingApplication();
-        $offering = Offering::where('code', 'PPO-2026')->firstOrFail();
+        $offering = Offering::where('code', 'PPO-2027')->firstOrFail();
 
         Livewire::test(ListApplications::class)
             ->callTableAction('accept', $application, ['offering_id' => $offering->id])
@@ -63,7 +63,7 @@ class AcceptApplicationActionTest extends TestCase
     public function test_an_application_cannot_be_accepted_a_second_time(): void
     {
         $application = $this->pendingApplication();
-        $offering = Offering::where('code', 'PPO-2026')->firstOrFail();
+        $offering = Offering::where('code', 'PPO-2027')->firstOrFail();
 
         Livewire::test(ListApplications::class)
             ->callTableAction('accept', $application, ['offering_id' => $offering->id]);
@@ -81,7 +81,7 @@ class AcceptApplicationActionTest extends TestCase
     {
         $application = $this->pendingApplication();
 
-        $offering = Offering::where('code', 'PPO-2026')->firstOrFail();
+        $offering = Offering::where('code', 'PPO-2027')->firstOrFail();
         $offering->update(['status' => OfferingStatus::DRAFT]);
 
         Livewire::test(ListApplications::class)
@@ -95,7 +95,7 @@ class AcceptApplicationActionTest extends TestCase
 
     private function pendingApplication(): Application
     {
-        $offering = Offering::where('code', 'PPO-2026')->firstOrFail();
+        $offering = Offering::where('code', 'PPO-2027')->firstOrFail();
 
         $learner = Learner::create([
             'learner_ref' => 'NAL-2026-09001',

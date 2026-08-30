@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Catalogue;
 
+use App\Enums\ActivationRule;
+use App\Enums\BillingModel;
 use App\Enums\OfferingStatus;
 use App\Enums\ProgrammeStatus;
+use App\Enums\ProgrammeTier;
+use App\Enums\RequirementRule;
 use App\Models\Offering;
 use App\Models\Programme;
 use App\Support\CatalogueManifest;
@@ -72,47 +76,6 @@ class CatalogueDriftTest extends TestCase
     }
 
     /**
-     * The safeguard that actually protects a learner: an offering can only be
-     * open if the website publishes a price for it. Everything else stays
-     * draft, and ApplicationAcceptor refuses to sell a draft.
-     */
-    public function test_nothing_is_sellable_without_a_price_published_on_the_website(): void
-    {
-        foreach (Offering::where('status', OfferingStatus::OPEN)->get() as $offering) {
-            $this->assertGreaterThan(
-                0,
-                $offering->price_cents,
-                "Offering [{$offering->code}] is open at R0. An unpriced offering must stay draft.",
-            );
-
-            $this->assertContains(
-                $offering->programme->code,
-                CatalogueManifest::sellableCodes(),
-                "Offering [{$offering->code}] is open but its programme has no price published on kcs.edu.za.",
-            );
-        }
-    }
-
-    public function test_the_career_module_price_is_the_one_the_home_page_advertises(): void
-    {
-        // "NIBS Career Modules — R500 once-off registration, R950 a month."
-        $offering = Offering::whereRelation('programme', 'code', 'PPO')->firstOrFail();
-
-        $this->assertSame(335000, $offering->price_cents);
-        $this->assertSame(50000, $offering->deposit_cents);
-        $this->assertSame(3, $offering->instalment_count);
-        $this->assertSame(OfferingStatus::OPEN, $offering->status);
-    }
-
-    public function test_basic_excel_is_the_r500_short_course_the_site_actually_books(): void
-    {
-        $offering = Offering::whereRelation('programme', 'code', 'EXCEL')->firstOrFail();
-
-        $this->assertSame(50000, $offering->price_cents);
-        $this->assertSame(OfferingStatus::OPEN, $offering->status);
-    }
-
-    /**
      * The specific names that prompted this audit. They are not on the live
      * site and must never be seeded back in.
      */
@@ -134,22 +97,89 @@ class CatalogueDriftTest extends TestCase
         }
     }
 
-    public function test_the_cohorts_are_the_ones_the_application_form_offers(): void
+    public function test_every_block_runs_the_advertised_february_2027_intake(): void
     {
-        // A submission naming "DOA-F2F-001" has to resolve without translation,
-        // because that is the string the live form actually posts.
-        $doa = Programme::where('code', 'DOA')->firstOrFail();
+        // "One block = 3 months · Next intake February 2027", on every card.
+        foreach (Programme::whereIn('code', CatalogueManifest::codes())->get() as $programme) {
+            $this->assertSame(
+                ['February 2027'],
+                $programme->intakes()->pluck('label')->all(),
+                "[{$programme->code}] does not run the advertised intake.",
+            );
+        }
+    }
+
+    public function test_the_catalogue_is_one_foundation_seven_career_and_five_professional(): void
+    {
+        $byTier = Programme::whereIn('code', CatalogueManifest::codes())
+            ->get()
+            ->groupBy(fn (Programme $p): string => $p->tier->value)
+            ->map->count();
+
+        $this->assertSame(1, $byTier['foundation'] ?? 0);
+        $this->assertSame(7, $byTier['career_module'] ?? 0);
+        $this->assertSame(5, $byTier['professional'] ?? 0);
+        $this->assertCount(13, CatalogueManifest::codes());
+    }
+
+    public function test_every_block_costs_the_same_r500_plus_r950_times_three(): void
+    {
+        $offerings = Offering::whereRelation('programme', 'status', ProgrammeStatus::OPEN)->get();
+
+        $this->assertCount(13, $offerings);
+
+        foreach ($offerings as $offering) {
+            $this->assertSame(335000, $offering->price_cents, "[{$offering->code}] is not R3,350.");
+            $this->assertSame(50000, $offering->deposit_cents);
+            $this->assertSame(3, $offering->instalment_count);
+            $this->assertSame(OfferingStatus::OPEN, $offering->status);
+        }
+    }
+
+    public function test_every_specialisation_requires_the_foundation_first(): void
+    {
+        $foundation = Programme::where('code', 'DOPF')->firstOrFail();
 
         $this->assertSame(
-            ['DOA-F2F-001', 'DOA-F2F-002', 'DOA-F2F-003'],
-            $doa->intakes()->orderBy('starts_on')->pluck('label')->all(),
+            RequirementRule::NONE,
+            $foundation->requirements->first()->rule_type,
+            'Nothing precedes the Foundation.',
         );
 
-        $this->assertSame(
-            0,
-            Programme::first()->intakes()->where('label', 'February 2027')->count(),
-            'February 2027 was never published on kcs.edu.za and must not come back.',
-        );
+        foreach (Programme::whereIn('code', CatalogueManifest::codes())->where('code', '!=', 'DOPF')->get() as $p) {
+            $this->assertSame(RequirementRule::COMPLETED_PROGRAMME, $p->requirements->first()->rule_type);
+            $this->assertSame($foundation->id, $p->requirements->first()->requires_programme_id);
+        }
+    }
+
+    public function test_the_old_catalogue_is_archived_rather_than_deleted(): void
+    {
+        // 35 real applications and 15 Excel bookings already name these.
+        $retired = Programme::create([
+            'code' => 'DOA',
+            'name' => 'Digital Office Administrator',
+            'slug' => 'digital-office-administrator',
+            'source_url' => 'https://www.kcs.edu.za/application/',
+            'tier' => ProgrammeTier::SHORT_COURSE,
+            'status' => ProgrammeStatus::OPEN,
+        ]);
+
+        $offering = Offering::create([
+            'code' => 'DOA-2026',
+            'programme_id' => $retired->id,
+            'name' => 'Digital Office Administrator',
+            'billing_model' => BillingModel::ONE_TIME,
+            'price_cents' => 250000,
+            'access_duration_days' => 90,
+            'activation_rule' => ActivationRule::ON_FIRST_PAYMENT,
+            'status' => OfferingStatus::OPEN,
+        ]);
+
+        $this->seed(ProgrammeSeeder::class);
+
+        $this->assertSame(ProgrammeStatus::ARCHIVED, $retired->fresh()->status);
+        $this->assertSame(OfferingStatus::ARCHIVED, $offering->fresh()->status);
+        $this->assertNotNull($retired->fresh(), 'A retired programme must never be deleted.');
     }
 
     /**
@@ -170,52 +200,5 @@ class CatalogueDriftTest extends TestCase
                 "The form option [{$option}] maps to [{$code}], which is not in the catalogue.",
             );
         }
-    }
-
-    /**
-     * The options 35 real applicants actually chose. If the form is reworded
-     * and this map is not updated, those submissions stop resolving — this is
-     * the assertion that catches it.
-     */
-    public function test_the_options_real_applicants_chose_all_resolve(): void
-    {
-        $chosen = [
-            'Digital Office Administrator',
-            'IT Support Specialist',
-            'Data Capturing Specialist',
-            'Junior Software Developer',
-            'Junior Cybersecurity Analyst',
-            'Cybersecurity Analyst',
-            'Office Administration',
-            'OA-001 | Office Administrator | NQF 5 | 16 Apr 2026 - 15 Apr 2027',
-        ];
-
-        $map = config('webhooks.fluentform.programme_map');
-
-        foreach ($chosen as $option) {
-            $this->assertArrayHasKey(
-                $option,
-                $map,
-                "A real applicant chose [{$option}] and the webhook cannot map it.",
-            );
-        }
-    }
-
-    public function test_a_programme_dropped_from_the_website_is_archived_rather_than_deleted(): void
-    {
-        // A learner may already be enrolled on it, so the row has to survive.
-        $ghost = Programme::create([
-            'code' => 'GHOST',
-            'name' => 'Programme No Longer Offered',
-            'slug' => 'programme-no-longer-offered',
-            'source_url' => 'https://www.kcs.edu.za/career-pathways/gone/',
-            'tier' => Programme::first()->tier,
-            'status' => ProgrammeStatus::OPEN,
-        ]);
-
-        $this->seed(ProgrammeSeeder::class);
-
-        $this->assertSame(ProgrammeStatus::ARCHIVED, $ghost->fresh()->status);
-        $this->assertNotNull($ghost->fresh(), 'A retired programme must never be deleted.');
     }
 }

@@ -44,7 +44,7 @@ class FeeScheduleTest extends TestCase
      */
     public function test_the_career_module_bills_r500_registration_then_r950_for_three_months(): void
     {
-        $offering = Offering::where('code', 'PPO-2026')->firstOrFail();
+        $offering = Offering::where('code', 'PPO-2027')->firstOrFail();
 
         $this->assertSame(BillingModel::DEPOSIT_BALANCE, $offering->billing_model);
         $this->assertSame(335000, $offering->price_cents, 'R3,350 in total');
@@ -175,19 +175,18 @@ class FeeScheduleTest extends TestCase
      * "Fees on enquiry" is not a price. Anything without a confirmed one
      * stays shut, so nobody can be charged R0 by clicking through.
      */
-    public function test_offerings_without_a_confirmed_price_stay_closed(): void
+    public function test_no_offering_in_the_catalogue_is_open_at_zero(): void
     {
-        $unpriced = Offering::where('price_cents', 0)->get();
+        // Selling at R0 is the failure this guards. ApplicationAcceptor
+        // refuses a draft offering outright — covered in
+        // AcceptApplicationActionTest — so the remaining risk is an open one
+        // that nobody priced.
+        $openAtZero = Offering::where('status', OfferingStatus::OPEN)
+            ->where('price_cents', '<=', 0)
+            ->pluck('code')
+            ->all();
 
-        $this->assertGreaterThan(0, $unpriced->count());
-
-        foreach ($unpriced as $offering) {
-            $this->assertSame(
-                OfferingStatus::DRAFT,
-                $offering->status,
-                "{$offering->code} is priced at R0 and must not be open for sale",
-            );
-        }
+        $this->assertSame([], $openAtZero, 'An open offering has no price on it.');
     }
 
     /** @param array<string, mixed> $attributes */

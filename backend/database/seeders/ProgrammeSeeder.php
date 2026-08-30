@@ -9,7 +9,6 @@ use App\Enums\BillingModel;
 use App\Enums\IntakeStatus;
 use App\Enums\OfferingStatus;
 use App\Enums\ProgrammeStatus;
-use App\Enums\ProgrammeTier;
 use App\Enums\RequirementRule;
 use App\Models\Intake;
 use App\Models\Offering;
@@ -26,10 +25,9 @@ use Illuminate\Database\Seeder;
  * mechanism: a programme cannot enter the backend without a source, and
  * CatalogueDriftTest fails if the database and the manifest disagree.
  *
- * This seeder previously carried a catalogue taken from the site navigation
- * and an intake month — "February 2027" — that appears nowhere on the site.
- * Both are gone. The intakes below are the cohort codes the live application
- * form actually offers.
+ * Thirteen blocks, one price, one intake. The KCS short courses and NIBS
+ * QCTO programmes that used to sit alongside these are retired here, not
+ * deleted — real applications already name them.
  */
 class ProgrammeSeeder extends Seeder
 {
@@ -57,6 +55,7 @@ class ProgrammeSeeder extends Seeder
                     'summary' => $entry['summary'],
                     'duration_label' => $entry['duration_label'],
                     'duration_days' => $entry['duration_days'],
+                    'weekly_hours' => $entry['weekly_hours'],
                     'fee_note' => $entry['fee_note'],
                     'status' => $entry['status'],
                     'sort_order' => $entry['sort_order'],
@@ -100,38 +99,26 @@ class ProgrammeSeeder extends Seeder
      */
     private function seedOfferings(): void
     {
-        $priced = collect(CatalogueManifest::programmes())->keyBy('code');
-
         foreach (Programme::all() as $programme) {
-            $entry = $priced->get($programme->code);
-
-            if ($entry === null) {
+            if (! in_array($programme->code, CatalogueManifest::codes(), true)) {
                 continue;
             }
 
-            $priceCents = $entry['price_cents'];
-            $sellable = $entry['status'] === ProgrammeStatus::OPEN && $priceCents > 0;
-            $isCareerModule = $programme->tier === ProgrammeTier::CAREER_MODULE;
-
             Offering::updateOrCreate(
-                ['code' => "{$programme->code}-2026"],
+                ['code' => "{$programme->code}-2027"],
                 [
                     'programme_id' => $programme->id,
-                    'name' => $programme->name,
-                    'description' => $sellable
-                        ? $entry['fee_note']
-                        : 'No price is published on kcs.edu.za for this programme. Confirm the fee and open this offering before selling it.',
-                    // R500 registration then R950 a month is a deposit plus
-                    // three instalments; Basic Excel is a single R500 charge.
-                    'billing_model' => $isCareerModule
-                        ? BillingModel::DEPOSIT_BALANCE
-                        : BillingModel::ONE_TIME,
-                    'price_cents' => $priceCents,
-                    'deposit_cents' => $isCareerModule ? CatalogueManifest::CAREER_MODULE_DEPOSIT_CENTS : null,
-                    'instalment_count' => $isCareerModule ? 3 : null,
-                    'access_duration_days' => $entry['duration_days'] ?? 90,
+                    'name' => $programme->name.' — '.CatalogueManifest::INTAKE_LABEL,
+                    'description' => 'R500 once-off registration, then R950 a month for three months.',
+                    // The same deal on every block: a R500 registration that
+                    // opens access, then three R950 instalments.
+                    'billing_model' => BillingModel::DEPOSIT_BALANCE,
+                    'price_cents' => CatalogueManifest::PRICE_CENTS,
+                    'deposit_cents' => CatalogueManifest::DEPOSIT_CENTS,
+                    'instalment_count' => CatalogueManifest::INSTALMENTS,
+                    'access_duration_days' => CatalogueManifest::BLOCK_DAYS,
                     'activation_rule' => ActivationRule::ON_FIRST_PAYMENT,
-                    'status' => $sellable ? OfferingStatus::OPEN : OfferingStatus::DRAFT,
+                    'status' => OfferingStatus::OPEN,
                     'sort_order' => $programme->sort_order,
                 ],
             );
@@ -145,20 +132,23 @@ class ProgrammeSeeder extends Seeder
      */
     private function seedRequirements(): void
     {
-        foreach (Programme::all() as $programme) {
-            $needsApproval = in_array(
-                $programme->tier,
-                [ProgrammeTier::PROFESSIONAL, ProgrammeTier::QCTO],
-                true,
-            );
+        $foundationId = Programme::where('code', CatalogueManifest::FOUNDATION_CODE)->value('id');
+
+        foreach (Programme::whereIn('code', CatalogueManifest::codes())->get() as $programme) {
+            // "Every learner starts here. Then specialise." Recorded now,
+            // enforced in Phase 5 when there is completion data to test it
+            // against — the Foundation itself has no prerequisite.
+            $isFoundation = $programme->code === CatalogueManifest::FOUNDATION_CODE;
 
             ProgrammeRequirement::updateOrCreate(
                 ['programme_id' => $programme->id],
                 [
-                    'rule_type' => $needsApproval ? RequirementRule::MANUAL_APPROVAL : RequirementRule::NONE,
-                    'notes' => $needsApproval
-                        ? 'Entry rules not published on kcs.edu.za. Confirm with a subject lead before this gates anybody.'
-                        : null,
+                    'rule_type' => $isFoundation ? RequirementRule::NONE : RequirementRule::COMPLETED_PROGRAMME,
+                    'requires_programme_id' => $isFoundation ? null : $foundationId,
+                    'requires_certificate' => false,
+                    'notes' => $isFoundation
+                        ? 'Compulsory first block. Nothing precedes it.'
+                        : 'Requires the Digital Operations Professional Foundation.',
                 ],
             );
         }
@@ -177,5 +167,10 @@ class ProgrammeSeeder extends Seeder
                 'status' => ProgrammeStatus::ARCHIVED,
                 'source_note' => 'No longer published on kcs.edu.za',
             ]);
+
+        // Its offering stops being sellable with it. The row survives because
+        // invoices already point at it.
+        Offering::whereRelation('programme', 'status', ProgrammeStatus::ARCHIVED->value)
+            ->update(['status' => OfferingStatus::ARCHIVED]);
     }
 }
