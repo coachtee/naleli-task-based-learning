@@ -253,6 +253,11 @@ class PayAtGoTest extends TestCase
 
         $this->assertNotSame($dead, $intent->providerReference, 'Pay@ will not reuse a number');
         $this->assertSame(1, (int) $invoice->fresh()->payat_attempt);
+
+        // Pay@ enforces uniqueness on the client reference as well, and
+        // refuses a re-issue that reuses it. Found against the live account.
+        Http::assertSent(fn (ClientRequest $r): bool => $r->url() === self::CREATE_URL
+            && $r['clientReferenceNumber'] === 'NAL-2026-00001-1r1');
         $this->assertSame($intent->providerReference, $invoice->fresh()->payat_account_number);
         $this->assertMatchesRegularExpression('/^9\d{9}$/', $intent->providerReference);
     }

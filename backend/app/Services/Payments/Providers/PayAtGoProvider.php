@@ -298,12 +298,18 @@ class PayAtGoProvider implements PaymentProvider
     /**
      * What finance sees on the Pay@ statement. Legible on purpose: a learner
      * reference and which invoice of theirs it was.
+     *
+     * Pay@ enforces uniqueness on this as well as on the account number —
+     * "Reference number NAL-2026-00002-1 already exists for this business" —
+     * so a re-issue has to carry the attempt here too, or it is refused for
+     * colliding with the dead reference it is replacing.
      */
     private function clientReferenceFor(Invoice $invoice): string
     {
         $ref = $invoice->learner?->learner_ref ?? "INV{$invoice->id}";
+        $attempt = (int) $invoice->payat_attempt;
 
-        return substr("{$ref}-{$invoice->sequence}", 0, 40);
+        return substr("{$ref}-{$invoice->sequence}".($attempt > 0 ? "r{$attempt}" : ''), 0, 40);
     }
 
     /**
