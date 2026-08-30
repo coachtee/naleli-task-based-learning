@@ -6,6 +6,8 @@ namespace App\Services\Intake;
 
 use App\Enums\ApplicationSource;
 use App\Enums\ApplicationStatus;
+use App\Enums\FundingSource;
+use App\Enums\FundingStatus;
 use App\Models\Application;
 use App\Models\InboundWebhook;
 use App\Models\Intake;
@@ -60,6 +62,7 @@ class ApplicationIntake
             $learner = $this->learners->resolve($applicant);
 
             $programme = $this->resolveProgramme($payload);
+            $funding = $this->resolveFunding($payload['funding_source'] ?? null);
             $intake = $this->resolveIntake($programme, $payload['intake_label'] ?? null);
 
             $application = Application::create([
@@ -70,6 +73,11 @@ class ApplicationIntake
                 'source' => $source,
                 'source_form_id' => $formId,
                 'source_reference' => $reference,
+                'campaign' => $this->nullableString($payload['campaign'] ?? null),
+                'funding_source' => $funding,
+                'funding_status' => $funding === null
+                    ? null
+                    : ($funding->needsFundingWork() ? FundingStatus::PENDING : FundingStatus::NOT_REQUIRED),
                 'payload' => $payload,
                 'applied_at' => isset($payload['submitted_at'])
                     ? Carbon::parse($payload['submitted_at'])
@@ -84,6 +92,44 @@ class ApplicationIntake
 
             return ['application' => $application, 'created' => true];
         });
+    }
+
+    /**
+     * "How will your studies be paid for?" on the registration form, matched
+     * against the enum by its own label.
+     *
+     * An answer we do not recognise returns null rather than guessing. Self
+     * funding raises no funding matter; everything else lands as pending so it
+     * shows up in the queue without interrupting the registration.
+     */
+    private function resolveFunding(mixed $raw): ?FundingSource
+    {
+        $value = trim((string) $raw);
+
+        if ($value === '') {
+            return null;
+        }
+
+        $direct = FundingSource::tryFrom($value);
+
+        if ($direct !== null) {
+            return $direct;
+        }
+
+        foreach (FundingSource::cases() as $case) {
+            if (strcasecmp($case->label(), $value) === 0 || strcasecmp($case->shortLabel(), $value) === 0) {
+                return $case;
+            }
+        }
+
+        return null;
+    }
+
+    private function nullableString(mixed $value): ?string
+    {
+        $value = trim((string) $value);
+
+        return $value === '' ? null : $value;
     }
 
     /**
