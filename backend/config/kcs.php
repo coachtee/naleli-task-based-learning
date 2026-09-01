@@ -40,4 +40,16 @@ return [
      */
     'workspace_url' => env('KCS_WORKSPACE_URL'),
 
+    /*
+     * Where the workspace calls the API.
+     *
+     * Same trap as `workspace_url`, one level deeper. Because /workspace is an
+     * internal rewrite onto /admin/workspace, Laravel serves the request under
+     * a root of "/" and `url('/api/v1')` comes back as
+     * kcs.edu.za/api/v1 — which is a 404. A rewritten request cannot be
+     * trusted to know where the application really lives, so in production
+     * this is stated rather than derived. Unset locally, where it is.
+     */
+    'api_url' => env('KCS_API_URL'),
+
 ];

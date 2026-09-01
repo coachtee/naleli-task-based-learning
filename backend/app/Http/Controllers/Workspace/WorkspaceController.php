@@ -42,14 +42,23 @@ class WorkspaceController extends Controller
         return rtrim($configured !== '' ? $configured : url('/workspace'), '/');
     }
 
+    /**
+     * Where the page sends its requests. Never derived from the current
+     * request: this page is reached through a rewrite, so `url()` reports a
+     * root of "/" and would send every call to a 404.
+     */
+    private function api(): string
+    {
+        $configured = (string) config('kcs.api_url');
+
+        return rtrim($configured !== '' ? $configured : url('/api/v1'), '/');
+    }
+
     public function shell(): View
     {
         return view('workspace.shell', [
             'config' => [
-                // The API keeps its real path: it is same-origin either way,
-                // and only the pages the service worker claims need to sit
-                // under the public prefix.
-                'api' => url('/api/v1'),
+                'api' => $this->api(),
                 'base' => $this->base(),
                 'pinLength' => LabPin::LENGTH,
                 // A learner who walks away without logging out must not leave
