@@ -70,6 +70,44 @@ The site had two labels for the same thing pointing at two different places:
 Everything is now **Register Now**, `kcs-btn--primary`, and lands on a working
 form: the in-page one where the page has it, `/application/` where it does not.
 
+## Three faults that made the site unusable on a phone
+
+Found from one screenshot. All three are the same shape: a change made for a
+good reason on desktop, with a consequence nobody could see.
+
+### The hamburger opened nothing
+
+`kcs-transform.php` ran `remove_all_actions('astra_footer')` to stop Astra's
+own footer rendering underneath the custom one. **Astra hooks its mobile
+off-canvas menu to `astra_footer` too** — `class-astra-builder-header.php`:
+
+```php
+add_action( 'astra_footer', array( $this, 'mobile_popup' ) );
+```
+
+So the site had no mobile navigation on any KCS-templated page, which is every
+real page. `#ast-mobile-popup-wrapper` was simply absent from the HTML; the
+button had nothing to open. It still worked on the few pages the templates do
+not claim (`/basic-excel/`, `/short-courses/`, 404) — which is what made it
+findable. The fix keeps the `mobile_popup` callback and removes the rest.
+
+### The hero form was see-through
+
+On mobile the card is `position:static`, and **`z-index` does nothing on a
+statically positioned element**. `.kcs-hero__art img` is `position:absolute;
+inset:0` with `opacity:.42`, so the photo painted over the white card and you
+read the form through it. `position:relative` restores the stacking.
+
+### The hero card was taller than the screen
+
+Six fields inside a 370px card. Below 900px the card now keeps the offer and
+its button, and the fields hand off to the form further down the page.
+
+### If a CSS change seems to do nothing
+
+The host sends long cache headers. `kcs-transform.php` sets `$v` on every
+enqueue — **bump it** or the browser keeps the old stylesheet.
+
 ## Not every button is in a template
 
 The most prominent button on the site — the one in the header, on every page —
