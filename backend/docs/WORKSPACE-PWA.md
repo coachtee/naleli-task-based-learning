@@ -56,6 +56,27 @@ Chromium grants it without prompting; without it the browser may drop a
 learner's queued work when the disk fills, which is the one failure that would
 end all trust in the thing.
 
+## Live
+
+**https://www.kcs.edu.za/workspace**
+
+Deployed 1 September 2026. `/workspace` is rewritten onto `/admin/workspace`
+by a rule at the top of `public_html/.htaccess`, above the WordPress block.
+Production sets two env vars that do not exist locally:
+
+```
+KCS_WORKSPACE_URL="https://www.kcs.edu.za/workspace"
+KCS_API_URL="https://www.kcs.edu.za/admin/api/v1"
+```
+
+Both are there for the same reason: a request that arrives through a rewrite
+is served under a root of `/`, so `url()` reports the wrong base. For the
+workspace URL that breaks *installing* the app — a manifest whose `scope` does
+not match the page's own URL is rejected with no visible error. For the API
+base it breaks everything, silently, because every call 404s. Neither shows up
+in local testing, where there is no rewrite. Read the config a deployed page
+actually injects, not the one you expect.
+
 ## Deploying it
 
 The application's front controller lives in `public_html/admin`, so the

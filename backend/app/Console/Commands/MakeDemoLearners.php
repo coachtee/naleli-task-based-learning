@@ -82,7 +82,10 @@ class MakeDemoLearners extends Command
 
         $this->newLine();
         $this->table(['Student number', 'Name', 'PIN'], $rows);
-        $this->line('  Sign in at '.url('/workspace').'  —  PINs are hashed, so this is the only time they are shown.');
+        // The learner-facing address, not the one behind the rewrite — this
+        // is the line a facilitator copies and reads out.
+        $workspace = rtrim((string) config('kcs.workspace_url') ?: url('/workspace'), '/');
+        $this->line("  Sign in at {$workspace}  —  PINs are hashed, so this is the only time they are shown.");
         $this->newLine();
 
         return self::SUCCESS;
