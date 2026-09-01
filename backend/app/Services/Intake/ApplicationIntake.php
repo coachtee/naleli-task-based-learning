@@ -13,6 +13,7 @@ use App\Models\InboundWebhook;
 use App\Models\Intake;
 use App\Models\Programme;
 use App\Services\Identity\LearnerRegistry;
+use App\Services\Messaging\LearnerMailer;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -27,7 +28,10 @@ use Illuminate\Support\Str;
  */
 class ApplicationIntake
 {
-    public function __construct(private readonly LearnerRegistry $learners) {}
+    public function __construct(
+        private readonly LearnerRegistry $learners,
+        private readonly LearnerMailer $mailer,
+    ) {}
 
     /**
      * @param  array<string, mixed>  $payload
@@ -35,7 +39,7 @@ class ApplicationIntake
      */
     public function receive(array $payload, InboundWebhook $delivery): array
     {
-        return DB::transaction(function () use ($payload, $delivery) {
+        $result = DB::transaction(function () use ($payload, $delivery) {
             $source = ApplicationSource::FLUENTFORM;
             $formId = isset($payload['form_id']) ? (int) $payload['form_id'] : null;
             $reference = isset($payload['submission_id']) ? (string) $payload['submission_id'] : null;
@@ -92,6 +96,17 @@ class ApplicationIntake
 
             return ['application' => $application, 'created' => true];
         });
+
+        // Outside the transaction on purpose. Sending inside would hold a
+        // database lock open for the length of an SMTP conversation, and a
+        // rollback afterwards could not unsend the message. The mailer
+        // swallows its own failures, so a registration never depends on email
+        // working — the money path must not break because Google is slow.
+        if ($result['created']) {
+            $this->mailer->registrationReceived($result['application']);
+        }
+
+        return $result;
     }
 
     /**
