@@ -11,6 +11,7 @@ use Database\Seeders\ProgrammeSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Testing\TestResponse;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 /**
@@ -80,15 +81,41 @@ class RegistrationEmailTest extends TestCase
         $this->assertSame(1, Application::count());
     }
 
-    public function test_no_mail_credentials_means_no_attempt_rather_than_an_error(): void
+    #[DataProvider('unconfiguredMailers')]
+    public function test_no_mail_credentials_means_no_attempt_rather_than_an_error(array $config): void
     {
-        config(['mail.mailers.smtp.username' => '', 'mail.mailers.smtp.password' => '']);
+        config($config);
         Mail::fake();
 
         $this->register()->assertCreated();
 
+        // Silence, not an exception, and the registration still lands.
         Mail::assertNothingSent();
         $this->assertSame(1, Learner::count());
+        $this->assertSame(1, Application::count());
+    }
+
+    /** @return array<string, array{0: array<string, mixed>}> */
+    public static function unconfiguredMailers(): array
+    {
+        return [
+            'brevo without an api key' => [['mail.default' => 'brevo', 'mail.mailers.brevo.key' => '']],
+            'smtp without credentials' => [[
+                'mail.default' => 'smtp',
+                'mail.mailers.smtp.username' => '',
+                'mail.mailers.smtp.password' => '',
+            ]],
+        ];
+    }
+
+    public function test_brevo_with_a_key_does_attempt_to_send(): void
+    {
+        config(['mail.default' => 'brevo', 'mail.mailers.brevo.key' => 'xkeysib-test']);
+        Mail::fake();
+
+        $this->register()->assertCreated();
+
+        Mail::assertSent(RegistrationReceived::class);
     }
 
     public function test_a_registration_without_an_email_address_is_still_accepted(): void

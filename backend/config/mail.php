@@ -49,6 +49,18 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
+        /*
+         * Brevo's HTTP API. kcs.edu.za publishes
+         * `v=spf1 include:_spf.google.com ~all`, so mail relayed through the
+         * cPanel server fails SPF; Brevo is the sender that already passes for
+         * this domain because the website has been using it for months.
+         */
+        'brevo' => [
+            'transport' => 'brevo',
+            'key' => env('BREVO_API_KEY'),
+            'timeout' => env('BREVO_TIMEOUT', 20),
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],

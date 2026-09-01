@@ -23,11 +23,23 @@ use Throwable;
  */
 class LearnerMailer
 {
-    /** No credentials configured means no attempt, rather than an exception per registration. */
+    /**
+     * No credentials configured means no attempt, rather than an exception on
+     * every registration. Checked against whichever mailer is actually
+     * selected, so switching between Brevo and SMTP does not silently leave
+     * this looking at the wrong one.
+     */
     public function isConfigured(): bool
     {
-        return (string) config('mail.mailers.smtp.username') !== ''
-            && (string) config('mail.mailers.smtp.password') !== '';
+        $mailer = (string) config('mail.default');
+
+        return match ($mailer) {
+            'brevo' => (string) config('mail.mailers.brevo.key') !== '',
+            'smtp' => (string) config('mail.mailers.smtp.username') !== ''
+                && (string) config('mail.mailers.smtp.password') !== '',
+            'log', 'array' => true,
+            default => true,
+        };
     }
 
     public function registrationReceived(Application $application): bool
