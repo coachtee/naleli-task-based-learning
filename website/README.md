@@ -103,6 +103,30 @@ read the form through it. `position:relative` restores the stacking.
 Six fields inside a 370px card. Below 900px the card now keeps the offer and
 its button, and the fields hand off to the form further down the page.
 
+### The drawer opened sideways
+
+Fixing the missing drawer revealed the next layer. `kcs-header-polish.css`
+styles the desktop nav with **unscoped** selectors:
+
+```css
+#primary-menu, .main-header-menu{ display:flex; flex-wrap:nowrap !important; }
+```
+
+Astra's off-canvas drawer renders *the same markup* — `#ast-hf-mobile-menu` also
+carries `.main-header-menu` — so the mobile menu was laid out as one
+non-wrapping horizontal row that ran off the side of the screen. Anything
+styling `.main-header-menu` must be scoped, or it reaches the drawer too.
+
+### The footer logo was a white block
+
+`.kcs-foot-logo` was whitened with `filter:brightness(0) invert(1)`. That is the
+right trick for a **transparent** image, and the wrong one here: the KCS mark is
+an SVG carrying its own `fill="#ffffff"` background, so the filter turned the
+entire bounding box into a solid white rectangle. It now sits on a light chip,
+which is how a full-colour logo belongs on a dark ground. The NIBS mark beside
+the accreditation numbers is a transparent PNG of dark artwork, so the same
+filter gives it the clean white silhouette it was meant to.
+
 ### If a CSS change seems to do nothing
 
 The host sends long cache headers. `kcs-transform.php` sets `$v` on every
