@@ -8,6 +8,7 @@ them and so changes are reviewable.
 | --- | --- |
 | `mu-plugins/kcs-registration-bridge.php` | `wp-content/mu-plugins/` |
 | `mu-plugins/kcs-registration-embed.php` | `wp-content/mu-plugins/` |
+| `mu-plugins/kcs-learner-link.php` | `wp-content/mu-plugins/` |
 
 Must-use plugins, deliberately: they load automatically and cannot be
 deactivated from the admin screen by someone tidying up the plugin list.
@@ -165,3 +166,16 @@ qualification overview, for instance) renders the form with nothing chosen.
 
 `campaign` is set to the page that converted — `pathway:ict-systems-administration`,
 `homepage` — and lands on the application record in the backend.
+
+## The learner's private link
+
+A learner finishing their own registration opens
+`kcs.edu.za/my/profile/{id}?expires=…&signature=…`. WordPress owns the domain
+root, so `kcs-learner-link.php` forwards `/my/...` to the application at
+`/admin/my/...`, **query string intact** — the expiry and signature travel in
+it, and dropping them breaks verification.
+
+The redirect exists for one reason: the application is served from
+`public_html/admin`, so every URL it generates carries `/admin`. These links go
+to people over WhatsApp minutes after they have paid, and a link that reads
+like a staff area is a link they do not click.
