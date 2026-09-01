@@ -70,6 +70,24 @@ The site had two labels for the same thing pointing at two different places:
 Everything is now **Register Now**, `kcs-btn--primary`, and lands on a working
 form: the in-page one where the page has it, `/application/` where it does not.
 
+## Not every button is in a template
+
+The most prominent button on the site — the one in the header, on every page —
+is **not** in any file. Astra stores it in the `astra-settings` option:
+
+| Key | Holds |
+| --- | --- |
+| `header-button1-text` | the label |
+| `header-button1-link-option` | `{"url": …}` |
+
+It read "My Campus" and pointed at the old LMS long after the templates had
+moved on, and no amount of grepping the theme files would have found it. If a
+label on the live site does not match anything in `novamira-sandbox/`, look in
+`astra-settings` before assuming a caching problem.
+
+`header-account-logout-link` still points at campus.kcs.edu.za on purpose:
+it is where a logged-in learner gets sent, not a marketing link.
+
 ## Pre-selecting the programme
 
 `kcs_registration_section($programme)` sets the choice server-side through
