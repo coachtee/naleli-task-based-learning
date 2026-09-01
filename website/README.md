@@ -48,6 +48,28 @@ previously lived in an inline `<style>` at the bottom of `homepage.php`, which
 was fine while the form only appeared there — and would have rendered it
 unstyled on all 13 programme pages, dark labels directly on the navy CTA band.
 
+## Where the form appears
+
+| Place | Programme | Campaign recorded |
+| --- | --- | --- |
+| Home hero card | none — visitor chooses | `hero` |
+| Home CTA band | none | `homepage` |
+| Each of the 13 programme pages | that page's programme | `pathway:<slug>` |
+| Qualification overview | none — it covers seven modules | `qualification:<slug>` |
+| `/application/` | none | `website` |
+
+Two instances of one form on the home page is supported: Fluent Forms scopes
+its JavaScript by the `ff_form_instance_15_1` / `_2` classes it generates for
+exactly this case. It does emit a duplicate `id="fluentform_15"` on both,
+which is invalid HTML but is the plugin's own markup, not ours.
+
+## One name for one action
+
+The site had two labels for the same thing pointing at two different places:
+"Apply Now" → `/application/` and "Register Interest" → an in-page anchor.
+Everything is now **Register Now**, `kcs-btn--primary`, and lands on a working
+form: the in-page one where the page has it, `/application/` where it does not.
+
 ## Pre-selecting the programme
 
 `kcs_registration_section($programme)` sets the choice server-side through

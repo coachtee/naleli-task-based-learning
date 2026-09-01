@@ -110,6 +110,23 @@ function kcs_registration_section(?string $programme = null, ?string $campaign =
     <?php
 }
 
+/**
+ * Just the form, for a place that already provides its own framing.
+ *
+ * The hero card has its own heading, price line and styling, so it wants the
+ * fields alone rather than the whole section.
+ */
+function kcs_registration_form(?string $campaign = null, ?string $programme = null): void {
+    $GLOBALS['kcs_registration_context'] = [
+        'programme' => $programme,
+        'campaign'  => $campaign ?: 'website',
+    ];
+
+    echo do_shortcode('[fluentform id="' . KCS_REGISTER_FORM_ID . '"]');
+
+    unset($GLOBALS['kcs_registration_context']);
+}
+
 /** For any page that does render post content. */
 add_shortcode('kcs_register', function ($atts) {
     $atts = shortcode_atts(['programme' => '', 'campaign' => ''], $atts);
