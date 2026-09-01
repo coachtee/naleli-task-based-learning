@@ -39,7 +39,8 @@ Route::prefix('v1')->group(function (): void {
     // Course content. Not learner data — no authentication, an ETag so a
     // client that already has it downloads nothing, and the same JSON the
     // Android app bundles so the two cannot drift apart.
-    Route::get('content/{code}', ContentController::class);
+    Route::get('content', [ContentController::class, 'index']);
+    Route::get('content/{code}', [ContentController::class, 'show']);
 
     // The lab PC's front door. A shared machine gets a session that expires
     // and is destroyed on logout; the phone keeps `tokens/activate`, where

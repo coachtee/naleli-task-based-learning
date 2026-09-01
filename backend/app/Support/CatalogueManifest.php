@@ -54,6 +54,39 @@ class CatalogueManifest
     public const FOUNDATION_CODE = 'DOPF';
 
     /**
+     * Which content pack each programme teaches from.
+     *
+     * A pack is a directory under `content/` holding `course.json` and
+     * `workspace-content.json` — the same JSON the Android app bundles and the
+     * browser downloads, so a learner sees one body of content whichever they
+     * open.
+     *
+     * Naming every programme here, including the twelve nobody has authored
+     * yet, is the point. A declared-but-missing pack is a known gap the
+     * backend can report; a programme with no entry at all is a silent one,
+     * and silence is how a Payroll learner ends up being shown the Foundation
+     * course. `ContentPacks::status()` and `php artisan content:check` read
+     * this list and say which are real.
+     *
+     * @var array<string, string>
+     */
+    public const CONTENT_PACKS = [
+        'DOPF' => 'digital-foundation',
+        'PPO' => 'people-payroll-operations',
+        'CRM' => 'customer-crm-operations',
+        'DMO' => 'digital-marketing-operations',
+        'PROJ' => 'project-operations',
+        'PROC' => 'procurement-tender-operations',
+        'ENT' => 'entrepreneurship-business-operations',
+        'ICT' => 'ict-systems-administration',
+        'MIS' => 'management-information-systems',
+        'OPS' => 'operations-management',
+        'CHG' => 'change-management',
+        'ERP' => 'erp-systems-administration',
+        'BIA' => 'business-intelligence-analytics',
+    ];
+
+    /**
      * @return array<int, array<string, mixed>>
      */
     public static function programmes(): array
@@ -71,6 +104,7 @@ class CatalogueManifest
                 'source_url' => self::SITE.'career-pathways/'.$slug.'/',
                 'source_note' => $label,
                 'summary' => $summary,
+                'content_code' => self::CONTENT_PACKS[$code] ?? null,
                 'duration_label' => '3-month block',
                 'duration_days' => self::BLOCK_DAYS,
                 'weekly_hours' => '8-10',

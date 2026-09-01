@@ -63,10 +63,11 @@ class LearningRecordSyncTest extends TestCase
 
         $response->assertOk()
             ->assertJsonPath('programme.code', 'PPO')
-            // The key the client needs to pick a content pack. Nothing in the
-            // catalogue actually sets it yet, so it comes back null — that is
-            // a real gap, recorded here rather than papered over.
-            ->assertJsonPath('programme.content_code', null)
+            // Every programme names the pack it teaches from, whether or not
+            // anyone has written it yet. Naming it is what lets the client say
+            // "your course is not loaded" instead of guessing at a pack — see
+            // ContentPackTest for the pack that is actually installed.
+            ->assertJsonPath('programme.content_code', 'people-payroll-operations')
             ->assertJsonPath('programme.entitlement_state', 'active')
             ->assertJsonCount(2, 'sub_steps')
             ->assertJsonCount(1, 'submissions')

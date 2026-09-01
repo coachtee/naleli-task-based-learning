@@ -83,13 +83,40 @@ php artisan lab:demo-learners     # prints three student numbers and PINs
 php artisan serve
 ```
 
-Then open `/workspace` and sign in as one of them. `tests/Browser/rotation.mjs`
-drives the whole rotation — three learners, a dropped line, a blocked logout,
-and the same learner on a second machine — in a real browser.
+Then open `/workspace` and sign in as one of them. Add `--reset` to
+`lab:demo-learners` to clear the work those three have already done, so a UAT
+run starts from a first morning.
+
+`tests/Browser/uat.mjs` drives the whole product in a real browser: reading the
+lesson, a blocked hand-in, ticking the steps, typing an answer, attaching a
+file while the line is down, watching it upload itself when the line returns,
+handing in, the next class finding a clean seat, and the same learner picking
+up on a different computer.
+
+## What a learner can do
+
+Four tabs on every task:
+
+| Tab | What it holds |
+|---|---|
+| **Learn** | The lesson: what they are doing, why it matters, understand / practise / do it for real, what must be handed in, and self-check questions |
+| **Your steps** | The sub-step checklist. Locked once the task is handed in |
+| **Evidence** | Type a written answer (saved as `text/plain`, same path as a photo) or attach a file up to 25 MB. Both queue offline as Blobs in IndexedDB |
+| **Hand in** | The assessment criteria up front, a 1–5 confidence rating, and the submit button — disabled, with the reason in words, until the steps are ticked and evidence is attached |
+
+Handing in is blocked rather than warned about. "You cannot hand in yet: 2 of
+your 4 steps are not ticked, and you have not attached any evidence" is
+something a learner can act on; a rejected submission an hour later is not.
+
+Results come back as **Competent** or **Not yet competent** with the assessor's
+reasons. No percentage appears anywhere — `tests/Browser/uat.mjs` asserts that.
 
 ## Not built yet
 
-Evidence upload and written answers from the browser (the endpoints exist —
-`POST /api/v1/me/evidence` — the screens do not), and reading lesson text. The
-shell proves the part that could lose a learner's work; the rest is screens on
-top of a record that already syncs.
+The assessor's side: a queue of hand-ins, the evidence beside the criteria, and
+a Competent / Not yet competent decision with reasons. The learner half of that
+conversation is finished and waiting for it — `submissions.result` and
+`.feedback` already render.
+
+Also: reading the fuller lesson text from `lessons.json` (the workspace shows
+the task-level lesson, not the paged reader the Android app has).

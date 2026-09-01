@@ -53,6 +53,7 @@ class ProgrammeSeeder extends Seeder
                     'tier' => $entry['tier'],
                     'nqf_level' => $entry['nqf_level'],
                     'summary' => $entry['summary'],
+                    'content_code' => $entry['content_code'],
                     'duration_label' => $entry['duration_label'],
                     'duration_days' => $entry['duration_days'],
                     'weekly_hours' => $entry['weekly_hours'],

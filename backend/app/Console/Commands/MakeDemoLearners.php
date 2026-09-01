@@ -20,7 +20,7 @@ use Illuminate\Console\Command;
  */
 class MakeDemoLearners extends Command
 {
-    protected $signature = 'lab:demo-learners {--programme=PPO}';
+    protected $signature = 'lab:demo-learners {--programme=DOPF} {--reset : Clear the work these three have already done}';
 
     protected $description = 'Create three demo learners with lab PINs, for testing the workspace';
 
@@ -67,6 +67,15 @@ class MakeDemoLearners extends Command
                     'expires_at' => now()->addDays(90),
                 ],
             );
+
+            if ($this->option('reset')) {
+                // Back to a first morning. Only ever these three, and only
+                // ever their DEMO- records — a UAT run that starts from
+                // yesterday's leftovers proves nothing twice.
+                $learner->subSteps()->delete();
+                $learner->submissions()->delete();
+                $learner->evidence()->delete();
+            }
 
             $rows[] = [$reference, "{$first} {$last}", $pins->issue($learner)];
         }

@@ -13,13 +13,15 @@
 :root{
   --navy:#0B1F3A; --navy-2:#13304f; --coral:#E8613C; --coral-dim:#c74e2c;
   --ink:#152238; --muted:#5b6a80; --line:#dde3ec; --paper:#f4f6fa; --card:#fff;
-  --ok:#1c7c54; --warn:#a8620a; --warn-bg:#fdf3e3;
+  --ok:#1c7c54; --ok-bg:#e7f5ee; --warn:#a8620a; --warn-bg:#fdf3e3;
+  --info:#1d4e89; --info-bg:#eaf1fa;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--paper);color:var(--ink);
   font:15px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}
-button{font:inherit;cursor:pointer}
+button,textarea,input,select{font:inherit}
+button{cursor:pointer}
 .hide{display:none!important}
 
 /* ---------------------------------------------------------------- sign in */
@@ -33,24 +35,24 @@ button{font:inherit;cursor:pointer}
 .card p.sub{margin:0 0 22px;color:var(--muted);font-size:13.5px}
 label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);
   text-transform:uppercase;letter-spacing:.4px;margin:0 0 6px}
-input{width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:9px;
-  font:inherit;background:#fbfcfe;margin-bottom:16px}
-input:focus{outline:none;border-color:var(--navy);background:#fff}
+input[type=text],input:not([type]){width:100%;padding:12px 13px;border:1.5px solid var(--line);
+  border-radius:9px;background:#fbfcfe;margin-bottom:16px}
+input:focus,textarea:focus{outline:none;border-color:var(--navy);background:#fff}
 #pin{letter-spacing:6px;font-size:19px;text-align:center}
 .btn{width:100%;padding:13px;border:0;border-radius:9px;background:var(--coral);
   color:#fff;font-weight:600;font-size:15px}
 .btn:hover{background:var(--coral-dim)}
-.btn[disabled]{opacity:.55;cursor:default}
+.btn[disabled]{opacity:.5;cursor:default;background:var(--coral)}
 .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
 .btn.ghost:hover{background:#f0f3f8}
+.btn.small{width:auto;padding:9px 16px;font-size:13.5px}
 .err{background:#fdecea;color:#98241a;border-radius:8px;padding:10px 12px;
   font-size:13.5px;margin-bottom:14px}
 .hint{margin:18px 0 0;font-size:12.5px;color:var(--muted);text-align:center}
 
 /* ------------------------------------------------------------------ shell */
 #work{min-height:100%;display:flex;flex-direction:column}
-header{background:var(--navy);color:#fff;display:flex;align-items:center;gap:14px;
-  padding:11px 18px}
+header{background:var(--navy);color:#fff;display:flex;align-items:center;gap:14px;padding:11px 18px}
 header .who{flex:1;min-width:0}
 header .who b{display:block;font-size:14.5px;font-weight:600}
 header .who span{font-size:12px;opacity:.72}
@@ -75,17 +77,33 @@ nav h2{font-size:11.5px;text-transform:uppercase;letter-spacing:.7px;color:var(-
 .task[aria-current="true"]{background:#eef3fb;box-shadow:inset 3px 0 0 var(--coral)}
 .task .n{font-size:11px;font-weight:700;color:var(--muted);min-width:34px;padding-top:2px}
 .task .t{flex:1;font-size:13.5px;line-height:1.35}
-.task .c{font-size:11px;color:var(--muted);margin-top:3px}
+.task .c{display:block;font-size:11px;color:var(--muted);margin-top:3px}
 .task .c.done{color:var(--ok);font-weight:600}
+.task .c.sent{color:var(--info);font-weight:600}
+.task .c.redo{color:var(--warn);font-weight:600}
 
-section{overflow:auto;padding:26px 30px 60px;max-width:780px}
+section{overflow:auto;padding:24px 30px 60px;max-width:820px}
 section h1{font-size:22px;margin:0 0 6px;letter-spacing:-.3px}
-.meta{color:var(--muted);font-size:13px;margin:0 0 20px}
+.meta{color:var(--muted);font-size:13px;margin:0 0 18px}
+.progress{height:6px;border-radius:3px;background:#e6ebf3;overflow:hidden;margin:0 0 20px}
+.progress i{display:block;height:100%;background:var(--coral);transition:width .25s}
+.tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--line);margin:0 0 20px}
+.tabs button{background:none;border:0;padding:10px 15px;font-size:14px;font-weight:600;
+  color:var(--muted);border-bottom:2.5px solid transparent;margin-bottom:-1.5px}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--coral)}
+.tabs .badge{display:inline-block;background:var(--coral);color:#fff;border-radius:9px;
+  font-size:11px;padding:0 6px;margin-left:6px;vertical-align:1px}
+
 .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;
-  padding:18px 20px;margin-bottom:18px}
-.panel h3{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);
-  margin:0 0 8px}
-.panel p{margin:0;font-size:14.5px}
+  padding:18px 20px;margin-bottom:16px}
+.panel h3{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:0 0 8px}
+.panel p{margin:0 0 10px;font-size:14.5px}
+.panel p:last-child{margin-bottom:0}
+.panel ol,.panel ul{margin:0;padding-left:20px;font-size:14.5px}
+.panel li{margin-bottom:6px}
+.deliver{background:var(--info-bg);border-left:3px solid var(--info);color:#123a68;
+  padding:12px 14px;border-radius:0 8px 8px 0;font-size:14px;margin-bottom:16px}
+
 .steps{list-style:none;margin:0;padding:0}
 .steps li{border-bottom:1px solid #eef1f6}
 .steps li:last-child{border-bottom:0}
@@ -99,9 +117,37 @@ section h1{font-size:22px;margin:0 0 6px;letter-spacing:-.3px}
 .step .lbl b{display:block;font-size:14.5px;font-weight:600}
 .step.on .lbl b{color:var(--muted);text-decoration:line-through}
 .step .lbl span{font-size:13px;color:var(--muted)}
-.progress{height:6px;border-radius:3px;background:#e6ebf3;overflow:hidden;margin:0 0 22px}
-.progress i{display:block;height:100%;background:var(--coral);transition:width .25s}
+
+textarea{width:100%;min-height:150px;padding:12px 13px;border:1.5px solid var(--line);
+  border-radius:9px;background:#fbfcfe;resize:vertical;line-height:1.55}
+.filerow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.filerow input[type=file]{flex:1;min-width:200px;font-size:13.5px}
+.ev{display:flex;gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid #eef1f6}
+.ev:last-child{border-bottom:0}
+.ev .ic{width:34px;height:34px;border-radius:8px;background:#eef3fb;display:grid;
+  place-items:center;font-size:15px;flex:none}
+.ev .nm{flex:1;min-width:0}
+.ev .nm b{display:block;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev .nm span{font-size:12.5px;color:var(--muted)}
+.ev a{font-size:13px;color:var(--info);font-weight:600;text-decoration:none}
+.tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+  padding:3px 8px;border-radius:5px;white-space:nowrap}
+.tag.wait{background:var(--warn-bg);color:var(--warn)}
+
+.verdict{border-radius:10px;padding:16px 18px;margin-bottom:16px}
+.verdict h3{margin:0 0 4px;font-size:16px;text-transform:none;letter-spacing:0}
+.verdict p{margin:0;font-size:14px}
+.verdict.ok{background:var(--ok-bg);border-left:4px solid var(--ok);color:#0f4d34}
+.verdict.redo{background:var(--warn-bg);border-left:4px solid var(--warn);color:#6b3f06}
+.verdict.sent{background:var(--info-bg);border-left:4px solid var(--info);color:#123a68}
+.rate{display:flex;gap:8px;margin:6px 0 18px}
+.rate button{width:46px;height:44px;border:1.5px solid var(--line);background:#fbfcfe;
+  border-radius:9px;font-size:16px;font-weight:600;color:var(--muted)}
+.rate button[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:#fff}
+.blocked{color:var(--muted);font-size:13.5px;margin:10px 0 0}
 .empty{color:var(--muted);padding:40px 0;text-align:center}
+.notice{max-width:520px;margin:60px auto;text-align:center;color:var(--muted)}
+.notice h2{color:var(--ink);font-size:19px;margin:0 0 8px}
 
 /* ----------------------------------------------------------------- modals */
 .veil{position:fixed;inset:0;background:rgba(11,31,58,.6);display:grid;place-items:center;
@@ -113,11 +159,15 @@ section h1{font-size:22px;margin:0 0 6px;letter-spacing:-.3px}
 .sheet .row{display:flex;gap:10px;flex-direction:column}
 .warnbox{background:var(--warn-bg);border-left:3px solid var(--warn);color:#6b3f06;
   padding:11px 13px;border-radius:0 8px 8px 0;font-size:13.5px;margin-bottom:16px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--navy);
+  color:#fff;padding:12px 20px;border-radius:9px;font-size:14px;z-index:30;
+  box-shadow:0 10px 30px rgba(8,20,40,.35)}
 
 @media (max-width:820px){
   main{grid-template-columns:1fr}
-  nav{max-height:200px;border-right:0;border-bottom:1px solid var(--line)}
-  section{padding:20px 18px 50px}
+  nav{max-height:190px;border-right:0;border-bottom:1px solid var(--line)}
+  section{padding:18px 16px 50px}
+  .tabs{overflow-x:auto}
 }
 </style>
 @endverbatim
@@ -162,11 +212,19 @@ section h1{font-size:22px;margin:0 0 6px;letter-spacing:-.3px}
 "use strict";
 const CFG = window.NALELI;
 const $ = (id) => document.getElementById(id);
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const uuid = () => (crypto.randomUUID ? crypto.randomUUID()
+  : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+      const r = Math.random() * 16 | 0;
+      return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
+    }));
+const bytes = (n) => n < 1024 ? `${n} B` : n < 1048576 ? `${(n / 1024).toFixed(0)} KB` : `${(n / 1048576).toFixed(1)} MB`;
 
 /* ============================================================== local store
- * IndexedDB, not localStorage: the queue must survive a browser that runs out
- * of room mid-morning, and it is keyed by learner so a machine shared by three
- * classes a day never hands one student's pending work to the next.
+ * IndexedDB, not localStorage: the queue holds file Blobs as well as ticks,
+ * and it is keyed by learner so a machine shared by three classes a day never
+ * hands one student's pending work to the next.
  */
 const DB_NAME = "naleli-workspace", DB_VER = 1;
 let _db;
@@ -200,19 +258,16 @@ const cacheGet = async (key) => {
   catch { return null; }
 };
 const cachePut = (key, value) => tx("cache", "readwrite", (s) => s.put({ key, value })).catch(() => {});
-
-const queueAll = async (owner) => {
-  const rows = await tx("queue", "readonly", (s) => s.index("owner").getAll(owner)).catch(() => []);
-  return rows || [];
-};
+const queueAll = async (owner) =>
+  (await tx("queue", "readonly", (s) => s.index("owner").getAll(owner)).catch(() => [])) || [];
 const queueAdd = (item) => tx("queue", "readwrite", (s) => s.add(item));
 const queueDrop = (ids) => tx("queue", "readwrite", (s) => { ids.forEach((id) => s.delete(id)); });
 
 /* ==================================================================== state */
 const S = {
-  token: null, learner: null, programme: null, contentCode: null,
-  content: null, record: null, pending: [], selected: null,
-  syncing: false, idleTimer: null,
+  token: null, learner: null, programme: null, contentCode: null, contentInstalled: false,
+  content: null, record: null, pending: [], selected: null, tab: "learn",
+  syncing: false, idleTimer: null, rating: null,
 };
 const owner = () => S.learner ? `${S.learner.learner_ref}:${S.programme}` : "";
 
@@ -245,8 +300,7 @@ $("signinForm").addEventListener("submit", async (e) => {
         device_name: "Workspace (browser)",
       },
     });
-    S.token = out.token;
-    S.learner = out.learner;
+    S.token = out.token; S.learner = out.learner;
     sessionStorage.setItem("naleli.session", JSON.stringify({ token: out.token, learner: out.learner }));
     await openWorkspace(out.entitlements);
   } catch (ex) {
@@ -259,12 +313,15 @@ $("signinForm").addEventListener("submit", async (e) => {
 });
 
 async function openWorkspace(entitlements) {
-  // Whichever programme is actually open. `content_code` is what binds it to
-  // a content pack; nothing in the catalogue sets it yet, so fall back.
-  const open = (entitlements || []).find((e) => e.state === "active")
-            || (entitlements || []).find((e) => e.unlocked_at);
+  const list = entitlements?.data || entitlements || [];
+  const open = list.find((e) => e.state === "active") || list.find((e) => e.unlocked_at);
+
   S.programme = open ? open.programme_code : null;
-  S.contentCode = (open && open.content_code) || "digital-foundation";
+  S.contentCode = open ? open.content_code : null;
+  // No guessing. A programme whose content nobody has written yet says so —
+  // showing a Payroll learner the Foundation course would be worse than
+  // showing them nothing.
+  S.contentInstalled = !!(open && open.content_installed);
 
   $("whoName").textContent = `${S.learner.first_name} ${S.learner.last_name}`.trim();
   $("whoRef").textContent = S.learner.learner_ref + (S.programme ? ` · ${S.programme}` : "");
@@ -273,18 +330,15 @@ async function openWorkspace(entitlements) {
 
   S.pending = await queueAll(owner());
   S.record = await cacheGet(`record:${owner()}`);
-  S.content = await cacheGet(`content:${S.contentCode}`);
+  S.content = S.contentCode ? await cacheGet(`content:${S.contentCode}`) : null;
   render();
 
-  // Cached first so the screen is usable instantly, then refreshed. A lab PC
-  // on a bad line shows yesterday's work rather than a spinner.
   await Promise.allSettled([pullContent(), pullRecord()]);
-  render();
-  drain();
-  armIdle();
+  render(); drain(); armIdle();
 }
 
 async function pullContent() {
+  if (!S.contentCode || !S.contentInstalled) return;
   try {
     const c = await api(`/content/${S.contentCode}`);
     if (c) { S.content = c; await cachePut(`content:${S.contentCode}`, c); }
@@ -299,8 +353,9 @@ async function pullRecord() {
 }
 
 /* ===================================================================== sync
- * Every tick is queued and pushed straight away. Nothing waits for logout, so
- * the most a machine can be holding on its own is a few seconds of work.
+ * Everything a learner does is queued and pushed straight away — ticks, typed
+ * answers, files, hand-ins. Nothing waits for logout, so the most a machine
+ * can be holding on its own is a few seconds of work.
  */
 let drainTimer = null;
 const scheduleDrain = () => { clearTimeout(drainTimer); drainTimer = setTimeout(drain, 600); };
@@ -313,24 +368,58 @@ async function drain() {
 
   S.syncing = true; paintSync();
   try {
-    const r = await api("/me/progress", {
-      method: "POST",
-      json: {
-        programme: S.programme,
-        device: deviceLabel(),
-        sub_steps: batch.map((b) => ({
-          sub_step_id: b.sub_step_id, task_id: b.task_id, complete: b.complete,
-          completed_at: b.completed_at, client_updated_at: b.client_updated_at,
-        })),
-      },
-    });
-    await queueDrop(batch.map((b) => b.id));
-    S.record = r; await cachePut(`record:${owner()}`, r);
+    // Progress first: it is small and it is what a facilitator looks at.
+    // Files follow one at a time so a big photo never holds up a tick.
+    const ticks = batch.filter((b) => b.kind === "substep");
+    const handIns = batch.filter((b) => b.kind === "submission");
+
+    if (ticks.length || handIns.length) {
+      const r = await api("/me/progress", {
+        method: "POST",
+        json: {
+          programme: S.programme, device: deviceLabel(),
+          sub_steps: ticks.map((b) => ({
+            sub_step_id: b.sub_step_id, task_id: b.task_id, complete: b.complete,
+            completed_at: b.completed_at, client_updated_at: b.client_updated_at,
+          })),
+          submissions: handIns.map((b) => ({
+            task_id: b.task_id, submitted_at: b.submitted_at,
+            confidence_rating: b.confidence_rating, client_updated_at: b.client_updated_at,
+          })),
+        },
+      });
+      await queueDrop([...ticks, ...handIns].map((b) => b.id));
+      S.record = r; await cachePut(`record:${owner()}`, r);
+    }
+
+    for (const item of batch.filter((b) => b.kind === "evidence")) {
+      const form = new FormData();
+      form.append("programme", S.programme);
+      form.append("device", deviceLabel());
+      form.append("client_evidence_id", item.client_evidence_id);
+      form.append("task_id", item.task_id);
+      form.append("captured_at", item.captured_at);
+      if (item.description) form.append("description", item.description);
+      form.append("file", item.blob, item.file_name);
+
+      await api("/me/evidence", { method: "POST", body: form });
+      await queueDrop([item.id]);
+    }
+
+    if (batch.some((b) => b.kind === "evidence")) await pullRecord();
     S.pending = await queueAll(owner());
   } catch (ex) {
-    // A rejected session is the one failure retrying cannot fix.
     if (ex.status === 401) return forceSignOut("Your session ended. Please sign in again.");
-    S.pending = batch;
+    // 422 means the server will never accept this item, so retrying for ever
+    // would wedge the queue behind it. Drop it and say so.
+    if (ex.status === 422) {
+      const stuck = (await queueAll(owner())).find((b) => b.kind === "evidence");
+      if (stuck) {
+        await queueDrop([stuck.id]);
+        toast(`"${stuck.file_name}" was refused — it may be too big or the wrong kind of file.`);
+      }
+    }
+    S.pending = await queueAll(owner());
   } finally {
     S.syncing = false; paintSync(); render();
   }
@@ -339,30 +428,70 @@ window.addEventListener("online", drain);
 window.addEventListener("offline", paintSync);
 
 function deviceLabel() {
-  const ua = navigator.userAgent;
-  return /Android|iPhone|iPad/i.test(ua) ? "Workspace (phone browser)" : "Workspace (computer)";
+  return /Android|iPhone|iPad/i.test(navigator.userAgent)
+    ? "Workspace (phone browser)" : "Workspace (computer)";
 }
 
-/* ==================================================================== ticks */
+/* =================================================== what the learner does */
+const isComplete = (id) => !!(S.record?.sub_steps || []).find((s) => s.sub_step_id === id && s.complete);
+const submissionFor = (taskId) => (S.record?.submissions || []).find((s) => s.task_id === taskId);
+const evidenceFor = (taskId) => [
+  ...(S.record?.evidence || []).filter((e) => e.task_id === taskId),
+  ...S.pending.filter((p) => p.kind === "evidence" && p.task_id === taskId)
+    .map((p) => ({ client_evidence_id: p.client_evidence_id, task_id: p.task_id,
+      file_name: p.file_name, mime_type: p.mime_type, byte_size: p.byte_size,
+      description: p.description, captured_at: p.captured_at, waiting: true })),
+];
+const isHandedIn = (taskId) => !!submissionFor(taskId)?.submitted_at;
+
 async function toggle(step, task) {
+  if (isHandedIn(task.taskId)) return toast("This task is already handed in.");
   const done = !isComplete(step.subStepId);
   const now = new Date().toISOString();
 
-  // Show it immediately; the queue is what makes it true.
   const list = (S.record?.sub_steps || []).filter((s) => s.sub_step_id !== step.subStepId);
   list.push({ sub_step_id: step.subStepId, task_id: task.taskId, complete: done, completed_at: done ? now : null });
   S.record = { ...(S.record || {}), sub_steps: list };
   await cachePut(`record:${owner()}`, S.record);
 
   await queueAdd({
-    owner: owner(), sub_step_id: step.subStepId, task_id: task.taskId,
+    owner: owner(), kind: "substep", sub_step_id: step.subStepId, task_id: task.taskId,
     complete: done, completed_at: done ? now : null, client_updated_at: now,
   });
-  S.pending = await queueAll(owner());
+  await afterChange();
+}
 
+async function attach(taskId, blob, fileName, description) {
+  await queueAdd({
+    owner: owner(), kind: "evidence", client_evidence_id: uuid(), task_id: taskId,
+    blob, file_name: fileName, mime_type: blob.type || "application/octet-stream",
+    byte_size: blob.size, description: description || null,
+    captured_at: new Date().toISOString(),
+  });
+  await afterChange();
+}
+
+async function handIn(task) {
+  const now = new Date().toISOString();
+  const list = (S.record?.submissions || []).filter((s) => s.task_id !== task.taskId);
+  list.push({ task_id: task.taskId, submitted_at: now, confidence_rating: S.rating,
+    result: "not_yet_assessed", assessed_at: null, feedback: null });
+  S.record = { ...(S.record || {}), submissions: list };
+  await cachePut(`record:${owner()}`, S.record);
+
+  await queueAdd({
+    owner: owner(), kind: "submission", task_id: task.taskId,
+    submitted_at: now, confidence_rating: S.rating, client_updated_at: now,
+  });
+  S.rating = null;
+  toast("Handed in. Your assessor will look at it.");
+  await afterChange();
+}
+
+async function afterChange() {
+  S.pending = await queueAll(owner());
   render(); paintSync(); scheduleDrain(); armIdle();
 }
-const isComplete = (id) => !!(S.record?.sub_steps || []).find((s) => s.sub_step_id === id && s.complete);
 
 /* =================================================================== render */
 function tasks() {
@@ -371,44 +500,101 @@ function tasks() {
     .sort((a, b) => (a.dayNumber || 0) - (b.dayNumber || 0));
 }
 
+function taskState(t) {
+  const steps = t.subSteps || [], done = steps.filter((s) => isComplete(s.subStepId)).length;
+  const sub = submissionFor(t.taskId);
+  if (sub?.result === "competent") return { cls: "done", label: "Competent", done, of: steps.length };
+  if (sub?.result === "requires_improvement") return { cls: "redo", label: "Needs more work", done, of: steps.length };
+  if (sub?.submitted_at) return { cls: "sent", label: "Handed in", done, of: steps.length };
+  if (steps.length && done === steps.length) return { cls: "done", label: "Steps complete", done, of: steps.length };
+  return { cls: "", label: `${done} of ${steps.length} steps`, done, of: steps.length };
+}
+
 function render() {
+  if (!S.programme) return notice("No programme is open on your account",
+    "Speak to the office — your registration may not be finished yet.");
+  if (!S.contentInstalled) return notice("Your course is not loaded yet",
+    `The content for ${esc(S.programme)} has not been published to this system. Your facilitator knows about it — nothing you have done is lost.`);
+
   const all = tasks();
-  if (!all.length) {
-    $("taskList").innerHTML = "";
-    $("detail").innerHTML = `<p class="empty">Your course content has not reached this computer yet.<br>Connect to the internet once and it will be saved here.</p>`;
-    return;
-  }
+  if (!all.length) return notice("Your course has not reached this computer yet",
+    "Connect to the internet once and it will be saved here for offline use.");
+
   if (!S.selected || !all.find((t) => t.taskId === S.selected)) {
-    const next = all.find((t) => (t.subSteps || []).some((s) => !isComplete(s.subStepId)));
+    const next = all.find((t) => !isHandedIn(t.taskId)
+      && (t.subSteps || []).some((s) => !isComplete(s.subStepId)));
     S.selected = (next || all[0]).taskId;
   }
 
   $("navTitle").textContent = `Your work · ${all.length} tasks`;
   $("taskList").innerHTML = "";
   all.forEach((t) => {
-    const steps = t.subSteps || [], done = steps.filter((s) => isComplete(s.subStepId)).length;
+    const st = taskState(t);
     const b = document.createElement("button");
     b.className = "task";
     b.setAttribute("aria-current", String(t.taskId === S.selected));
     b.innerHTML = `<span class="n">DAY ${t.dayNumber || "–"}</span>
-      <span class="t">${esc(t.title)}
-        <span class="c ${done === steps.length && steps.length ? "done" : ""}">
-          ${steps.length ? (done === steps.length ? "Complete" : `${done} of ${steps.length} steps`) : "No steps"}
-        </span>
-      </span>`;
-    b.onclick = () => { S.selected = t.taskId; render(); armIdle(); };
+      <span class="t">${esc(t.title)}<span class="c ${st.cls}">${esc(st.label)}</span></span>`;
+    b.onclick = () => { S.selected = t.taskId; S.tab = "learn"; render(); armIdle(); };
     $("taskList").appendChild(b);
   });
 
-  const t = all.find((x) => x.taskId === S.selected);
-  const steps = t.subSteps || [], done = steps.filter((s) => isComplete(s.subStepId)).length;
+  renderTask(all.find((x) => x.taskId === S.selected));
+}
+
+function notice(heading, body) {
+  $("taskList").innerHTML = "";
+  $("navTitle").textContent = "Your work";
+  $("detail").innerHTML = `<div class="notice"><h2>${heading}</h2><p>${body}</p></div>`;
+}
+
+function renderTask(t) {
+  const steps = t.subSteps || [], st = taskState(t);
+  const ev = evidenceFor(t.taskId);
   const sec = $("detail");
+
   sec.innerHTML = `
     <h1>${esc(t.title)}</h1>
     <p class="meta">Day ${t.dayNumber} · ${esc(t.workstream || "")} · about ${t.estimatedMinutes || "—"} minutes</p>
-    <div class="progress"><i style="width:${steps.length ? (done / steps.length) * 100 : 0}%"></i></div>
-    ${t.whatYoureDoing ? `<div class="panel"><h3>What you are doing</h3><p>${esc(t.whatYoureDoing)}</p></div>` : ""}
-    ${t.whyItMatters ? `<div class="panel"><h3>Why it matters</h3><p>${esc(t.whyItMatters)}</p></div>` : ""}
+    <div class="progress"><i style="width:${st.of ? (st.done / st.of) * 100 : 0}%"></i></div>
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="learn">Learn</button>
+      <button role="tab" data-tab="steps">Your steps</button>
+      <button role="tab" data-tab="evidence">Evidence${ev.length ? `<span class="badge">${ev.length}</span>` : ""}</button>
+      <button role="tab" data-tab="handin">Hand in</button>
+    </div>
+    <div id="tabBody"></div>`;
+
+  sec.querySelectorAll("[data-tab]").forEach((b) => {
+    b.setAttribute("aria-selected", String(b.dataset.tab === S.tab));
+    b.onclick = () => { S.tab = b.dataset.tab; renderTask(t); armIdle(); };
+  });
+
+  ({ learn: tabLearn, steps: tabSteps, evidence: tabEvidence, handin: tabHandIn }[S.tab] || tabLearn)(t);
+}
+
+/* ------------------------------------------------------------------- learn */
+function tabLearn(t) {
+  const block = (title, body) => body
+    ? `<div class="panel"><h3>${title}</h3><p>${esc(body)}</p></div>` : "";
+
+  $("tabBody").innerHTML = `
+    ${block("What you are doing", t.whatYoureDoing)}
+    ${block("Why it matters", t.whyItMatters)}
+    ${block("Understand it", t.understandText)}
+    ${block("Practise it", t.practiseText)}
+    ${block("Now do the real thing", t.assignmentText)}
+    ${t.deliverableLabel ? `<div class="deliver"><b>What you must hand in:</b> ${esc(t.deliverableLabel)}</div>` : ""}
+    ${(t.reviewQuestions || []).length ? `<div class="panel"><h3>Check yourself</h3><ol>
+        ${t.reviewQuestions.map((q) => `<li>${esc(q)}</li>`).join("")}</ol></div>` : ""}`;
+}
+
+/* ------------------------------------------------------------------- steps */
+function tabSteps(t) {
+  const steps = t.subSteps || [];
+  const locked = isHandedIn(t.taskId);
+  $("tabBody").innerHTML = `
+    ${locked ? `<div class="verdict sent"><h3>Handed in</h3><p>You cannot change the steps now. If it comes back for more work, they open again.</p></div>` : ""}
     <div class="panel"><h3>Your steps</h3><ul class="steps" id="stepList"></ul></div>`;
 
   const ul = $("stepList");
@@ -418,15 +604,113 @@ function render() {
     const b = document.createElement("button");
     b.className = "step" + (on ? " on" : "");
     b.innerHTML = `<span class="box">${on ? "✓" : ""}</span>
-      <span class="lbl"><b>${esc(s.title)}</b>
-      <span>${esc(s.instructions || "")}</span></span>`;
+      <span class="lbl"><b>${esc(s.title)}</b><span>${esc(s.instructions || "")}</span>
+      ${s.evidence ? `<span><b style="display:inline;font-weight:600">Show:</b> ${esc(s.evidence)}</span>` : ""}</span>`;
     b.onclick = () => toggle(s, t);
     li.appendChild(b); ul.appendChild(li);
   });
 }
-const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) =>
-  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+/* ---------------------------------------------------------------- evidence */
+function tabEvidence(t) {
+  const ev = evidenceFor(t.taskId);
+  $("tabBody").innerHTML = `
+    <div class="panel">
+      <h3>Write your answer</h3>
+      <p style="color:var(--muted);font-size:13.5px">Not everything is a file. If the work is
+        an explanation, type it here — it is saved as evidence exactly like a photo.</p>
+      <textarea id="answer" placeholder="Type your answer here…"></textarea>
+      <div class="filerow" style="margin-top:12px">
+        <button class="btn small" id="saveAnswer">Save this answer</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Attach a file or photo</h3>
+      <p style="color:var(--muted);font-size:13.5px">A photo of your written work, a document,
+        a screenshot — up to 25 MB.</p>
+      <div class="filerow">
+        <input type="file" id="file"
+               accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.odt,.ods">
+        <button class="btn small" id="saveFile">Attach it</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>What you have attached${ev.length ? ` (${ev.length})` : ""}</h3>
+      ${ev.length ? `<div id="evList"></div>`
+        : `<p style="color:var(--muted)">Nothing yet. You need at least one piece of evidence before you can hand this in.</p>`}
+    </div>`;
+
+  $("saveAnswer").onclick = async () => {
+    const text = $("answer").value.trim();
+    if (!text) return toast("Type something first.");
+    await attach(t.taskId, new Blob([text], { type: "text/plain" }), "written-answer.txt", "Written answer");
+    toast("Your answer is saved.");
+  };
+  $("saveFile").onclick = async () => {
+    const f = $("file").files[0];
+    if (!f) return toast("Choose a file first.");
+    await attach(t.taskId, f, f.name, null);
+    toast(`"${f.name}" attached.`);
+  };
+
+  const list = $("evList");
+  if (!list) return;
+  ev.forEach((e) => {
+    const row = document.createElement("div");
+    row.className = "ev";
+    const icon = /^image\//.test(e.mime_type || "") ? "🖼" : /pdf/.test(e.mime_type || "") ? "📄" : "📎";
+    row.innerHTML = `<span class="ic">${icon}</span>
+      <span class="nm"><b>${esc(e.file_name)}</b>
+        <span>${esc(e.description || "")}${e.description ? " · " : ""}${bytes(e.byte_size || 0)}</span></span>
+      ${e.waiting ? `<span class="tag wait">Waiting to send</span>`
+        : `<a href="${esc(e.download_url)}" target="_blank" rel="noopener">Open</a>`}`;
+    list.appendChild(row);
+  });
+}
+
+/* ----------------------------------------------------------------- hand in */
+function tabHandIn(t) {
+  const steps = t.subSteps || [], st = taskState(t);
+  const ev = evidenceFor(t.taskId);
+  const sub = submissionFor(t.taskId);
+  const missing = [];
+  if (st.of && st.done < st.of) missing.push(`${st.of - st.done} of your ${st.of} steps are not ticked`);
+  if (!ev.length) missing.push("you have not attached any evidence");
+
+  const verdict = !sub?.submitted_at ? ""
+    : sub.result === "competent"
+      ? `<div class="verdict ok"><h3>Competent</h3><p>${esc(sub.feedback || "Your assessor accepted this work.")}</p></div>`
+    : sub.result === "requires_improvement"
+      ? `<div class="verdict redo"><h3>Not yet competent</h3><p>${esc(sub.feedback || "Your assessor has asked for more work on this.")}</p></div>`
+      : `<div class="verdict sent"><h3>Waiting for your assessor</h3><p>Handed in. Nothing more to do on this one for now.</p></div>`;
+
+  $("tabBody").innerHTML = `
+    ${verdict}
+    <div class="panel">
+      <h3>What your assessor will check</h3>
+      <ul>${(t.assessmentCriteria || ["Your steps are complete", "Your evidence is attached"])
+        .map((c) => `<li>${esc(c)}</li>`).join("")}</ul>
+    </div>
+    ${sub?.submitted_at ? "" : `
+    <div class="panel">
+      <h3>How confident are you in this work?</h3>
+      <p style="color:var(--muted);font-size:13.5px">1 is "I struggled", 5 is "I could teach it".
+        This is how you feel — it does not decide your result.</p>
+      <div class="rate" id="rate">
+        ${[1, 2, 3, 4, 5].map((n) => `<button data-n="${n}" aria-pressed="${S.rating === n}">${n}</button>`).join("")}
+      </div>
+      <button class="btn" id="submitBtn" ${missing.length ? "disabled" : ""}>Hand this work in</button>
+      ${missing.length ? `<p class="blocked">You cannot hand in yet: ${esc(missing.join(", and "))}.</p>` : ""}
+    </div>`}`;
+
+  if (sub?.submitted_at) return;
+  $("rate").querySelectorAll("button").forEach((b) => {
+    b.onclick = () => { S.rating = Number(b.dataset.n); renderTask(t); };
+  });
+  $("submitBtn").onclick = () => handIn(t);
+}
+
+/* ------------------------------------------------------------- sync status */
 function paintSync() {
   const pill = $("syncPill"), text = $("syncText");
   pill.className = "pill";
@@ -439,8 +723,7 @@ function paintSync() {
 
 /* =================================================================== log out
  * The one moment work can be lost, so it is the one moment that is not
- * allowed to be quiet. Queue empty: go. Queue full and online: send it first.
- * Queue full and offline: say so, and never pretend otherwise.
+ * allowed to be quiet.
  */
 $("logoutBtn").onclick = async () => {
   S.pending = await queueAll(owner());
@@ -469,9 +752,13 @@ $("logoutBtn").onclick = async () => {
 
 async function downloadBackup() {
   const rows = await queueAll(owner());
+  // Files are dropped from the copy on purpose — a learner cannot carry a
+  // 25 MB photo home on a text file, and the photo is still on this PC when
+  // they come back. The ticks and hand-ins are what a facilitator can re-enter.
   const blob = new Blob([JSON.stringify({
     learner_ref: S.learner.learner_ref, programme: S.programme,
-    saved_at: new Date().toISOString(), sub_steps: rows,
+    saved_at: new Date().toISOString(),
+    changes: rows.map(({ blob: _drop, ...rest }) => rest),
   }, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
@@ -485,7 +772,8 @@ async function signOut() {
 }
 function forceSignOut(message) {
   sessionStorage.removeItem("naleli.session");
-  S.token = null; S.learner = null; S.record = null; S.pending = []; S.selected = null;
+  Object.assign(S, { token: null, learner: null, record: null, content: null,
+    pending: [], selected: null, tab: "learn", rating: null });
   clearTimeout(S.idleTimer); closeSheet();
   $("work").classList.add("hide");
   $("signin").classList.remove("hide");
@@ -494,27 +782,31 @@ function forceSignOut(message) {
   if (message) { err.textContent = message; err.classList.remove("hide"); } else { err.classList.add("hide"); }
 }
 
-/* ===================================================================== idle
- * Students leave without logging out. The next one must not inherit the seat.
- */
+/* ===================================================================== idle */
 function armIdle() {
   clearTimeout(S.idleTimer);
   if (!S.token) return;
   S.idleTimer = setTimeout(async () => { await drain(); signOut(); }, CFG.idleMinutes * 60000);
 }
-["click", "keydown", "pointerdown"].forEach((e) => document.addEventListener(e, () => { if (S.token) armIdle(); }));
+["click", "keydown", "pointerdown"].forEach((e) =>
+  document.addEventListener(e, () => { if (S.token) armIdle(); }));
 
-/* =================================================================== modals */
+/* =================================================== modals and small talk */
 function sheet(html) { $("sheet").innerHTML = html; $("modal").classList.remove("hide"); }
 function closeSheet() { $("modal").classList.add("hide"); }
+let toastTimer = null;
+function toast(message) {
+  document.querySelector(".toast")?.remove();
+  const el = document.createElement("div");
+  el.className = "toast"; el.textContent = message;
+  document.body.appendChild(el);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.remove(), 3200);
+}
 
 /* ===================================================== boot / offline / PWA */
 (async function boot() {
-  // Ask to keep our storage. On an installed app Chromium grants this without
-  // prompting; without it the browser may drop a learner's queued work when
-  // the disk fills, which is the one failure that would end all trust.
   if (navigator.storage?.persist) { try { await navigator.storage.persist(); } catch {} }
-
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register(CFG.base + "/sw.js", { scope: CFG.base + "/" }).catch(() => {});
   }
@@ -525,7 +817,7 @@ function closeSheet() { $("modal").classList.add("hide"); }
       const { token, learner } = JSON.parse(saved);
       S.token = token; S.learner = learner;
       const ents = await api("/me/entitlements").catch(() => null);
-      if (ents) { await openWorkspace(ents.data || ents); return; }
+      if (ents) { await openWorkspace(ents); return; }
     } catch { /* fall through to sign in */ }
     sessionStorage.removeItem("naleli.session");
   }

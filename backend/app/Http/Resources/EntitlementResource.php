@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Services\Content\ContentPacks;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,6 +26,12 @@ class EntitlementResource extends JsonResource
             'tier' => $this->programme->tier->value,
             'content_code' => $this->programme->content_code,
             'content_version' => $this->programme->content_version,
+            // Whether that pack is actually on this server. Thirteen
+            // programmes are sold and their content is authored over months,
+            // so a client must be able to say "your course is not loaded yet"
+            // rather than guess at a pack and show somebody else's course.
+            'content_installed' => app(ContentPacks::class)
+                ->isInstalled($this->programme->content_code),
             'state' => $this->state->value,
             'reason' => $this->reason,
             'unlocked_at' => $this->unlocked_at?->toIso8601String(),
