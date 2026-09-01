@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\CallQueue;
 use App\Filament\Widgets\PipelineOverview;
 use App\Filament\Widgets\WorkQueue;
 use App\Support\LocalAvatarProvider;
@@ -81,6 +82,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 PipelineOverview::class,
+                // First on the screen, because it is first in the day.
+                CallQueue::class,
                 WorkQueue::class,
             ])
             ->middleware([

@@ -41,11 +41,21 @@ class PipelineOverview extends StatsOverviewWidget
 
     protected function getStats(): array
     {
-        $awaitingDecision = Application::whereIn('status', [
+        // Counted apart, and this is the whole point of importing leads at
+        // LEAD rather than as registrations. Rolled together, eighty-five
+        // Facebook enquiries read as eighty-five registrations, and the one
+        // number the school actually steers on stops being true.
+        $leadsDue = Application::whereIn('status', [
             ApplicationStatus::LEAD,
             ApplicationStatus::CONTACTED,
-            ApplicationStatus::REGISTRATION_STARTED,
-        ])->count();
+        ])->whereNotNull('next_action_at')->count();
+
+        $overdue = Application::whereIn('status', [
+            ApplicationStatus::LEAD,
+            ApplicationStatus::CONTACTED,
+        ])->where('next_action_at', '<=', now())->count();
+
+        $awaitingDecision = Application::where('status', ApplicationStatus::REGISTRATION_STARTED)->count();
         $awaitingPayment = Application::where('status', ApplicationStatus::AWAITING_PAYMENT)->count();
         $owedCents = Invoice::where('status', InvoiceStatus::DUE)->sum('amount_cents');
         $settledThisMonth = Payment::where('status', PaymentStatus::SETTLED)
@@ -56,6 +66,13 @@ class PipelineOverview extends StatsOverviewWidget
         $unredeemed = AccessToken::where('status', TokenStatus::ISSUED)->count();
 
         return [
+            Stat::make('Leads to call', (string) $leadsDue)
+                ->description($overdue > 0
+                    ? "{$overdue} overdue — call them today"
+                    : ($leadsDue > 0 ? 'All scheduled' : 'Nobody waiting'))
+                ->descriptionIcon($overdue > 0 ? 'heroicon-m-phone-arrow-up-right' : 'heroicon-m-check')
+                ->color($overdue > 0 ? 'danger' : ($leadsDue > 0 ? 'info' : 'gray')),
+
             Stat::make('New registrations', (string) $awaitingDecision)
                 ->description($awaitingDecision > 0 ? 'Waiting for a decision' : 'Nothing waiting')
                 ->descriptionIcon($awaitingDecision > 0 ? 'heroicon-m-inbox-arrow-down' : 'heroicon-m-check')

@@ -32,9 +32,10 @@ class WorkQueue extends TableWidget
             ->query(
                 Application::query()
                     ->with(['learner', 'programme', 'intake'])
+                    // Leads live in the call queue above. Chasing a stranger
+                    // and processing somebody who has already registered are
+                    // different jobs, and one list holding both is neither.
                     ->whereIn('status', [
-                        ApplicationStatus::LEAD,
-                        ApplicationStatus::CONTACTED,
                         ApplicationStatus::REGISTRATION_STARTED,
                         ApplicationStatus::PROFILE_INCOMPLETE,
                     ])

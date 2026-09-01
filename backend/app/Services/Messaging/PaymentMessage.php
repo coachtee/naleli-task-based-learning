@@ -173,6 +173,37 @@ class PaymentMessage
             : "https://wa.me/{$number}?text=".rawurlencode($this->workspaceAccessMessage($learner, $link));
     }
 
+    /**
+     * The first message to somebody who tapped a Facebook ad.
+     *
+     * Written to be sent by a person, not to look like a broadcast: it says
+     * who is writing, what they asked about, and asks one question. A lead who
+     * gets a template does not reply.
+     */
+    public function leadIntroMessage(Learner $learner, ?string $sender = null): string
+    {
+        $name = $learner->preferred_name ?: $learner->first_name;
+        $from = $sender !== null && $sender !== '' ? " This is {$sender} from KCS." : ' This is KCS.';
+
+        return implode("\n\n", [
+            "Hi {$name},{$from}",
+            'You asked about our courses on Facebook — thank you.',
+            'We run a 3-month Digital Foundation block: R500 to register, then R950 a month. '
+                .'You learn by doing real workplace tasks, not just theory.',
+            'Can I answer anything, or shall I send you the registration link?',
+        ]);
+    }
+
+    public function leadIntroWhatsAppLink(Learner $learner, ?string $sender = null): ?string
+    {
+        $number = Normalise::whatsappNumber($learner->whatsapp)
+            ?? Normalise::whatsappNumber($learner->phone);
+
+        return $number === null
+            ? null
+            : "https://wa.me/{$number}?text=".rawurlencode($this->leadIntroMessage($learner, $sender));
+    }
+
     public function profileWhatsAppLink(Learner $learner): ?string
     {
         $message = $this->profileMessage($learner);

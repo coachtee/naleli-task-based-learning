@@ -11,6 +11,7 @@ namespace App\Enums;
 enum ApplicationSource: string
 {
     case FLUENTFORM = 'fluentform';
+    case META_LEAD = 'meta_lead';
     case ADMIN = 'admin';
     case WALK_IN = 'walk_in';
 
@@ -18,6 +19,7 @@ enum ApplicationSource: string
     {
         return match ($this) {
             self::FLUENTFORM => 'Website form',
+            self::META_LEAD => 'Facebook or Instagram lead',
             self::ADMIN => 'Captured by staff',
             self::WALK_IN => 'Walk-in',
         };
