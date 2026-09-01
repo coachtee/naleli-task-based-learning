@@ -18,7 +18,7 @@ class LearnerResource extends Resource
 {
     protected static ?string $model = Learner::class;
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Admissions';
+    protected static string|\UnitEnum|null $navigationGroup = 'Do the work';
 
     protected static ?int $navigationSort = 2;
 

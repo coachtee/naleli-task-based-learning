@@ -63,14 +63,15 @@ class AdminPanelProvider extends PanelProvider
             ->font('Archivo')
             ->maxContentWidth(Width::Full)
             ->sidebarCollapsibleOnDesktop()
-            // The information architecture, not an alphabetical dump of
-            // tables. A registrar works down Admissions; finance works down
-            // Money; nobody has to know which model backs which screen.
+            // Two groups, not four, and the split is by whether a person
+            // does anything there. Nine menu items across Admissions, Money,
+            // Delivery and Catalogue read as nine equal jobs; in fact only
+            // three are places staff work. The rest are what the system
+            // produced — tokens, entitlements, payments, the catalogue — and
+            // they are worth looking up, never worth doing.
             ->navigationGroups([
-                NavigationGroup::make('Admissions')->icon('heroicon-o-inbox-arrow-down'),
-                NavigationGroup::make('Money')->icon('heroicon-o-banknotes'),
-                NavigationGroup::make('Delivery')->icon('heroicon-o-academic-cap'),
-                NavigationGroup::make('Catalogue')->icon('heroicon-o-rectangle-stack'),
+                NavigationGroup::make('Do the work')->icon('heroicon-o-inbox-arrow-down'),
+                NavigationGroup::make('Records')->icon('heroicon-o-archive-box'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

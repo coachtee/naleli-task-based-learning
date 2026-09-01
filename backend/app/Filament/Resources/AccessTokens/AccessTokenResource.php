@@ -18,9 +18,9 @@ class AccessTokenResource extends Resource
 {
     protected static ?string $model = AccessToken::class;
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Delivery';
+    protected static string|\UnitEnum|null $navigationGroup = 'Records';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedKey;
 

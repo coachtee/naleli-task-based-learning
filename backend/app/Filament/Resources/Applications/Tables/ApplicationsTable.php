@@ -8,6 +8,8 @@ use App\Enums\OfferingStatus;
 use App\Models\Application;
 use App\Models\Offering;
 use App\Services\Enrolment\ApplicationAcceptor;
+use App\Services\Messaging\PaymentMessage;
+use App\Services\Payments\Providers\PayAtGoProvider;
 use App\Services\Registration\ProfileCompleteness;
 use DomainException;
 use Filament\Actions\Action;
@@ -15,10 +17,12 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
+use Filament\Notifications\Actions\Action as NotificationAction;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Throwable;
 
 class ApplicationsTable
 {
@@ -154,6 +158,73 @@ class ApplicationsTable
                             ->send();
                     }),
 
+                // Registering a learner used to be three actions on two
+                // screens: accept against an "offering", then mint a Pay@
+                // reference on the right invoice, then send it. Nothing told a
+                // registrar the last two were needed, so learners sat at
+                // awaiting_payment with no reference anyone had issued. It is
+                // one button now, and the offering is not a question: every
+                // programme has exactly one open one.
+                Action::make('registerAndSend')
+                    ->label('Register & send payment link')
+                    ->icon('heroicon-o-paper-airplane')
+                    ->color('primary')
+                    ->visible(fn (Application $record): bool => $record->status->isDecidable()
+                        && $record->programme_id !== null
+                        && self::soleOpenOffering($record) !== null)
+                    ->requiresConfirmation()
+                    ->modalHeading('Register this learner and raise the fees')
+                    ->modalDescription(fn (Application $record): string => 'Creates the enrolment, raises '
+                        .self::soleOpenOffering($record)?->terms().', and issues the Pay@ reference for the '
+                        .'registration fee. Nothing is charged until the learner pays at a till.')
+                    ->modalSubmitActionLabel('Register and issue the reference')
+                    ->action(function (Application $record): void {
+                        $offering = self::soleOpenOffering($record);
+
+                        try {
+                            $enrolment = app(ApplicationAcceptor::class)
+                                ->accept($record, $offering, auth()->user());
+                        } catch (DomainException $e) {
+                            Notification::make()->title('Could not register this learner')
+                                ->body($e->getMessage())->danger()->persistent()->send();
+
+                            return;
+                        }
+
+                        $invoice = $enrolment->activatingInvoice();
+                        $reference = null;
+
+                        try {
+                            app(PayAtGoProvider::class)->createCheckout($invoice);
+                            $reference = $invoice->fresh()->payat_source_reference;
+                        } catch (Throwable $e) {
+                            // The enrolment and the invoices are real either
+                            // way; only the reference is missing, and Invoices
+                            // can issue one on its own.
+                            report($e);
+                        }
+
+                        $link = app(PaymentMessage::class)->whatsAppLinkFor($invoice->fresh());
+
+                        $body = $reference !== null
+                            ? "Registered. Pay@ reference {$reference} for R".number_format($invoice->amount_cents / 100, 2).'.'
+                            : 'Registered and invoiced, but Pay@ did not issue a reference. '
+                              .'Use "Create Pay@ reference" on the invoice to try again.';
+
+                        Notification::make()
+                            ->title($record->learner->learner_ref.' is registered')
+                            ->body($body.($link === null ? ' No usable WhatsApp number on file.' : ''))
+                            ->success()
+                            ->persistent()
+                            ->actions(array_values(array_filter([
+                                $link === null ? null : NotificationAction::make('whatsapp')
+                                    ->label('Send it on WhatsApp')
+                                    ->url($link, shouldOpenInNewTab: true)
+                                    ->button(),
+                            ])))
+                            ->send();
+                    }),
+
                 Action::make('accept')
                     ->label('Accept')
                     ->icon('heroicon-o-check-circle')
@@ -161,8 +232,11 @@ class ApplicationsTable
                     // Anything below awaiting_payment: a lead, a contact,
                     // or a started registration. Above that the money is
                     // already committed and accepting again would undo it.
+                    // Only when the offering is a real choice. With one open
+                    // offering the single button above does the whole job.
                     ->visible(fn (Application $record): bool => $record->status->isDecidable()
-                        && $record->programme_id !== null)
+                        && $record->programme_id !== null
+                        && self::soleOpenOffering($record) === null)
                     ->modalHeading('Accept this application')
                     ->modalDescription('This creates a pending enrolment and raises the invoices for the offering you choose. Nothing is charged yet.')
                     ->modalSubmitActionLabel('Accept and raise invoices')
@@ -224,5 +298,28 @@ class ApplicationsTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    /**
+     * The one offering a programme is actually sold under, or null when it is
+     * a genuine choice.
+     *
+     * Every 2027 programme has exactly one open offering, so asking a
+     * registrar to pick "the offering" was presenting internal vocabulary as a
+     * decision. Where more than one is open the question is real, and the
+     * Accept action asks it properly.
+     */
+    private static function soleOpenOffering(Application $application): ?Offering
+    {
+        if ($application->programme_id === null) {
+            return null;
+        }
+
+        $open = Offering::query()
+            ->where('programme_id', $application->programme_id)
+            ->where('status', OfferingStatus::OPEN)
+            ->get();
+
+        return $open->count() === 1 ? $open->first() : null;
     }
 }

@@ -18,9 +18,9 @@ class OfferingResource extends Resource
 {
     protected static ?string $model = Offering::class;
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Catalogue';
+    protected static string|\UnitEnum|null $navigationGroup = 'Records';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 6;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 

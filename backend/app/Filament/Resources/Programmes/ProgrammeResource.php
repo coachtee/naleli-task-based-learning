@@ -18,9 +18,9 @@ class ProgrammeResource extends Resource
 {
     protected static ?string $model = Programme::class;
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Catalogue';
+    protected static string|\UnitEnum|null $navigationGroup = 'Records';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 5;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

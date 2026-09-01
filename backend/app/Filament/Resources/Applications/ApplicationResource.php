@@ -26,7 +26,7 @@ class ApplicationResource extends Resource
 
     protected static ?string $navigationLabel = 'Registrations';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Admissions';
+    protected static string|\UnitEnum|null $navigationGroup = 'Do the work';
 
     protected static ?int $navigationSort = 1;
 

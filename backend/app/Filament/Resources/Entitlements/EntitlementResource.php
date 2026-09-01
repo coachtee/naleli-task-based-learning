@@ -18,9 +18,9 @@ class EntitlementResource extends Resource
 {
     protected static ?string $model = Entitlement::class;
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Delivery';
+    protected static string|\UnitEnum|null $navigationGroup = 'Records';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedLockOpen;
 
