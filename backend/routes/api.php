@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\V1\ContentController;
 use App\Http\Controllers\Api\V1\EvidenceController;
 use App\Http\Controllers\Api\V1\HealthController;
+use App\Http\Controllers\Api\V1\LabSessionController;
 use App\Http\Controllers\Api\V1\MeController;
 use App\Http\Controllers\Api\V1\ProgrammeController;
 use App\Http\Controllers\Api\V1\ProgressController;
@@ -34,6 +36,17 @@ Route::prefix('v1')->group(function (): void {
     Route::get('programmes', [ProgrammeController::class, 'index']);
     Route::post('tokens/activate', [TokenActivationController::class, 'store']);
 
+    // Course content. Not learner data — no authentication, an ETag so a
+    // client that already has it downloads nothing, and the same JSON the
+    // Android app bundles so the two cannot drift apart.
+    Route::get('content/{code}', ContentController::class);
+
+    // The lab PC's front door. A shared machine gets a session that expires
+    // and is destroyed on logout; the phone keeps `tokens/activate`, where
+    // one handset belongs to one learner for good.
+    Route::post('sessions', [LabSessionController::class, 'store'])
+        ->middleware('throttle:60,1');
+
     // --- the website's application webhook -----------------------------
     Route::post('intake/application', FluentFormsApplicationController::class)
         ->middleware('webhook.signature:fluentform');
@@ -50,6 +63,10 @@ Route::prefix('v1')->group(function (): void {
     Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('me', [MeController::class, 'show']);
         Route::get('me/entitlements', [MeController::class, 'entitlements']);
+
+        // Logging out destroys this session only. A learner leaving a lab PC
+        // is not a reason to sign them out of their own phone.
+        Route::delete('sessions', [LabSessionController::class, 'destroy']);
 
         // --- the learning record ---------------------------------------
         // The learner account owns the work; a phone and a lab PC are only

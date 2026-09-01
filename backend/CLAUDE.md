@@ -47,6 +47,12 @@ deliberately — both the Android app and the planned desktop PWA need exactly
 these endpoints, so building them first means the client decision cannot be
 made wrong.
 
+The learner workspace (`/workspace`) is the first client on it — an installable
+web app for the lab PCs, because a signed Windows installer costs money the
+school does not have. See `docs/WORKSPACE-PWA.md`; the rule that matters is
+that logging out is never allowed to lose work, and the service worker never
+caches anything under `/api/v1/me/`.
+
 Not yet: any Android app change, assessment, moderation, certificates. Do not
 build ahead of the phase.
 

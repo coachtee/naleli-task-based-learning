@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 
 use App\Http\Controllers\Learner\ProfileController;
+use App\Http\Controllers\Workspace\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,4 +33,24 @@ Route::middleware('signed')->group(function (): void {
 
     Route::post('/my/profile/{learner}', [ProfileController::class, 'update'])
         ->name('learner.profile.update');
+});
+
+/*
+ * The learner workspace: the same work as the Android app, in a browser.
+ *
+ * A lab PC cannot install an APK and a signed .exe costs money the school
+ * does not have, so the desktop experience is an installable web app —
+ * Edge is already on every machine, "Install this site as an app" gives it a
+ * Start-menu entry and its own window, and updating it is a deploy rather
+ * than a visit to thirty computers.
+ *
+ * Everything lives under /workspace/ so the website can rewrite one path onto
+ * the application, and so the service worker's scope covers the whole app and
+ * nothing else on the domain.
+ */
+Route::prefix('workspace')->group(function (): void {
+    Route::get('/', [WorkspaceController::class, 'shell'])->name('workspace.shell');
+    Route::get('/sw.js', [WorkspaceController::class, 'serviceWorker'])->name('workspace.sw');
+    Route::get('/manifest.webmanifest', [WorkspaceController::class, 'manifest'])->name('workspace.manifest');
+    Route::get('/icon.svg', [WorkspaceController::class, 'icon'])->name('workspace.icon');
 });

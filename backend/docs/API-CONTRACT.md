@@ -14,6 +14,22 @@ Two different tokens, deliberately:
 |---|---|---|
 | **Access token** | `KCS-XXXX-XXXX-XXXX`, printed or emailed. Grants access to **one enrolment**. Redeemed once. | Until used, expired or revoked |
 | **Device token** | Bearer token issued in exchange, identifies **this phone**. | Until revoked |
+| **Lab session** | Issued for a **student number + 6-digit PIN**, at a shared computer. | 12 hours, or until logout |
+
+The phone and the lab PC need opposite things, so they get different doors. One
+handset belongs to one learner for good, and making them type a PIN every
+morning to reach work already on the device would be theatre. A lab machine
+carries three learners a day and must keep nothing behind, so it gets a session
+that expires by itself and is destroyed on `DELETE /sessions`.
+
+`POST /sessions` answers identically for a wrong PIN and an unknown student
+number — references run in sequence, so distinguishable answers would let
+anyone count upwards and read off the roll. Guessing is limited to 5 attempts
+per student number per minute, and separately per address, so one learner
+fumbling their PIN cannot lock out the room.
+
+PINs are hashed and there is no way to read one back. A facilitator issues a
+new one from the learner's row in the dashboard and reads it out once.
 
 The access token is not the learner's identity. A learner keeps one permanent
 reference (`NAL-2026-00001`) and collects a new access token for each
@@ -29,7 +45,9 @@ Authenticated requests send `Authorization: Bearer <device token>`.
 ```
 GET  /health                 liveness
 GET  /programmes             the catalogue
-POST /tokens/activate        redeem an access token, receive a device token
+GET  /content/{code}         a course content pack
+POST /tokens/activate        redeem an access token, receive a device token (phone)
+POST /sessions               sign in with student number + PIN (shared computer)
 ```
 
 `POST /tokens/activate`
@@ -152,6 +170,14 @@ So nothing here is last-write-wins:
 Every rule is idempotent, so a client that never saw its response just pushes
 again. Trade-off worth naming: because completion is a ratchet, un-ticking a
 step needs the learner to be online. Losing work costs more than re-ticking.
+
+### `GET /content/{code}`
+
+The course pack — the same JSON the APK bundles, so the phone and the browser
+render one body of content rather than two that can drift. Not learner data:
+no authentication, an `ETag` so a machine that already has it downloads
+nothing, and cacheable by anything in between. `code` is whitelisted against
+`[a-z0-9-]`, so it names a pack and can never name a path.
 
 ### `POST /me/evidence`
 

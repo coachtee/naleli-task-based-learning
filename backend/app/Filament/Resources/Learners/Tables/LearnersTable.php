@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Learners\Tables;
 
 use App\Models\Learner;
+use App\Services\Identity\LabPin;
 use App\Services\Messaging\PaymentMessage;
 use App\Services\Registration\LearnerLinks;
 use App\Services\Registration\ProfileCompleteness;
@@ -140,6 +141,31 @@ class LearnersTable
                                     ->url($whatsapp, shouldOpenInNewTab: true)
                                     ->button(),
                             ])))
+                            ->send();
+                    }),
+
+                // A learner cannot log in at a lab PC without one of these,
+                // and there is no way to look one up — only to issue a new
+                // one. "What was my PIN?" is how somebody else's PIN gets
+                // handed to whoever is standing at the counter.
+                Action::make('labPin')
+                    ->label(fn (Learner $record): string => $record->pin_hash === null ? 'Give a lab PIN' : 'New lab PIN')
+                    ->icon('heroicon-o-key')
+                    ->color(fn (Learner $record): string => $record->pin_hash === null ? 'warning' : 'gray')
+                    ->requiresConfirmation()
+                    ->modalHeading('Issue a lab PIN')
+                    ->modalDescription(fn (Learner $record): string => $record->pin_hash === null
+                        ? "{$record->learner_ref} has no PIN yet and cannot sign in at a lab computer."
+                        : "This replaces the PIN {$record->learner_ref} has now. Their old one stops working immediately.")
+                    ->modalSubmitActionLabel('Issue it')
+                    ->action(function (Learner $record): void {
+                        $pin = app(LabPin::class)->issue($record);
+
+                        Notification::make()
+                            ->title("PIN for {$record->learner_ref}: {$pin}")
+                            ->body('Read it to them now — it is stored hashed and cannot be shown again. They sign in at kcs.edu.za/workspace with their student number and this PIN.')
+                            ->success()
+                            ->persistent()
                             ->send();
                     }),
 

@@ -13,6 +13,13 @@ return [
     'max_sub_steps' => (int) env('SYNC_MAX_SUB_STEPS', 500),
     'max_submissions' => (int) env('SYNC_MAX_SUBMISSIONS', 500),
 
+    /*
+     * Where the course content packs live. The repository keeps them beside
+     * the app (they are the same JSON the APK bundles); a deployment copies
+     * that directory next to the application and points this at it.
+     */
+    'content_path' => env('SYNC_CONTENT_PATH', base_path('../content')),
+
     'evidence' => [
         // The plain local disk — storage/app/private. No object store, no
         // new infrastructure; a VPS with a backed-up storage directory.
