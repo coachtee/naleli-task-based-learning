@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\Messaging;
 
+use App\Mail\CourseAccessOpened;
 use App\Mail\RegistrationReceived;
 use App\Models\Application;
+use App\Models\Enrolment;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -53,6 +55,27 @@ class LearnerMailer
         return $this->send($email, new RegistrationReceived($application), [
             'mail' => 'registration_received',
             'learner_ref' => $application->learner->learner_ref,
+        ]);
+    }
+
+    /**
+     * "Your course is open" — student number, and a link to choose a PIN.
+     *
+     * Sent the moment access actually opens, which is the moment a learner is
+     * most likely to be looking for it. Never carries the PIN itself.
+     */
+    public function courseAccessOpened(Enrolment $enrolment, string $accessLink, ?string $appToken = null): bool
+    {
+        $learner = $enrolment->learner;
+        $email = $learner?->email;
+
+        if ($email === null || $email === '') {
+            return false;
+        }
+
+        return $this->send($email, new CourseAccessOpened($enrolment, $accessLink, $appToken), [
+            'mail' => 'course_access_opened',
+            'learner_ref' => $learner->learner_ref,
         ]);
     }
 

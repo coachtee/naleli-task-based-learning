@@ -142,6 +142,37 @@ class PaymentMessage
     }
 
     /** Null when there is nothing outstanding, or no number to send it to. */
+    /**
+     * "Your course is open" for WhatsApp.
+     *
+     * Same content as the email and the same rule: the link, never the PIN.
+     * Sent as well as the email rather than instead of it — a learner who
+     * gave us a Gmail address they check monthly still reads WhatsApp today.
+     */
+    public function workspaceAccessMessage(Learner $learner, string $link): string
+    {
+        $name = $learner->preferred_name ?: $learner->first_name;
+        $workspace = rtrim((string) config('kcs.workspace_url') ?: url('/workspace'), '/');
+
+        return implode("\n\n", [
+            "Hi {$name}, your payment is in and your KCS course is open.",
+            "Your student number is {$learner->learner_ref} — you will type it every time you sign in.",
+            "First, choose your PIN here: {$link}",
+            "Then sign in at {$workspace} on any computer at KCS, or on your phone.",
+            'Keep your PIN to yourself — the lab computers are shared.',
+        ]);
+    }
+
+    public function workspaceAccessWhatsAppLink(Learner $learner, string $link): ?string
+    {
+        $number = Normalise::whatsappNumber($learner->whatsapp)
+            ?? Normalise::whatsappNumber($learner->phone);
+
+        return $number === null
+            ? null
+            : "https://wa.me/{$number}?text=".rawurlencode($this->workspaceAccessMessage($learner, $link));
+    }
+
     public function profileWhatsAppLink(Learner $learner): ?string
     {
         $message = $this->profileMessage($learner);

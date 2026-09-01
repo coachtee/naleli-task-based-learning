@@ -24,6 +24,15 @@ class LearnerLinks
     /** How long a learner has to finish their profile before the link lapses. */
     public const PROFILE_DAYS = 30;
 
+    /**
+     * How long a learner has to pick their workspace PIN.
+     *
+     * Longer than a password reset because this arrives at the same moment as
+     * a payment receipt and a lot else, and a learner who opens it a week
+     * later must not be locked out of the course they have paid for.
+     */
+    public const ACCESS_DAYS = 21;
+
     public function profile(Learner $learner, ?int $days = null): string
     {
         return URL::temporarySignedRoute(
@@ -31,6 +40,30 @@ class LearnerLinks
             now()->addDays($days ?? self::PROFILE_DAYS),
             ['learner' => $learner->id],
         );
+    }
+
+    /**
+     * Where a paid learner chooses the PIN they will use at a lab computer.
+     *
+     * A link rather than a PIN in the email body. Emailing "your number is X
+     * and your PIN is Y" puts a whole working credential in an inbox, a
+     * forwarded message and a WhatsApp thread; a signed link expires, works
+     * once the learner has used it, and leaves the secret something only they
+     * have ever typed.
+     */
+    public function workspaceAccess(Learner $learner, ?int $days = null): string
+    {
+        return URL::temporarySignedRoute(
+            'learner.access.show',
+            now()->addDays($days ?? self::ACCESS_DAYS),
+            ['learner' => $learner->id],
+        );
+    }
+
+    /** The same link as it goes into an email. */
+    public function friendlyWorkspaceAccess(Learner $learner, ?int $days = null): string
+    {
+        return $this->onPublicHost($this->workspaceAccess($learner, $days));
     }
 
     /**
@@ -42,13 +75,25 @@ class LearnerLinks
      */
     public function friendlyProfile(Learner $learner, ?int $days = null): string
     {
-        $signed = $this->profile($learner, $days);
+        return $this->onPublicHost($this->profile($learner, $days));
+    }
+
+    /**
+     * Everything from /my onward — path, expiry and signature — hung off the
+     * public host. Rebuilt rather than string-replaced on config, because the
+     * scheme and base path the app generates are not guaranteed to match what
+     * APP_URL says.
+     *
+     * Note what this does to the signature: it is computed over the whole URL,
+     * so moving the host invalidates it. The link works because the website
+     * forwards /my/... straight back to the address it was signed for — which
+     * means these are the form to SEND, and never the form to test against.
+     * Sign with the plain method, send with this one.
+     */
+    private function onPublicHost(string $signed): string
+    {
         $position = strpos($signed, '/my/');
 
-        // Everything from /my onward — path, expiry and signature — hung off
-        // the public host. Rebuilt rather than string-replaced on config,
-        // because the scheme and base path the app generates are not
-        // guaranteed to match what APP_URL says.
         return $position === false
             ? $signed
             : rtrim((string) config('kcs.public_url'), '/').substr($signed, $position);

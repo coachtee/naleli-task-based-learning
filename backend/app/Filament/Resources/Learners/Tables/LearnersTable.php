@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Learners\Tables;
 
 use App\Models\Learner;
-use App\Services\Identity\LabPin;
+use App\Services\Messaging\LearnerMailer;
 use App\Services\Messaging\PaymentMessage;
 use App\Services\Registration\LearnerLinks;
 use App\Services\Registration\ProfileCompleteness;
@@ -144,28 +144,48 @@ class LearnersTable
                             ->send();
                     }),
 
-                // A learner cannot log in at a lab PC without one of these,
-                // and there is no way to look one up — only to issue a new
-                // one. "What was my PIN?" is how somebody else's PIN gets
-                // handed to whoever is standing at the counter.
-                Action::make('labPin')
-                    ->label(fn (Learner $record): string => $record->pin_hash === null ? 'Give a lab PIN' : 'New lab PIN')
+                // The step that used to happen by word of mouth. Activation
+                // mints a token for the phone app and nothing else; nobody
+                // was ever told how to reach the workspace. This sends the
+                // learner a link to choose their own PIN — a link, never a
+                // PIN, because "your number is X and your PIN is Y" in an
+                // inbox is a whole working credential that outlives the
+                // course.
+                Action::make('sendWorkspaceLogin')
+                    ->label(fn (Learner $record): string => $record->pin_hash === null
+                        ? 'Send workspace login'
+                        : 'Send a new PIN link')
                     ->icon('heroicon-o-key')
                     ->color(fn (Learner $record): string => $record->pin_hash === null ? 'warning' : 'gray')
-                    ->requiresConfirmation()
-                    ->modalHeading('Issue a lab PIN')
-                    ->modalDescription(fn (Learner $record): string => $record->pin_hash === null
-                        ? "{$record->learner_ref} has no PIN yet and cannot sign in at a lab computer."
-                        : "This replaces the PIN {$record->learner_ref} has now. Their old one stops working immediately.")
-                    ->modalSubmitActionLabel('Issue it')
+                    ->visible(fn (Learner $record): bool => $record->entitlements()->whereNotNull('unlocked_at')->exists())
+                    ->modalHeading('Send their workspace login')
+                    ->modalDescription(fn (Learner $record): string => $record->email
+                        ? "We will email {$record->email} a link to choose a PIN. It lasts "
+                          .LearnerLinks::ACCESS_DAYS.' days.'
+                        : 'No email address on file, so nothing can be sent. Use the link below on WhatsApp, or add an email first.')
+                    ->modalSubmitActionLabel('Send it')
                     ->action(function (Learner $record): void {
-                        $pin = app(LabPin::class)->issue($record);
+                        $link = app(LearnerLinks::class)->friendlyWorkspaceAccess($record);
+                        $enrolment = $record->enrolments()->latest('id')->first();
+
+                        $emailed = $enrolment !== null
+                            && app(LearnerMailer::class)->courseAccessOpened($enrolment, $link);
+
+                        $whatsapp = app(PaymentMessage::class)->workspaceAccessWhatsAppLink($record, $link);
 
                         Notification::make()
-                            ->title("PIN for {$record->learner_ref}: {$pin}")
-                            ->body('Read it to them now — it is stored hashed and cannot be shown again. They sign in at kcs.edu.za/workspace with their student number and this PIN.')
-                            ->success()
+                            ->title($emailed
+                                ? "Emailed to {$record->email}"
+                                : 'Not emailed — send it another way')
+                            ->body($link)
+                            ->color($emailed ? 'success' : 'warning')
                             ->persistent()
+                            ->actions(array_values(array_filter([
+                                $whatsapp === null ? null : NotificationAction::make('wa')
+                                    ->label('Send it on WhatsApp')
+                                    ->url($whatsapp, shouldOpenInNewTab: true)
+                                    ->button(),
+                            ])))
                             ->send();
                     }),
 

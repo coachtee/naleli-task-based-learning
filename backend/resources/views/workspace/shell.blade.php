@@ -24,6 +24,16 @@ button,textarea,input,select{font:inherit}
 button{cursor:pointer}
 .hide{display:none!important}
 
+/* A lab keyboard is often the only way in — a stuck mouse, a learner who
+   tabs, a screen reader. Filament and the browser both give focus rings by
+   default and hand-styled controls quietly lose them. */
+:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px;border-radius:4px}
+header :focus-visible{outline-color:#fff}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
 /* ---------------------------------------------------------------- sign in */
 #signin{min-height:100%;display:grid;place-items:center;padding:24px;
   background:linear-gradient(160deg,var(--navy) 0%,var(--navy-2) 100%)}
@@ -42,13 +52,17 @@ input:focus,textarea:focus{outline:none;border-color:var(--navy);background:#fff
 .btn{width:100%;padding:13px;border:0;border-radius:9px;background:var(--coral);
   color:#fff;font-weight:600;font-size:15px}
 .btn:hover{background:var(--coral-dim)}
-.btn[disabled]{opacity:.5;cursor:default;background:var(--coral)}
+/* Faded coral still reads as "press me". A blocked hand-in is not a button
+   having a bad day — it is not a button. */
+.btn[disabled]{background:#e6ebf3;color:#8a97ab;cursor:not-allowed}
+.btn[disabled]:hover{background:#e6ebf3}
 .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
 .btn.ghost:hover{background:#f0f3f8}
 .btn.small{width:auto;padding:9px 16px;font-size:13.5px}
 .err{background:#fdecea;color:#98241a;border-radius:8px;padding:10px 12px;
   font-size:13.5px;margin-bottom:14px}
 .hint{margin:18px 0 0;font-size:12.5px;color:var(--muted);text-align:center}
+.micro{margin:-10px 0 16px;font-size:12.5px;color:var(--muted)}
 
 /* ------------------------------------------------------------------ shell */
 #work{min-height:100%;display:flex;flex-direction:column}
@@ -57,7 +71,8 @@ header .who{flex:1;min-width:0}
 header .who b{display:block;font-size:14.5px;font-weight:600}
 header .who span{font-size:12px;opacity:.72}
 .pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.13);
-  border-radius:20px;padding:6px 13px;font-size:12.5px;font-weight:600;white-space:nowrap}
+  border-radius:20px;padding:6px 13px;font-size:13px;font-weight:600;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
 .dot{width:8px;height:8px;border-radius:50%;background:#7ee3b0;flex:none}
 .pill.busy .dot{background:#ffd479;animation:pulse 1s infinite}
 .pill.wait{background:#7a4a12}
@@ -76,7 +91,11 @@ nav h2{font-size:11.5px;text-transform:uppercase;letter-spacing:.7px;color:var(-
 .task:hover{background:#f7f9fc}
 .task[aria-current="true"]{background:#eef3fb;box-shadow:inset 3px 0 0 var(--coral)}
 .task .n{font-size:11px;font-weight:700;color:var(--muted);min-width:34px;padding-top:2px}
-.task .t{flex:1;font-size:13.5px;line-height:1.35}
+.task .t{flex:1;min-width:0;font-size:13.5px;line-height:1.35}
+/* Some days carry two lessons in one title. Left to wrap, a single row grows
+   to five lines and the list stops being scannable. */
+.task .t > .ttl{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden}
 .task .c{display:block;font-size:11px;color:var(--muted);margin-top:3px}
 .task .c.done{color:var(--ok);font-weight:600}
 .task .c.sent{color:var(--info);font-weight:600}
@@ -181,7 +200,9 @@ textarea{width:100%;min-height:150px;padding:12px 13px;border:1.5px solid var(--
     <p class="sub">Katlehong Computer School</p>
     <div class="err hide" id="signinErr"></div>
     <label for="ref">Student number</label>
-    <input id="ref" name="ref" placeholder="NAL-2026-00001" autocapitalize="characters" required>
+    <input id="ref" name="ref" placeholder="NAL-2026-00001" autocapitalize="characters"
+           autocomplete="username" spellcheck="false" required>
+    <p class="micro">It is on the email we sent you, and starts with NAL.</p>
     <label for="pin">PIN</label>
     <input id="pin" name="pin" inputmode="numeric" pattern="[0-9]*"
            maxlength="{{ $config['pinLength'] }}" placeholder="••••••" required>
@@ -533,9 +554,16 @@ function render() {
     const b = document.createElement("button");
     b.className = "task";
     b.setAttribute("aria-current", String(t.taskId === S.selected));
+    b.title = t.title;
     b.innerHTML = `<span class="n">DAY ${t.dayNumber || "–"}</span>
-      <span class="t">${esc(t.title)}<span class="c ${st.cls}">${esc(st.label)}</span></span>`;
-    b.onclick = () => { S.selected = t.taskId; S.tab = "learn"; render(); armIdle(); };
+      <span class="t"><span class="ttl">${esc(t.title)}</span>
+      <span class="c ${st.cls}">${esc(st.label)}</span></span>`;
+    b.onclick = () => {
+      S.selected = t.taskId; S.tab = "learn"; render(); armIdle();
+      // Otherwise a learner opening a short task from halfway down a long one
+      // lands past its heading and thinks the page is blank.
+      $("detail").scrollTop = 0;
+    };
     $("taskList").appendChild(b);
   });
 

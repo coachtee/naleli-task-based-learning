@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 
 use App\Http\Controllers\Learner\ProfileController;
+use App\Http\Controllers\Learner\WorkspaceAccessController;
 use App\Http\Controllers\Workspace\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +34,22 @@ Route::middleware('signed')->group(function (): void {
 
     Route::post('/my/profile/{learner}', [ProfileController::class, 'update'])
         ->name('learner.profile.update');
+
+    // Choosing a workspace PIN. Same signature-as-credential story: this is
+    // the first thing a learner does after paying, and they have nothing to
+    // log in with yet.
+    Route::get('/my/start/{learner}', [WorkspaceAccessController::class, 'show'])
+        ->name('learner.access.show');
+
+    Route::post('/my/start/{learner}', [WorkspaceAccessController::class, 'update'])
+        ->name('learner.access.update');
 });
+
+// Shown after the signed link has been spent, so it carries no signature of
+// its own — and gives away nothing a learner who just set their PIN does not
+// already know.
+Route::get('/my/start/{learner}/done', [WorkspaceAccessController::class, 'done'])
+    ->name('learner.access.done');
 
 /*
  * The learner workspace: the same work as the Android app, in a browser.

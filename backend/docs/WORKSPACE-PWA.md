@@ -132,6 +132,33 @@ something a learner can act on; a rejected submission an hour later is not.
 Results come back as **Competent** or **Not yet competent** with the assessor's
 reasons. No percentage appears anywhere — `tests/Browser/uat.mjs` asserts that.
 
+## How a learner gets in
+
+Activation used to mint an access token for the phone app and stop there —
+nobody was ever told how to reach the workspace, and the registrar read a token
+off a screen. The chain now completes:
+
+```
+website form -> registrar accepts -> learner pays
+  -> "Your course is open" email
+  -> learner opens the link and chooses a PIN
+  -> signs in at any lab computer with student number + PIN
+```
+
+The email carries **a link, not a PIN**. "Your number is X and your PIN is Y"
+in an inbox is a whole working credential that outlives the course, gets
+forwarded, and sits in a WhatsApp thread; a signed link expires after
+`LearnerLinks::ACCESS_DAYS` and leaves the secret something only the learner
+has ever typed. Obvious PINs (`000000`, `123456`, runs) are refused with a
+reason.
+
+A learner still owing us an identity document gets no email, correctly — they
+cannot sign in yet. The registrar sends it by hand from the learner's row once
+the document is sighted (**Send workspace login**, which also offers WhatsApp).
+
+`tests/Browser/journey.mjs` drives this whole path in a real browser, and
+`tests/Feature/Flow/ProspectToStudentTest.php` asserts it server-side.
+
 ## Not built yet
 
 The assessor's side: a queue of hand-ins, the evidence beside the criteria, and

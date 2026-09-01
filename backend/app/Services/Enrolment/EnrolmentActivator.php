@@ -13,8 +13,10 @@ use App\Models\AccessToken;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\User;
+use App\Services\Messaging\LearnerMailer;
 use App\Services\Payments\Contracts\CallbackResult;
 use App\Services\Payments\PaymentProviderRegistry;
+use App\Services\Registration\LearnerLinks;
 use App\Services\Registration\ProfileCompleteness;
 use App\Services\Tokens\AccessTokenIssuer;
 use DomainException;
@@ -44,6 +46,8 @@ class EnrolmentActivator
         private readonly EntitlementResolver $entitlements,
         private readonly AccessTokenIssuer $tokens,
         private readonly ProfileCompleteness $profiles,
+        private readonly LearnerLinks $links,
+        private readonly LearnerMailer $mailer,
     ) {}
 
     /**
@@ -53,7 +57,7 @@ class EnrolmentActivator
      */
     public function settle(CallbackResult $result, ?Invoice $invoice = null, ?User $actor = null): array
     {
-        return DB::transaction(function () use ($result, $invoice, $actor) {
+        $outcome = DB::transaction(function () use ($result, $invoice, $actor) {
             // The unique index on (provider, provider_reference) is what makes
             // a replayed callback harmless: we find the existing row rather
             // than writing a second payment for the same money.
@@ -119,6 +123,41 @@ class EnrolmentActivator
                 'already_settled' => false,
             ];
         });
+
+        return $this->announceAccess($outcome);
+    }
+
+    /**
+     * Tell the learner their course is open.
+     *
+     * Outside the transaction on purpose: a rollback afterwards could not
+     * unsend the message. The mailer swallows its own failures, so a mail
+     * outage cannot undo a payment that has already settled.
+     *
+     * The trigger is a newly minted access token, which happens exactly once
+     * per enrolment — when the money lands and identity is already verified.
+     * A learner still owing us a document gets nothing here, correctly: they
+     * cannot sign in yet. The registrar sends it by hand from the dashboard
+     * once the document is sighted.
+     *
+     * @param  array{payment: Payment, token: ?AccessToken, plain_token: ?string, already_settled: bool}  $outcome
+     * @return array{payment: Payment, token: ?AccessToken, plain_token: ?string, already_settled: bool}
+     */
+    private function announceAccess(array $outcome): array
+    {
+        $enrolment = $outcome['token']?->enrolment;
+
+        if ($outcome['plain_token'] === null || $enrolment?->learner === null) {
+            return $outcome;
+        }
+
+        $this->mailer->courseAccessOpened(
+            $enrolment,
+            $this->links->friendlyWorkspaceAccess($enrolment->learner),
+            $outcome['plain_token'],
+        );
+
+        return $outcome;
     }
 
     /**
