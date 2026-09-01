@@ -26,12 +26,31 @@ use Illuminate\View\View;
  */
 class WorkspaceController extends Controller
 {
+    /**
+     * The address a learner actually opens, not the one behind the rewrite.
+     *
+     * Unset locally, where the app is served from the project root and
+     * `url()` is already right. Production sets KCS_WORKSPACE_URL because the
+     * front controller sits in public_html/admin and `url()` would put
+     * /admin/ into every learner-facing URL — which breaks installing the app,
+     * not just the look of it.
+     */
+    private function base(): string
+    {
+        $configured = (string) config('kcs.workspace_url');
+
+        return rtrim($configured !== '' ? $configured : url('/workspace'), '/');
+    }
+
     public function shell(): View
     {
         return view('workspace.shell', [
             'config' => [
+                // The API keeps its real path: it is same-origin either way,
+                // and only the pages the service worker claims need to sit
+                // under the public prefix.
                 'api' => url('/api/v1'),
-                'base' => url('/workspace'),
+                'base' => $this->base(),
                 'pinLength' => LabPin::LENGTH,
                 // A learner who walks away without logging out must not leave
                 // the next one holding their session.
@@ -43,7 +62,7 @@ class WorkspaceController extends Controller
     public function serviceWorker(): Response
     {
         return response()
-            ->view('workspace.sw', ['version' => $this->version()])
+            ->view('workspace.sw', ['version' => $this->version(), 'base' => $this->base()])
             ->header('Content-Type', 'application/javascript')
             ->header('Cache-Control', 'no-cache')
             // Belt and braces: lets the worker claim the whole path even if a
@@ -57,15 +76,15 @@ class WorkspaceController extends Controller
             'name' => 'Naleli Workspace — KCS',
             'short_name' => 'Naleli',
             'description' => 'Your course work, at the lab or at home.',
-            'start_url' => url('/workspace/'),
-            'scope' => url('/workspace/'),
+            'start_url' => $this->base().'/',
+            'scope' => $this->base().'/',
             'display' => 'standalone',
             'orientation' => 'any',
             'background_color' => '#0B1F3A',
             'theme_color' => '#0B1F3A',
             'icons' => [
                 [
-                    'src' => url('/workspace/icon.svg'),
+                    'src' => $this->base().'/icon.svg',
                     'type' => 'image/svg+xml',
                     'sizes' => 'any',
                     'purpose' => 'any maskable',

@@ -16,11 +16,11 @@
  */
 @endverbatim
 const VERSION = "{{ $version }}";
-const SHELL_URL = "{{ route('workspace.shell') }}";
+const SHELL_URL = "{{ $base }}/";
 const PRECACHE = [
   SHELL_URL,
-  "{{ route('workspace.icon') }}",
-  "{{ route('workspace.manifest') }}",
+  "{{ $base }}/icon.svg",
+  "{{ $base }}/manifest.webmanifest",
 ];
 @verbatim
 const SHELL_CACHE = `naleli-shell-${VERSION}`;

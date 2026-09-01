@@ -26,4 +26,18 @@ return [
      */
     'public_url' => env('KCS_PUBLIC_URL', 'https://www.kcs.edu.za'),
 
+    /*
+     * Where a learner reaches the workspace.
+     *
+     * Same problem as the profile links, with one extra constraint: an
+     * installable web app is only installable when the manifest's `scope`
+     * matches the URL the page is actually served from. Generate
+     * /admin/workspace/ URLs into a page the learner opened at /workspace/
+     * and the browser refuses to install it — "page not in scope" — with no
+     * visible error. So every workspace URL is built from the public address,
+     * and the website rewrites that path onto the application internally
+     * (a redirect would put /admin back in the learner's address bar).
+     */
+    'workspace_url' => env('KCS_WORKSPACE_URL'),
+
 ];
