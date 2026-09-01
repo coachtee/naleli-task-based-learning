@@ -17,6 +17,15 @@ Laravel 13 · PHP 8.3+ · MySQL/MariaDB · Filament · deployed to a plain VPS.
   idempotent and atomic; keep it that way. Every payment route ends there.
 - **The Android app can never write competence, entitlement or a certificate.**
   It reports what the learner did; the backend decides what that counts for.
+  On `learner_submissions` that is held structurally: `result`, `assessed_at`,
+  `assessed_by` and `feedback` are left out of `ProgressSynchroniser`'s upsert
+  column list, so no request shape can move them.
+- **The learner account owns the learning record.** A phone and a lab PC are
+  working copies of it, never the original. Sync merges — completion is a
+  ratchet, evidence is idempotent on `client_evidence_id`, nothing is
+  last-write-wins. `docs/API-CONTRACT.md` has the rules and why each one is
+  the way it is; changing one of them changes whether a learner can lose an
+  afternoon's work.
 
 ## Testing
 
@@ -31,5 +40,16 @@ confirmation, enrolments, tokens, entitlements, Filament dashboard. Pay@ Go is
 live on top of that — see `docs/PAYMENTS-PAYAT.md`; its callback is unsigned,
 so settlement is always decided by reading the reference back from Pay@ and
 never from the callback body.
+
+Phase 3 (the learning record) is now built server-side: `/api/v1/me/progress`
+and `/api/v1/me/evidence`. No client calls it yet. It was brought forward
+deliberately — both the Android app and the planned desktop PWA need exactly
+these endpoints, so building them first means the client decision cannot be
+made wrong.
+
 Not yet: any Android app change, assessment, moderation, certificates. Do not
 build ahead of the phase.
+
+Known gap: no programme in the catalogue sets `content_code`, so the field the
+client uses to pick a content pack comes back null. `CatalogueManifest` is
+where that would be fixed.

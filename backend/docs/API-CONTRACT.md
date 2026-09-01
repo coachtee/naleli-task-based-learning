@@ -57,8 +57,13 @@ without the `KCS` prefix. Rate limited to 10 attempts per IP per minute.
 ### Authenticated
 
 ```
-GET /me                      learner profile
-GET /me/entitlements         what this learner may open
+GET  /me                     learner profile
+GET  /me/entitlements        what this learner may open
+
+GET  /me/progress            the learning record
+POST /me/progress            merge this device's changes, get the record back
+POST /me/evidence            upload one file (multipart)
+GET  /me/evidence/{id}       fetch one back
 ```
 
 `entitlement.state` is one of `locked`, `available`, `active`, `completed`,
@@ -70,17 +75,120 @@ cannot grant itself a programme.
 the APK (`digital-foundation`), so the app never maps programme names to
 content files itself.
 
+## The learning record (Phase 3)
+
+The rule the whole thing rests on:
+
+> **The learner account owns the work. A phone and a lab PC are working
+> copies. This backend holds the record.**
+
+That is what lets one learner work at home on Android, walk into KCS, sit at
+whichever machine is free, log in, and carry on — and lets thirty learners
+share one lab PC without ever seeing each other's work.
+
+Every sync is scoped to one programme. Name it with `?programme=PPO` (or
+`"programme"` in the body); if the learner has exactly one programme open, it
+is taken as read.
+
+### `GET /me/progress` · `POST /me/progress`
+
+Both return **the same shape** — the whole record for that learner and
+programme. A client pushes its batch and replaces its local state with the
+response; there is no second round trip and nothing to merge twice.
+
+Push:
+
+```json
+{
+  "programme": "PPO",
+  "device": "KCS Lab PC 17",
+  "sub_steps": [
+    { "sub_step_id": "day-01-task-1-step-1", "task_id": "day-01-task-1",
+      "complete": true, "completed_at": "2026-09-01T08:00:00+02:00",
+      "client_updated_at": "2026-09-01T08:00:00+02:00" }
+  ],
+  "submissions": [
+    { "task_id": "day-01-task-1", "submitted_at": "2026-09-01T08:30:00+02:00",
+      "confidence_rating": 4 }
+  ]
+}
+```
+
+**200** — the record:
+
+```json
+{
+  "server_time": "2026-09-01T06:31:00+00:00",
+  "programme": { "code": "PPO", "content_code": "digital-foundation",
+                 "content_version": 1, "entitlement_state": "active",
+                 "expires_at": "2026-11-30T00:00:00+00:00" },
+  "sub_steps":   [ { "sub_step_id": "…", "task_id": "…", "complete": true,
+                     "completed_at": "…" } ],
+  "submissions": [ { "task_id": "…", "submitted_at": "…", "confidence_rating": 4,
+                     "result": "not_yet_assessed", "assessed_at": null,
+                     "feedback": null } ],
+  "evidence":    [ { "client_evidence_id": "…", "task_id": "…", "file_name": "…",
+                     "mime_type": "…", "byte_size": 128400, "checksum": "…",
+                     "captured_at": "…", "download_url": "…" } ]
+}
+```
+
+Batches are capped (`config/sync.php`, 500 each); past the cap the client
+chunks. **422** if the learner has several programmes open and named none.
+
+### Merge rules
+
+Two devices can both be right — a phone that was offline all morning and a lab
+PC that was offline all afternoon are not stale in any way the other can see.
+So nothing here is last-write-wins:
+
+| | Rule | Because |
+|---|---|---|
+| Sub-step completion | **Ratchet.** Complete anywhere is complete; the earliest `completed_at` is kept. | Half the lab clocks have never been set, and a wrong clock must not erase an afternoon. |
+| Submissions | Latest `submitted_at` wins; a rating is never overwritten with nothing. | A resubmission is a real later hand-in; silence is not an answer. |
+| Evidence | Additive, idempotent on `client_evidence_id`. | A retry over a bad line must not double a photo. |
+| Competence | **Not writable at all.** | See below. |
+
+Every rule is idempotent, so a client that never saw its response just pushes
+again. Trade-off worth naming: because completion is a ratchet, un-ticking a
+step needs the learner to be online. Losing work costs more than re-ticking.
+
+### `POST /me/evidence`
+
+`multipart/form-data`: `file`, `client_evidence_id`, `task_id`, and optionally
+`description`, `captured_at`, `programme`, `device`. **201** on first receipt,
+**200** if that `client_evidence_id` is already held — a retry is not a
+failure. Written answers arrive here too, as `text/plain`; the app keeps one
+evidence path and so does this.
+
+Limits and the extension allowlist live in `config/sync.php` (25 MB default).
+Nothing the client sends shapes a path: the directory is the learner reference
+we allocated and the filename is a UUID we generate.
+
+`GET /me/evidence/{client_evidence_id}` streams it back, scoped to the caller —
+another learner's id is a **404**, not a 403, because a permission message
+would confirm the file exists.
+
+### Who may sync
+
+Not "is the entitlement active". Writing is allowed for any programme that has
+ever been unlocked — including an **expired** one. Expiry stops a learner
+opening new content, which the client enforces from `entitlement_state`; it
+must not destroy work already done by a device that has been offline since
+before it lapsed. Only a programme that was never opened is refused (**403**).
+
 ## Not in v1 — and why
 
 | Endpoint | Phase | Why not yet |
 |---|---|---|
-| `POST /sync/progress` | 3 | Needs the app; contract shape is the existing backup DTOs |
-| `POST /sync/evidence` | 3 | Multipart, idempotent on `client_evidence_id` |
 | `GET /me/assessments` | 4 | Needs the assessor workflow to exist |
 | `GET /me/certificates` | 5 | Depends on moderated human assessment |
 
 **There is no write route for entitlements, assessment results or
-certificates, and there never will be.** The app is authoritative about what
+certificates, and there never will be.** On `learner_submissions` this is
+structural rather than a policy: `result`, `assessed_at`, `assessed_by` and
+`feedback` are absent from the synchroniser's upsert column list, so no shape
+of request can move them. The app is authoritative about what
 the learner *did*; this backend is authoritative about what that *counts for*.
 Holding that asymmetry in the routing table rather than in policy is what
 stops a rooted phone awarding itself a qualification.

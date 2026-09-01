@@ -73,6 +73,26 @@ class Learner extends Model implements AuthenticatableContract
         return $this->hasMany(Entitlement::class);
     }
 
+    /**
+     * The learning record. These three are the learner's work, held here
+     * rather than on whichever device happened to be in front of them — see
+     * ProgressSynchroniser for how two devices' versions are reconciled.
+     */
+    public function subSteps(): HasMany
+    {
+        return $this->hasMany(LearnerSubStep::class);
+    }
+
+    public function submissions(): HasMany
+    {
+        return $this->hasMany(LearnerSubmission::class);
+    }
+
+    public function evidence(): HasMany
+    {
+        return $this->hasMany(LearnerEvidence::class);
+    }
+
     public function accessTokens(): HasMany
     {
         return $this->hasMany(AccessToken::class);
