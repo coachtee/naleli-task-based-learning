@@ -237,10 +237,6 @@ class EnrolmentActivator
      */
     private function settleRegistrationStatus($enrolment, $learner): void
     {
-        $complete = $this->profiles->refresh($learner->refresh());
-
-        $enrolment->application?->update($complete
-            ? ['status' => ApplicationStatus::REGISTERED, 'registered_at' => now()]
-            : ['status' => ApplicationStatus::PROFILE_INCOMPLETE, 'registered_at' => null]);
+        $this->profiles->settleApplication($enrolment->application, $learner->refresh());
     }
 }

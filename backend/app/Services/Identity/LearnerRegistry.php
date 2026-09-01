@@ -154,6 +154,37 @@ class LearnerRegistry
      *
      * @param  array<string, mixed>  $applicant
      */
+    /**
+     * A learner supplying their own identification, from the secure link.
+     *
+     * Wraps the same rule the intake path uses so identity is written one way
+     * only: an SA ID is validated and self-verifies, anything else waits for a
+     * registrar to sight the document, and an ID already on file is never
+     * silently replaced.
+     *
+     * @throws RuntimeException when the number is invalid, or belongs to somebody else
+     */
+    public function attachIdentity(Learner $learner, string $idNumber, mixed $idType = null): void
+    {
+        $normalised = Normalise::idNumber($idNumber);
+
+        if ($normalised === null) {
+            throw new RuntimeException('That identification number could not be read.');
+        }
+
+        $hash = Normalise::idHash($normalised);
+
+        // Two learners cannot share one identity. Without this check a typo
+        // could quietly attach somebody else's ID to this record.
+        $existing = Learner::where('id_number_hash', $hash)->where('id', '!=', $learner->id)->first();
+
+        if ($existing !== null) {
+            throw new RuntimeException('That identification number is already registered to another learner. Please contact us.');
+        }
+
+        $this->applyIdentification($learner, ['id_type' => $idType], $normalised, $hash);
+    }
+
     private function applyIdentification(Learner $learner, array $applicant, ?string $idNumber, ?string $idHash): void
     {
         if ($idNumber === null || $learner->id_number_hash !== null) {

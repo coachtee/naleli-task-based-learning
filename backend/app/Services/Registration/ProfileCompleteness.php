@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Registration;
 
+use App\Enums\ApplicationStatus;
+use App\Models\Application;
 use App\Models\Learner;
 
 /**
@@ -104,6 +106,25 @@ class ProfileCompleteness
         if (! $complete && $learner->profile_completed_at !== null) {
             $learner->forceFill(['profile_completed_at' => null])->save();
         }
+
+        return $complete;
+    }
+
+    /**
+     * Put the application on the rung the learner's file now warrants.
+     *
+     * Registered when nothing is outstanding, profile_incomplete while
+     * something is. Shared by the two paths that can change it — a payment
+     * settling, and the learner filling in their own details from the secure
+     * link — so the rule lives here rather than being restated in each.
+     */
+    public function settleApplication(?Application $application, Learner $learner): bool
+    {
+        $complete = $this->refresh($learner);
+
+        $application?->update($complete
+            ? ['status' => ApplicationStatus::REGISTERED, 'registered_at' => now()]
+            : ['status' => ApplicationStatus::PROFILE_INCOMPLETE, 'registered_at' => null]);
 
         return $complete;
     }

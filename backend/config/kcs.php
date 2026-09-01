@@ -18,4 +18,12 @@ return [
      */
     'panel_path' => env('FILAMENT_PANEL_PATH', 'admin'),
 
+    /*
+     * The address a learner sees. The application is served from /admin, so a
+     * raw link reads like a staff area to somebody who was sent it — and a
+     * link that looks like an admin panel is a link people do not click. The
+     * website rewrites /my/... onto the application.
+     */
+    'public_url' => env('KCS_PUBLIC_URL', 'https://www.kcs.edu.za'),
+
 ];

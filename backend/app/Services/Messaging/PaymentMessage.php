@@ -6,6 +6,9 @@ namespace App\Services\Messaging;
 
 use App\Enums\PayAtAccountState;
 use App\Models\Invoice;
+use App\Models\Learner;
+use App\Services\Registration\LearnerLinks;
+use App\Services\Registration\ProfileCompleteness;
 use App\Support\Normalise;
 
 /**
@@ -101,5 +104,55 @@ class PaymentMessage
         }
 
         return "https://wa.me/{$number}?text=".rawurlencode($message);
+    }
+
+    /**
+     * The message asking a learner to finish their own registration.
+     *
+     * Names what is actually outstanding rather than saying "complete your
+     * profile", because a person is far likelier to open a link that tells
+     * them it wants their ID and their address than one that does not.
+     */
+    public function profileMessage(Learner $learner): ?string
+    {
+        $profiles = app(ProfileCompleteness::class);
+
+        if ($profiles->isComplete($learner)) {
+            return null;
+        }
+
+        $missing = $profiles->missing($learner);
+        $name = $learner->preferred_name ?: $learner->first_name;
+
+        return implode("\n", [
+            "Hi {$name},",
+            '',
+            'Your place at Katlehong Computer School is confirmed. There are a few details '
+                .'we still need before your first block starts.',
+            '',
+            'Still outstanding: '.strtolower(implode(', ', $missing)).'.',
+            '',
+            'Fill them in here — it takes about three minutes and you can come back to it:',
+            app(LearnerLinks::class)->friendlyProfile($learner),
+            '',
+            'The link is private to you and works for '.LearnerLinks::PROFILE_DAYS.' days.',
+            '',
+            'Katlehong Computer School',
+        ]);
+    }
+
+    /** Null when there is nothing outstanding, or no number to send it to. */
+    public function profileWhatsAppLink(Learner $learner): ?string
+    {
+        $message = $this->profileMessage($learner);
+
+        if ($message === null) {
+            return null;
+        }
+
+        $number = Normalise::whatsappNumber($learner->whatsapp)
+            ?? Normalise::whatsappNumber($learner->phone);
+
+        return $number === null ? null : "https://wa.me/{$number}?text=".rawurlencode($message);
     }
 }

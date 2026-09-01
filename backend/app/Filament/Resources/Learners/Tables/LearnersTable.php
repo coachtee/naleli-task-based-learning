@@ -3,11 +3,14 @@
 namespace App\Filament\Resources\Learners\Tables;
 
 use App\Models\Learner;
+use App\Services\Messaging\PaymentMessage;
+use App\Services\Registration\LearnerLinks;
 use App\Services\Registration\ProfileCompleteness;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Actions\Action as NotificationAction;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -107,6 +110,39 @@ class LearnersTable
                             ->success()
                             ->send();
                     }),
+                // The step that used to have nowhere to happen: a learner
+                // filling in their own identity, address and schooling. The
+                // link is private to them and lapses, so it is sent rather
+                // than published.
+                Action::make('sendProfileLink')
+                    ->label('Ask them to finish their profile')
+                    ->icon('heroicon-o-identification')
+                    ->color('warning')
+                    ->visible(fn (Learner $record): bool => ! app(ProfileCompleteness::class)->isComplete($record))
+                    ->modalHeading('Send the private profile link')
+                    ->modalDescription(fn (Learner $record): string => 'Still outstanding: '
+                        .strtolower(implode(', ', app(ProfileCompleteness::class)->missing($record))).'.')
+                    ->modalSubmitActionLabel('Show me the link')
+                    ->action(function (Learner $record): void {
+                        $link = app(LearnerLinks::class)->friendlyProfile($record);
+                        $whatsapp = app(PaymentMessage::class)->profileWhatsAppLink($record);
+
+                        Notification::make()
+                            ->title('Profile link for '.$record->learner_ref)
+                            ->body($whatsapp === null
+                                ? $link.' — no usable WhatsApp number on file, so send it another way.'
+                                : $link)
+                            ->success()
+                            ->persistent()
+                            ->actions(array_values(array_filter([
+                                $whatsapp === null ? null : NotificationAction::make('wa')
+                                    ->label('Send it on WhatsApp')
+                                    ->url($whatsapp, shouldOpenInNewTab: true)
+                                    ->button(),
+                            ])))
+                            ->send();
+                    }),
+
                 EditAction::make(),
             ])
             ->toolbarActions([
