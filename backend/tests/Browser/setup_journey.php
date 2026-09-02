@@ -11,9 +11,6 @@
  * Re-running wipes the previous UAT prospect first, so it proves something
  * twice rather than tripping over yesterday's record.
  */
-require __DIR__.'/../../vendor/autoload.php';
-$a = require __DIR__.'/../../bootstrap/app.php';
-$a->make(Kernel::class)->bootstrap();
 
 use App\Models\Learner;
 use App\Models\Offering;
@@ -23,6 +20,10 @@ use App\Services\Registration\LearnerLinks;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+
+require __DIR__.'/../../vendor/autoload.php';
+$a = require __DIR__.'/../../bootstrap/app.php';
+$a->make(Kernel::class)->bootstrap();
 
 // Sign for the host the browser will actually ask for; a signature covers the
 // whole URL, so signing against APP_URL and then browsing somewhere else fails.

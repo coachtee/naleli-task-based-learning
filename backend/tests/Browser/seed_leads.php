@@ -1,11 +1,17 @@
 <?php
+
+use App\Enums\TouchChannel;
+use App\Enums\TouchOutcome;
+use App\Enums\UserRole;
+use App\Models\Application;
+use App\Models\User;
+use App\Services\Leads\MetaLeadImporter;
+use App\Services\Leads\TouchLog;
+use Illuminate\Contracts\Console\Kernel;
+
 require __DIR__.'/../../vendor/autoload.php';
 $a = require __DIR__.'/../../bootstrap/app.php';
-$a->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
-
-use App\Enums\{TouchChannel, TouchOutcome, UserRole};
-use App\Models\{Application, User};
-use App\Services\Leads\{MetaLeadImporter, TouchLog};
+$a->make(Kernel::class)->bootstrap();
 
 $admin = User::firstOrCreate(['email' => 'uat.admin@example.co.za'], [
     'name' => 'Thabiso Naleli', 'password' => bcrypt('uat-password-123'), 'role' => UserRole::ADMIN,

@@ -12,6 +12,7 @@ use App\Services\Leads\MetaLeadImporter;
 use App\Services\Leads\TouchLog;
 use App\Services\Messaging\PaymentMessage;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -22,6 +23,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\HtmlString;
 use Throwable;
 
 /**
@@ -60,16 +62,33 @@ class CallQueue extends TableWidget
             ->emptyStateHeading('Nobody is waiting')
             ->emptyStateDescription('Every lead has been called, or has a date to be called on. Import a new Facebook export to add more.')
             ->columns([
+                // One column carrying three facts, not three columns. A
+                // Filament row on a phone screen used to run to 1277px in a
+                // 390px viewport — reaching the person's own actions meant
+                // dragging the table sideways for every one of eighty-nine
+                // leads. Folding "who they are", "how they were last tried"
+                // and "how urgent" into one flexible column, rather than each
+                // claiming a fixed-width column of its own, is what actually
+                // fixes that: it wraps instead of forcing a scrollbar.
                 TextColumn::make('learner.first_name')
                     ->label('Who')
                     ->searchable(['first_name', 'last_name'])
                     ->weight('medium')
+                    ->wrap()
                     ->formatStateUsing(fn (Application $record): string => trim(
                         "{$record->learner->first_name} {$record->learner->last_name}",
                     ) ?: $record->learner->learner_ref)
-                    ->description(fn (Application $record): string => $record->learner->phone
-                        ?? $record->learner->email
-                        ?? 'no contact details'),
+                    ->description(function (Application $record): HtmlString {
+                        $contact = e($record->learner->phone ?? $record->learner->email ?? 'no contact details');
+                        $tried = $record->touch_count === 0
+                            ? 'never called'
+                            : $record->touch_count.'× tried — '
+                                .e($record->leadTouches()->first()?->outcome->label() ?? '');
+
+                        return new HtmlString(
+                            $contact.'<br><span style="opacity:.75">'.$tried.'</span>',
+                        );
+                    }),
 
                 TextColumn::make('next_action_at')
                     ->label('Waiting')
@@ -84,28 +103,20 @@ class CallQueue extends TableWidget
                         $state->isPast() => 'warning',
                         default => 'gray',
                     })
-                    ->weight('medium'),
-
-                TextColumn::make('touch_count')
-                    ->label('Tried')
-                    ->badge()
-                    ->color(fn (int $state): string => $state >= 5 ? 'gray' : ($state === 0 ? 'warning' : 'info'))
-                    ->formatStateUsing(fn (int $state): string => $state === 0
-                        ? 'never called'
-                        : $state.'×')
-                    ->description(fn (Application $record): ?string => $record->leadTouches()->first()?->outcome->label()),
+                    ->weight('medium')
+                    ->wrap(),
 
                 TextColumn::make('campaign')
                     ->label('Came from')
                     ->placeholder('—')
                     ->limit(28)
-                    ->toggleable()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->description(fn (Application $record): string => $record->source->label()),
 
                 TextColumn::make('owner.name')
                     ->label('Owner')
                     ->placeholder('Nobody yet')
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->headerActions([
                 // Because nobody is going to SSH into a server to run an
@@ -176,9 +187,19 @@ class CallQueue extends TableWidget
                 // One tap, message already written, from the phone in their
                 // hand. Never a bulk send — a business number that broadcasts
                 // gets banned, and the school runs on that number.
+                //
+                // Icon-only rather than a labelled button: on a phone this row
+                // used to be wider than the screen (1277px into a 390px
+                // viewport in the layout that shipped first), so reaching
+                // WhatsApp meant dragging the table sideways for every one of
+                // eighty-nine leads. WhatsApp is the action used most, so it
+                // stays a single tap; the other two move into the menu next
+                // to it rather than each claiming their own width.
                 Action::make('whatsapp')
                     ->label('WhatsApp')
                     ->icon('heroicon-o-chat-bubble-left-right')
+                    ->iconButton()
+                    ->tooltip('WhatsApp')
                     ->color('success')
                     ->url(fn (Application $record): ?string => app(PaymentMessage::class)
                         ->leadIntroWhatsAppLink($record->learner, auth()->user()?->name))
@@ -189,60 +210,76 @@ class CallQueue extends TableWidget
                         $record, TouchChannel::WHATSAPP, TouchOutcome::SENT_INFO, 'Opened WhatsApp from the queue.',
                     )),
 
-                Action::make('logCall')
-                    ->label('Log a call')
-                    ->icon('heroicon-o-phone')
-                    ->modalHeading(fn (Application $record): string => 'How did it go with '
-                        .trim("{$record->learner->first_name} {$record->learner->last_name}").'?')
-                    ->modalDescription(fn (Application $record): ?string => $record->leadTouches()->first()?->note)
-                    ->schema([
-                        Select::make('channel')
-                            ->label('How did you reach out?')
-                            ->options(collect(TouchChannel::cases())
-                                ->mapWithKeys(fn (TouchChannel $c): array => [$c->value => $c->label()])->all())
-                            ->default(TouchChannel::PHONE->value)
-                            ->required(),
-
-                        Select::make('outcome')
-                            ->label('What happened?')
-                            ->options(collect(TouchOutcome::cases())
-                                ->mapWithKeys(fn (TouchOutcome $o): array => [$o->value => $o->label()])->all())
-                            ->required()
-                            ->live()
-                            ->helperText('This sets when they come back into the queue.'),
-
-                        Textarea::make('note')
-                            ->label('What did they say?')
-                            ->placeholder('The next person to call them will read this.')
-                            ->rows(3),
-
-                        DatePicker::make('next_action_at')
-                            ->label('Call again on')
-                            ->helperText('Leave blank to use the usual interval for that outcome.')
-                            ->minDate(now()),
-                    ])
-                    ->modalSubmitActionLabel('Save it')
-                    ->action(function (Application $record, array $data): void {
-                        $this->log(
-                            $record,
-                            TouchChannel::from($data['channel']),
-                            TouchOutcome::from($data['outcome']),
-                            $data['note'] ?? null,
-                            isset($data['next_action_at']) && $data['next_action_at']
-                                ? Carbon::parse($data['next_action_at'])
-                                : null,
-                        );
-                    }),
-
-                Action::make('register')
-                    ->label('Register them')
-                    ->icon('heroicon-o-arrow-right-circle')
-                    ->color('warning')
-                    ->url(fn (Application $record): string => route('filament.admin.resources.applications.index',
-                        ['tableSearch' => $record->learner->learner_ref]))
-                    ->visible(fn (Application $record): bool => $record->leadTouches()
-                        ->where('outcome', TouchOutcome::WILL_REGISTER)->exists()),
+                ActionGroup::make([
+                    $this->logCallAction(),
+                    $this->registerAction(),
+                ])
+                    ->label('More')
+                    ->icon('heroicon-o-ellipsis-vertical')
+                    ->iconButton()
+                    ->tooltip('More actions')
+                    ->color('gray'),
             ]);
+    }
+
+    private function logCallAction(): Action
+    {
+        return Action::make('logCall')
+            ->label('Log a call')
+            ->icon('heroicon-o-phone')
+            ->modalHeading(fn (Application $record): string => 'How did it go with '
+                .trim("{$record->learner->first_name} {$record->learner->last_name}").'?')
+            ->modalDescription(fn (Application $record): ?string => $record->leadTouches()->first()?->note)
+            ->schema([
+                Select::make('channel')
+                    ->label('How did you reach out?')
+                    ->options(collect(TouchChannel::cases())
+                        ->mapWithKeys(fn (TouchChannel $c): array => [$c->value => $c->label()])->all())
+                    ->default(TouchChannel::PHONE->value)
+                    ->required(),
+
+                Select::make('outcome')
+                    ->label('What happened?')
+                    ->options(collect(TouchOutcome::cases())
+                        ->mapWithKeys(fn (TouchOutcome $o): array => [$o->value => $o->label()])->all())
+                    ->required()
+                    ->live()
+                    ->helperText('This sets when they come back into the queue.'),
+
+                Textarea::make('note')
+                    ->label('What did they say?')
+                    ->placeholder('The next person to call them will read this.')
+                    ->rows(3),
+
+                DatePicker::make('next_action_at')
+                    ->label('Call again on')
+                    ->helperText('Leave blank to use the usual interval for that outcome.')
+                    ->minDate(now()),
+            ])
+            ->modalSubmitActionLabel('Save it')
+            ->action(function (Application $record, array $data): void {
+                $this->log(
+                    $record,
+                    TouchChannel::from($data['channel']),
+                    TouchOutcome::from($data['outcome']),
+                    $data['note'] ?? null,
+                    isset($data['next_action_at']) && $data['next_action_at']
+                        ? Carbon::parse($data['next_action_at'])
+                        : null,
+                );
+            });
+    }
+
+    private function registerAction(): Action
+    {
+        return Action::make('register')
+            ->label('Register them')
+            ->icon('heroicon-o-arrow-right-circle')
+            ->color('warning')
+            ->url(fn (Application $record): string => route('filament.admin.resources.applications.index',
+                ['tableSearch' => $record->learner->learner_ref]))
+            ->visible(fn (Application $record): bool => $record->leadTouches()
+                ->where('outcome', TouchOutcome::WILL_REGISTER)->exists());
     }
 
     private function log(

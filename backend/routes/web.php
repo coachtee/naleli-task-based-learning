@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Learner\ProfileController;
 use App\Http\Controllers\Learner\WorkspaceAccessController;
+use App\Http\Controllers\Staff\CallQueueController;
 use App\Http\Controllers\Workspace\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
@@ -69,4 +70,22 @@ Route::prefix('workspace')->group(function (): void {
     Route::get('/sw.js', [WorkspaceController::class, 'serviceWorker'])->name('workspace.sw');
     Route::get('/manifest.webmanifest', [WorkspaceController::class, 'manifest'])->name('workspace.manifest');
     Route::get('/icon.svg', [WorkspaceController::class, 'icon'])->name('workspace.icon');
+});
+
+/*
+ * The mobile call queue for staff.
+ *
+ * Same login as the dashboard (the `web` session guard) — nothing new to
+ * remember. Built as its own page rather than squeezed into the Filament
+ * table because a data table cannot fit a phone screen without losing the
+ * thing a caller actually needs: the WhatsApp and Log-a-call buttons still
+ * ran off the edge of the viewport after every column was trimmed. A card
+ * list is the right shape for standing in a queue and working down it.
+ */
+Route::middleware('auth')->prefix('calls')->name('staff.calls.')->group(function (): void {
+    Route::get('/', [CallQueueController::class, 'shell'])->name('shell');
+    Route::get('/api/leads', [CallQueueController::class, 'index'])->name('api.index');
+    Route::post('/api/leads/{application}/log', [CallQueueController::class, 'logCall'])->name('api.log');
+    Route::post('/api/leads/{application}/whatsapp', [CallQueueController::class, 'whatsapp'])->name('api.whatsapp');
+    Route::post('/api/import', [CallQueueController::class, 'import'])->name('api.import');
 });
