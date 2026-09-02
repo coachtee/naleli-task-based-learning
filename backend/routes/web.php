@@ -16,6 +16,9 @@ declare(strict_types=1);
 use App\Http\Controllers\Learner\ProfileController;
 use App\Http\Controllers\Learner\WorkspaceAccessController;
 use App\Http\Controllers\Staff\CallQueueController;
+use App\Http\Controllers\Staff\DashboardController;
+use App\Http\Controllers\Staff\MoreController;
+use App\Http\Controllers\Staff\RecordsController;
 use App\Http\Controllers\Workspace\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
@@ -88,4 +91,18 @@ Route::middleware('auth')->prefix('calls')->name('staff.calls.')->group(function
     Route::post('/api/leads/{application}/log', [CallQueueController::class, 'logCall'])->name('api.log');
     Route::post('/api/leads/{application}/whatsapp', [CallQueueController::class, 'whatsapp'])->name('api.whatsapp');
     Route::post('/api/import', [CallQueueController::class, 'import'])->name('api.import');
+    Route::get('/{application}', [CallQueueController::class, 'show'])->name('show');
+});
+
+/*
+ * The rest of the mobile CRM: a dashboard that says what today is, the
+ * records a name has already earned (registrations, learners, invoices),
+ * and the one learner profile that ties them together. Same `web` guard,
+ * same shared shell as the call queue above.
+ */
+Route::middleware('auth')->group(function (): void {
+    Route::get('/staff', [DashboardController::class, 'index'])->name('staff.dashboard');
+    Route::get('/records', [RecordsController::class, 'index'])->name('staff.records.index');
+    Route::get('/records/learners/{learner}', [RecordsController::class, 'learner'])->name('staff.records.learner');
+    Route::get('/more', [MoreController::class, 'index'])->name('staff.more');
 });

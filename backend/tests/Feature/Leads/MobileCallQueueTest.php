@@ -54,7 +54,7 @@ class MobileCallQueueTest extends TestCase
 
     public function test_the_page_loads_for_a_logged_in_staff_member(): void
     {
-        $this->get('/calls')->assertOk()->assertSee('Calls', false);
+        $this->get('/calls')->assertOk()->assertSee('Leads', false);
     }
 
     public function test_the_feed_lists_leads_oldest_waiting_first(): void

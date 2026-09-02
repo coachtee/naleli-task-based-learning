@@ -36,15 +36,18 @@ class CallQueueController extends Controller
 {
     public function shell(): View
     {
-        return view('staff.calls', [
-            'staffName' => auth()->user()?->name,
-            // Built from route(), not hardcoded: the panel mounts at /admin
-            // locally but at the directory root in production (the front
-            // controller already sits inside public_html/admin), so a literal
-            // "/admin/applications" would be wrong in exactly one of the two
-            // places this runs.
-            'applicationsUrl' => route('filament.admin.resources.applications.index'),
-            'dashboardUrl' => route('filament.admin.pages.dashboard'),
+        return view('staff.calls');
+    }
+
+    /** One lead's own page — the profile the mobile queue never had room for. */
+    public function show(Application $application): View
+    {
+        $application->load(['learner', 'programme', 'leadTouches' => fn ($q) => $q->latest('occurred_at')]);
+
+        return view('staff.lead', [
+            'application' => $application,
+            'learner' => $application->learner,
+            'whatsappLink' => app(PaymentMessage::class)->leadIntroWhatsAppLink($application->learner, auth()->user()?->name),
         ]);
     }
 
