@@ -74,7 +74,7 @@
   <div style="height:80px"></div>
   <div class="stickybar">
     <button type="button" class="btn btn-outline" id="stickyLogBtn">Log a call</button>
-    <a class="btn btn-coral" href="{{ route('filament.admin.resources.applications.edit', $application) }}">Register them</a>
+    <a class="btn btn-coral" href="{{ \App\Support\AdminUrl::route('filament.admin.resources.applications.edit', ['record' => $application]) }}">Register them</a>
   </div>
 
   <x-slot:scripts>

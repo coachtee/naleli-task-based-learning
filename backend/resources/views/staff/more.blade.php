@@ -21,7 +21,7 @@
         <div style="font-size:11.5px;color:var(--faint);font-weight:600">Upload a Leads Centre export</div>
       </div>
     </a>
-    <a href="{{ route('filament.admin.resources.programmes.index') }}" style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-top:1px solid var(--line)">
+    <a href="{{ \App\Support\AdminUrl::route('filament.admin.resources.programmes.index') }}" style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-top:1px solid var(--line)">
       <div style="width:36px;height:36px;border-radius:10px;background:var(--gray-bg);color:var(--ink);display:grid;place-items:center;flex-shrink:0">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5l3 2"/></svg>
       </div>
@@ -31,7 +31,7 @@
 
   <div style="margin:18px 16px 8px;font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.3px">Desktop dashboard</div>
   <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;margin:0 16px 16px;overflow:hidden">
-    <a href="{{ route('filament.admin.pages.dashboard') }}" style="display:flex;align-items:center;gap:13px;padding:14px 16px">
+    <a href="{{ \App\Support\AdminUrl::route('filament.admin.pages.dashboard') }}" style="display:flex;align-items:center;gap:13px;padding:14px 16px">
       <div style="width:36px;height:36px;border-radius:10px;background:var(--gray-bg);color:var(--ink);display:grid;place-items:center;flex-shrink:0">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
       </div>
@@ -40,7 +40,7 @@
         <div style="font-size:11.5px;color:var(--faint);font-weight:600">Everything mobile doesn't show yet</div>
       </div>
     </a>
-    <form method="POST" action="{{ route('filament.admin.auth.logout') }}" style="border-top:1px solid var(--line)">
+    <form method="POST" action="{{ \App\Support\AdminUrl::route('filament.admin.auth.logout') }}" style="border-top:1px solid var(--line)">
       @csrf
       <button type="submit" style="width:100%;display:flex;align-items:center;gap:13px;padding:14px 16px;text-align:left">
         <div style="width:36px;height:36px;border-radius:10px;background:var(--danger-bg);color:var(--danger);display:grid;place-items:center;flex-shrink:0">

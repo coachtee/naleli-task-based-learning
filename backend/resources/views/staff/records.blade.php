@@ -27,7 +27,7 @@
             @if($row['profile_link'])
               <a class="btn btn-outline" style="flex:1" href="{{ $row['profile_link'] }}" target="_blank" rel="noopener">Ask to finish profile</a>
             @endif
-            <a class="btn btn-coral" style="flex:1" href="{{ route('filament.admin.resources.applications.edit', $a) }}">Edit</a>
+            <a class="btn btn-coral" style="flex:1" href="{{ \App\Support\AdminUrl::route('filament.admin.resources.applications.edit', ['record' => $a]) }}">Edit</a>
           </div>
         </div>
       @empty
