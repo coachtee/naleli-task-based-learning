@@ -100,7 +100,10 @@ class MobileCallQueueTest extends TestCase
     {
         $lead = $this->lead('Mpho', 'Moleko', now());
 
-        $response = $this->postJson("/calls/api/leads/{$lead->id}/whatsapp")->assertOk();
+        $response = $this->postJson("/calls/api/leads/{$lead->id}/whatsapp")
+            ->assertOk()
+            ->assertJsonPath('lead.status', 'contacted')
+            ->assertJsonPath('lead.status_label', 'Contacted');
 
         $this->assertStringStartsWith('https://wa.me/', $response->json('url'));
         $this->assertSame(1, $lead->fresh()->touch_count);
@@ -143,7 +146,12 @@ class MobileCallQueueTest extends TestCase
 
         $this->postJson("/calls/api/leads/{$leaves->id}/log", [
             'channel' => 'phone', 'outcome' => 'not_interested', 'note' => 'Found work.',
-        ])->assertOk();
+        ])
+            ->assertOk()
+            // The mobile page reads a null next_action_at as "take this card
+            // out of the list" instead of re-fetching the whole queue — so
+            // the response has to carry that signal, not just the database.
+            ->assertJsonPath('lead.next_action_at', null);
 
         $ids = collect($this->getJson('/calls/api/leads')->json('leads'))->pluck('id')->all();
         $this->assertSame([$stays->id], $ids);

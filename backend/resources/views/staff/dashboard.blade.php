@@ -53,7 +53,7 @@
         <div class="row-top">
           <div class="row-avatar" style="background:var(--navy)">{{ $initials }}</div>
           <div class="row-body">
-            <div class="row-name">{{ $name }}</div>
+            <div class="row-name">{{ $name }} <span class="pill pill-{{ $application->status->value }}">{{ $application->status->label() }}</span></div>
             <div class="row-meta">{{ $application->programme?->name ?? 'No programme yet' }} &middot; {{ $application->source->label() }}</div>
             <div style="font-size:11.5px;margin-top:5px;font-weight:700;color:{{ $application->next_action_at->isPast() ? 'var(--danger)' : 'var(--faint)' }}">
               {{ $application->next_action_at->isPast() ? $application->next_action_at->diffForHumans().' overdue' : 'due '.$application->next_action_at->diffForHumans() }}

@@ -35,6 +35,8 @@
       .urgency.gray{background:var(--gray-bg);color:var(--muted)}
       .tried-pill{font-size:11px;font-weight:700;color:var(--faint)}
       .lastnote{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:12.5px;color:var(--ink);margin-top:8px;border-left:3px solid var(--line)}
+      .row-card.just-updated{animation:flashUpdate 1.8s ease}
+      @keyframes flashUpdate{0%{background:var(--success-bg)}100%{background:var(--card)}}
       #veil{position:fixed;inset:0;background:rgba(10,31,61,.42);z-index:20;display:flex;align-items:flex-end}
       #veil.hide{display:none}
       #sheet{background:#fff;border-radius:20px 20px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));width:100%;max-height:88vh;overflow:auto}
@@ -84,7 +86,7 @@
         render();
       }
 
-      function render() {
+      function render(justUpdatedId) {
         const overdue = LEADS.filter((l) => l.overdue).length;
         const urgent = LEADS.filter((l) => l.urgent).length;
         const neverCalled = LEADS.filter((l) => l.touch_count === 0).length;
@@ -104,6 +106,35 @@
 
         $("feed").innerHTML = "";
         LEADS.forEach((l) => $("feed").appendChild(card(l)));
+
+        // The visible proof that logging a touch actually did something: the
+        // card that just changed flashes and the person can watch it move —
+        // "reordering" a screen reader can't see is not confirmation to
+        // someone standing in a queue tapping through eighty-nine names.
+        if (justUpdatedId) {
+          const el = $("feed").querySelector(`[data-id="${justUpdatedId}"]`);
+          if (el) {
+            el.scrollIntoView({ block: "center", behavior: "smooth" });
+            el.classList.add("just-updated");
+          }
+        }
+      }
+
+      /** Replace one lead in place and re-sort, rather than a full reload —
+       * so the person sees their own action move the card, not a blank
+       * "Loading…" flash that looks like nothing happened. A closed outcome
+       * (not interested, wrong number) comes back with no next action at
+       * all — that one leaves the queue instead of being redrawn. */
+      function applyUpdatedLead(updated) {
+        const i = LEADS.findIndex((l) => l.id === updated.id);
+        if (updated.next_action_at === null) {
+          if (i !== -1) LEADS.splice(i, 1);
+          render();
+          return;
+        }
+        if (i === -1) { LEADS.push(updated); } else { LEADS[i] = updated; }
+        LEADS.sort((a, b) => new Date(a.next_action_at || 0) - new Date(b.next_action_at || 0));
+        render(updated.id);
       }
 
       function waitLabel(l) {
@@ -119,6 +150,7 @@
       function card(l) {
         const el = document.createElement("div");
         el.className = "row-card";
+        el.dataset.id = l.id;
         const pillClass = l.urgent ? "danger" : (l.overdue ? "warn" : "gray");
         const triedPill = l.touch_count === 0
           ? `never called`
@@ -128,7 +160,7 @@
           <div class="row-top">
             <div class="row-avatar" style="background:var(--navy)">${esc((l.name || "?").split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase())}</div>
             <div class="row-body">
-              <div class="row-name">${esc(l.name)}</div>
+              <div class="row-name">${esc(l.name)} <span class="pill pill-${esc(l.status)}">${esc(l.status_label)}</span></div>
               <div class="row-meta">${esc(l.campaign || l.source)} &middot; <span class="tried-pill">${triedPill}</span></div>
             </div>
             <span class="urgency ${pillClass}">${esc(waitLabel(l))}</span>
@@ -152,10 +184,10 @@
 
       async function openWhatsApp(l) {
         try {
-          const { url } = await api(`/calls/api/leads/${l.id}/whatsapp`, { method: "POST" });
+          const { url, lead } = await api(`/calls/api/leads/${l.id}/whatsapp`, { method: "POST" });
           window.open(url, "_blank");
-          toast("Logged as sent — WhatsApp opened.");
-          await load();
+          toast(`Logged as sent — now ${lead.status_label.toLowerCase()}.`);
+          applyUpdatedLead(lead);
         } catch (e) {
           toast(e.body?.message || "Could not open WhatsApp.");
         }
@@ -186,13 +218,15 @@
           if (save) save.onclick = async () => {
             save.disabled = true; save.textContent = "Saving…";
             try {
-              await api(`/calls/api/leads/${l.id}/log`, {
+              const { lead } = await api(`/calls/api/leads/${l.id}/log`, {
                 method: "POST",
                 json: { channel, outcome, note: $("note").value || null },
               });
               $("veil").classList.add("hide");
-              toast("Logged — " + OUTCOMES.find(([v]) => v === outcome)[1]);
-              await load();
+              toast(lead.next_action_at
+                ? "Logged — " + OUTCOMES.find(([v]) => v === outcome)[1]
+                : "Logged — left the queue.");
+              applyUpdatedLead(lead);
             } catch (e) {
               toast("Could not save that.");
               save.disabled = false; save.textContent = "Save it";

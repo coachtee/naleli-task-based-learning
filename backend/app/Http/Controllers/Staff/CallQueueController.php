@@ -139,6 +139,8 @@ class CallQueueController extends Controller
             'name' => trim("{$learner->first_name} {$learner->last_name}") ?: $learner->learner_ref,
             'phone' => $learner->phone,
             'email' => $learner->email,
+            'status' => $application->status->value,
+            'status_label' => $application->status->label(),
             'campaign' => $application->campaign,
             'source' => $application->source->label(),
             'touch_count' => $application->touch_count,
